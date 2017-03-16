@@ -39,3 +39,24 @@ Route::group(['prefix' => 'group'], function () {
     Route::get( 'update','GroupController@edit' )->name('group-update');
     Route::post( 'update','GroupController@update' )->name('group-update');
 });
+
+Route::group(['prefix' => 'Partner'], function () {
+    Route::get( '/','PartnerController@index' )->name('partner-index');
+    Route::post( 'delete','PartnerController@delete' )->name('partner-delete');
+    Route::get( 'update','PartnerController@edit' )->name('partner-update');
+    Route::post( 'update','PartnerController@update' )->name('partner-update');
+});
+
+Route::group(['prefix' => 'Group'], function () {
+    Route::get( '/','GroupController@index' )->name('group-index');
+    Route::post( 'delete','GroupController@delete' )->name('group-delete');
+    Route::get( 'update','GroupController@edit' )->name('group-update');
+    Route::post( 'update','GroupController@update' )->name('group-update');
+});
+
+Route::group(['prefix' => 'Sourcesteering'], function () {
+    Route::get( '/','SourcesteeringController@index' )->name('sourcesteering-index');
+    Route::post( 'delete','SourcesteeringController@delete' )->name('sourcesteering-delete');
+    Route::get( 'update','SourcesteeringController@edit' )->name('sourcesteering-update');
+    Route::post( 'update','SourcesteeringController@update' )->name('sourcesteering-update');
+});
