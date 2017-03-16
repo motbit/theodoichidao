@@ -56,9 +56,9 @@
 
     <div class="form-group">
         {!! Form::label('Đơn vị Xác nhận') !!}
-        {!! Form::radio('confirm', 'C',($row->status=='C')) !!} Đơn vị chưa xác nhận
-        {!! Form::radio('confirm', 'X',($row->status=='X')) !!} Đơn vị đã xác nhận
-        {!! Form::radio('confirm', 'K',($row->status=='K')) !!} Đơn vị không nhận
+        {!! Form::radio('confirm', 'C',($row->xn=='C')) !!} Đơn vị chưa xác nhận
+        {!! Form::radio('confirm', 'X',($row->xn=='X')) !!} Đơn vị đã xác nhận
+        {!! Form::radio('confirm', 'K',($row->xn=='K')) !!} Đơn vị không nhận
 
     </div>
 

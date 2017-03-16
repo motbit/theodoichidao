@@ -73,10 +73,10 @@
             </ul>
             <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
             <ul>
-                <li><a href="<?php echo e(@route('user-index')); ?>">Công việc đầu mối</a></li>
-                <li><a href="<?php echo e(@route('user-index')); ?>">Công việc phối hợp</a></li>
-                <li><a href="<?php echo e(@route('user-index')); ?>">Công việc mới được giao</a></li>
-                <li><a href="<?php echo e(@route('user-index')); ?>">Nguồn chỉ đạo</a></li>
+                <li><a href="<?php echo e(@route('xuly-daumoi')); ?>">Công việc đầu mối</a></li>
+                <li><a href="<?php echo e(@route('xuly-phoihop')); ?>">Công việc phối hợp</a></li>
+                <li><a href="<?php echo e(@route('xuly-duocgiao')); ?>">Công việc mới được giao</a></li>
+                <li><a href="<?php echo e(@route('xuly-nguonchidao')); ?>">Nguồn chỉ đạo</a></li>
             </ul>
         </div>
     </div>
