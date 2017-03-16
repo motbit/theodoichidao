@@ -13,7 +13,7 @@
         @show</title>
 </head>
 <body>
-<img src="img/top-baner.png" width="100%" height="auto">
+<img src="/img/top-baner.png" width="100%" height="auto">
 <nav class="navbar navbar-my">
     <a href="javascript:actionNav()">
         <i class="fa fa-bars"></i>
