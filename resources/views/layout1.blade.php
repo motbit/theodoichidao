@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
-    <link href="css/slide.css" rel="stylesheet" type="text/css">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <link href="/css/slide.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <title>@section('page-title')
         @show</title>
@@ -27,21 +27,21 @@
         <div class="list-menu">
             <div class="cate-menu">NGƯỜI DÙNG</div>
             <ul>
-                <li>Người sử dụng</li>
-                <li>Ban - Đơn vị</li>
-                <li>Người chủ trì</li>
+                <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
+                <li><a href="{{@route('unit-index')}}">Ban - Đơn vị</a></li>
+                <li><a href="{{@route('viphuman-index')}}">Người chủ trì</a></li>
             </ul>
             <div class="cate-menu">Ý KIẾN CHỈ ĐẠO</div>
             <ul>
-                <li>Nguồn chỉ đạo</li>
-                <li>Nội dung chỉ đạo</li>
+                <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
+                <li><a href="{{@route('steeringcontent-index')}}">Nội dung chỉ đạo</a></li>
             </ul>
             <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
             <ul>
-                <li>Công việc đầu mối</li>
-                <li>Công việc phối hợp</li>
-                <li>Công việc mới được giao</li>
-                <li>Nguồn chỉ đạo</li>
+                <li><a href="{{@route('user-index')}}">Công việc đầu mối</a></li>
+                <li><a href="{{@route('user-index')}}">Công việc phối hợp</a></li>
+                <li><a href="{{@route('user-index')}}">Công việc mới được giao</a></li>
+                <li><a href="{{@route('user-index')}}">Nguồn chỉ đạo</a></li>
             </ul>
         </div>
     </div>
