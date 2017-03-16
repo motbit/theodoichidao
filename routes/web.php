@@ -11,20 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+Route::get('/', 'HomeController@home');
+Route::get('/home', 'HomeController@index');
 
-Route::get('home', 'IndexController@home');
-
-Route::group(['prefix' => 'nguoidung'], function () {
-    Route::get( '/','NguoidungController@index' )->name('nguoidung-index');
-    Route::post( 'delete','NguoidungController@delete' )->name('nguoidung-delete');
-    Route::get( 'update','NguoidungController@edit' )->name('nguoidung-update');
-    Route::post( 'update','NguoidungController@update' )->name('nguoidung-update');
-    Route::get( 'add','NguoidungController@addform' )->name('nguoidung-add');
-    Route::post( 'add','NguoidungController@add' )->name('nguoidung-add');
-});
 
 Route::group(['prefix' => 'user'], function () {
     Route::get( '/','UserController@index' )->name('user-index');
@@ -84,6 +74,3 @@ Route::group(['prefix' => 'chucnang'], function () {
     Route::post( 'update','ChucnangController@update' )->name('chucnang-update');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
