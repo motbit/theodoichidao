@@ -36,7 +36,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Hệ thống thông tin Quả lý Văn bản và Điều hành') }}
+                        {{ config('app.name', 'Hệ thống thông tin Quản lý Văn bản và Điều hành') }}
                     </a>
                 </div>
 

@@ -33,7 +33,10 @@
         <i class="fa fa-bars"></i>
     </a>
     <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown  top-menu">
+        @if (Auth::guest())
+            <li><a href="{{ route('login') }}">Đăng nhập</a></li>
+        @else
+        <li class="dropdown top-menu">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{\Illuminate\Support\Facades\Auth::user()->fullname}}
                 <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -42,11 +45,13 @@
                                                      document.getElementById('logout-form').submit();" style="color: black !important;">Đăng xuất</a></li>
             </ul>
         </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+        @endif
     </ul>
 </nav>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
+
 <div class="main">
     <div id="mySidenav" class="sidenav">
         <div class="left-head">
