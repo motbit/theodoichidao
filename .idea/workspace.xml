@@ -2,16 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/sourcesteering/i2.blade.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/sourcesteering/i2.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/0f053e52c3448c8cf83cd9fd1a3bdf85b4d54d79.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/11d54dd0d6af63f4278f26f8a34ace774aaaf986.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/30843032f5cb21272f3cf758d6abb6c7e750f41e.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/3275dad7d830f5afefefb18e5e5a00825fe55de2.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/5768caa51cd1da07271eed7225a46523aeceea05.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/594c11eb2ca7e94742e1606854813381ccb09368.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/6208cc3b08093cff5534141405f7df277dd3f102.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/69d61a6d8719b03da495285f23ffc6b3b76fc57a.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/74e1f9862d79d43a4c8c2c6b3b9925dde47789a2.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/78407a5c2e1bb3eacd701fe5cab5983297111aa3.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/9f5714a0d22a134d082937180fdeb67f489da915.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/a1798cb06c5bcbadc2b10bd65a918358aa473fa9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/a5cd67bfd3f873e3cbe953575d8e879f396b606e.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/aaaf8d0844114a3dc2af3e88308d4268618d03b4.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/d2ec5ad755ec7a87621657a65b23745ef69923f7.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/ee40b601b27fcdfca86be955417fd8aeb0d9f17c.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SourcesteeringController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SourcesteeringController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/slide.css" afterPath="$PROJECT_DIR$/public/css/slide.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layout1.blade.php" afterPath="$PROJECT_DIR$/resources/views/layout1.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/sessions/4rl1xAIOwu3oeCdQJWii6Ay44AvlynLWZQXpkkBB" afterPath="$PROJECT_DIR$/storage/framework/sessions/4rl1xAIOwu3oeCdQJWii6Ay44AvlynLWZQXpkkBB" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/30843032f5cb21272f3cf758d6abb6c7e750f41e.php" afterPath="$PROJECT_DIR$/storage/framework/views/30843032f5cb21272f3cf758d6abb6c7e750f41e.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/logs/laravel.log" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" afterPath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" afterPath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,16 +89,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="264">
               <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="i2.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/sourcesteering/i2.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -686,7 +686,7 @@
       <workItem from="1489571508317" duration="17228000" />
       <workItem from="1489634552594" duration="6590000" />
       <workItem from="1489646702354" duration="35000" />
-      <workItem from="1489650937854" duration="259000" />
+      <workItem from="1489650937854" duration="345000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -699,7 +699,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24112000" />
+    <option name="totallyTimeSpent" value="24198000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
