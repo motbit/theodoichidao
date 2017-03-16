@@ -84,7 +84,6 @@ class UserController extends Controller
             $result=User::insert([
                 'username'=>$request->input('username'),
                 'password'=>bcrypt($request->input('password')),
-                'email'=>$request->input('email'),
                 'fullname'=>$request->input('fullname'),
                 'group'=>$request->input('group'),
                 'unit'=>$request->input('unit'),
