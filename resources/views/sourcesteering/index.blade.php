@@ -22,7 +22,9 @@
     <table class="table table-responsive table-bordered">
         <thead>
         <tr>
+            @if(\App\Roles::checkPermission())
             <th></th>
+            @endif
             <th>Nguồn chỉ đạo</th>
             <th>Loại</th>
             <th>Kí hiệu</th>
@@ -36,8 +38,10 @@
         @foreach ($data as $row)
             <tr>
                 <td>
+                    @if(\App\Roles::checkPermission())
                     <a href="/sourcesteering/update?id={{$row->id}}"><img src="/img/edit.png"></a>
                     <a href="javascript:xoanguoidung('{{$row->id}}')"><img src="/img/delete.png"></a>
+                    @endif
                 </td>
                 <td>{{$row->name}}</td>
                 <td>{{$row->typename}}</td>
