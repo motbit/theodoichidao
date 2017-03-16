@@ -66,8 +66,8 @@
             </ul>
             <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
             <ul>
-                <li><a href="{{@route('user-index')}}">Công việc đầu mối</a></li>
-                <li><a href="{{@route('user-index')}}">Công việc phối hợp</a></li>
+                <li><a href="{{@route('xuly-daumoi')}}">Công việc đầu mối</a></li>
+                <li><a href="{{@route('xuly-phoihop')}}">Công việc phối hợp</a></li>
                 <li><a href="{{@route('user-index')}}">Công việc mới được giao</a></li>
                 <li><a href="{{@route('user-index')}}">Nguồn chỉ đạo</a></li>
             </ul>

@@ -75,3 +75,8 @@ Route::group(['prefix' => 'chucnang'], function () {
     Route::post( 'update','ChucnangController@update' )->name('chucnang-update');
 });
 
+Route::group(['prefix' => 'xuly'], function () {
+    Route::get( '/daumoi','XuLyCVController@daumoi' )->name('xuly-daumoi');
+    Route::get( '/phoihop','XuLyCVController@phoihop' )->name('xuly-phoihop');
+});
+
