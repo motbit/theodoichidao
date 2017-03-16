@@ -71,6 +71,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    Route::group(['prefix' => 'xuly'], function () {
+        Route::get( '/daumoi','XuLyCVController@daumoi' )->name('xuly-daumoi');
+        Route::get( '/phoihop','XuLyCVController@phoihop' )->name('xuly-phoihop');
+    });
+
     Route::group(['prefix' => 'chucnang'], function () {
         Route::get( '/','ChucnangController@index' )->name('chucnang-index');
         Route::post( 'delete','ChucnangController@delete' )->name('chucnang-delete');
@@ -78,11 +83,5 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'update','ChucnangController@update' )->name('chucnang-update');
     });
 
-    Route::group(['prefix' => 'congviec'], function () {
-        Route::get( 'daumoi','CongviecController@daumoi' )->name('congviec-daumoi');
-        Route::get( 'phoihop','CongviecController@phoihop' )->name('congviec-phoihop');
-        Route::get( 'duocgiao','CongviecController@duocgiao' )->name('congviec-duocgiao');
-        Route::get( 'nguonchidao','CongviecController@nguonchidao' )->name('congviec-nguonchidao');
-    });
 
 });
