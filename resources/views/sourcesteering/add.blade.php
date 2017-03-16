@@ -28,7 +28,6 @@
     </div>
     <div class="form-group form-inline">
         <label>File đính kèm</label>
-        {{--<input name="file" type="file" id="file" class="form-control">--}}
         {!! Form::file('docs', array('class'=>'form-control')) !!}
     </div>
     <div class="form-group form-inline">
@@ -37,7 +36,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Ngày ban hành</label>
-        <input name="time" type="date" class="form-control" required value="{{($id == 0)?"":$steering->time}}">
+        <input id="my-time" name="time" type="date" class="form-control" required value="{{($id == 0)?"":date("Y-m-d", strtotime($steering->time))}}">
     </div>
     <input name="id" value="{{$id}}" type="hidden">
 

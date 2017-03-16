@@ -1,33 +1,33 @@
-.navbar-my{
+.navbar-my {
     background-color: #9f224e;
 }
 
-.navbar-my i{
+.navbar-my i {
     font-size: 1.6em;
     padding: 5px;
 }
 
-.navbar{
+.navbar {
     min-height: 30px !important;
     border-radius: 0px !important;
     margin-bottom: 0px !important;
 }
 
-.nav a{
+.nav a {
     color: white;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
 }
 
-li a:hover{
+li a:hover {
     box-shadow: none;
 }
 
-.main{
+.main {
     margin-top: 0px;
 }
 
-.left-head{
+.left-head {
     background-color: #e6f3ff;
     color: #43aa76;
     text-align: center;
@@ -37,14 +37,14 @@ li a:hover{
     border-bottom: 1px solid #ccc;
 }
 
-.list-menu{
+.list-menu {
     background-color: #f2f2f2;
     padding-left: 20px;
     padding-top: 5px;
     padding-bottom: 10px;
 }
 
-.cate-menu{
+.cate-menu {
     margin-left: 20px;
     font-weight: bold;
     color: #9f224e;
@@ -53,49 +53,65 @@ li a:hover{
     font-size: 1.1em;
 }
 
-.list-menu ul li a{
+.list-menu ul li a {
     color: #5d5d5d;
     padding: 5px;
 }
 
-.navbar-my a{
-    color: white !important;
-}
-.navbar-my a:hover{
+.navbar-my a {
     color: white !important;
 }
 
-table th, td{
+.navbar-my a:hover {
+    color: white !important;
+}
+
+table th, td {
     font-size: 0.9em;
 }
 
-table th{
-    background-color: #ddd;
+table th {
+    background-color: #eee;
 }
-table{
+
+table {
     margin-top: 10px;
 }
 
-.form label{
+.form label {
     min-width: 100px;
 }
-.b-action{
+
+.b-action {
     width: 30px;
     height: 30px;
     float: left;
     margin: 3px;
 }
 
-.b-action i{
+.b-action i {
     width: 30px;
     height: 30px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
-.b-action .edit{
+.b-action .edit {
     background-image: url("../img/edit.png");
 }
-.b-action .delete{
+
+.b-action .delete {
     background-image: url("../img/delete.png");
+}
+
+.top-menu:hover {
+    background-color: #9f224e !important;
+}
+
+.drop-menu {
+    color: black !important;
+}
+
+.col-action {
+    padding: 3px !important;
 }
