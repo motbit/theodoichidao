@@ -17,6 +17,8 @@
         }
     </script>
 
+    <a href="">THee</a>
+
 {!! Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
 {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
 {!! Form::close() !!}

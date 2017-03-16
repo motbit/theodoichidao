@@ -6,7 +6,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <h1>Update User</h1>
+    <h1>Add User</h1>
 
     <ul>
         <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

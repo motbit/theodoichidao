@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <h1>Update User</h1>
+    <h1>Add User</h1>
 
     <ul>
         @foreach($errors->all() as $error)

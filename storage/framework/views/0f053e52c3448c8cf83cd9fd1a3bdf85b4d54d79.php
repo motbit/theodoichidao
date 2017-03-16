@@ -15,6 +15,8 @@
         }
     </script>
 
+    <a href="">THee</a>
+
 <?php echo Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')); ?>
 
 <?php echo e(Form::hidden('id', 0, array('id' => 'nguoidung_id'))); ?>
