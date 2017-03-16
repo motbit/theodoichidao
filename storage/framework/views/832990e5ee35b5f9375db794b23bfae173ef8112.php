@@ -2,7 +2,7 @@
     <script language="javascript">
         function xoanguoidung(id) {
 
-            if(confirm("Bạn có muốn xóa?")) {
+            if (confirm("Bạn có muốn xóa?")) {
                 document.getElementById("steering_id").value = id;
                 frmxoa.submit();
             }
@@ -24,7 +24,9 @@
     <table class="table table-responsive table-bordered">
         <thead>
         <tr>
-            <th></th>
+            <?php if(\App\Roles::checkPermission()): ?>
+                <th></th>
+            <?php endif; ?>
             <th>Nguồn chỉ đạo</th>
             <th>Loại</th>
             <th>Kí hiệu</th>
@@ -37,10 +39,14 @@
         <tbody>
         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <td>
-                    <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img src="/img/edit.png"></a>
-                    <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img src="/img/delete.png"></a>
-                </td>
+
+                <?php if(\App\Roles::checkPermission()): ?>
+                    <td class="col-action">
+                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img src="/img/edit.png"></a>
+                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img src="/img/delete.png"></a>
+                    </td>
+                <?php endif; ?>
+
                 <td><?php echo e($row->name); ?></td>
                 <td><?php echo e($row->typename); ?></td>
                 <td><?php echo e($row->code); ?></td>
@@ -50,7 +56,8 @@
                         <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
                     <?php endif; ?>
                 </td>
-                <td class="text-center"><input type="checkbox" value="<?php echo e($row->id); ?>" disabled <?php echo e(($row->status == 0)?'':'checked'); ?>></td>
+                <td class="text-center"><input type="checkbox" value="<?php echo e($row->id); ?>"
+                                               disabled <?php echo e(($row->status == 0)?'':'checked'); ?>></td>
                 <td><?php echo e(date("d-m-Y", strtotime($row->time))); ?></td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

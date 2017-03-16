@@ -32,7 +32,28 @@
     <a href="javascript:actionNav()">
         <i class="fa fa-bars"></i>
     </a>
+    <ul class="nav navbar-nav navbar-right">
+        <?php if(Auth::guest()): ?>
+            <li><a href="<?php echo e(route('login')); ?>">Đăng nhập</a></li>
+        <?php else: ?>
+        <li class="dropdown top-menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo e(\Illuminate\Support\Facades\Auth::user()->fullname); ?>
+
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo e(route('logout')); ?>"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" style="color: black !important;">Đăng xuất</a></li>
+            </ul>
+        </li>
+        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+            <?php echo e(csrf_field()); ?>
+
+        </form>
+        <?php endif; ?>
+    </ul>
 </nav>
+
 <div class="main">
     <div id="mySidenav" class="sidenav">
         <div class="left-head">

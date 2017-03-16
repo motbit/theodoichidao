@@ -61,7 +61,7 @@
         <td> {{$row->note}} </td>
         <td>
             @if($row->status === 1)
-                <span class="label label-sm label-success"> Hoành thành </span>
+                <span class="label label-sm label-success"> Hoàn thành </span>
             @elseif($row->status === 0)
                 <span class="label label-sm label-warning"> Không hoàn thành </span>
             @elseif($row->status === -1)

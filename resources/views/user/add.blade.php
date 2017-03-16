@@ -32,13 +32,7 @@
                   'placeholder'=>'password')) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('Email') !!}
-        {!! Form::text('email', "",
-            array('required',
-                  'class'=>'form-control',
-                  'placeholder'=>'Nhập email')) !!}
-    </div>
+
 
         <div class="form-group">
             {!! Form::label('Tên đầy đủ') !!}
