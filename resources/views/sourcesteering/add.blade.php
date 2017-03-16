@@ -37,7 +37,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Ngày ban hành</label>
-        <input name="time" type="date" class="form-control" required value="{{($id == 0)?"":$steering->time}}">
+        <input name="time" type="date" class="form-control" required value="{{($id == 0)?"":date("d-m-Y", strtotime($steering->time))}}">
     </div>
     <input name="id" value="{{$id}}" type="hidden">
 
