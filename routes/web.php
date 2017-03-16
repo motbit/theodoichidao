@@ -83,3 +83,7 @@ Route::group(['prefix' => 'chucnang'], function () {
     Route::get( 'update','ChucnangController@edit' )->name('chucnang-update');
     Route::post( 'update','ChucnangController@update' )->name('chucnang-update');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

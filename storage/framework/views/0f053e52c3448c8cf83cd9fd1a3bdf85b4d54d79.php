@@ -15,7 +15,8 @@
         }
     </script>
 
-    <a href="">THee</a>
+    <?php echo e(Html::linkAction('UserController@edit', 'Thêm mới', array('id'=>0))); ?>
+
 
 <?php echo Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')); ?>
 
@@ -49,7 +50,7 @@
                 <span class="label label-sm label-danger"> Disable </span>
             <?php endif; ?>
         </td>
-        <td><a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')">xóa</a> | <?php echo e(Html::linkAction('UserController@edit', 'sửa', array('id'=>$row->id))); ?></td>
+        <td><a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')">xóa</a> | <?php echo e(Html::linkAction('UserController@edit', 'cập nhật', array('id'=>$row->id))); ?></td>
     </tr>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </tbody>

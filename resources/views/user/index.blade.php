@@ -17,7 +17,7 @@
         }
     </script>
 
-    <a href="">THee</a>
+    {{ Html::linkAction('UserController@edit', 'Thêm mới', array('id'=>0)) }}
 
 {!! Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
 {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
@@ -48,7 +48,7 @@
                 <span class="label label-sm label-danger"> Disable </span>
             @endif
         </td>
-        <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UserController@edit', 'sửa', array('id'=>$row->id)) }}</td>
+        <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UserController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
     </tbody>

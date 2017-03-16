@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
     public function index()
     {
+
+        $users = DB::table('user')->get();
+
         $data=User::orderBy('created_at', 'DESC')->get();
         return view("user/index")->with('nguoidung',$data);
 

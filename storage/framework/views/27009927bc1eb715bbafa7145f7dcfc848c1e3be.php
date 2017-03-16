@@ -28,7 +28,7 @@
             <div class="cate-menu">NGƯỜI DÙNG</div>
             <ul>
                 <li><a href="<?php echo e(@route('user-index')); ?>">Người sử dụng</a></li>
-                <li><a href="<?php echo e(@route('group-index')); ?>">Ban - Đơn vị</a></li>
+                <li><a href="<?php echo e(@route('unit-index')); ?>">Ban - Đơn vị</a></li>
                 <li><a href="<?php echo e(@route('viphuman-index')); ?>">Người chủ trì</a></li>
             </ul>
             <div class="cate-menu">Ý KIẾN CHỈ ĐẠO</div>
