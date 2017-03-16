@@ -48,13 +48,19 @@
         <td> <?php echo e($row->content); ?> </td>
         <td> <?php echo e($source[$row->source]); ?> </td>
         <td> <?php echo e($unit[$row->unit]); ?> </td>
-        <td> <?php echo e($row->follow); ?> </td>
+        <td>
+            <?php $__currentLoopData = explode(',', $row->follow); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if(isset($unit2[$i])): ?>
+                    <?php echo e($unit2[$i]); ?>,
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </td>
         <td> <?php echo e($row->deathline); ?> </td>
         <td> <?php echo e($row->note); ?> </td>
         <td>  </td>
         <td> <?php echo e($row->status); ?> </td>
         <td> <?php echo e($row->xn); ?> </td>
-        <td><a href="javascript:removebyid('<?php echo e($row->id); ?>')">xóa</a> | <?php echo e(Html::linkAction('UnitController@edit', 'cập nhật', array('id'=>$row->id))); ?></td>
+        <td><a href="javascript:removebyid('<?php echo e($row->id); ?>')">xóa</a> | <?php echo e(Html::linkAction('SteeringcontentController@edit', 'cập nhật', array('id'=>$row->id))); ?></td>
     </tr>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </tbody>
