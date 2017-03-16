@@ -70,9 +70,11 @@ class SteeringcontentController extends Controller
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=>implode(",",$request->input('secondunit')),
+                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'note'=>$request->input('note'),
                 'deadline'=>$request->input('deadline'),
+                'xn'=>$request->input('confirm'),
+                'status'=>$request->input('status'),
             ]);
 
             $data=Steeringcontent::where('id',$request->input('id'))->get();
@@ -87,7 +89,7 @@ class SteeringcontentController extends Controller
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=>implode(",",$request->input('secondunit')),
+                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'deadline'=>$request->input('deadline'),
             ]);
 

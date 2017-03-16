@@ -17,7 +17,9 @@
         }
     </script>
 
-    {{ Html::linkAction('UserController@edit', 'Thêm mới', array('id'=>0)) }}
+<h1>Người sử dụng</h1>
+
+{{ Html::linkAction('UserController@edit', 'Thêm người sử dụng', array('id'=>0), array('class' => 'btn btn-default')) }}
 
 {!! Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
 {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
@@ -28,10 +30,9 @@
     <tr>
         <th> # </th>
         <th> Username </th>
-        <th> Fullname </th>
-        <th> Date </th>
-        <th> Status </th>
-        <th>  </th>
+        <th> Tên đầy đủ </th>
+        <th> Ngày tạo </th>
+        <th> </th>
     </tr>
     </thead>
     <tbody>
@@ -41,13 +42,6 @@
         <td> {{$row->username}} </td>
         <td> {{$row->fullname}} </td>
         <td> {{$row->created_at}} </td>
-        <td>
-            @if($row->status === 1)
-                <span class="label label-sm label-success"> Approved </span>
-            @elseif($row->status === 0)
-                <span class="label label-sm label-danger"> Disable </span>
-            @endif
-        </td>
         <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UserController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach

@@ -46,9 +46,9 @@
             @endforeach
         </ul>
     </div>
-    <div class="form-group">
+    <div class="form-group form-inline">
         {!! Form::label('Thời gian hoàn thành') !!}
-        {!! Form::text('deathline', "",
+        {!! Form::date('deathline', "",
             array('no-required',
                   'class'=>'form-control',
                   'placeholder'=>'Thời gian hoàn thành')) !!}
@@ -56,6 +56,9 @@
 
     <div class="form-group">
         {!! Form::label('Đơn vị Xác nhận') !!}
+        {!! Form::radio('confirm', 'C',($row->status=='C')) !!} Đơn vị chưa xác nhận
+        {!! Form::radio('confirm', 'X',($row->status=='X')) !!} Đơn vị đã xác nhận
+        {!! Form::radio('confirm', 'K',($row->status=='K')) !!} Đơn vị không nhận
 
     </div>
 
@@ -71,6 +74,9 @@
 
     <div class="form-group">
         {!! Form::label('Đánh giá') !!}
+        {!! Form::radio('status', 0,($row->status==0)) !!} Chưa hoàn thành
+        {!! Form::radio('status', 1,($row->status==1)) !!} Hoàn thành
+        {!! Form::radio('status', -1,($row->status==-1)) !!} Bị hủy
 
     </div>
 

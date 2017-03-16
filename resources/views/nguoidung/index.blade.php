@@ -28,7 +28,6 @@
         <th> Username </th>
         <th> Fullname </th>
         <th> Date </th>
-        <th> Status </th>
         <th>  </th>
     </tr>
     </thead>
@@ -39,13 +38,6 @@
         <td> {{$row->username}} </td>
         <td> {{$row->fullname}} </td>
         <td> {{$row->created_at}} </td>
-        <td>
-            @if($row->status === 1)
-                <span class="label label-sm label-success"> Approved </span>
-            @elseif($row->status === 0)
-                <span class="label label-sm label-danger"> Disable </span>
-            @endif
-        </td>
         <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('NguoidungController@edit', 'sửa', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
