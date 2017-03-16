@@ -1,54 +1,78 @@
+
 @extends('layout1')
 
 @section('page-title')
-    Update User
+    Thêm mới Ban - Đơn Vị
+@stop
+@section('page-toolbar')
 @stop
 
 @section('content')
-
-    <h1>Update User</h1>
 
     <ul>
         @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
         @endforeach
     </ul>
-    @foreach ($unit as $row)
-    {!! Form::open(array('route' => 'unit-update', 'class' => 'form')) !!}
-    {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
-    <div class="form-group">
-        {!! Form::label('Tên Ban -  Đơn Vị') !!}
-        {!! Form::text('name', $row->name,
-            array('required',
-                  'class'=>'form-control',
-                  'placeholder'=>'Nhập tên Ban hoặc Đơn vị')) !!}
-    </div>
-
+    @foreach ($data as $row)
+    {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
+    {{ Form::hidden('id', $row->id, array('id' => 'id')) }}
 
     <div class="form-group">
-        {!! Form::label('Tên viết tắc') !!}
-        {!! Form::text('shortname', $row->shortname,
-            array('required',
-                  'class'=>'form-control',
-                  'placeholder'=>'Tên viết tắt')) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('Nội dung') !!}
-        {!! Form::textarea('description', $row->description,
+        {!! Form::label('Nội dung chỉ đạo') !!}
+        {!! Form::textarea('content', $row->content,
             array('no-required',
                   'class'=>'form-control',
-                  'placeholder'=>'Nội dung')) !!}
+                  'placeholder'=>'Nội dung chỉ đạo')) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('Thuộc kết luận') !!}
+        {!! Form::select('source', $source, $row->source,
+                array('no-required','class'=>'form-control')
+        ) !!}
     </div>
 
     <div class="form-group">
-        {!! Form::label('Sắp xếp') !!}
-        {!! Form::text('order', $row->order,
-            array('required',
+        {!! Form::label('Đơn vị chủ trì') !!}
+        {!! Form::select('firtunit', $firstunit,$row->unit,
+                array('no-required','class'=>'form-control')
+        ) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('Đơn vị Phối hợp') !!}
+        <ul>
+            @foreach ($secondunit as $id=>$r1)
+                <li>{!! Form::checkbox('secondunit[]', $id, in_array($id,$dtfollow)) !!} {{ $r1 }}</li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="form-group">
+        {!! Form::label('Thời gian hoàn thành') !!}
+        {!! Form::text('deathline', "",
+            array('no-required',
                   'class'=>'form-control',
-                  'placeholder'=>'Sắp xếp')) !!}
+                  'placeholder'=>'Thời gian hoàn thành')) !!}
     </div>
 
+    <div class="form-group">
+        {!! Form::label('Đơn vị Xác nhận') !!}
+
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('Theo dõi của văn phòng') !!}
+        {!! Form::textarea('note', $row->note,
+            array('no-required',
+                  'class'=>'form-control',
+                  'placeholder'=>'Theo dõi của văn phòng')) !!}
+    </div>
+
+
+
+    <div class="form-group">
+        {!! Form::label('Đánh giá') !!}
+
+    </div>
 
     <div class="form-group">
         {!! Form::submit('Cập nhật',
@@ -56,6 +80,5 @@
     </div>
     {!! Form::close() !!}
     @endforeach
-
 
 @stop

@@ -14,9 +14,13 @@ class SteeringcontentController extends Controller
         $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
-        $unit = array();
+
+        $firstunit = array();
+        $secondunit = array();
+
         foreach ($dataunit as $row) {
-            $unit[$row->id] = $row->name;
+            $firstunit[$row->id] = $row->name;
+            $secondunit[$row->id] = $row->shortname;
         }
 
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
@@ -24,35 +28,35 @@ class SteeringcontentController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('steeringcontent.index',['lst'=>$data,'unit'=>$unit,'source'=>$source]);
+        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$source]);
     }
 
     public function edit(Request $request)
     {
         $id = intval( $request->input('id') );
+
+        $unit=Unit::orderBy('created_at', 'DESC')->get();
+        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+
+        $firstunit = array();
+        $secondunit = array();
+
+        foreach ($unit as $row) {
+            $firstunit[$row->id] = $row->name;
+            $secondunit[$row->id] = $row->shortname;
+        }
+
+        $source = array();
+        foreach ($sourcesteering as $row) {
+            $source[$row->id] = "[" . $row->code . "] " . $row->name;
+        }
+
         if($id > 0) {
             $data=Steeringcontent::where('id',$id)->get();
-            return view("steeringcontent/update")->with('steeringcontent',$data);
+
+            $dtfollow = explode(",",$data[0]['follow']);
+            return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,'data'=>$data,'dtfollow'=>$dtfollow]);
         } else {
-
-
-            $unit=Unit::orderBy('created_at', 'DESC')->get();
-            $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
-
-            $firstunit = array();
-            $secondunit = array();
-
-            foreach ($unit as $row) {
-                $firstunit[$row->id] = $row->name;
-                $secondunit[$row->id] = $row->shortname;
-            }
-
-            $source = array();
-            foreach ($sourcesteering as $row) {
-                $source[$row->id] = "[" . $row->code . "] " . $row->name;
-            }
-
-            $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
             return view('steeringcontent.add',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source]);
         }
     }
@@ -66,7 +70,8 @@ class SteeringcontentController extends Controller
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=>$request->input('secondunit'),
+                'follow'=>implode(",",$request->input('secondunit')),
+                'note'=>$request->input('note'),
                 'deadline'=>$request->input('deadline'),
             ]);
 

@@ -46,13 +46,19 @@
         <td> {{$row->content}} </td>
         <td> {{ $source[$row->source] }} </td>
         <td> {{ $unit[$row->unit] }} </td>
-        <td> {{$row->follow}} </td>
+        <td>
+            @foreach(explode(',', $row->follow) as $i)
+                @if (isset($unit2[$i]))
+                    {{$unit2[$i]}},
+                @endif
+            @endforeach
+        </td>
         <td> {{$row->deathline}} </td>
         <td> {{$row->note}} </td>
         <td>  </td>
         <td> {{$row->status}} </td>
         <td> {{$row->xn}} </td>
-        <td><a href="javascript:removebyid('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UnitController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
+        <td><a href="javascript:removebyid('{{$row->id}}')">xóa</a> | {{ Html::linkAction('SteeringcontentController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
     </tbody>
