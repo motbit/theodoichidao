@@ -38,11 +38,13 @@
     <tbody>
     @foreach ($lstunit as $row)
     <tr>
-        <td> {{$row->id}} </td>
+        <td>
+            <a href="/unit/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+            <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+        </td>
         <td> {{$row->name}} </td>
         <td> {{$row->shortname}} </td>
         <td> {{$row->order}} </td>
-        <td><a href="javascript:removebyid('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UnitController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
     </tbody>

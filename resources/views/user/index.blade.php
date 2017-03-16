@@ -28,7 +28,7 @@
 <table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th> # </th>
+        <th>  </th>
         <th> Username </th>
         <th> Tên đầy đủ </th>
         <th> Quyền Hạn </th>
@@ -39,7 +39,10 @@
     <tbody>
     @foreach ($nguoidung as $row)
     <tr>
-        <td> {{$row->id}} </td>
+        <td>
+            <a href="/user/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+            <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+        </td>
         <td> {{$row->username}} </td>
         <td> {{$row->fullname}} </td>
         <td>
@@ -52,7 +55,6 @@
             {{$unit[$row->unit]}}
             @endif
         </td>
-        <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UserController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
     </tbody>
