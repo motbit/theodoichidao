@@ -17,7 +17,27 @@
         }
     </script>
 
-    {{ Html::linkAction('ViphumanController@edit', 'Thêm mới', array('id'=>0)) }}
+    {{--{{ Html::linkAction('ViphumanController@edit', 'Thêm mới', array('id'=>0)) }}--}}
+
+    <div>
+        <div class="pull-left">
+            <a href="viphuman/update?id=0"><i class="fa fa-plus"></i> Them moi</a>
+        </div>
+        <div class="pull-right">
+            <form class="form" action="" method="get" id="searchform">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-content">
+                            <input class="form-control" id="searchinput" type="text" name="k" value="{{$key}}" placeholder="Search username">
+                        </div>
+                        <div class="input-group-btn">
+                            <button type="submit" value="search" class="btn btn-default" tabindex="-1"><i class="fa fa-search"></i>&nbsp;Search</button>
+                        </div>
+                    </div><!--end .input-group -->
+                </div>
+            </form>
+        </div>
+    </div>
 
     {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
     {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}

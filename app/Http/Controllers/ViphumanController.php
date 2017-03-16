@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class ViphumanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Viphuman::findAll();
-        return view("viphuman/index")->with('nguoidung', $data);
+        $key = $request->input('k');
+        $data = Viphuman::findAll($key);
+        return view("viphuman/index")->with('nguoidung', $data)->with('key', $key);
     }
 
     public function edit(Request $request)
