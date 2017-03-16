@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/js/jquery-3.1.1.min.js"></script>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+
     <script src="/js/bootstrap.min.js"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/main.css" rel="stylesheet" type="text/css">
@@ -14,6 +16,12 @@
         bkLib.onDomLoaded(function () {
             nicEditors.allTextAreas()
         });
+    </script>
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>;
     </script>
     <title><?php $__env->startSection('page-title'); ?>
         <?php echo $__env->yieldSection(); ?></title>

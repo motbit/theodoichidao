@@ -48,7 +48,7 @@
     </div>
     <div class="form-group form-inline">
         {!! Form::label('Thời gian hoàn thành') !!}
-        {!! Form::date('deathline', "",
+        {!! Form::date('deadline', $row->deadline,
             array('no-required',
                   'class'=>'form-control',
                   'placeholder'=>'Thời gian hoàn thành')) !!}

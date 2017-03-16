@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\user;
 use App\unit;
+use App\group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,16 +15,17 @@ class UserController extends Controller
     {
 
         $unitdata=Unit::orderBy('created_at', 'DESC')->get();
+        $unitgroup=Group::orderBy('created_at', 'DESC')->get();
 
         $unit = array();
-        $group = array(
-            1 => "Quản trị (Admin)",
-            2 => "Lãnh đạo ban(Đơn vị)",
-            3 => "Chuyên viên tổng hợp",
-        );
+        $group = array();
 
         foreach ($unitdata as $row) {
             $unit[$row->id] = $row->name;
+        }
+
+        foreach ($unitgroup as $row) {
+            $group[$row->id] = $row->name;
         }
 
         $data=User::orderBy('created_at', 'DESC')->get();
@@ -37,18 +39,17 @@ class UserController extends Controller
         $id = intval( $request->input('id') );
 
         $unitdata=Unit::orderBy('created_at', 'DESC')->get();
+        $unitgroup=Group::orderBy('created_at', 'DESC')->get();
 
         $unit = array();
-        $group = array(
-            1 => "Quản trị (Admin)",
-            2 => "Lãnh đạo ban(Đơn vị)",
-            3 => "Chuyên viên tổng hợp",
-        );
+        $group = array();
 
         foreach ($unitdata as $row) {
             $unit[$row->id] = $row->name;
         }
-
+        foreach ($unitgroup as $row) {
+            $group[$row->id] = $row->name;
+        }
 
         if($id > 0) {
             $data=User::where('id',$id)->get();
