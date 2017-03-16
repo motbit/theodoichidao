@@ -9,6 +9,12 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+    <script type="text/javascript">
+        bkLib.onDomLoaded(function () {
+            nicEditors.allTextAreas()
+        });
+    </script>
     <title>@section('page-title')
         @show</title>
 </head>
@@ -53,7 +59,7 @@
 <script>
     var open = true;
     console.log(window.innerWidth + "/" + window.innerHeight)
-    if (window.innerWidth < window.innerHeight || window.innerWidth < 800){
+    if (window.innerWidth < window.innerHeight || window.innerWidth < 800) {
         open = false;
     }
     function openNav() {
@@ -65,11 +71,11 @@
         document.getElementById("content").style.marginLeft = "0";
     }
 
-    function actionNav(){
-        if (open){
+    function actionNav() {
+        if (open) {
             open = false;
             closeNav();
-        }else{
+        } else {
             open = true;
             openNav();
         }
