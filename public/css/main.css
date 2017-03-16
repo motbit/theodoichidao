@@ -79,7 +79,7 @@ table {
 }
 
 .form label {
-    min-width: 100px;
+    min-width: 130px;
 }
 
 .b-action {
@@ -107,7 +107,12 @@ table {
 .top-menu:hover {
     background-color: #9f224e !important;
 }
-
+.top-menu:focus {
+    background-color: #9f224e !important;
+}
+.top-menu:active {
+    background-color: #9f224e !important;
+}
 .drop-menu {
     color: black !important;
 }

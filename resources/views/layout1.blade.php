@@ -36,8 +36,8 @@
         @if (Auth::guest())
             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
         @else
-        <li class="dropdown top-menu">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{\Illuminate\Support\Facades\Auth::user()->fullname}}
+        <li class="dropdown">
+            <a class="dropdown-toggle top-menu" data-toggle="dropdown" href="#">{{\Illuminate\Support\Facades\Auth::user()->fullname}}
                 <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="{{ route('logout') }}"
