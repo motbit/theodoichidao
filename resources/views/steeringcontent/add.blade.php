@@ -43,13 +43,14 @@
         @endforeach
         </ul>
     </div>
-    <div class="form-group">
+    <div class="form-group  form-inline">
         {!! Form::label('Thời gian hoàn thành') !!}
-        {!! Form::text('deathline', "",
+        {!! Form::date('deathline', "",
             array('no-required',
                   'class'=>'form-control',
                   'placeholder'=>'Thời gian hoàn thành')) !!}
     </div>
+
         <div class="form-group">
             {!! Form::submit('Cập nhật',
               array('class'=>'btn btn-primary')) !!}

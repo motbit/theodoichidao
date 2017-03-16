@@ -17,7 +17,9 @@
         }
     </script>
 
-{{ Html::linkAction('UnitController@edit', 'Thêm mới', array('id'=>0)) }}
+    <h1>Nguồn Đơn vị</h1>
+
+{{ Html::linkAction('UnitController@edit', 'Thêm Đơn vị', array('id'=>0), array('class' => 'btn btn-default')) }}
 
 {!! Form::open(array('route' => 'unit-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
 {{ Form::hidden('id', 0, array('id' => 'id')) }}
@@ -40,13 +42,6 @@
         <td> {{$row->name}} </td>
         <td> {{$row->shortname}} </td>
         <td> {{$row->order}} </td>
-        <td>
-            @if($row->status === 1)
-                <span class="label label-sm label-success"> Approved </span>
-            @elseif($row->status === 0)
-                <span class="label label-sm label-danger"> Disable </span>
-            @endif
-        </td>
         <td><a href="javascript:removebyid('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UnitController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
