@@ -24,13 +24,6 @@
                   'placeholder'=>'Your name')) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('Password') !!}
-        {!! Form::password('password', "",
-            array('required',
-                  'class'=>'form-control',
-                  'placeholder'=>'password')) !!}
-    </div>
 
     <div class="form-group">
         {!! Form::label('Tên đầy đủ') !!}
@@ -38,6 +31,20 @@
             array('required',
                   'class'=>'form-control',
                   'placeholder'=>'Nhập tên')) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('Quyền hạn') !!}
+        {!! Form::select('group', $group, $row->group,
+                array('no-required','class'=>'form-control')
+        ) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('Đơn vị') !!}
+        {!! Form::select('unit', $unit, $row->unit,
+                array('no-required','class'=>'form-control')
+        ) !!}
     </div>
 
 
