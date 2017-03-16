@@ -21,7 +21,7 @@
             {!! Form::text('username', "",
                 array('required',
                       'class'=>'form-control',
-                      'placeholder'=>'Your name')) !!}
+                      'placeholder'=>'Nhập tên đăng nhập')) !!}
         </div>
 
     <div class="form-group">
@@ -32,14 +32,36 @@
                   'placeholder'=>'password')) !!}
     </div>
 
+    <div class="form-group">
+        {!! Form::label('Email') !!}
+        {!! Form::text('email', "",
+            array('required',
+                  'class'=>'form-control',
+                  'placeholder'=>'Nhập email')) !!}
+    </div>
+
         <div class="form-group">
             {!! Form::label('Tên đầy đủ') !!}
             {!! Form::text('fullname', "",
                 array('required',
                       'class'=>'form-control',
-                      'placeholder'=>'Nhập tên')) !!}
+                      'placeholder'=>'Nhập họ tên người sử dụng')) !!}
         </div>
 
+
+        <div class="form-group">
+            {!! Form::label('Quyền hạn') !!}
+            {!! Form::select('group', $group,
+                    array('no-required','class'=>'form-control')
+            ) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('Đơn vị') !!}
+            {!! Form::select('unit', $unit,
+                    array('no-required','class'=>'form-control')
+            ) !!}
+        </div>
 
         <div class="form-group">
             {!! Form::submit('Cập nhật',

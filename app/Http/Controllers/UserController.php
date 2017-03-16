@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\user;
+use App\unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,21 +13,50 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = DB::table('user')->get();
+        $unitdata=Unit::orderBy('created_at', 'DESC')->get();
+
+        $unit = array();
+        $group = array(
+            1 => "Quản trị (Admin)",
+            2 => "Lãnh đạo ban(Đơn vị)",
+            3 => "Chuyên viên tổng hợp",
+        );
+
+        foreach ($unitdata as $row) {
+            $unit[$row->id] = $row->name;
+        }
 
         $data=User::orderBy('created_at', 'DESC')->get();
-        return view("user/index")->with('nguoidung',$data);
+        return view('user.index',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
+
 
     }
 
     public function edit(Request $request)
     {
         $id = intval( $request->input('id') );
+
+        $unitdata=Unit::orderBy('created_at', 'DESC')->get();
+
+        $unit = array();
+        $group = array(
+            1 => "Quản trị (Admin)",
+            2 => "Lãnh đạo ban(Đơn vị)",
+            3 => "Chuyên viên tổng hợp",
+        );
+
+        foreach ($unitdata as $row) {
+            $unit[$row->id] = $row->name;
+        }
+
+
         if($id > 0) {
             $data=User::where('id',$id)->get();
-            return view("user/update")->with('nguoidung',$data);
+
+            return view('user.update',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
+
         } else {
-            return view("user/add");
+            return view('user.add',['unit'=>$unit,'group'=>$group]);
         }
     }
 
@@ -37,8 +67,9 @@ class UserController extends Controller
         if($id > 0) {
             $result=User::where('id',$request->input('id'))->update([
                 'username'=>$request->input('username'),
-                'password'=>$request->input('password'),
                 'fullname'=>$request->input('fullname'),
+                'group'=>$request->input('group'),
+                'unit'=>$request->input('unit'),
             ]);
 
             $data=User::where('id',$request->input('id'))->get();
@@ -51,8 +82,11 @@ class UserController extends Controller
 
             $result=User::insert([
                 'username'=>$request->input('username'),
-                'password'=>$request->input('password'),
+                'password'=>bcrypt($request->input('password')),
+                'email'=>$request->input('email'),
                 'fullname'=>$request->input('fullname'),
+                'group'=>$request->input('group'),
+                'unit'=>$request->input('unit'),
             ]);
 
             if($result) {

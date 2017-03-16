@@ -31,7 +31,8 @@
         <th> # </th>
         <th> Username </th>
         <th> Tên đầy đủ </th>
-        <th> Ngày tạo </th>
+        <th> Quyền Hạn </th>
+        <th> Đơn vị </th>
         <th> </th>
     </tr>
     </thead>
@@ -41,7 +42,16 @@
         <td> {{$row->id}} </td>
         <td> {{$row->username}} </td>
         <td> {{$row->fullname}} </td>
-        <td> {{$row->created_at}} </td>
+        <td>
+            @if (isset($group[$row->group]))
+            {{$group[$row->group]}}
+            @endif
+        </td>
+        <td>
+            @if (isset($unit[$row->unit]))
+            {{$unit[$row->unit]}}
+            @endif
+        </td>
         <td><a href="javascript:xoanguoidung('{{$row->id}}')">xóa</a> | {{ Html::linkAction('UserController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
