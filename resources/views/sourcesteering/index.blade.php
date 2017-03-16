@@ -21,12 +21,12 @@
                 <td>{{$row->typename}}</td>
                 <td>{{$row->code}}</td>
                 <td>{{$row->conductorname}}</td>
-                <td>
+                <td class="text-center">
                     @if($row->file_attach != '')
                     <a href="/file/{{$row->file_attach}}" download>Tải về</a>
                     @endif
                 </td>
-                <td><input type="checkbox" value="{{$row->id}}"></td>
+                <td class="text-center"><input type="checkbox" value="{{$row->id}}"></td>
                 <td>{{date("d-m-Y", strtotime($row->time))}}</td>
             </tr>
         @endforeach
