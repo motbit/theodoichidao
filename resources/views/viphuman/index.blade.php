@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+    @if(\App\Roles::checkPermission())
     <script language="javascript">
         function removebyid(id) {
 
@@ -15,10 +16,18 @@
         }
     </script>
 
+        {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
+        {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
+        {!! Form::close() !!}
+    @endif
+
     <div>
+        @if(\App\Roles::checkPermission())
         <div class="pull-left">
             <a href="viphuman/update?id=0"><i class="fa fa-plus"></i> Thêm mới</a>
         </div>
+        @endif
+
         <div class="pull-right">
             <form class="form" action="" method="get" id="searchform">
                 <div class="form-group">
@@ -35,14 +44,12 @@
         </div>
     </div>
 
-    {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
-    {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
-    {!! Form::close() !!}
-
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th> STT </th>
+            @if(\App\Roles::checkPermission())
+            <th>  </th>
+            @endif
             <th> Tên lãnh đạo </th>
             <th> Chức vụ </th>
         </tr>
@@ -50,10 +57,12 @@
         <tbody>
         @foreach ($nguoidung as $row)
             <tr>
+                @if(\App\Roles::checkPermission())
                 <td>
                     <a href="/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
                     <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
                 </td>
+                @endif
                 <td> {{$row->name}} </td>
                 <td> {{$row->description}} </td>
             </tr>

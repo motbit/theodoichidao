@@ -5,6 +5,11 @@
 @stop
 
 @section('content')
+
+<h1>Nội dung chỉ đạo</h1>
+@if(\App\Roles::checkPermission())
+{{ Html::linkAction('SteeringcontentController@edit', 'Thêm Nội dung Chỉ đạo', array('id'=>0), array('class' => 'btn btn-default')) }}
+
 <script language="javascript">
     function removebyid(id) {
 
@@ -16,19 +21,17 @@
 
     }
 </script>
-<h1>Nội dung chỉ đạo</h1>
-
-{{ Html::linkAction('SteeringcontentController@edit', 'Thêm Nội dung Chỉ đạo', array('id'=>0), array('class' => 'btn btn-default')) }}
-
 
 {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
 {{ Form::hidden('id', 0, array('id' => 'id')) }}
 {!! Form::close() !!}
-
+@endif
 <table class="table table-striped table-hover">
     <thead>
     <tr>
+        @if(\App\Roles::checkPermission())
         <th></th>
+        @endif
         <th> Nội dung công việc </th>
         <th> Nguồn chỉ đạo </th>
         <th> Đơn vị đầu mối</th>
@@ -42,11 +45,12 @@
     <tbody>
     @foreach ($lst as $row)
     <tr>
+        @if(\App\Roles::checkPermission())
         <td>
             <a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
             <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
         </td>
-
+        @endif
         <td> {{$row->content}} </td>
         <td> {{ $source[$row->source] }} </td>
         <td> {{ $unit[$row->unit] }} </td>
