@@ -64,3 +64,15 @@ li a:hover{
 .navbar-my a:hover{
     color: white !important;
 }
+
+table th, td{
+    font-size: 0.9em;
+}
+
+table th{
+    background-color: #ddd;
+}
+
+.form label{
+    min-width: 100px;
+}
