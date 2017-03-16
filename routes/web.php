@@ -12,8 +12,8 @@
 */
 
 Auth::routes();
-Route::get('/', 'HomeController@home');
-Route::get('/home', 'HomeController@index');
+Route::get( '/','SourcesteeringController@index' )->name('sourcesteering-index');
+Route::get('/home', 'SourcesteeringController@index' )->name('sourcesteering-index');
 
 
 Route::group(['prefix' => 'user'], function () {

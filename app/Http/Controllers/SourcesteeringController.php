@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
 use App\Sourcesteering;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SourcesteeringController extends Controller
 {
     public function index()
     {
+        if (!Auth::check()){
+            return redirect("login");
+        }
         $data = DB::table('sourcesteering')
             ->join('type', 'sourcesteering.type', '=', 'type.id')
             ->join('viphuman', 'sourcesteering.conductor', '=', 'viphuman.id')
@@ -22,6 +27,9 @@ class SourcesteeringController extends Controller
 
     public function edit(Request $request)
     {
+        if (!Auth::check()){
+            return redirect("login");
+        }
         $type = DB::table('type')->get();
         $conductor = DB::table('viphuman')->get();
         $id = intval($request->input('id'));
@@ -37,6 +45,9 @@ class SourcesteeringController extends Controller
 
     public function update(Request $request)
     {
+        if (!Auth::check()){
+            return redirect("login");
+        }
         $id = intval($request->input('id'));
 //        dd($request->file('docs'));
         $status = 0;
@@ -90,7 +101,9 @@ class SourcesteeringController extends Controller
     #region Nguoidung Delete
     public function delete(Request $request)
     {
-
+        if (!Auth::check()){
+            return redirect("login");
+        }
         $result = Sourcesteering::where('id', $request->input('id'))->delete();
         if ($result) {
             return redirect()->action(

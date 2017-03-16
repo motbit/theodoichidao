@@ -22,4 +22,10 @@ class Roles extends Model
             return false;
         }
     }
+
+    public static function requireAuthen(){
+        if (!Auth::check()){
+            return redirect("login");
+        }
+    }
 }
