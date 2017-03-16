@@ -12,6 +12,7 @@
 */
 
 Auth::routes();
+
 Route::get( '/','SourcesteeringController@index' )->name('sourcesteering-index');
 Route::get('/home', 'SourcesteeringController@index' )->name('sourcesteering-index');
 

@@ -28,7 +28,7 @@
 <table class="table table-striped table-hover">
     <thead>
     <tr>
-        <th> # </th>
+        <th></th>
         <th> Nội dung công việc </th>
         <th> Nguồn chỉ đạo </th>
         <th> Đơn vị đầu mối</th>
@@ -37,13 +37,16 @@
         <th> Theo dõi của VP </th>
         <th> Đánh giá </th>
         <th> XN </th>
-        <th> </th>
     </tr>
     </thead>
     <tbody>
     @foreach ($lst as $row)
     <tr>
-        <td> {{$row->id}} </td>
+        <td>
+            <a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+            <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+        </td>
+
         <td> {{$row->content}} </td>
         <td> {{ $source[$row->source] }} </td>
         <td> {{ $unit[$row->unit] }} </td>
@@ -54,7 +57,7 @@
                 @endif
             @endforeach
         </td>
-        <td> {{$row->deathline}} </td>
+        <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
         <td> {{$row->note}} </td>
         <td>
             @if($row->status === 1)
@@ -68,7 +71,6 @@
             @endif
         </td>
         <td> {{$row->xn}} </td>
-        <td><a href="javascript:removebyid('{{$row->id}}')">xóa</a> | {{ Html::linkAction('SteeringcontentController@edit', 'cập nhật', array('id'=>$row->id)) }}</td>
     </tr>
     @endforeach
     </tbody>

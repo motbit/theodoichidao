@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Chucnang;
 use App\Viphuman;
 use Illuminate\Http\Request;
+use App\Helper;
 
 class ViphumanController extends Controller
 {
     public function index(Request $request)
     {
-        $key = $request->input('k');
-        $data = Viphuman::findAll($key);
-        return view("viphuman/index")->with('nguoidung', $data)->with('key', $key);
+        $keyword = $request->input('k');
+        $data = Viphuman::findAll($keyword);
+
+        return view("viphuman/index")->with('nguoidung', $data)->with('key', $keyword);
     }
 
     public function edit(Request $request)

@@ -6,22 +6,18 @@
 
 @section('content')
     <script language="javascript">
-        function xoanguoidung(id) {
+        function removebyid(id) {
 
             if(confirm("Bạn có muốn xóa?")) {
                 document.getElementById("nguoidung_id").value = id;
-                frmxoanguoidung.submit();
+                frmdelete.submit();
             }
-
-
         }
     </script>
 
-    {{--{{ Html::linkAction('ViphumanController@edit', 'Thêm mới', array('id'=>0)) }}--}}
-
     <div>
         <div class="pull-left">
-            <a href="viphuman/update?id=0"><i class="fa fa-plus"></i> Them moi</a>
+            <a href="viphuman/update?id=0"><i class="fa fa-plus"></i> Thêm mới</a>
         </div>
         <div class="pull-right">
             <form class="form" action="" method="get" id="searchform">
@@ -39,7 +35,7 @@
         </div>
     </div>
 
-    {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
+    {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
     {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
     {!! Form::close() !!}
 
@@ -49,19 +45,17 @@
             <th> STT </th>
             <th> Tên lãnh đạo </th>
             <th> Chức vụ </th>
-            <th> Action </th>
         </tr>
         </thead>
         <tbody>
         @foreach ($nguoidung as $row)
             <tr>
-                <td> {{$row->id}} </td>
+                <td>
+                    <a href="/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                    <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+                </td>
                 <td> {{$row->name}} </td>
                 <td> {{$row->description}} </td>
-                <td>
-                    <a href="javascript:xoanguoidung('{{$row->id}}')"><i class="fa fa-pencil"></i> Xóa</a> |
-                    {{ Html::linkAction('ViphumanController@edit', 'sửa', array('id'=>$row->id)) }}
-                </td>
             </tr>
         @endforeach
         </tbody>
