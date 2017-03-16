@@ -25,6 +25,18 @@
     </div>
 
 
+
+    <div class="form-group">
+        {!! Form::label('Mật khẩu') !!}
+        {!! Form::password('password', "",
+            array('required',
+                  'class'=>'form-control',
+                  'placeholder'=>'password')) !!}
+        <em>* Để trống nếu không thay đổi. * Yêu cầu mật khẩu ít nhất 6 ký tự.</em>
+    </div>
+
+
+
     <div class="form-group">
         {!! Form::label('Tên đầy đủ') !!}
         {!! Form::text('fullname', $row->fullname,

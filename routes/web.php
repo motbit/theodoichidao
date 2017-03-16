@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'xuly'], function () {
         Route::get( '/daumoi','XuLyCVController@daumoi' )->name('xuly-daumoi');
         Route::get( '/phoihop','XuLyCVController@phoihop' )->name('xuly-phoihop');
+        Route::get( '/duocgiao','XuLyCVController@duocgiao' )->name('xuly-duocgiao');
+        Route::get( '/nguonchidao','XuLyCVController@nguonchidao' )->name('xuly-nguonchidao');
     });
 
     Route::group(['prefix' => 'chucnang'], function () {

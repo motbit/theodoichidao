@@ -66,14 +66,20 @@ class UserController extends Controller
 
         $id = intval( $request->input('id') );
         if($id > 0) {
-            $result=User::where('id',$request->input('id'))->update([
+
+            $data = [
                 'username'=>$request->input('username'),
                 'fullname'=>$request->input('fullname'),
                 'group'=>$request->input('group'),
                 'unit'=>$request->input('unit'),
-            ]);
+            ];
 
-            $data=User::where('id',$request->input('id'))->get();
+            if(strlen($request->input('password')) >= 6) {
+                $data['password'] = bcrypt($request->input('password'));
+            }
+
+            $result=User::where('id',$request->input('id'))->update($data);
+
 
             return redirect()->action(
                 'UserController@index', ['update' => $result]

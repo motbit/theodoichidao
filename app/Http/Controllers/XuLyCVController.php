@@ -40,6 +40,46 @@ class XuLyCVController extends Controller
         return view('xulycv.daumoi',['data'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit, 'source'=>$source]);
     }
 
+    public function duocgiao(Request $request)
+    {
+        $user = Auth::user();
+        $data = DB::table('steeringcontent')
+            ->where([
+                ['unit', '=', $user->unit],
+                ['xn', '=', 'C'],
+            ])
+            ->get();
+        $dataunit=Unit::orderBy('created_at', 'DESC')->get();
+
+        $firstunit = array();
+        $secondunit = array();
+
+        foreach ($dataunit as $row) {
+            $firstunit[$row->id] = $row->name;
+            $secondunit[$row->id] = $row->shortname;
+        }
+
+        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $source = array();
+        foreach ($sourcesteering as $row) {
+            $source[$row->id] = "" . $row->code . "";
+        }
+        return view('xulycv.duocgiao',['data'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit, 'source'=>$source]);
+    }
+
+    public function nguonchidao()
+    {
+
+        $data = DB::table('sourcesteering')
+            ->join('type', 'sourcesteering.type', '=', 'type.id')
+            ->join('viphuman', 'sourcesteering.conductor', '=', 'viphuman.id')
+            ->select('sourcesteering.*', 'type.name as typename', 'viphuman.name as conductorname')
+            ->get();
+
+        return view("xulycv/nguonchidao")->with('data', $data);
+
+    }
+
     public function phoihop(Request $request)
     {
         $user = Auth::user();
