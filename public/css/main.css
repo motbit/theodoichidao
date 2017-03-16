@@ -53,14 +53,14 @@ li a:hover{
     font-size: 1.1em;
 }
 
-.list-menu ul li{
+.list-menu ul li a{
     color: #5d5d5d;
     padding: 5px;
 }
 
-a{
+.navbar-my a{
     color: white !important;
 }
-a:hover{
+.navbar-my a:hover{
     color: white !important;
 }
