@@ -45,7 +45,7 @@
                     </td>
                 @endif
 
-                <td>{{$row->name}}</td>
+                <td><a href="steeringcontent?source={{$row->id}}">{{$row->name}}</a></td>
                 <td>{{$row->typename}}</td>
                 <td>{{$row->code}}</td>
                 <td>{{$row->conductorname}}</td>
