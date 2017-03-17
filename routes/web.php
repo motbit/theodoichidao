@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get( '/duocgiao','XuLyCVController@duocgiao' )->name('xuly-duocgiao');
         Route::get( '/nguonchidao','XuLyCVController@nguonchidao' )->name('xuly-nguonchidao');
         Route::post( 'nhancongviec','XuLyCVController@nhancongviec' )->name('xuly-nhancongviec');
+        Route::get( 'updatecv','XuLyCVController@updatecv' )->name('xuly-updatecv');
+        Route::post( 'updatecv','XuLyCVController@updatecv' )->name('xuly-updatecv');
 
     });
 

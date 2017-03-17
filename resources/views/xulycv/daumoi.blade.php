@@ -22,7 +22,7 @@
         <tbody>
         @foreach ($data as $row)
             <tr>
-                <td><a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a></td>
+                <td><a href="/xuly/updatecv?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a></td>
                 <td> {{$row->content}} </td>
                 <td> {{ $source[$row->source] }} </td>
                 <td> {{ $unit[$row->unit] }} </td>
