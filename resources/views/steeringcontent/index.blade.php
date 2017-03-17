@@ -30,7 +30,7 @@
 {{ Form::hidden('id', 0, array('id' => 'id')) }}
 {!! Form::close() !!}
 @endif
-<table class="table table-striped table-hover">
+<table class="table table-bordered table-hover">
     <thead>
     <tr>
         @if(\App\Roles::checkPermission())

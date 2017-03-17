@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <table class="table table-striped table-hover">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             @if(\App\Roles::checkPermission())
