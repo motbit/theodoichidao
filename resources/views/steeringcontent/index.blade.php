@@ -31,24 +31,24 @@
 {!! Form::close() !!}
 @endif
 
-<script>
-    $(document).ready(function() {
-        var table = $('#myTable').DataTable();
+{{--<script>--}}
+    {{--$(document).ready(function() {--}}
+        {{--var table = $('#myTable').DataTable();--}}
 
-        $('#myTable tbody')
-                .on( 'mouseenter', 'td', function () {
-                    var colIdx = table.cell(this).index().column;
+        {{--$('#myTable tbody')--}}
+                {{--.on( 'mouseenter', 'td', function () {--}}
+                    {{--var colIdx = table.cell(this).index().column;--}}
 
-                    $( table.cells().nodes() ).removeClass( 'highlight' );
-                    $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-                } );
-    } );
-</script>
-<style type="text/css">
-    td.highlight {
-        background-color: whitesmoke !important;
-    }
-</style>
+                    {{--$( table.cells().nodes() ).removeClass( 'highlight' );--}}
+                    {{--$( table.column( colIdx ).nodes() ).addClass( 'highlight' );--}}
+                {{--} );--}}
+    {{--} );--}}
+{{--</script>--}}
+{{--<style type="text/css">--}}
+    {{--td.highlight {--}}
+        {{--background-color: whitesmoke !important;--}}
+    {{--}--}}
+{{--</style>--}}
 <table id="myTable" class="table table-bordered table-hover row-border hover order-column">
     <thead>
     <tr>

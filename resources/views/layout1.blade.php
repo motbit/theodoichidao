@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/js/jquery-3.1.1.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="/img/fa-icon.png">
 
     <script src="/js/bootstrap.min.js"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
