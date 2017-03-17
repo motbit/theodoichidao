@@ -39,9 +39,9 @@
             <tr>
 
                 @if(\App\Roles::checkPermission())
-                    <td class="col-action">
-                        <a href="/sourcesteering/update?id={{$row->id}}"><img src="/img/edit.png"></a>
-                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img src="/img/delete.png"></a>
+                    <td style="width: 30px">
+                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
                     </td>
                 @endif
 

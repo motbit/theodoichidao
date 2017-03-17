@@ -9,6 +9,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
+            <th></th>
             <th> Nội dung công việc </th>
             <th> Nguồn chỉ đạo </th>
             <th> Đơn vị đầu mối</th>
@@ -21,6 +22,7 @@
         <tbody>
         @foreach ($data as $row)
             <tr>
+                <td><a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a></td>
                 <td> {{$row->content}} </td>
                 <td> {{ $source[$row->source] }} </td>
                 <td> {{ $unit[$row->unit] }} </td>
