@@ -54,6 +54,8 @@ class SourcesteeringController extends Controller
         $file = $request->file('docs');
         if (isset($file)){
             $file_attach = $request->input('code') . "." . pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+            $file_attach = str_replace("/", "-", $file_attach);
+
         }
         if ($request->input('complete') != null) {
             $status = 1;

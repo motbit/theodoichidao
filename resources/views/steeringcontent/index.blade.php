@@ -62,7 +62,7 @@
         <th> Thời hạn HT </th>
         <th> Theo dõi của VP </th>
         <th> Đánh giá </th>
-        <th> XN </th>
+        {{--<th> XN </th>--}}
     </tr>
     </thead>
     <tbody>
@@ -97,7 +97,7 @@
                 <span class="label label-sm label-info"> Mới </span>
             @endif
         </td>
-        <td> {{$row->xn}} </td>
+        {{--<td> {{$row->xn}} </td>--}}
     </tr>
     @endforeach
     </tbody>
