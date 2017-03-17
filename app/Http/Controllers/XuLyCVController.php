@@ -150,6 +150,7 @@ class XuLyCVController extends Controller
         if (isset($note)) {
             $result=Steeringcontent::where('id',$request->input('id'))->update([
                 'note'=>$request->input('note'),
+                'status'=>$request->input('status')
             ]);
             return redirect()->action(
                 'XuLyCVController@daumoi', ['update' => $result]

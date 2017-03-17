@@ -26,6 +26,13 @@
                       'placeholder'=>'Theo dõi của văn phòng')) !!}
         </div>
 
+        <div class="form-group">
+            {!! Form::label('Đánh giá') !!}
+            {!! Form::radio('status', 0,($row->status==0)) !!} Chưa hoàn thành
+            {!! Form::radio('status', 1,($row->status==1)) !!} Hoàn thành
+
+        </div>
+
 
         <div class="form-group">
             {!! Form::submit('Cập nhật',
