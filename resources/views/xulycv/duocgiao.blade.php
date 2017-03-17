@@ -6,7 +6,6 @@
 
 @section('content')
 
-
     {!! Form::open(array('route' => 'xuly-nhancongviec', 'class' => 'form', 'id' => 'frmdelete')) !!}
     {{ Form::hidden('unit', 0, array('id' => 'unit') )}}
     {{ Form::hidden('steering', 0, array('id' => 'steering') ) }}
@@ -35,7 +34,8 @@
         }
     </script>
 
-    <h1>Công việc đầu mối</h1>
+    <h1>Công việc mới được giao</h1>
+
     <table class="table table-bordered table-hover">
         <thead>
         <tr>

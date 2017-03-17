@@ -22,11 +22,7 @@
     @endif
 
     <div>
-        @if(\App\Roles::checkPermission())
-        <div class="pull-left">
-            <a href="viphuman/update?id=0"><i class="fa fa-plus"></i> Thêm mới</a>
-        </div>
-        @endif
+        <h1>Người chủ trì</h1>
 
         <div class="pull-right">
             <form class="form" action="" method="get" id="searchform">
@@ -42,6 +38,11 @@
                 </div>
             </form>
         </div>
+        @if(\App\Roles::checkPermission())
+            <div class="pull-left" style="margin-bottom: 10px">
+                <a href="viphuman/update?id=0" class="btn btn-default"><i class="fa fa-plus"></i> Thêm mới</a>
+            </div>
+        @endif
     </div>
 
     <table class="table table-bordered table-hover">

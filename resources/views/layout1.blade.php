@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/js/jquery-3.1.1.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="/img/fa-icon.png">
 
     <script src="/js/bootstrap.min.js"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -61,6 +62,7 @@
             CÔNG VIỆC
         </div>
         <div class="list-menu">
+            @if(\App\Roles::checkPermission())
             <div class="cate-menu">NGƯỜI DÙNG</div>
             <ul>
                 <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
@@ -72,6 +74,7 @@
                 <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
                 <li><a href="{{@route('steeringcontent-index')}}">Nội dung chỉ đạo</a></li>
             </ul>
+            @endif
             <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
             <ul>
                 <li><a href="{{@route('xuly-daumoi')}}">Công việc đầu mối</a></li>
