@@ -6,12 +6,26 @@ use App\steeringcontent;
 use App\unit;
 use App\sourcesteering;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SteeringcontentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
+
+        $source = intval( $request->input('source') );
+
+        if($source) {
+            $steering = DB::table('sourcesteering')
+                ->where('id', '=', $source)
+                ->get()->first();
+            $data=Steeringcontent::where('source',$source)->orderBy('created_at', 'DESC')->get();
+        } else {
+            $steering = false;
+            $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
+        }
+
+
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
 
@@ -28,7 +42,7 @@ class SteeringcontentController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$source]);
+        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$source,'steering'=>$steering]);
     }
 
     public function edit(Request $request)
