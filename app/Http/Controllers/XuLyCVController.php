@@ -55,6 +55,7 @@ class XuLyCVController extends Controller
             ->where([
                 ['unit', '=', $user->unit],
                 ['xn', '=', 'C'],
+                ['status', '=', '0'],
             ])->whereNotIn('id', $danhan_array)
             ->get();
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
