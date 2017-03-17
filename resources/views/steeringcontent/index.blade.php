@@ -7,6 +7,10 @@
 @section('content')
 
 <h1>Nội dung chỉ đạo</h1>
+
+@if ($steering != false)
+    <p><u>Nguồn chỉ đạo:</u> [{{$steering->code}}] - {{$steering->name}}</p>
+    @endif
 @if(\App\Roles::checkPermission())
 {{ Html::linkAction('SteeringcontentController@edit', 'Thêm Nội dung Chỉ đạo', array('id'=>0), array('class' => 'btn btn-default')) }}
 
@@ -67,7 +71,7 @@
             @if($row->status === 1)
                 <span class="label label-sm label-success"> Hoàn thành </span>
             @elseif($row->status === 0)
-                <span class="label label-sm label-warning"> Không hoàn thành </span>
+                <span class="label label-sm label-warning"> Chưa hoàn thành </span>
             @elseif($row->status === -1)
                 <span class="label label-sm label-danger"> Hủy </span>
             @else
