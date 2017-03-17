@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\steeringcontent;
-use App\unit;
-use App\sourcesteering;
+use App\Steeringcontent;
+use App\Unit;
+use App\Sourcesteering;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

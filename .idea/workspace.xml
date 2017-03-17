@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PartnerController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PartnerController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UnitController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UnitController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layout1.blade.php" afterPath="$PROJECT_DIR$/resources/views/layout1.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/logs/laravel.log" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php" afterPath="$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" afterPath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,37 +32,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="add.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/user/add.blade.php">
+      <file leaf-file-name="ChucnangController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+            <state relative-caret-position="99">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding>
-                <marker date="1489714729026" expanded="true" signature="444:608" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="456:606" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="494:605" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="708:873" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="724:871" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="754:870" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="985:1161" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="997:1159" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1035:1158" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1275:1385" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1289:1383" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1495:1603" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1509:1601" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1671:1746" ph="..." />
-                <marker date="1489714729026" expanded="true" signature="1685:1744" ph="..." />
+                <element signature="e#40#57#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="duocgiao.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/xulycv/duocgiao.blade.php">
+      <file leaf-file-name="Controller.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -64,76 +57,22 @@
       <file leaf-file-name="NguoidungController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NguoidungController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1023">
+            <state relative-caret-position="1056">
               <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/user/update.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
               <folding>
-                <marker date="1489714723865" expanded="true" signature="515:679" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="527:677" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="573:676" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="777:941" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="793:939" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="823:938" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1089:1248" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1101:1246" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1147:1245" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1345:1460" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1359:1458" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1554:1666" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1568:1664" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1723:1794" ph="..." />
-                <marker date="1489714723865" expanded="true" signature="1737:1792" ph="..." />
+                <element signature="e#40#58#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/user/index.blade.php">
+      <file leaf-file-name="ViphumanController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ViphumanController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1287">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="11" column="50" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Steeringcontent.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Steeringcontent.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="8" column="16" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SteeringcontentController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="44" column="125" selection-start-line="44" selection-start-column="117" selection-end-line="44" selection-end-column="125" />
+            <state relative-caret-position="1351">
+              <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
               <folding>
-                <element signature="e#40#64#0#PHP" expanded="true" />
+                <element signature="e#40#57#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,11 +88,57 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
+      <file leaf-file-name="XuLyCVController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/XuLyCVController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2376">
-              <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
+            <state relative-caret-position="1221">
+              <caret line="42" column="28" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="28" />
+              <folding>
+                <element signature="e#135#158#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GroupController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GroupController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#40#54#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CongviecController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CongviecController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="28" />
+              <folding>
+                <element signature="e#39#75#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IndexController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -176,10 +161,7 @@
         <option value="$PROJECT_DIR$/app/Sourcesteering.php" />
         <option value="$PROJECT_DIR$/app/Steeringcontent.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/GroupController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PartnerController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UnitController.php" />
         <option value="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/group/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/chucnang/index.blade.php" />
@@ -207,17 +189,20 @@
         <option value="$PROJECT_DIR$/resources/views/viphuman/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/unit/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/layout1.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/XuLyCVController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/resources/views/steeringcontent/update.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/xulycv/duocgiao.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/user/update.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/add.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
+        <option value="$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/layout1.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UnitController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PartnerController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php" />
       </list>
     </option>
   </component>
@@ -668,7 +653,7 @@
       <workItem from="1489650937854" duration="11049000" />
       <workItem from="1489671616498" duration="607000" />
       <workItem from="1489672376187" duration="2730000" />
-      <workItem from="1489714493753" duration="1916000" />
+      <workItem from="1489714493753" duration="4224000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -681,7 +666,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40155000" />
+    <option name="totallyTimeSpent" value="42463000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2884" height="1566" extended-state="0" />
@@ -723,52 +708,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="Update Nguoi chu tri" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php</url>
+          <line>3</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/chucnang/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Sourcesteering.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/News.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Unit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Viphuman.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Chucnang.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -780,13 +731,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1155">
           <caret line="35" column="10" selection-start-line="18" selection-start-column="4" selection-end-line="35" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ViphumanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -868,13 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
@@ -906,26 +843,6 @@
         <state relative-caret-position="330">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="28" />
-          <folding>
-            <element signature="e#39#75#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CongviecController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
-          <folding>
-            <element signature="e#40#64#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -971,38 +888,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/XuLyCVController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="42" column="28" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/unit/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2475">
-          <caret line="75" column="52" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="52" />
-          <folding>
-            <marker date="1489672722920" expanded="true" signature="927:994" ph="..." />
-            <marker date="1489672722920" expanded="true" signature="940:992" ph="..." />
-            <marker date="1489672722920" expanded="true" signature="941:991" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1042,22 +931,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NguoidungController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1023">
-          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2376">
-          <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -1126,6 +999,122 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="14" column="88" selection-start-line="14" selection-start-column="88" selection-end-line="14" selection-end-column="88" />
+          <folding>
+            <marker date="1489722871880" expanded="true" signature="1130:1197" ph="..." />
+            <marker date="1489722871880" expanded="true" signature="1143:1195" ph="..." />
+            <marker date="1489722871880" expanded="true" signature="1144:1194" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1023">
+          <caret line="49" column="5" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UnitController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PartnerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CongviecController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ChucnangController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="e#40#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NguoidungController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+          <folding>
+            <element signature="e#40#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/XuLyCVController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1221">
+          <caret line="42" column="28" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="28" />
+          <folding>
+            <element signature="e#135#158#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ViphumanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1351">
+          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+          <folding>
+            <element signature="e#40#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SourcesteeringController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -1134,20 +1123,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IndexController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="125" selection-start-line="44" selection-start-column="117" selection-end-line="44" selection-end-column="125" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="28" />
           <folding>
-            <element signature="e#40#64#0#PHP" expanded="true" />
+            <element signature="e#39#75#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GroupController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="11" column="50" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#40#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

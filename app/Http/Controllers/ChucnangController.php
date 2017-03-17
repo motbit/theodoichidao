@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\chucnang;
+use App\Chucnang;
 use Illuminate\Http\Request;
 
 class ChucnangController extends Controller

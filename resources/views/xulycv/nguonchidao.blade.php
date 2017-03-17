@@ -2,7 +2,6 @@
 @section('content')
 
     <h1>Nguồn chỉ đạo</h1>
-    <a class="btn btn-default" href="sourcesteering/update?id=0">Thêm nguồn chỉ đạo</a>
     <table class="table table-responsive table-bordered">
         <thead>
         <tr>
