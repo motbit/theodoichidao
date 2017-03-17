@@ -21,7 +21,7 @@
 {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
 {!! Form::close() !!}
 
-<table class="table table-striped table-hover">
+<table class="table table-bordered table-hover">
     <thead>
     <tr>
         <th> # </th>

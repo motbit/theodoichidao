@@ -37,7 +37,7 @@
                     @if($row->status === 1)
                         <span class="label label-sm label-success"> Hoành thành </span>
                     @elseif($row->status === 0)
-                        <span class="label label-sm label-warning"> Không hoàn thành </span>
+                        <span class="label label-sm label-warning"> Chưa hoàn thành </span>
                     @elseif($row->status === -1)
                         <span class="label label-sm label-danger"> Hủy </span>
                     @else
