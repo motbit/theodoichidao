@@ -11,6 +11,9 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
     <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
@@ -36,8 +39,8 @@
         <?php if(Auth::guest()): ?>
             <li><a href="<?php echo e(route('login')); ?>">Đăng nhập</a></li>
         <?php else: ?>
-        <li class="dropdown top-menu">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo e(\Illuminate\Support\Facades\Auth::user()->fullname); ?>
+        <li class="dropdown">
+            <a class="dropdown-toggle top-menu" data-toggle="dropdown" href="#"><?php echo e(\Illuminate\Support\Facades\Auth::user()->fullname); ?>
 
                 <span class="caret"></span></a>
             <ul class="dropdown-menu">
