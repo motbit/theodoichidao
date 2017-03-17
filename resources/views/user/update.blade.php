@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <h1>Update User</h1>
+    <h1>Cập nhật thông tin người sử dụng</h1>
 
     <ul>
         @foreach($errors->all() as $error)
@@ -17,22 +17,22 @@
     {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
     {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
     <div class="form-group">
-        {!! Form::label('Username') !!}
+        {!! Form::label('Tên đăng nhập') !!}
         {!! Form::text('username', $row->username,
             array('required',
                   'class'=>'form-control',
-                  'placeholder'=>'Your name')) !!}
+                  'placeholder'=>'Tên đăng nhập')) !!}
     </div>
 
 
 
     <div class="form-group">
         {!! Form::label('Mật khẩu') !!}
-        {!! Form::password('password', "",
+        {!! Form::password('password',
             array('required',
                   'class'=>'form-control',
-                  'placeholder'=>'password')) !!}
-        <em>* Để trống nếu không thay đổi. * Yêu cầu mật khẩu ít nhất 6 ký tự.</em>
+                  'placeholder'=>'Mật khẩu ít nhất 6 ký tự.')) !!}
+        <em>* Để trống nếu không thay đổi.</em>
     </div>
 
 
