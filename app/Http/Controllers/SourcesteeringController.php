@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
 use App\Sourcesteering;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,9 @@ class SourcesteeringController extends Controller
     {
         if (!Auth::check()){
             return redirect("login");
+        }
+        if (!Roles::checkPermission()){
+            return redirect("xuly/duocgiao");
         }
         $data = DB::table('sourcesteering')
             ->join('type', 'sourcesteering.type', '=', 'type.id')
