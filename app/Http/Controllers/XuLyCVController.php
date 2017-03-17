@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
@@ -94,15 +95,25 @@ class XuLyCVController extends Controller
 
     public function nhancongviec(Request $request)
     {
-        $result = Congviecdaumoi::insert([
-            'unit' => $request->input('unit'),
-            'steering' => $request->input('steering'),
-            'user' => $request->input('user'),
-            'status' => $request->input('status'),
+
+        $result1=Congviecdaumoi::insert([
+            'unit'=>$request->input('unit'),
+            'steering'=>$request->input('steering'),
+            'user'=>$request->input('user'),
+            'status'=>$request->input('status'),
         ]);
 
+        if($request->input('status') == 1 )
+            $data = ['xn'=>'X'];
+        else
+            $data = ['xn'=>'K'];
+
+        $result2=Steeringcontent::where('id',$request->input('steering'))->update($data);
+
+
+
         return redirect()->action(
-            'XuLyCVController@duocgiao', ['update' => $result]
+            'XuLyCVController@duocgiao', ['update' => $result1 . ":" . $result2]
         );
 
     }
