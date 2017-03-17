@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <h1>Thêm người dùng</h1>
+    <h1>Thêm người sử dụng</h1>
 
     <ul>
         @foreach($errors->all() as $error)
@@ -17,19 +17,19 @@
     </ul>
         {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
         <div class="form-group">
-            {!! Form::label('Username') !!}
+            {!! Form::label('Tên đăng nhập') !!}
             {!! Form::text('username', "",
                 array('required',
                       'class'=>'form-control',
-                      'placeholder'=>'Nhập tên đăng nhập')) !!}
+                      'placeholder'=>'Tên đăng nhập')) !!}
         </div>
 
     <div class="form-group">
         {!! Form::label('Password') !!}
-        {!! Form::password('password', "",
+        {!! Form::password('password',
             array('required',
                   'class'=>'form-control',
-                  'placeholder'=>'password')) !!}
+                  'placeholder'=>' Mật khẩu ít nhất 6 ký tự.')) !!}
     </div>
 
 
