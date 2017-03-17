@@ -40,9 +40,9 @@
     </div>
     <div class="form-group">
         {!! Form::label('Đơn vị Phối hợp') !!}
-        <ul class="list-group">
+        <ul>
             @foreach ($secondunit as $id=>$r1)
-                <li class="list-group-item" style="border: none">{!! Form::checkbox('secondunit[]', $id, in_array($id,$dtfollow)) !!} {{ $r1 }}</li>
+                <li>{!! Form::checkbox('secondunit[]', $id, in_array($id,$dtfollow)) !!} {{ $r1 }}</li>
             @endforeach
         </ul>
     </div>
@@ -56,10 +56,10 @@
 
     <div class="form-group">
         {!! Form::label('Đơn vị Xác nhận') !!}
-        <ul class="list-group">
-            <li class="list-group-item" style="border: none">{!! Form::radio('confirm', 'C',($row->xn=='C')) !!} Đơn vị chưa xác nhận</li>
-            <li class="list-group-item">{!! Form::radio('confirm', 'X',($row->xn=='X')) !!} Đơn vị đã xác nhận</li>
-            <li class="list-group-item">{!! Form::radio('confirm', 'K',($row->xn=='K')) !!} Đơn vị không nhận</li>
+        <ul>
+            <li>{!! Form::radio('confirm', 'C',($row->xn=='C')) !!} Đơn vị chưa xác nhận</li>
+            <li>{!! Form::radio('confirm', 'X',($row->xn=='X')) !!} Đơn vị đã xác nhận</li>
+            <li>{!! Form::radio('confirm', 'K',($row->xn=='K')) !!} Đơn vị không nhận</li>
         </ul>
 
     </div>
