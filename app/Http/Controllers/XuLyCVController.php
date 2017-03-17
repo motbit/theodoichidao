@@ -21,7 +21,9 @@ class XuLyCVController extends Controller
     {
         $user = Auth::user();
         $data = DB::table('steeringcontent')
-            ->where('unit', '=', $user->unit)
+            ->join('congviecdaumoi', 'congviecdaumoi.steering', '=', 'steeringcontent.id')
+            ->where('congviecdaumoi.unit', '=', $user->unit)
+            ->select('steeringcontent.*')
             ->get();
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
 
