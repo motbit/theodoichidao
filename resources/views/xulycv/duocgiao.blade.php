@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <h1>Công việc đầu mối</h1>
+    <h1>Công việc mới được giao</h1>
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
