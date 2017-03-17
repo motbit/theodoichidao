@@ -8,8 +8,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Sourcesteering;
+use App\Steeringcontent;
 use App\Unit;
+use App\Sourcesteering;
 use App\Congviecdaumoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class XuLyCVController extends Controller
             ->where('congviecdaumoi.unit', '=', $user->unit)
             ->select('steeringcontent.*')
             ->get();
-        $dataunit=Unit::orderBy('created_at', 'DESC')->get();
+        $dataunit = Unit::orderBy('created_at', 'DESC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -35,12 +36,12 @@ class XuLyCVController extends Controller
             $secondunit[$row->id] = $row->shortname;
         }
 
-        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
         $source = array();
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('xulycv.daumoi',['data'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit, 'source'=>$source]);
+        return view('xulycv.daumoi', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $source]);
     }
 
     public function duocgiao(Request $request)
@@ -60,7 +61,7 @@ class XuLyCVController extends Controller
                 ['status', '=', '0'],
             ])->whereNotIn('id', $danhan_array)
             ->get();
-        $dataunit=Unit::orderBy('created_at', 'DESC')->get();
+        $dataunit = Unit::orderBy('created_at', 'DESC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -70,12 +71,12 @@ class XuLyCVController extends Controller
             $secondunit[$row->id] = $row->shortname;
         }
 
-        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
         $source = array();
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('xulycv.duocgiao',['data'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit, 'source'=>$source]);
+        return view('xulycv.duocgiao', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $source]);
     }
 
     public function nguonchidao()
@@ -93,11 +94,11 @@ class XuLyCVController extends Controller
 
     public function nhancongviec(Request $request)
     {
-        $result=Congviecdaumoi::insert([
-            'unit'=>$request->input('unit'),
-            'steering'=>$request->input('steering'),
-            'user'=>$request->input('user'),
-            'status'=>$request->input('status'),
+        $result = Congviecdaumoi::insert([
+            'unit' => $request->input('unit'),
+            'steering' => $request->input('steering'),
+            'user' => $request->input('user'),
+            'status' => $request->input('status'),
         ]);
 
         return redirect()->action(
@@ -110,11 +111,11 @@ class XuLyCVController extends Controller
     {
         $user = Auth::user();
         $data = DB::table('steeringcontent')
-            ->where('follow', 'like', '%,'.$user->unit)
-            ->orwhere('follow', 'like', '%,'.$user->unit.',%')
-            ->orwhere('follow', 'like', $user->unit.',%')
+            ->where('follow', 'like', '%,' . $user->unit)
+            ->orwhere('follow', 'like', '%,' . $user->unit . ',%')
+            ->orwhere('follow', 'like', $user->unit . ',%')
             ->get();
-        $dataunit=Unit::orderBy('created_at', 'DESC')->get();
+        $dataunit = Unit::orderBy('created_at', 'DESC')->get();
         $firstunit = array();
         $secondunit = array();
 
@@ -123,11 +124,28 @@ class XuLyCVController extends Controller
             $secondunit[$row->id] = $row->shortname;
         }
 
-        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
         $source = array();
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('xulycv.phoihop',['data'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit, 'source'=>$source]);
+        return view('xulycv.phoihop', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $source]);
+    }
+
+    public function updatecv(Request $request)
+    {
+        $id = intval($request->input('id'));
+        $note = $request->input('note');
+        if (isset($note)) {
+            $result=Steeringcontent::where('id',$request->input('id'))->update([
+                'note'=>$request->input('note'),
+            ]);
+            return redirect()->action(
+                'XuLyCVController@daumoi', ['update' => $result]
+            );
+        } else {
+            $data = Steeringcontent::where('id', $id)->get();
+            return view('xulycv.updatecv', ['data' => $data]);
+        }
     }
 }
