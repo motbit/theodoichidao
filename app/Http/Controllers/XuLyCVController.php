@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Sourcesteering;
 use App\Unit;
+use App\Congviecdaumoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,11 +44,18 @@ class XuLyCVController extends Controller
     public function duocgiao(Request $request)
     {
         $user = Auth::user();
+
+        $danhan = DB::table('congviecdaumoi')->select('steering')->get();
+        $danhan_array = array();
+        foreach ($danhan as $r) {
+            $danhan_array[] = $r->steering;
+        }
+
         $data = DB::table('steeringcontent')
             ->where([
                 ['unit', '=', $user->unit],
                 ['xn', '=', 'C'],
-            ])
+            ])->whereNotIn('id', $danhan_array)
             ->get();
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
 
@@ -77,6 +85,21 @@ class XuLyCVController extends Controller
             ->get();
 
         return view("xulycv/nguonchidao")->with('data', $data);
+
+    }
+
+    public function nhancongviec(Request $request)
+    {
+        $result=Congviecdaumoi::insert([
+            'unit'=>$request->input('unit'),
+            'steering'=>$request->input('steering'),
+            'user'=>$request->input('user'),
+            'status'=>$request->input('status'),
+        ]);
+
+        return redirect()->action(
+            'XuLyCVController@duocgiao', ['update' => $result]
+        );
 
     }
 
