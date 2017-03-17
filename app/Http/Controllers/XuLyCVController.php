@@ -104,7 +104,7 @@ class XuLyCVController extends Controller
         if($request->input('status') == 1 )
             $data = ['xn'=>'X'];
         else
-            $data = ['xn'=>'H'];
+            $data = ['xn'=>'K'];
 
         $result2=Steeringcontent::where('id',$request->input('steering'))->update($data);
 
