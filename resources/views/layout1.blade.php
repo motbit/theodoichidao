@@ -15,6 +15,8 @@
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
     <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <link href="/css/datepicker.css" rel="stylesheet">
 
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {

@@ -15,6 +15,8 @@
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
     <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <link href="/css/datepicker.css" rel="stylesheet">
 
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
@@ -130,9 +132,9 @@
                 <div class="footer-text">
                     <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
                     <p>Địa chỉ: Số 35 Đại Cồ Việt, Hà Nội</p>
-                    <p>Điện thoại: 04.38695144; Fax: 04.38694085;</p>
-                    <p>Email: bogddt@moet.gov.vn</p>
-                    <p><strong>Thiết kế bởi Cục Công nghệ thông tin - Bộ Giáo dục và Đào tạo</strong></p>
+                    
+                    
+                    
                 </div>
             </div>
         </div>
@@ -162,5 +164,6 @@
             openNav();
         }
     }
+    $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 </script>
 </html>
