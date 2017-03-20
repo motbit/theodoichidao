@@ -28,4 +28,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function validate($input) {
+
+        $rules = array(
+            'username' => 'Required|Min:6|Max:80|Alpha|Unique:user',
+            'fullname'     => 'Required|Between:3,64',
+            'password'  =>'Required|AlphaNum|Between:4,8'
+        );
+
+        return Validator::make($input, $rules);
+    }
 }

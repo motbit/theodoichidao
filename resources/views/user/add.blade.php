@@ -10,11 +10,17 @@
 
     <h1>Thêm người sử dụng</h1>
 
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
+        @if ( $errors->count() > 0 )
+            <p>The following errors have occurred:</p>
+
+            <ul>
+                @foreach( $errors->all() as $message )
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+
         {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
         <div class="form-group">
             {!! Form::label('Tên đăng nhập') !!}

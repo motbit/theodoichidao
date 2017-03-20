@@ -122,16 +122,16 @@
         <?php echo $__env->yieldContent('content'); ?>
     </div>
 </div>
-<footer class="container-fluid ">
+<footer class="container-fluid">
         <!-- Example row of columns -->
         <div class="row footer">
             <div class="col-sm-4">
-                <img src="/img/moet-logo.jpg" width="150" height="auto" border="0" />
+                
             </div>
             <div class="col-sm-8 pull-right" style="text-align: right">
                 <div class="footer-text">
                     <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
-                    <p>Địa chỉ: Số 35 Đại Cồ Việt, Hà Nội</p>
+                    <p>Địa chỉ: Số 35 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</p>
                     
                     
                     
@@ -165,5 +165,10 @@
         }
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
+
+    $( document ).ready(function() {
+        // Handler for .ready() called.
+        $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+    });
 </script>
 </html>
