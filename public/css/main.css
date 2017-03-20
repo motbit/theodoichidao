@@ -39,8 +39,8 @@ li a:hover {
 
 .list-menu {
     background-color: #f2f2f2;
-    padding-left: 20px;
-    padding-top: 5px;
+    /*padding-left: 20px;*/
+    /*padding-top: 5px;*/
     padding-bottom: 10px;
 }
 
@@ -128,6 +128,22 @@ table {
 
 .navbar-right{
     margin-right: 0px !important;
+}
+
+.title{
+    font-size: 1.4em;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.btn-my{
+    color: white;
+    background-color: #9f224e;
+    border-color: #9f224e;
+    margin-bottom: 10px;
+}
+.btn-my:hover{
+    color: white;
 }
 
 footer.footer {

@@ -14,6 +14,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
@@ -90,24 +91,21 @@
 
 <div class="main">
     <div id="mySidenav" class="sidenav">
-        <div class="left-head">
-            CÔNG VIỆC
-        </div>
         <div class="list-menu">
             @if(\App\Roles::checkPermission())
-            <div class="cate-menu">NGƯỜI DÙNG</div>
+            <div class="left-head">NGƯỜI DÙNG</div>
             <ul>
                 <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
                 <li><a href="{{@route('unit-index')}}">Ban - Đơn vị</a></li>
                 <li><a href="{{@route('viphuman-index')}}">Người chủ trì</a></li>
             </ul>
-            <div class="cate-menu">Ý KIẾN CHỈ ĐẠO</div>
+            <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
             <ul>
                 <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
                 <li><a href="{{@route('steeringcontent-index')}}">Nội dung chỉ đạo</a></li>
             </ul>
             @endif
-            <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
+            <div class="left-head">XỬ LÝ CÔNG VIỆC</div>
             <ul>
                 <li><a href="{{@route('xuly-daumoi')}}">Công việc đầu mối</a></li>
                 <li><a href="{{@route('xuly-phoihop')}}">Công việc phối hợp</a></li>
