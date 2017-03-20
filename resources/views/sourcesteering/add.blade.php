@@ -1,25 +1,32 @@
 @extends('layout1')
+@section('page-title')
+    {{($id == 0)?"Thêm":"Chỉnh sửa"}} nguồn chỉ đạo
+@stop
 @section('content')
-    <h1>{{($id == 0)?"Thêm":"Chỉnh sửa"}} nguồn chỉ đạo</h1>
+    <div class="text-center title">{{($id == 0)?"Thêm":"Chỉnh sửa"}} nguồn chỉ đạo</div>
     {!! Form::open(array('route' => 'sourcesteering-update', 'class' => 'form', 'files'=>'true')) !!}
     <div class="form-group form-inline">
-        <label>Nguồn chỉ đạo</label>
-        <textarea name="name" style="width: 100%;" class="form-control">{{($id == 0)?"":$steering->name}}</textarea>
-    </div>
-    <div class="form-group form-inline">
-        <label>Loại</label>
+        <label>Loại nguồn</label>
         <select name="type" class="form-control">
             @foreach($type as $t)
-            <option value="{{$t->id}}" {{($id == 0 || $t->id != $steering->type)?'':'selected'}}>{{$t->name}}</option>
+                <option value="{{$t->id}}" {{($id == 0 || $t->id != $steering->type)?'':'selected'}}>{{$t->name}}</option>
             @endforeach
         </select>
     </div>
     <div class="form-group form-inline">
-        <label>Kí hiệu</label>
+        <label>Số kí hiệu</label>
         <input type="text" required name="code" class="form-control" value="{{($id == 0)?"":$steering->code}}">
     </div>
     <div class="form-group form-inline">
-        <label>Người chủ trì</label>
+        <label>Trích yếu</label>
+        <textarea name="name" style="width: 100%;" class="form-control">{{($id == 0)?"":$steering->name}}</textarea>
+    </div>
+    <div class="form-group form-inline">
+        <label>Ngày ban hành</label>
+        <input id="my-time" name="time" type="date" class="form-control" required value="{{($id == 0)?"":date("Y-m-d", strtotime($steering->time))}}">
+    </div>
+    <div class="form-group form-inline">
+        <label>Người ký</label>
         <select name="conductor" class="form-control">
             @foreach($conductor as $c)
                 <option value="{{$c->id}}" {{($id == 0 || $c->id != $steering->conductor)?'':'selected'}}>{{$c->name}}</option>
@@ -30,19 +37,15 @@
         <label>File đính kèm</label>
         {!! Form::file('docs', array('class'=>'form-control')) !!}
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group form-inline hidden">
         <label>Hoàn thành</label>
         <input name="complete" type="checkbox"  class="form-control" {{($id > 0 && $steering->status == 1)?"checked":""}}>
-    </div>
-    <div class="form-group form-inline">
-        <label>Ngày ban hành</label>
-        <input id="my-time" name="time" type="date" class="form-control" required value="{{($id == 0)?"":date("Y-m-d", strtotime($steering->time))}}">
     </div>
     <input name="id" value="{{$id}}" type="hidden">
 
     <div class="form-group">
         {!! Form::submit('Cập nhật',
-          array('class'=>'btn btn-primary')) !!}
+          array('class'=>'btn btn-my')) !!}
     </div>
     {!! Form::close() !!}
 @stop
