@@ -21,16 +21,16 @@
     <?php echo Form::close(); ?>
 
 
-    <h1>Nguồn chỉ đạo</h1>
-    <a class="btn btn-default" href="sourcesteering/update?id=0">Thêm nguồn chỉ đạo</a>
+    <div class="text-center title">Nguồn chỉ đạo</div>
+    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm mới</a>
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
             <?php if(\App\Roles::checkPermission()): ?>
                 <th></th>
             <?php endif; ?>
-            <th>Nguồn chỉ đạo<input type="text"></th>
-            <th>Loại
+            <th>Trích yếu<input type="text"></th>
+            <th>Loại nguồn
                 <select>
                     <option value=""></option>
                     <?php $__currentLoopData = $type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -38,8 +38,8 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </th>
-            <th>Kí hiệu<input type="text"></th>
-            <th>Người chủ trì
+            <th>Số kí hiệu<input type="text"></th>
+            <th>Người ký
                 <select>
                     <option value=""></option>
                     <?php $__currentLoopData = $viphuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -48,7 +48,7 @@
                 </select>
             </th>
             <th>File đính kèm</th>
-            <th>Hoàn thành</th>
+            
             <th>Ngày ban hành
                 <input type="date">
             </th>
@@ -90,8 +90,8 @@
                         <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
                     <?php endif; ?>
                 </td>
-                <td class="text-center"><input type="checkbox" value="<?php echo e($row->id); ?>"
-                                               disabled <?php echo e(($row->status == 0)?'':'checked'); ?>></td>
+                
+                                               
                 <td><?php echo e(date("d-m-Y", strtotime($row->time))); ?></td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
