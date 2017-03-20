@@ -118,9 +118,9 @@
         @yield('content')
     </div>
 </div>
-<footer class="footer">
+<footer class="container-fluid ">
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row footer">
             <div class="col-sm-4">
                 <img src="/img/moet-logo.jpg" width="150" height="auto" border="0" />
             </div>
