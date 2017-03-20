@@ -20,17 +20,13 @@ class SourcesteeringController extends Controller
         }
         $data = DB::table('sourcesteering')
             ->join('type', 'sourcesteering.type', '=', 'type.id')
-            ->join('viphuman', 'sourcesteering.conductor', '=', 'viphuman.id')
-            ->select('sourcesteering.*', 'type.name as typename', 'viphuman.name as conductorname')
-            ->get();
-        $viphuman = DB::table('viphuman')
-            ->select('name')
+            ->select('sourcesteering.*', 'type.name as typename')
             ->get();
         $type = DB::table('type')
             ->select('name')
             ->get();
 
-        return view("sourcesteering/index", ['data' => $data, 'viphuman' => $viphuman, 'type' => $type]);
+        return view("sourcesteering/index", ['data' => $data, 'type' => $type]);
 
     }
 
@@ -75,7 +71,7 @@ class SourcesteeringController extends Controller
                 'name' => $request->input('name'),
                 'type' => $request->input('type'),
                 'code' => $request->input('code'),
-                'conductor' => $request->input('conductor'),
+                'sign_by' => $request->input('sign_by'),
                 'status' => $status,
                 'time' => $request->input('time')
             ];
@@ -88,7 +84,7 @@ class SourcesteeringController extends Controller
                 'name' => $request->input('name'),
                 'type' => $request->input('type'),
                 'code' => $request->input('code'),
-                'conductor' => $request->input('conductor'),
+                'sign_by' => $request->input('sign_by'),
                 'file_attach' => $file_attach,
                 'status' => $status,
                 'time' => $request->input('time'),
