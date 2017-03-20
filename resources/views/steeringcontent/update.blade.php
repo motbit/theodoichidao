@@ -2,13 +2,13 @@
 @extends('layout1')
 
 @section('page-title')
-    Thêm mới Ban - Đơn Vị
+    Thêm mới Nhiệm vụ
 @stop
 @section('page-toolbar')
 @stop
 
 @section('content')
-
+    <div class="text-center title">Thêm mới nhiệm vụ</div>
     <ul>
         @foreach($errors->all() as $error)
             <li>{{ $error }}</li>

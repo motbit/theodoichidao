@@ -73,7 +73,7 @@ class SourcesteeringController extends Controller
                 'code' => $request->input('code'),
                 'sign_by' => $request->input('sign_by'),
                 'status' => $status,
-                'time' => $request->input('time')
+                'time' => \DateTime::createFromFormat('d/m/Y', $request->input('time'))
             ];
             if (isset($file)){
                 $update['file_attach'] = $file_attach;
@@ -87,7 +87,7 @@ class SourcesteeringController extends Controller
                 'sign_by' => $request->input('sign_by'),
                 'file_attach' => $file_attach,
                 'status' => $status,
-                'time' => $request->input('time'),
+                'time' => \DateTime::createFromFormat('d/m/Y', $request->input('time')),
             ]);
         }
         if (isset($file)) {
