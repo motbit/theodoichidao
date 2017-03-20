@@ -18,7 +18,7 @@
         <div class="form-group">
             {!! Form::label('Nội dung chỉ đạo') !!}
             {!! Form::textarea('content', "",
-                array('no-required',
+                array('required',
                       'class'=>'form-control',
                       'placeholder'=>'Nội dung chỉ đạo')) !!}
         </div>
@@ -45,9 +45,9 @@
     </div>
     <div class="form-group  form-inline">
         {!! Form::label('Thời gian hoàn thành') !!}
-        {!! Form::date('deathline', "",
-            array('no-required',
-                  'class'=>'form-control',
+        {!! Form::text('deathline', "",
+            array('required',
+                  'class'=>'form-control datepicker',
                   'placeholder'=>'Thời gian hoàn thành')) !!}
     </div>
 
@@ -57,5 +57,10 @@
         </div>
         {!! Form::close() !!}
 
-
+<script>
+    $( document ).ready(function() {
+        // Handler for .ready() called.
+        $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+    });
+</script>
 @stop
