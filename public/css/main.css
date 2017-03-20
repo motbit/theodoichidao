@@ -129,3 +129,19 @@ table {
 .navbar-right{
     margin-right: 0px !important;
 }
+
+footer.footer {
+    background: #455258;
+    padding: 20px 0;
+    color: #fff;
+    z-index: 999;
+/*    position: absolute;*/
+}
+
+footer.footer p {
+    margin: 2px 0;
+}
+
+.footer-text {
+    padding: 5px 30px 5px 0;
+}

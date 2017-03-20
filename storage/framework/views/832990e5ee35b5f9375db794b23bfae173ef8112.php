@@ -1,3 +1,6 @@
+<?php $__env->startSection('page-title'); ?>
+    Nguồn chỉ đạo
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <script language="javascript">
         function xoanguoidung(id) {
@@ -6,9 +9,8 @@
                 document.getElementById("steering_id").value = id;
                 frmxoa.submit();
             }
-
-
         }
+
     </script>
 
 
@@ -21,33 +23,65 @@
 
     <h1>Nguồn chỉ đạo</h1>
     <a class="btn btn-default" href="sourcesteering/update?id=0">Thêm nguồn chỉ đạo</a>
-    <table class="table table-responsive table-bordered">
+    <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
             <?php if(\App\Roles::checkPermission()): ?>
                 <th></th>
             <?php endif; ?>
-            <th>Nguồn chỉ đạo</th>
-            <th>Loại</th>
-            <th>Kí hiệu</th>
-            <th>Người chủ trì</th>
+            <th>Nguồn chỉ đạo<input type="text"></th>
+            <th>Loại
+                <select>
+                    <option value=""></option>
+                    <?php $__currentLoopData = $type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($t->name); ?>"><?php echo e($t->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+            </th>
+            <th>Kí hiệu<input type="text"></th>
+            <th>Người chủ trì
+                <select>
+                    <option value=""></option>
+                    <?php $__currentLoopData = $viphuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($vip->name); ?>"><?php echo e($vip->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+            </th>
             <th>File đính kèm</th>
             <th>Hoàn thành</th>
-            <th>Ngày ban hành</th>
+            <th>Ngày ban hành
+                <input type="date">
+            </th>
         </tr>
         </thead>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <tbody>
         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
 
                 <?php if(\App\Roles::checkPermission()): ?>
-                    <td class="col-action">
-                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img src="/img/edit.png"></a>
-                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img src="/img/delete.png"></a>
+                    <td style="width: 30px">
+                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="16" border="0"
+                                                                              src="/img/edit.png"></a>
+                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="16" border="0"
+                                                                               src="/img/delete.png"></a>
                     </td>
                 <?php endif; ?>
 
-                <td><?php echo e($row->name); ?></td>
+                <td><a href="steeringcontent?source=<?php echo e($row->id); ?>"><?php echo e($row->name); ?></a></td>
                 <td><?php echo e($row->typename); ?></td>
                 <td><?php echo e($row->code); ?></td>
                 <td><?php echo e($row->conductorname); ?></td>
