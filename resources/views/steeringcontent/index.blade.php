@@ -1,7 +1,7 @@
 @extends('layout1')
 
 @section('page-title')
-    Người Dùng
+    Nội dung chỉ đạo
 @stop
 
 @section('content')

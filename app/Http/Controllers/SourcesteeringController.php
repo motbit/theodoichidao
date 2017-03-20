@@ -23,8 +23,14 @@ class SourcesteeringController extends Controller
             ->join('viphuman', 'sourcesteering.conductor', '=', 'viphuman.id')
             ->select('sourcesteering.*', 'type.name as typename', 'viphuman.name as conductorname')
             ->get();
+        $viphuman = DB::table('viphuman')
+            ->select('name')
+            ->get();
+        $type = DB::table('type')
+            ->select('name')
+            ->get();
 
-        return view("sourcesteering/index")->with('data', $data);
+        return view("sourcesteering/index", ['data' => $data, 'viphuman' => $viphuman, 'type' => $type]);
 
     }
 

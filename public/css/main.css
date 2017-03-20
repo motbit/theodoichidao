@@ -125,3 +125,7 @@ table {
 .col-action {
     padding: 3px !important;
 }
+
+.navbar-right{
+    margin-right: 0px !important;
+}

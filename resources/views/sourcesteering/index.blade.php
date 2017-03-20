@@ -1,4 +1,7 @@
 @extends('layout1')
+@section('page-title')
+    Nguồn chỉ đạo
+@stop
 @section('content')
     <script language="javascript">
         function xoanguoidung(id) {
@@ -7,9 +10,8 @@
                 document.getElementById("steering_id").value = id;
                 frmxoa.submit();
             }
-
-
         }
+
     </script>
 
 
@@ -19,29 +21,61 @@
 
     <h1>Nguồn chỉ đạo</h1>
     <a class="btn btn-default" href="sourcesteering/update?id=0">Thêm nguồn chỉ đạo</a>
-    <table class="table table-responsive table-bordered">
+    <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
             @if(\App\Roles::checkPermission())
                 <th></th>
             @endif
-            <th>Nguồn chỉ đạo</th>
-            <th>Loại</th>
-            <th>Kí hiệu</th>
-            <th>Người chủ trì</th>
+            <th>Nguồn chỉ đạo<input type="text"></th>
+            <th>Loại
+                <select>
+                    <option value=""></option>
+                    @foreach($type as $t)
+                        <option value="{{$t->name}}">{{$t->name}}</option>
+                    @endforeach
+                </select>
+            </th>
+            <th>Kí hiệu<input type="text"></th>
+            <th>Người chủ trì
+                <select>
+                    <option value=""></option>
+                    @foreach($viphuman as $vip)
+                    <option value="{{$vip->name}}">{{$vip->name}}</option>
+                    @endforeach
+                </select>
+            </th>
             <th>File đính kèm</th>
             <th>Hoàn thành</th>
-            <th>Ngày ban hành</th>
+            <th>Ngày ban hành
+                <input type="date">
+            </th>
         </tr>
         </thead>
+        {{--<tfoot>--}}
+        {{--<tr>--}}
+        {{--@if(\App\Roles::checkPermission())--}}
+        {{--<th type="action"></th>--}}
+        {{--@endif--}}
+        {{--<th>Nguồn chỉ đạo</th>--}}
+        {{--<th>Loại</th>--}}
+        {{--<th>Kí hiệu</th>--}}
+        {{--<th>Người chủ trì</th>--}}
+        {{--<th>File đính kèm</th>--}}
+        {{--<th>Hoàn thành</th>--}}
+        {{--<th>Ngày ban hành</th>--}}
+        {{--</tr>--}}
+        {{--</tfoot>--}}
         <tbody>
         @foreach ($data as $row)
             <tr>
 
                 @if(\App\Roles::checkPermission())
                     <td style="width: 30px">
-                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="16" border="0"
+                                                                              src="/img/edit.png"></a>
+                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0"
+                                                                               src="/img/delete.png"></a>
                     </td>
                 @endif
 

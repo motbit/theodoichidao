@@ -12,10 +12,9 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
-    <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <link href="/css/jquery.dataTables.css" rel="stylesheet">
+    <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
             nicEditors.allTextAreas()
@@ -27,6 +26,38 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+
+            // DataTable
+            var table = $('#table').DataTable({
+                bSort: false,
+                bLengthChange: false,
+                "pageLength": 20
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+                $('select', this.header()).on('change', function () {
+                    if (that.search() !== this.value) {
+                        that.search( this.value ? '^'+this.value+'$' : '', true, false ).draw();
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        #table_filter{
+            display: none;
+        }
+    </style>
     <title>@section('page-title')
         @show</title>
 </head>
