@@ -25,14 +25,14 @@
     {!! Form::close() !!}
 
     <div class="text-center title">Nguồn chỉ đạo</div>
-    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm mới</a>
+    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
             @if(\App\Roles::checkPermission())
                 <th></th>
             @endif
-            <th>Trích yếu<input type="text"></th>
+            <th>Trích yếu<br><input type="text"></th>
             <th>Loại nguồn
                 <select>
                     <option value=""></option>
@@ -43,12 +43,7 @@
             </th>
             <th>Số kí hiệu<input type="text" style="max-width: 100px"></th>
             <th>Người ký
-                <select>
-                    <option value=""></option>
-                    @foreach($viphuman as $vip)
-                    <option value="{{$vip->name}}">{{$vip->name}}</option>
-                    @endforeach
-                </select>
+                <input type="text" style="max-width: 100px">
             </th>
             <th>File đính kèm</th>
             {{--<th>Hoàn thành</th>--}}
@@ -87,7 +82,7 @@
                 <td><a href="steeringcontent?source={{$row->id}}">{{$row->name}}</a></td>
                 <td>{{$row->typename}}</td>
                 <td>{{$row->code}}</td>
-                <td>{{$row->conductorname}}</td>
+                <td>{{$row->sign_by}}</td>
                 <td class="text-center">
                     @if($row->file_attach != '')
                         <a href="/file/{{$row->file_attach}}" download>Tải về</a>

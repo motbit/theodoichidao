@@ -122,12 +122,12 @@
         <!-- Example row of columns -->
         <div class="row">
             <div class="col-sm-4">
-                <img src="/img/moet-logo.jpg" width="150" height="auto" border="0" />
+                {{--<img src="/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
             </div>
             <div class="col-sm-8 pull-right" style="text-align: right">
                 <div class="footer-text">
                     <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
-                    <p>Địa chỉ: Số 35 Đại Cồ Việt, Hà Nội</p>
+                    <p>Địa chỉ: Số 35 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</p>
                     {{--<p>Điện thoại: 04.38695144; Fax: 04.38694085;</p>--}}
                     {{--<p>Email: bogddt@moet.gov.vn</p>--}}
                     {{--<p><strong>Thiết kế bởi Cục Công nghệ thông tin - Bộ Giáo dục và Đào tạo</strong></p>--}}

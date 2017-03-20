@@ -27,11 +27,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Người ký</label>
-        <select name="conductor" class="form-control">
-            @foreach($conductor as $c)
-                <option value="{{$c->id}}" {{($id == 0 || $c->id != $steering->conductor)?'':'selected'}}>{{$c->name}}</option>
-            @endforeach
-        </select>
+        <input type="text" required name="sign_by" class="form-control" value="{{($id == 0)?"":$steering->sign_by}}">
     </div>
     <div class="form-group form-inline">
         <label>File đính kèm</label>
