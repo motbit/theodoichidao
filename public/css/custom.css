@@ -1,0 +1,27 @@
+footer {
+    clear: both;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.footer {
+    background: #455258;
+    padding: 5px 0;
+    color: #fff;
+    z-index: 999;
+    /*    position: absolute;*/
+}
+
+.footer p {
+    margin: 2px 0;
+}
+
+.footer-text {
+    padding: 5px 30px 5px 0;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}

@@ -27,14 +27,12 @@
 
 
     <div class="text-center title">Nguồn chỉ đạo</div>
-    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm mới</a>
+    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
-            <?php if(\App\Roles::checkPermission()): ?>
-                <th></th>
-            <?php endif; ?>
-            <th>Trích yếu<input type="text"></th>
+            <th></th>
+            <th>Trích yếu<br><input type="text" style="width: 100%" ></th>
             <th>Loại nguồn
                 <select>
                     <option value=""></option>
@@ -45,38 +43,31 @@
             </th>
             <th>Số kí hiệu<input type="text" style="max-width: 100px"></th>
             <th>Người ký
-                <select>
-                    <option value=""></option>
-                    <?php $__currentLoopData = $viphuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option value="<?php echo e($vip->name); ?>"><?php echo e($vip->name); ?></option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
+                <input type="text" style="max-width: 100px">
             </th>
-            <th>File đính kèm</th>
-            
+            <th>File</th>
             <th>Ngày ban hành
-                <input type="date">
+                <input type="text" class="datepicker" style="max-width: 100px">
             </th>
+            <?php if(\App\Roles::checkPermission()): ?>
+                <th></th>
+            <?php endif; ?>
         </tr>
         </thead>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         <tbody>
-        <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx=>$row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-
+                <td><?php echo e($idx + 1); ?></td>
+                <td><a href="steeringcontent?source=<?php echo e($row->id); ?>"><?php echo e($row->name); ?></a></td>
+                <td><?php echo e($row->typename); ?></td>
+                <td><?php echo e($row->code); ?></td>
+                <td><?php echo e($row->sign_by); ?></td>
+                <td class="text-center">
+                    <?php if($row->file_attach != ''): ?>
+                        <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
+                    <?php endif; ?>
+                </td>
+                <td><?php echo e(date("d-m-Y", strtotime($row->time))); ?></td>
                 <?php if(\App\Roles::checkPermission()): ?>
                     <td style="width: 30px">
                         <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="16" border="0"
@@ -85,19 +76,6 @@
                                                                                src="/img/delete.png"></a>
                     </td>
                 <?php endif; ?>
-
-                <td><a href="steeringcontent?source=<?php echo e($row->id); ?>"><?php echo e($row->name); ?></a></td>
-                <td><?php echo e($row->typename); ?></td>
-                <td><?php echo e($row->code); ?></td>
-                <td><?php echo e($row->conductorname); ?></td>
-                <td class="text-center">
-                    <?php if($row->file_attach != ''): ?>
-                        <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
-                    <?php endif; ?>
-                </td>
-                
-                                               
-                <td><?php echo e(date("d-m-Y", strtotime($row->time))); ?></td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>

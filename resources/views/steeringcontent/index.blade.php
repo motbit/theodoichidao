@@ -6,13 +6,13 @@
 
 @section('content')
 
-<h1>Nội dung chỉ đạo</h1>
+    <div class="text-center title">Nội dung chỉ đạo</div>
 
 @if ($steering != false)
     <p><u>Nguồn chỉ đạo:</u> [{{$steering->code}}] - {{$steering->name}}</p>
     @endif
 @if(\App\Roles::checkPermission())
-{{ Html::linkAction('SteeringcontentController@edit', 'Thêm Nội dung Chỉ đạo', array('id'=>0), array('class' => 'btn btn-default')) }}
+{{ Html::linkAction('SteeringcontentController@edit', 'Thêm Nội dung Chỉ đạo', array('id'=>0), array('class' => 'btn btn-my')) }}
 
 <script language="javascript">
     function removebyid(id) {
@@ -49,12 +49,9 @@
         {{--background-color: whitesmoke !important;--}}
     {{--}--}}
 {{--</style>--}}
-<table id="myTable" class="table table-bordered table-hover row-border hover order-column">
+<table id="table" class="table table-bordered table-hover row-border hover order-column">
     <thead>
     <tr>
-        @if(\App\Roles::checkPermission())
-        <th></th>
-        @endif
         <th> Nội dung công việc </th>
         <th> Nguồn chỉ đạo </th>
         <th> Đơn vị đầu mối</th>
@@ -63,17 +60,14 @@
         <th> Theo dõi của VP </th>
         <th> Đánh giá </th>
         <th> XN </th>
+        @if(\App\Roles::checkPermission())
+            <th></th>
+        @endif
     </tr>
     </thead>
     <tbody>
     @foreach ($lst as $row)
     <tr>
-        @if(\App\Roles::checkPermission())
-        <td>
-            <a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-            <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
-        </td>
-        @endif
         <td> {{$row->content}} </td>
         <td> {{ $source[$row->source] }} </td>
         <td> {{ $unit[$row->unit] }} </td>
@@ -98,6 +92,12 @@
             @endif
         </td>
         <td> {{$row->xn}} </td>
+        @if(\App\Roles::checkPermission())
+            <td>
+                <a href="/steeringcontent/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+            </td>
+        @endif
     </tr>
     @endforeach
     </tbody>

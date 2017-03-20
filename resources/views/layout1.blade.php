@@ -120,7 +120,7 @@
         @yield('content')
     </div>
 </div>
-<footer>
+<footer class="container-fluid">
         <!-- Example row of columns -->
         <div class="row footer">
             <div class="col-sm-4">
