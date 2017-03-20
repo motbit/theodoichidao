@@ -149,7 +149,11 @@ table {
     color: white;
 }
 
-footer.footer {
+#content {
+    min-height: 450px;
+}
+
+.footer {
     background: #455258;
     padding: 5px 0;
     color: #fff;
@@ -157,7 +161,7 @@ footer.footer {
 /*    position: absolute;*/
 }
 
-footer.footer p {
+.footer p {
     margin: 2px 0;
 }
 

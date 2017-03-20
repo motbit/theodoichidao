@@ -15,6 +15,8 @@
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
     <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <link href="/css/datepicker.css" rel="stylesheet">
 
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
@@ -118,9 +120,9 @@
         @yield('content')
     </div>
 </div>
-<footer class="footer">
+<footer class="container-fluid ">
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row footer">
             <div class="col-sm-4">
                 {{--<img src="/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
             </div>

@@ -14,6 +14,9 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <link href="/css/datepicker.css" rel="stylesheet">
 
     <script type="text/javascript">
         bkLib.onDomLoaded(function () {
@@ -92,24 +95,21 @@
 
 <div class="main">
     <div id="mySidenav" class="sidenav">
-        <div class="left-head">
-            CÔNG VIỆC
-        </div>
         <div class="list-menu">
             <?php if(\App\Roles::checkPermission()): ?>
-            <div class="cate-menu">NGƯỜI DÙNG</div>
+            <div class="left-head">NGƯỜI DÙNG</div>
             <ul>
                 <li><a href="<?php echo e(@route('user-index')); ?>">Người sử dụng</a></li>
                 <li><a href="<?php echo e(@route('unit-index')); ?>">Ban - Đơn vị</a></li>
                 <li><a href="<?php echo e(@route('viphuman-index')); ?>">Người chủ trì</a></li>
             </ul>
-            <div class="cate-menu">Ý KIẾN CHỈ ĐẠO</div>
+            <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
             <ul>
                 <li><a href="<?php echo e(@route('sourcesteering-index')); ?>">Nguồn chỉ đạo</a></li>
                 <li><a href="<?php echo e(@route('steeringcontent-index')); ?>">Nội dung chỉ đạo</a></li>
             </ul>
             <?php endif; ?>
-            <div class="cate-menu">XỬ LÝ CÔNG VIỆC</div>
+            <div class="left-head">XỬ LÝ CÔNG VIỆC</div>
             <ul>
                 <li><a href="<?php echo e(@route('xuly-daumoi')); ?>">Công việc đầu mối</a></li>
                 <li><a href="<?php echo e(@route('xuly-phoihop')); ?>">Công việc phối hợp</a></li>
@@ -122,9 +122,9 @@
         <?php echo $__env->yieldContent('content'); ?>
     </div>
 </div>
-<footer class="footer">
+<footer class="container-fluid ">
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row footer">
             <div class="col-sm-4">
                 <img src="/img/moet-logo.jpg" width="150" height="auto" border="0" />
             </div>
@@ -132,9 +132,9 @@
                 <div class="footer-text">
                     <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
                     <p>Địa chỉ: Số 35 Đại Cồ Việt, Hà Nội</p>
-                    <p>Điện thoại: 04.38695144; Fax: 04.38694085;</p>
-                    <p>Email: bogddt@moet.gov.vn</p>
-                    <p><strong>Thiết kế bởi Cục Công nghệ thông tin - Bộ Giáo dục và Đào tạo</strong></p>
+                    
+                    
+                    
                 </div>
             </div>
         </div>
@@ -164,5 +164,6 @@
             openNav();
         }
     }
+    $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 </script>
 </html>
