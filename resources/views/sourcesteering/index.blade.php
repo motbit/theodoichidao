@@ -13,6 +13,11 @@
         }
 
     </script>
+    <style>
+        select{
+            max-width: 150px;
+        }
+    </style>
 
 
     {!! Form::open(array('route' => 'sourcesteering-delete', 'class' => 'form', 'id' => 'frmxoa')) !!}
@@ -36,7 +41,7 @@
                     @endforeach
                 </select>
             </th>
-            <th>Số kí hiệu<input type="text"></th>
+            <th>Số kí hiệu<input type="text" style="max-width: 100px"></th>
             <th>Người ký
                 <select>
                     <option value=""></option>
