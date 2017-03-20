@@ -29,10 +29,8 @@
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
-            @if(\App\Roles::checkPermission())
-                <th></th>
-            @endif
-            <th>Trích yếu<br><input type="text"></th>
+            <th></th>
+            <th>Trích yếu<br><input type="text" style="width: 100%" ></th>
             <th>Loại nguồn
                 <select>
                     <option value=""></option>
@@ -45,40 +43,19 @@
             <th>Người ký
                 <input type="text" style="max-width: 100px">
             </th>
-            <th>File đính kèm</th>
-            {{--<th>Hoàn thành</th>--}}
+            <th>File</th>
             <th>Ngày ban hành
-                <input type="date">
+                <input type="text" class="datepicker" style="max-width: 100px">
             </th>
+            @if(\App\Roles::checkPermission())
+                <th></th>
+            @endif
         </tr>
         </thead>
-        {{--<tfoot>--}}
-        {{--<tr>--}}
-        {{--@if(\App\Roles::checkPermission())--}}
-        {{--<th type="action"></th>--}}
-        {{--@endif--}}
-        {{--<th>Nguồn chỉ đạo</th>--}}
-        {{--<th>Loại</th>--}}
-        {{--<th>Kí hiệu</th>--}}
-        {{--<th>Người chủ trì</th>--}}
-        {{--<th>File đính kèm</th>--}}
-        {{--<th>Hoàn thành</th>--}}
-        {{--<th>Ngày ban hành</th>--}}
-        {{--</tr>--}}
-        {{--</tfoot>--}}
         <tbody>
-        @foreach ($data as $row)
+        @foreach ($data as $idx=>$row)
             <tr>
-
-                @if(\App\Roles::checkPermission())
-                    <td style="width: 30px">
-                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="16" border="0"
-                                                                              src="/img/edit.png"></a>
-                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0"
-                                                                               src="/img/delete.png"></a>
-                    </td>
-                @endif
-
+                <td>{{$idx + 1}}</td>
                 <td><a href="steeringcontent?source={{$row->id}}">{{$row->name}}</a></td>
                 <td>{{$row->typename}}</td>
                 <td>{{$row->code}}</td>
@@ -88,9 +65,15 @@
                         <a href="/file/{{$row->file_attach}}" download>Tải về</a>
                     @endif
                 </td>
-                {{--<td class="text-center"><input type="checkbox" value="{{$row->id}}"--}}
-                                               {{--disabled {{($row->status == 0)?'':'checked'}}></td>--}}
                 <td>{{date("d-m-Y", strtotime($row->time))}}</td>
+                @if(\App\Roles::checkPermission())
+                    <td style="width: 30px">
+                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="16" border="0"
+                                                                              src="/img/edit.png"></a>
+                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0"
+                                                                               src="/img/delete.png"></a>
+                    </td>
+                @endif
             </tr>
         @endforeach
         </tbody>

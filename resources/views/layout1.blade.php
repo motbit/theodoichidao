@@ -120,7 +120,7 @@
         @yield('content')
     </div>
 </div>
-<footer class="container-fluid ">
+<footer>
         <!-- Example row of columns -->
         <div class="row footer">
             <div class="col-sm-4">
@@ -163,5 +163,10 @@
         }
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
+
+    $( document ).ready(function() {
+        // Handler for .ready() called.
+        $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+    });
 </script>
 </html>

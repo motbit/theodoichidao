@@ -23,15 +23,15 @@
     </div>
     <div class="form-group form-inline">
         <label>Ngày ban hành</label>
-        <input id="my-time" name="time" type="date" class="form-control" required value="{{($id == 0)?"":date("Y-m-d", strtotime($steering->time))}}">
+        <input id="my-time" name="time" type="text" class="form-control datepicker" required value="{{($id == 0)?"":date("d/m/y", strtotime($steering->time))}}">
     </div>
     <div class="form-group form-inline">
         <label>Người ký</label>
         <input type="text" required name="sign_by" class="form-control" value="{{($id == 0)?"":$steering->sign_by}}">
     </div>
     <div class="form-group form-inline">
-        <label>File đính kèm</label>
-        {!! Form::file('docs', array('class'=>'form-control')) !!}
+        <label style="float: left">File đính kèm</label>
+        {!! Form::file('docs', array('class'=>'')) !!}
     </div>
     <div class="form-group form-inline hidden">
         <label>Hoàn thành</label>
@@ -40,7 +40,7 @@
     <input name="id" value="{{$id}}" type="hidden">
 
     <div class="form-group">
-        {!! Form::submit('Cập nhật',
+        {!! Form::submit('Hoàn tất',
           array('class'=>'btn btn-my')) !!}
     </div>
     {!! Form::close() !!}
