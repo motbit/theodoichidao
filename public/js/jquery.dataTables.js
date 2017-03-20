@@ -11463,7 +11463,7 @@
 			 *      } );
 			 *    } );
              */
-            "sInfoFiltered": "(filtered from _MAX_ total entries)",
+            "sInfoFiltered": "(Lọc từ <strong>_MAX_</strong> bản ghi)",
 
 
             /**
