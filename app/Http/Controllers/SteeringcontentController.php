@@ -51,9 +51,25 @@ class SteeringcontentController extends Controller
 
         $unit=Unit::orderBy('created_at', 'DESC')->get();
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $priority = $type = DB::table('priority')->get();
 
         $firstunit = array();
         $secondunit = array();
+        $tree_unit = array();
+        foreach ($unit as $row) {
+            if ($row->parent_id == 0){
+                $children = array();
+                foreach ($unit as $c) {
+                    if ($c->parent_id == $row->id){
+                        $children[$c->id] = $c;
+                    }
+                }
+                $row->children = $children;
+                $tree_unit[] = $row;
+            }
+        }
+
+//        dd($tree_unit);
 
         foreach ($unit as $row) {
             $firstunit[$row->id] = $row->name;
@@ -69,9 +85,11 @@ class SteeringcontentController extends Controller
             $data=Steeringcontent::where('id',$id)->get();
 
             $dtfollow = explode(",",$data[0]['follow']);
-            return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering]);
+            return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
+                'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit]);
         } else {
-            return view('steeringcontent.add',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source, 'sourcesteering'=>$sourcesteering]);
+            return view('steeringcontent.add',['sourcesteering'=>$sourcesteering,
+                'treeunit'=>$tree_unit,'unit'=>$unit, 'priority'=>$priority]);
         }
     }
 
@@ -98,13 +116,13 @@ class SteeringcontentController extends Controller
             );
 
         } else {
-
             $result=Steeringcontent::insert([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
-                'deadline'=>$request->input('deadline'),
+                'follow'=>$request->input('secondunit'),
+                'priority'=>$request->input('priority'),
+                'deadline'=>\DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
             ]);
 
             if($result) {

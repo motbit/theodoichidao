@@ -21,7 +21,7 @@ body{
     margin-bottom: 0px !important;
 }
 
-.nav a {
+.navbar-my a {
     color: white;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
@@ -87,7 +87,7 @@ table {
 }
 
 .form label {
-    min-width: 130px;
+    width: 150px;
 }
 
 .b-action {

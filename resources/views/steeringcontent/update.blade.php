@@ -2,7 +2,7 @@
 @extends('layout1')
 
 @section('page-title')
-    Thêm mới Nhiệm vụ
+    Cập nhật Nhiệm vụ
 @stop
 @section('page-toolbar')
 @stop
