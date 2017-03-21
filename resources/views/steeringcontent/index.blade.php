@@ -71,15 +71,9 @@
             <tr>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> {{ $source[$row->source] }} </td>
-                <td> {{ $unit[$row->unit] }} </td>
-                <td>
-                    @foreach(explode(',', $row->follow) as $i)
-                        @if (isset($unit2[$i]))
-                            {{$unit2[$i]}},
-                        @endif
-                    @endforeach
-                </td>
+                <td> {{ $row->source }} </td>
+                <td> {{ $row->unit }} </td>
+                <td> {{ $row->follow }} </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
                 <td> {{$row->note}} </td>
                 {{--<td>--}}

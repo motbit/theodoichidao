@@ -11,18 +11,18 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    {{--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">--}}
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
-    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    {{--<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>--}}
     <script src="/js/bootstrap-datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet">
 
-    <script type="text/javascript">
-        bkLib.onDomLoaded(function () {
-            nicEditors.allTextAreas()
-        });
-    </script>
+    {{--<script type="text/javascript">--}}
+        {{--bkLib.onDomLoaded(function () {--}}
+            {{--nicEditors.allTextAreas()--}}
+        {{--});--}}
+    {{--</script>--}}
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -68,8 +68,7 @@
 <img src="/img/top-baner.png" width="100%" class="hidden-xs hidden-sm" height="auto">
 <img src="/img/mobile-banner.png" width="100%" class="visible-xs visible-sm" height="auto">
 <nav class="navbar navbar-my">
-    <a href="javascript:actionNav()">
-        <i class="fa fa-bars"></i>
+    <a href="javascript:actionNav()" class="btn ico ico-menu">
     </a>
     <ul class="nav navbar-nav navbar-right">
         @if (Auth::guest())
