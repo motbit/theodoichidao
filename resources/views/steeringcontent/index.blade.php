@@ -23,7 +23,8 @@
                 }
 
 
-            }
+
+}
         </script>
 
         {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}

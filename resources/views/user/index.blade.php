@@ -7,9 +7,9 @@
 @section('content')
 
 
-<h1>Người sử dụng</h1>
+    <div class="text-center title">Người sử dụng</div>
 @if(\App\Roles::checkPermission())
-{{ Html::linkAction('UserController@edit', 'Thêm người sử dụng', array('id'=>0), array('class' => 'btn btn-default')) }}
+{{ Html::linkAction('UserController@edit', 'Thêm người sử dụng', array('id'=>0), array('class' => 'btn btn-my')) }}
 
 {!! Form::open(array('route' => 'user-delete', 'class' => 'form', 'id' => 'frmxoanguoidung')) !!}
 {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
@@ -27,27 +27,28 @@
     }
 </script>
 @endif
-<table class="table table-bordered table-hover">
+<table id="table" class="table table-bordered table-hover">
     <thead>
     <tr>
+        <th> Username <br />
+            <input type="text" style="max-width: 150px">
+        </th>
+        <th> Tên đầy đủ<br />
+            <input type="text" style="max-width: 150px">
+        </th>
+        <th> Quyền Hạn<br />
+            <input type="text" style="max-width: 150px"> </th>
+        <th> Đơn vị<br />
+            <input type="text" style="max-width: 150px"> </th>
+
         @if(\App\Roles::checkPermission())
-        <th>  </th>
+            <th>  </th>
         @endif
-        <th> Username </th>
-        <th> Tên đầy đủ </th>
-        <th> Quyền Hạn </th>
-        <th> Đơn vị </th>
     </tr>
     </thead>
     <tbody>
     @foreach ($nguoidung as $row)
     <tr>
-        @if(\App\Roles::checkPermission())
-        <td>
-            <a href="/user/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-            <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
-        </td>
-        @endif
         <td> {{$row->username}} </td>
         <td> {{$row->fullname}} </td>
         <td>
@@ -60,6 +61,12 @@
             {{$unit[$row->unit]}}
             @endif
         </td>
+        @if(\App\Roles::checkPermission())
+            <td>
+                <a href="/user/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+            </td>
+        @endif
     </tr>
     @endforeach
     </tbody>

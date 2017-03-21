@@ -20,10 +20,9 @@
         {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
         {!! Form::close() !!}
     @endif
+    <div class="text-center title">Người chủ trì</div>
 
-    <div>
-        <h1>Người chủ trì</h1>
-
+{{--    <div>
         <div class="pull-right">
             <form class="form" action="" method="get" id="searchform">
                 <div class="form-group">
@@ -40,32 +39,34 @@
         </div>
         @if(\App\Roles::checkPermission())
             <div class="pull-left" style="margin-bottom: 10px">
-                <a href="viphuman/update?id=0" class="btn btn-default"><i class="fa fa-plus"></i> Thêm mới</a>
+                <a href="viphuman/update?id=0" class="btn btn-my"><i class="fa fa-plus"></i> Thêm mới</a>
             </div>
         @endif
-    </div>
+    </div>--}}
 
-    <table class="table table-bordered table-hover">
+    <table id="table" class="table table-bordered table-hover">
         <thead>
         <tr>
+            <th> Tên lãnh đạo <br />
+                <input type="text" style="max-width: 150px"></th>
+            <th> Chức vụ <br />
+                <input type="text" style="max-width: 150px"></th>
             @if(\App\Roles::checkPermission())
-            <th>  </th>
+                <th>  </th>
             @endif
-            <th> Tên lãnh đạo </th>
-            <th> Chức vụ </th>
         </tr>
         </thead>
         <tbody>
         @foreach ($nguoidung as $row)
             <tr>
-                @if(\App\Roles::checkPermission())
-                <td>
-                    <a href="/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-                    <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
-                </td>
-                @endif
                 <td> {{$row->name}} </td>
                 <td> {{$row->description}} </td>
+                @if(\App\Roles::checkPermission())
+                    <td>
+                        <a href="/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                        <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+                    </td>
+                @endif
             </tr>
         @endforeach
         </tbody>

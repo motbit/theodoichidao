@@ -64,6 +64,18 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|min:5',
+            'group' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->action('UserController@index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
         $id = intval( $request->input('id') );
         if($id > 0) {
 
