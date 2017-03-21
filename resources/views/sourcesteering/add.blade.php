@@ -23,7 +23,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Ngày ban hành</label>
-        <input id="my-time" name="time" type="text" class="form-control datepicker" required value="{{($id == 0)?"":date("d/m/y", strtotime($steering->time))}}">
+        <input id="my-time" name="time" type="text" class="form-control datepicker" required value="{{($id == 0)?"":date("d/m/Y", strtotime($steering->time))}}">
     </div>
     <div class="form-group form-inline">
         <label>Người ký</label>

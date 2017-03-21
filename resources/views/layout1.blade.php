@@ -50,14 +50,14 @@
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
-                        that.search( this.value ? '^'+this.value+'$' : '', true, false ).draw();
+                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
                     }
                 });
             });
         });
     </script>
     <style>
-        #table_filter{
+        #table_filter {
             display: none;
         }
     </style>
@@ -75,18 +75,20 @@
         @if (Auth::guest())
             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
         @else
-        <li class="dropdown">
-            <a class="dropdown-toggle top-menu" data-toggle="dropdown" href="#">{{\Illuminate\Support\Facades\Auth::user()->fullname}}
-                <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" style="color: black !important;">Đăng xuất</a></li>
-            </ul>
-        </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
+            <li class="dropdown">
+                <a class="dropdown-toggle top-menu" data-toggle="dropdown"
+                   href="#">{{\Illuminate\Support\Facades\Auth::user()->fullname}}
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"
+                           style="color: black !important;">Đăng xuất</a></li>
+                </ul>
+            </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         @endif
     </ul>
 </nav>
@@ -95,24 +97,29 @@
     <div id="mySidenav" class="sidenav">
         <div class="list-menu">
             @if(\App\Roles::checkPermission())
-            <div class="left-head">NGƯỜI DÙNG</div>
-            <ul>
-                <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
-                <li><a href="{{@route('unit-index')}}">Ban - Đơn vị</a></li>
-                <li><a href="{{@route('viphuman-index')}}">Người chủ trì</a></li>
-            </ul>
-            <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
-            <ul>
-                <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
-                <li><a href="{{@route('steeringcontent-index')}}">Nội dung chỉ đạo</a></li>
-            </ul>
+                <div class="left-head">NGƯỜI DÙNG</div>
+                <ul>
+                    <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
+                    <li><a href="{{@route('unit-index')}}">Ban - Đơn vị</a></li>
+                    <li><a href="{{@route('viphuman-index')}}">Người chủ trì</a></li>
+                </ul>
+                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
+                <ul>
+                    <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
+                    <li><a href="{{@route('steeringcontent-index')}}">Danh mục nhiệm vụ</a></li>
+                </ul>
             @endif
-            <div class="left-head">XỬ LÝ CÔNG VIỆC</div>
+            <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
             <ul>
-                <li><a href="{{@route('xuly-daumoi')}}">Công việc đầu mối</a></li>
-                <li><a href="{{@route('xuly-phoihop')}}">Công việc phối hợp</a></li>
-                <li><a href="{{@route('xuly-duocgiao')}}">Công việc mới được giao</a></li>
+                <li><a href="{{@route('xuly-daumoi')}}">Nhiệm vụ đầu mối</a></li>
+                <li><a href="{{@route('xuly-phoihop')}}">Nhiệm vụ phối hợp</a></li>
+                <li><a href="{{@route('xuly-duocgiao')}}">Nhiệm vụ mới được giao</a></li>
                 <li><a href="{{@route('xuly-nguonchidao')}}">Nguồn chỉ đạo</a></li>
+            </ul>
+            <div class="left-head">THỐNG KÊ BÁO CÁO</div>
+            <ul>
+                <li><a href="#">Báo cáo thống kê</a></li>
+                <li><a href="#">Báo cáo chi tiết</a></li>
             </ul>
         </div>
     </div>
@@ -120,22 +127,22 @@
         @yield('content')
     </div>
 </div>
-<footer class="container-fluid">
-        <!-- Example row of columns -->
-        <div class="row footer">
-            <div class="col-sm-4">
-                {{--<img src="/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
-            </div>
-            <div class="col-sm-8 pull-right" style="text-align: right">
-                <div class="footer-text">
-                    <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
-                    <p>Địa chỉ: Số 35 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</p>
-                    {{--<p>Điện thoại: 04.38695144; Fax: 04.38694085;</p>--}}
-                    {{--<p>Email: bogddt@moet.gov.vn</p>--}}
-                    {{--<p><strong>Thiết kế bởi Cục Công nghệ thông tin - Bộ Giáo dục và Đào tạo</strong></p>--}}
-                </div>
+<footer>
+    <!-- Example row of columns -->
+    <div class="row footer">
+        <div class="col-sm-4">
+            {{--<img src="/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
+        </div>
+        <div class="col-sm-8 pull-right" style="text-align: right">
+            <div class="footer-text">
+                <p><strong>BẢN QUYỀN THUỘC VỀ: BỘ GIÁO DỤC VÀ ĐÀO TẠO</strong></p>
+                <p>Địa chỉ: Số 35 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</p>
+                {{--<p>Điện thoại: 04.38695144; Fax: 04.38694085;</p>--}}
+                {{--<p>Email: bogddt@moet.gov.vn</p>--}}
+                {{--<p><strong>Thiết kế bởi Cục Công nghệ thông tin - Bộ Giáo dục và Đào tạo</strong></p>--}}
             </div>
         </div>
+    </div>
 </footer>
 </body>
 <script>
@@ -164,7 +171,7 @@
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
-    $( document ).ready(function() {
+    $(document).ready(function () {
         // Handler for .ready() called.
         $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
     });

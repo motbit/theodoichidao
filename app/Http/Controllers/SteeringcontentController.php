@@ -69,9 +69,9 @@ class SteeringcontentController extends Controller
             $data=Steeringcontent::where('id',$id)->get();
 
             $dtfollow = explode(",",$data[0]['follow']);
-            return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,'data'=>$data,'dtfollow'=>$dtfollow]);
+            return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering]);
         } else {
-            return view('steeringcontent.add',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source]);
+            return view('steeringcontent.add',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source, 'sourcesteering'=>$sourcesteering]);
         }
     }
 

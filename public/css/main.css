@@ -1,3 +1,11 @@
+body{
+    overflow-x: hidden;
+}
+
+.main{
+    overflow-x: scroll;
+}
+
 .navbar-my {
     background-color: #9f224e;
 }
@@ -169,7 +177,54 @@ table {
     padding: 5px 30px 5px 0;
 }
 
+/*table style*/
 .row {
     margin-right: 0px !important;
     margin-left: 0px !important;
 }
+
+.td-file{
+    width: 35px;
+}
+
+.table>thead>tr>th {
+    vertical-align: top;
+}
+
+.td-action{
+    width: 20px;
+}
+
+.td-date{
+    width: 100px;
+}
+
+.td-sign{
+    width: 100px;
+}
+
+.td-code{
+    width: 100px;
+}
+
+.td-type{
+    width: 150px;
+}
+/*table style*/
+
+/*icon*/
+.ico{
+    width: 30px;
+    height: 30px;
+    background-size: 80% 80%;
+    background-position: 3px;
+    background-repeat: no-repeat;
+}
+
+.ico-search{
+    background-image: url("../img/ico-search.png");
+}
+.ico-menu{
+    background-image: url("../img/ico-menu.png");
+}
+/*icon*/
