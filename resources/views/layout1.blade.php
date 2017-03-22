@@ -12,14 +12,17 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
     {{--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">--}}
-    <link href="/css/jquery.dataTables.css" rel="stylesheet">
-    <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
-    <script src="/js/dataTables.buttons.js" type="text/javascript"></script>
-    <script src="/js/buttons.flash.js" type="text/javascript"></script>
-    <script src="/js/pdfmake.js" type="text/javascript"></script>
-    <script src="/js/vfs_fonts.js" type="text/javascript"></script>
-    <script src="/js/jszip.js" type="text/javascript"></script>
-    <script src="/js/button.html5.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/js/datatables/datatables.min.css"/>
+    <script type="text/javascript" src="/js/datatables/datatables.min.js"></script>
+
+    {{--    <link href="/css/jquery.dataTables.css" rel="stylesheet">
+        <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="/js/dataTables.buttons.js" type="text/javascript"></script>
+        <script src="/js/buttons.flash.js" type="text/javascript"></script>
+        <script src="/js/pdfmake.js" type="text/javascript"></script>
+        <script src="/js/vfs_fonts.js" type="text/javascript"></script>
+        <script src="/js/jszip.js" type="text/javascript"></script>
+        <script src="/js/button.html5.js" type="text/javascript"></script>--}}
     {{--<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>--}}
     <script src="/js/bootstrap-datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet">
@@ -42,12 +45,50 @@
     <script>
         $(document).ready(function () {
             // Setup - add a text input to each footer cell
-
+            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'pdf'
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            modifier: {
+                                page: 'current'
+                            },
+                        },
+                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        orientation: 'landscape',
+                        customize: function (doc) {
+                            doc.defaultStyle.fontSize = 10;
+                        },
+                        className: 'btn btn-success',
+                        text: 'Export to pdf',
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-success',
+                        text: 'Export to excel',
+                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        stripHtml: false,
+                        decodeEntities: true,
+                        columns: ':visible',
+                        modifier: {
+                            selected: true
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            format: {
+                                body: function (data, row, column, node) {
+
+                                    return column === 5 ?
+                                            data.replace(/[.]/g, 'pooja') :
+                                            data;
+                                }
+                            }
+                        }
+                    }
                 ],
                 bSort: false,
                 bLengthChange: false,
