@@ -35,7 +35,7 @@ class SteeringcontentController extends Controller
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->shortname;
+            $secondunit[$row->id] = $row->name;
         }
 
 
@@ -81,15 +81,19 @@ class SteeringcontentController extends Controller
 
         $source = array();
         foreach ($sourcesteering as $row) {
-            $source[$row->id] = "[" . $row->code . "] " . $row->name;
+//            $source[$row->id] = "[" . $row->code . "] " . $row->name;
+            $source[$row->id] = $row->code;
         }
 
         if($id > 0) {
             $data=Steeringcontent::where('id',$id)->get();
 
-            $dtfollow = explode(",",$data[0]['follow']);
+//            $dtfollow = explode(",",$data[0]['follow']);
+            $dtfollow = $data[0]['follow'];
+
             return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
-                'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit]);
+                'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
+                'priority'=>$priority, 'viphuman'=>$viphuman]);
         } else {
 
             return view('steeringcontent.add',['sourcesteering'=>$sourcesteering,
@@ -102,15 +106,22 @@ class SteeringcontentController extends Controller
 
         $id = intval( $request->input('id') );
         if($id > 0) {
+            $secondunitArr = $request->input('secondunit');
+            $secondunit = implode(",", $secondunitArr);
+
             $result=Steeringcontent::where('id',$request->input('id'))->update([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
-                'note'=>$request->input('note'),
-                'deadline'=>$request->input('deadline'),
-                'xn'=>$request->input('confirm'),
-                'status'=>$request->input('status'),
+//                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
+                'follow'=>$secondunit,
+//                'note'=>$request->input('note'),
+//                'deadline'=>$request->input('deadline'),
+//                'xn'=>$request->input('confirm'),
+//                'status'=>$request->input('status'),
+                'steer_time' => date("Y-m-d", strtotime($request->input('steer_time')) ),
+                'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) ),
+                'conductor' => $request->input('viphuman')
             ]);
 
             $data=Steeringcontent::where('id',$request->input('id'))->get();
@@ -132,7 +143,6 @@ class SteeringcontentController extends Controller
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => date("Y-m-d", strtotime($request->input('steer_time')) ),
                 'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) )
-//                'deadline'=>\DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
             ]);
 
             if($result) {

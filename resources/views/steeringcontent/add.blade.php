@@ -28,7 +28,7 @@
         {!! Form::text('source', "",
                 array('no-required',
                 'placeholder'=>'Nguồn chỉ đạo',
-                'class'=>'form-control', 'id'=>'source')
+                'class'=>'form-control ipw', 'id'=>'source')
         ) !!}
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
     </div>
@@ -37,7 +37,7 @@
         {!! Form::text('viphuman', "",
                 array('no-required',
                 'placeholder'=>'Người chỉ đạo',
-                'class'=>'form-control', 'id'=>'viphuman')
+                'class'=>'form-control ipw', 'id'=>'viphuman')
         ) !!}
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-viphuman"></div>
     </div>
@@ -50,9 +50,8 @@
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân chủ trì:</label>
-        <select id="fList" name="firtunit" class="form-control">
+        <select id="fList" name="firtunit" class="form-control select-single ipw">
             @foreach($treeunit as $item)
-                <optgroup label="{{$item->name}}">
                     @foreach($item->children as $c)
                         <option value="{{$c->id}}" >{{$c->name}}</option>
             @endforeach
@@ -63,12 +62,11 @@
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân phối hợp:</label>
-        <select id="sList" name="secondunit[]" class="form-control select-multiple" multiple="multiple">
+        <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
             @foreach($treeunit as $item)
-                <optgroup label="{{$item->name}}">
                     @foreach($item->children as $c)
                         <option value="{{$c->id}}" >{{$c->name}}</option>
-            @endforeach
+                    @endforeach
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -364,5 +362,14 @@
         });
 
         $(".select-multiple").select2();
+        $(".select-single").select2();
     </script>
+    <style>
+        .ipw{
+            width: 300px !important;
+        }
+        .select2{
+            width: 300px !important;
+        }
+    </style>
 @stop
