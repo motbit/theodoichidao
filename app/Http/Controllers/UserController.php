@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Unit;
 use App\Group;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -64,23 +65,45 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|min:5',
-            'group' => 'required',
-        ]);
+        $id = intval( $request->input('id') );
 
-        if ($validator->fails()) {
-            return redirect()->action('UserController@index')
-                ->withErrors($validator)
-                ->withInput();
+        $messages = [
+            'username.min' => 'Tên người dùng phải ít nhất 6 chữ cái.',
+            'username.alpha' => 'Tên người dùng chỉ bao gồm các chữ cái và số.',
+            'username.required' => 'Yêu cầu nhập tên người dùng.',
+            'username.unique' => 'Tên người dùng đã tồn tại.',
+            'password.min' => 'Mật khẩu phải ít nhất 6 ký tự.',
+            'password.required' => 'Yêu cầu nhập mật khẩu.',
+        ];
+        if($id > 0) {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|nullable|min:6',
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('UserController@update',["id"=>$id])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        } else {
+            $validator = Validator::make($request->all(), [
+                'username' => 'required|unique:user,username|alpha_num|min:5|max:20',
+                'password' => 'required|min:6',
+                'group' => 'required',
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('UserController@update')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
         }
 
-
-        $id = intval( $request->input('id') );
         if($id > 0) {
 
             $data = [
-                'username'=>$request->input('username'),
                 'fullname'=>$request->input('fullname'),
                 'group'=>$request->input('group'),
                 'unit'=>$request->input('unit'),
