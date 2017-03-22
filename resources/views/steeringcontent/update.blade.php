@@ -80,7 +80,7 @@
 
     <div class="form-group  form-inline">
         <label>Thời hạn hoàn thành:</label>
-        {!! Form::text('deathline', $row->deadline,
+        {!! Form::text('deathline', date("d-m-Y", strtotime($row->deadline)),
             array('required',
                   'class'=>'form-control datepicker',
                   'placeholder'=>'Thời gian hoàn thành')) !!}
@@ -88,7 +88,7 @@
 
     <div class="form-group  form-inline">
         <label>Ngày chỉ đạo:</label>
-        {!! Form::text('steer_time', $row->steer_time,
+        {!! Form::text('steer_time', date("d-m-Y", strtotime($row->steer_time)),
             array('required',
                   'class'=>'form-control datepicker',
                   'placeholder'=>'Ngày bắt đầu')) !!}
