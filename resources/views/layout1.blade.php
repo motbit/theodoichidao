@@ -14,9 +14,16 @@
     {{--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">--}}
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
     <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="/js/dataTables.buttons.js" type="text/javascript"></script>
+    <script src="/js/buttons.flash.js" type="text/javascript"></script>
+    <script src="/js/pdfmake.js" type="text/javascript"></script>
+    <script src="/js/vfs_fonts.js" type="text/javascript"></script>
+    <script src="/js/jszip.js" type="text/javascript"></script>
+    <script src="/js/button.html5.js" type="text/javascript"></script>
     {{--<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>--}}
     <script src="/js/bootstrap-datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet">
+
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -26,7 +33,7 @@
             {{--nicEditors.allTextAreas()--}}
         {{--});--}}
     {{--</script>--}}
-    <!-- Scripts -->
+            <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -38,9 +45,13 @@
 
             // DataTable
             var table = $('#table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf'
+                ],
                 bSort: false,
                 bLengthChange: false,
-                "pageLength": 20
+                "pageLength": 20,
             });
 
             // Apply the search
