@@ -132,7 +132,6 @@ class ApiController extends Controller
 
     public function addProgress(Request $request)
     {
-        echo "bbbbbbbbbbb";
         $steering_id = $request->steering_id;
         $note = $request->note;
         $status = intval($request->status);

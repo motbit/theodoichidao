@@ -255,3 +255,12 @@ table {
     100% { transform: rotate(360deg); }
 }
 /* End loader*/
+.row-st-1{
+    color: blue;
+}
+.row-st-2{
+    color: green;
+}
+.row-st-3{
+    color: red;
+}
