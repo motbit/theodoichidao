@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
+use App\Viphuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +54,7 @@ class SteeringcontentController extends Controller
         $unit=Unit::orderBy('created_at', 'DESC')->get();
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
         $priority = $type = DB::table('priority')->get();
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -89,8 +91,9 @@ class SteeringcontentController extends Controller
             return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
                 'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit]);
         } else {
+
             return view('steeringcontent.add',['sourcesteering'=>$sourcesteering,
-                'treeunit'=>$tree_unit,'unit'=>$unit, 'priority'=>$priority]);
+                'treeunit'=>$tree_unit,'unit'=>$unit, 'priority'=>$priority, 'viphuman'=>$viphuman]);
         }
     }
 
@@ -117,13 +120,19 @@ class SteeringcontentController extends Controller
             );
 
         } else {
+            $secondunitArr = $request->input('secondunit');
+            $secondunit = implode(",", $secondunitArr);
+
             $result=Steeringcontent::insert([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
                 'unit'=>$request->input('firtunit'),
-                'follow'=>$request->input('secondunit'),
+                'follow'=>$secondunit,
                 'priority'=>$request->input('priority'),
-                'deadline'=>\DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
+                'conductor' => $request->input('viphuman'),
+                'steer_time' => date("Y-m-d", strtotime($request->input('steer_time')) ),
+                'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) )
+//                'deadline'=>\DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
             ]);
 
             if($result) {

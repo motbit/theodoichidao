@@ -127,6 +127,7 @@
     <div id="content">
         <?php echo $__env->yieldContent('content'); ?>
     </div>
+    <div class="loader"></div>
 </div>
 <footer>
     <!-- Example row of columns -->

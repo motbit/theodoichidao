@@ -24,10 +24,14 @@
     <script src="/js/bootstrap-datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet">
 
-    {{--<script type="text/javascript">--}}
-    {{--bkLib.onDomLoaded(function () {--}}
-    {{--nicEditors.allTextAreas()--}}
-    {{--});--}}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+{{--<script type="text/javascript">--}}
+        {{--bkLib.onDomLoaded(function () {--}}
+            {{--nicEditors.allTextAreas()--}}
+        {{--});--}}
     {{--</script>--}}
             <!-- Scripts -->
     <script>
