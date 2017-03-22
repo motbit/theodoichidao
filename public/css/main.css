@@ -156,6 +156,15 @@ table {
 .btn-my:hover{
     color: white;
 }
+.btn-my:active{
+    color: white;
+}
+.btn-my:focus{
+    color: white;
+}
+.btn-my:visited{
+    color: white;
+}
 
 #content {
     min-height: 450px;
