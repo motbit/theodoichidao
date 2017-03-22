@@ -49,16 +49,16 @@
     {{--background-color: whitesmoke !important;--}}
     {{--}--}}
     {{--</style>--}}
-    <table id="myTable" class="table table-bordered table-hover row-border hover order-column">
+    <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
             <th></th>
-            <th> Tên nhiệm vụ</th>
-            <th> Nguồn chỉ đạo</th>
-            <th> Đơn vị đầu mối</th>
-            <th> Đơn vị phối hợp</th>
-            <th> Thời hạn HT</th>
-            <th> Tiến độ</th>
+            <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
+            <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
+            <th> Đơn vị đầu mối<input type="text" style="max-width: 100px"></th>
+            <th> Đơn vị phối hợp<input type="text" style="max-width: 110px"></th>
+            <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             @if(\App\Roles::checkPermission())
                 <th class="td-action"></th>
                 <th class="td-action"></th>
