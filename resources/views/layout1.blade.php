@@ -47,7 +47,6 @@
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'pdf'
                 ],
                 bSort: false,
                 bLengthChange: false,
@@ -126,8 +125,8 @@
             <ul>
                 <li><a href="{{@route('xuly-daumoi')}}">Nhiệm vụ đầu mối</a></li>
                 <li><a href="{{@route('xuly-phoihop')}}">Nhiệm vụ phối hợp</a></li>
-                <li><a href="{{@route('xuly-duocgiao')}}">Nhiệm vụ mới được giao</a></li>
-                <li><a href="{{@route('xuly-nguonchidao')}}">Nguồn chỉ đạo</a></li>
+                {{--<li><a href="{{@route('xuly-duocgiao')}}">Nhiệm vụ mới được giao</a></li>--}}
+                {{--<li><a href="{{@route('xuly-nguonchidao')}}">Nguồn chỉ đạo</a></li>--}}
             </ul>
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>

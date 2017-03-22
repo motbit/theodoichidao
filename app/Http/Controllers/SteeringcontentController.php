@@ -35,7 +35,7 @@ class SteeringcontentController extends Controller
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->shortname;
+            $secondunit[$row->id] = $row->name;
         }
 
 
@@ -115,10 +115,10 @@ class SteeringcontentController extends Controller
                 'unit'=>$request->input('firtunit'),
 //                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'follow'=>$secondunit,
-                'note'=>$request->input('note'),
+//                'note'=>$request->input('note'),
 //                'deadline'=>$request->input('deadline'),
-                'xn'=>$request->input('confirm'),
-                'status'=>$request->input('status'),
+//                'xn'=>$request->input('confirm'),
+//                'status'=>$request->input('status'),
                 'steer_time' => date("Y-m-d", strtotime($request->input('steer_time')) ),
                 'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) ),
                 'conductor' => $request->input('viphuman')

@@ -31,24 +31,6 @@
         {!! Form::close() !!}
     @endif
 
-    {{--<script>--}}
-    {{--$(document).ready(function() {--}}
-    {{--var table = $('#myTable').DataTable();--}}
-
-    {{--$('#myTable tbody')--}}
-    {{--.on( 'mouseenter', 'td', function () {--}}
-    {{--var colIdx = table.cell(this).index().column;--}}
-
-    {{--$( table.cells().nodes() ).removeClass( 'highlight' );--}}
-    {{--$( table.column( colIdx ).nodes() ).addClass( 'highlight' );--}}
-    {{--} );--}}
-    {{--} );--}}
-    {{--</script>--}}
-    {{--<style type="text/css">--}}
-    {{--td.highlight {--}}
-    {{--background-color: whitesmoke !important;--}}
-    {{--}--}}
-    {{--</style>--}}
     <div class="row">
         <div class="col-xs-2 nopad">
             <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
@@ -73,7 +55,7 @@
             <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
             <th> Đơn vị đầu mối<input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị phối hợp<input type="text" style="max-width: 110px"></th>
+            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%"></th>
             <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             @if(\App\Roles::checkPermission())
@@ -93,7 +75,7 @@
                     $st = 2;
                 }
             }else{
-                if ($row->complete_time < $row->deadline){
+                if (date('Y-m-d') < $row->deadline){
                     $st = 0;
                 }else{
                     $st = 3;
