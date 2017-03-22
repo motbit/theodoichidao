@@ -50,7 +50,7 @@
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân chủ trì:</label>
-        <select id="fList" name="firtunit" class="form-control ipw">
+        <select id="fList" name="firtunit" class="form-control select-single ipw">
             @foreach($treeunit as $item)
                     @foreach($item->children as $c)
                         <option value="{{$c->id}}" >{{$c->name}}</option>
@@ -362,6 +362,7 @@
         });
 
         $(".select-multiple").select2();
+        $(".select-single").select2();
     </script>
     <style>
         .ipw{
