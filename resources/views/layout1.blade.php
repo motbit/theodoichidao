@@ -125,6 +125,7 @@
     <div id="content">
         @yield('content')
     </div>
+    <div class="loader"></div>
 </div>
 <footer>
     <!-- Example row of columns -->
