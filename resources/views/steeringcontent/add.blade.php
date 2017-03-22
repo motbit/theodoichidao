@@ -49,7 +49,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Đơn vị chủ trì:</label>
+        <label>Đơn vị/Cá nhân chủ trì:</label>
         <select id="fList" name="firtunit" class="form-control">
             @foreach($treeunit as $item)
                 <optgroup label="{{$item->name}}">
@@ -62,7 +62,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Đơn vị phối hợp:</label>
+        <label>Đơn vị/Cá nhân phối hợp:</label>
         <select id="sList" name="secondunit[]" class="form-control select-multiple" multiple="multiple">
             @foreach($treeunit as $item)
                 <optgroup label="{{$item->name}}">

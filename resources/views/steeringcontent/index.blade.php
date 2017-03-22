@@ -67,7 +67,23 @@
         </thead>
         <tbody>
         @foreach ($lst as $idx=>$row)
-            <tr>
+            <?php
+            $st = 0;
+            if($row->status == 1){
+                if ($row->complete_time < $row->deadline){
+                    $st = 1;
+                }else{
+                    $st = 2;
+                }
+            }else{
+                if ($row->complete_time < $row->deadline){
+                    $st = 0;
+                }else{
+                    $st = 3;
+                }
+            }
+            ?>
+            <tr class="row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
