@@ -8,16 +8,13 @@
 
 @section('content')
 
+
     <h1>Thêm người sử dụng</h1>
 
         @if ( $errors->count() > 0 )
-            <p>The following errors have occurred:</p>
-
-            <ul>
-                @foreach( $errors->all() as $message )
-                    <li>{{ $message }}</li>
-                @endforeach
-            </ul>
+            @foreach( $errors->all() as $message )
+                <p class="bg-danger">{{ $message }}</p>
+            @endforeach
         @endif
 
 

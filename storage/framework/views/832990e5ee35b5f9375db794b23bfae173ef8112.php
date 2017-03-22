@@ -13,8 +13,12 @@
 
     </script>
     <style>
-        select{
-            max-width: 150px;
+        select {
+            height: 23px;
+        }
+
+        input {
+            height: 23px;
         }
     </style>
 
@@ -32,25 +36,26 @@
         <thead>
         <tr>
             <th></th>
-            <th>Trích yếu<br><input type="text" style="width: 100%" ></th>
-            <th>Loại nguồn
-                <select>
+            <th>Trích yếu<br><input type="text" style="width: 100%"></th>
+            <th class="td-type">Loại nguồn
+                <select style="max-width: 150px">
                     <option value=""></option>
                     <?php $__currentLoopData = $type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($t->name); ?>"><?php echo e($t->name); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </th>
-            <th>Số kí hiệu<input type="text" style="max-width: 100px"></th>
-            <th>Người ký
+            <th class="td-code">Số kí hiệu<input type="text" style="max-width: 100px"></th>
+            <th class="td-sign">Người ký
                 <input type="text" style="max-width: 100px">
             </th>
-            <th>File</th>
-            <th>Ngày ban hành
+            <th class="text-center align-top">File</th>
+            <th class="td-date">Ngày ban hành
                 <input type="text" class="datepicker" style="max-width: 100px">
             </th>
             <?php if(\App\Roles::checkPermission()): ?>
-                <th></th>
+                <th class="td-action"></th>
+                <th class="td-action"></th>
             <?php endif; ?>
         </tr>
         </thead>
@@ -62,17 +67,19 @@
                 <td><?php echo e($row->typename); ?></td>
                 <td><?php echo e($row->code); ?></td>
                 <td><?php echo e($row->sign_by); ?></td>
-                <td class="text-center">
+                <td class="text-center td-file">
                     <?php if($row->file_attach != ''): ?>
                         <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
                     <?php endif; ?>
                 </td>
-                <td><?php echo e(date("d-m-Y", strtotime($row->time))); ?></td>
+                <td><?php echo e(date("d/m/Y", strtotime($row->time))); ?></td>
                 <?php if(\App\Roles::checkPermission()): ?>
-                    <td style="width: 30px">
-                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="16" border="0"
+                    <td>
+                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
                                                                               src="/img/edit.png"></a>
-                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="16" border="0"
+                    </td>
+                    <td>
+                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="20" border="0"
                                                                                src="/img/delete.png"></a>
                     </td>
                 <?php endif; ?>

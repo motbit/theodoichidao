@@ -8,18 +8,19 @@
 
     <h1>Cập nhật thông tin người sử dụng</h1>
 
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p class="bg-danger">{{ $message }}</p>
         @endforeach
-    </ul>
+    @endif
+
     @foreach ($nguoidung as $row)
     {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
     {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
     <div class="form-group">
         {!! Form::label('Tên đăng nhập') !!}
         {!! Form::text('username', $row->username,
-            array('required',
+            array('readonly',
                   'class'=>'form-control',
                   'placeholder'=>'Tên đăng nhập')) !!}
     </div>
@@ -29,7 +30,7 @@
     <div class="form-group">
         {!! Form::label('Mật khẩu') !!}
         {!! Form::password('password',
-            array('required',
+            array(
                   'class'=>'form-control',
                   'placeholder'=>'Mật khẩu ít nhất 6 ký tự.')) !!}
         <em>* Để trống nếu không thay đổi.</em>
