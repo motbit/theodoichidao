@@ -12,17 +12,21 @@
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     <link href="/css/slide.css" rel="stylesheet" type="text/css">
     {{--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">--}}
-    <link rel="stylesheet" type="text/css" href="/js/datatables/datatables.min.css"/>
-    <script type="text/javascript" src="/js/datatables/datatables.min.js"></script>
 
-    {{--    <link href="/css/jquery.dataTables.css" rel="stylesheet">
-        <script src="/js/jquery.dataTables.js" type="text/javascript"></script>
-        <script src="/js/dataTables.buttons.js" type="text/javascript"></script>
-        <script src="/js/buttons.flash.js" type="text/javascript"></script>
-        <script src="/js/pdfmake.js" type="text/javascript"></script>
-        <script src="/js/vfs_fonts.js" type="text/javascript"></script>
-        <script src="/js/jszip.js" type="text/javascript"></script>
-        <script src="/js/button.html5.js" type="text/javascript"></script>--}}
+    <link rel="stylesheet" type="text/css" href="/js/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css"/>
+
+    <script type="text/javascript" src="/js/datatables/JSZip-2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/pdfmake-0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/pdfmake-0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="/js/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/Buttons-1.2.4/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/Buttons-1.2.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="/js/datatables/Buttons-1.2.4/js/buttons.print.min.js"></script>
+
     {{--<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>--}}
     <script src="/js/bootstrap-datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet">
@@ -226,9 +230,5 @@
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
-    $(document).ready(function () {
-        // Handler for .ready() called.
-        $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
-    });
 </script>
 </html>
