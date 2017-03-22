@@ -23,8 +23,7 @@ class XuLyCVController extends Controller
     {
         $user = Auth::user();
         $data = DB::table('steeringcontent')
-            ->join('congviecdaumoi', 'congviecdaumoi.steering', '=', 'steeringcontent.id')
-            ->where('congviecdaumoi.unit', '=', $user->unit)
+            ->where('unit', '=', $user->unit)
             ->select('steeringcontent.*')
             ->get();
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
@@ -34,7 +33,7 @@ class XuLyCVController extends Controller
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->shortname;
+            $secondunit[$row->id] = $row->name;
         }
 
         $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
@@ -69,7 +68,7 @@ class XuLyCVController extends Controller
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->shortname;
+            $secondunit[$row->id] = $row->name;
         }
 
         $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();

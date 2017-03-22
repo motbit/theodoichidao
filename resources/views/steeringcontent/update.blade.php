@@ -94,35 +94,35 @@
                   'placeholder'=>'Ngày bắt đầu')) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('Đơn vị xác nhận:') !!}
-        <ul>
-            <li>{!! Form::radio('confirm', 'C',($row->xn=='C')) !!} Đơn vị chưa xác nhận</li>
-            <li>{!! Form::radio('confirm', 'X',($row->xn=='X')) !!} Đơn vị đã xác nhận</li>
-            <li>{!! Form::radio('confirm', 'K',($row->xn=='K')) !!} Đơn vị không nhận</li>
-        </ul>
+    {{--<div class="form-group">--}}
+        {{--{!! Form::label('Đơn vị xác nhận:') !!}--}}
+        {{--<ul>--}}
+            {{--<li>{!! Form::radio('confirm', 'C',($row->xn=='C')) !!} Đơn vị chưa xác nhận</li>--}}
+            {{--<li>{!! Form::radio('confirm', 'X',($row->xn=='X')) !!} Đơn vị đã xác nhận</li>--}}
+            {{--<li>{!! Form::radio('confirm', 'K',($row->xn=='K')) !!} Đơn vị không nhận</li>--}}
+        {{--</ul>--}}
 
-    </div>
+    {{--</div>--}}
 
-    <div class="form-group">
-        {!! Form::label('Theo dõi của văn phòng:') !!}
-        {!! Form::textarea('note', $row->note,
-            array('no-required',
-                  'class'=>'form-control',
-                  'placeholder'=>'Theo dõi của văn phòng')) !!}
-    </div>
+    {{--<div class="form-group">--}}
+        {{--{!! Form::label('Theo dõi của văn phòng:') !!}--}}
+        {{--{!! Form::textarea('note', $row->note,--}}
+            {{--array('no-required',--}}
+                  {{--'class'=>'form-control',--}}
+                  {{--'placeholder'=>'Theo dõi của văn phòng')) !!}--}}
+    {{--</div>--}}
 
-    <div class="form-group">
-        {!! Form::label('Đánh giá') !!}
-        {!! Form::radio('status', 0,($row->status==0)) !!} Chưa hoàn thành
-        {!! Form::radio('status', 1,($row->status==1)) !!} Hoàn thành
-        {!! Form::radio('status', -1,($row->status==-1)) !!} Bị hủy
+    {{--<div class="form-group">--}}
+        {{--{!! Form::label('Đánh giá') !!}--}}
+        {{--{!! Form::radio('status', 0,($row->status==0)) !!} Chưa hoàn thành--}}
+        {{--{!! Form::radio('status', 1,($row->status==1)) !!} Hoàn thành--}}
+        {{--{!! Form::radio('status', -1,($row->status==-1)) !!} Bị hủy--}}
 
-    </div>
+    {{--</div>--}}
 
     <div class="form-group">
         {!! Form::submit('Cập nhật',
-          array('class'=>'btn btn-primary')) !!}
+          array('class'=>'btn btn-my')) !!}
     </div>
     {!! Form::close() !!}
     @endforeach
