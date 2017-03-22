@@ -264,3 +264,36 @@ table {
 .row-st-3{
     color: red;
 }
+.row-st-4{
+    color: yellow;
+}
+
+.note-cl{
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+    float: left;
+}
+.note-tx{
+    line-height: 25px;
+    font-size: 0.85em;
+}
+.cl0{
+    background-color: black;
+}
+.cl1{
+    background-color: blue;
+}
+.cl2{
+    background-color: green;
+}
+.cl3{
+    background-color: red;
+}
+.cl4{
+    background-color: yellow;
+}
+
+.nopad{
+    padding: 0px !important;
+}

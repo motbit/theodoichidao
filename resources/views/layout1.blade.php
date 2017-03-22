@@ -47,7 +47,7 @@
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'pdf'
+                    'pdf'
                 ],
                 bSort: false,
                 bLengthChange: false,
