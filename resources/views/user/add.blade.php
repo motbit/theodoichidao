@@ -9,7 +9,7 @@
 @section('content')
 
 
-    <h1>Thêm người sử dụng</h1>
+    <h1>Thêm Người sử dụng</h1>
 
         @if ( $errors->count() > 0 )
             @foreach( $errors->all() as $message )
@@ -20,7 +20,7 @@
 
         {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
         <div class="form-group">
-            {!! Form::label('Tên đăng nhập') !!}
+            {!! Form::label('username', 'Tên đăng nhập') !!}
             {!! Form::text('username', "",
                 array('required',
                       'class'=>'form-control',
@@ -28,7 +28,7 @@
         </div>
 
     <div class="form-group">
-        {!! Form::label('Password') !!}
+        {!! Form::label('password', 'Mật khẩu') !!}
         {!! Form::password('password',
             array('required',
                   'class'=>'form-control',
@@ -38,7 +38,7 @@
 
 
         <div class="form-group">
-            {!! Form::label('Tên đầy đủ') !!}
+            {!! Form::label('fullname', 'Họ & Tên') !!}
             {!! Form::text('fullname', "",
                 array('required',
                       'class'=>'form-control',
@@ -47,14 +47,14 @@
 
 
         <div class="form-group">
-            {!! Form::label('Quyền hạn') !!}
+            {!! Form::label('group', 'Quyền hạn') !!}
             {!! Form::select('group', $group,
                     array('no-required','class'=>'form-control')
             ) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('Đơn vị') !!}
+            {!! Form::label('unit', 'Đơn vị') !!}
             {!! Form::select('unit', $unit,
                     array('no-required','class'=>'form-control')
             ) !!}
