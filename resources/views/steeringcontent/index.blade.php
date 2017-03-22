@@ -49,6 +49,23 @@
     {{--background-color: whitesmoke !important;--}}
     {{--}--}}
     {{--</style>--}}
+    <div class="row">
+        <div class="col-xs-2 nopad">
+            <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
+        </div>
+        <div class="col-xs-2 nopad">
+            <div class="note-cl cl1"></div><span class="note-tx">Hoàn thành đúng hạn</span>
+        </div>
+        <div class="col-xs-2 nopad">
+            <div class="note-cl cl2"></div><span class="note-tx">Hoàn thành quá hạn</span>
+        </div>
+        <div class="col-xs-2 nopad">
+            <div class="note-cl cl4"></div><span class="note-tx">Sắp hết hạn</span>
+        </div>
+        <div class="col-xs-4 nopad">
+            <div class="note-cl cl3"></div><span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
+        </div>
+    </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
