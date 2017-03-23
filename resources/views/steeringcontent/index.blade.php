@@ -91,7 +91,12 @@
             <tr class="row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> {{ $row->source }} </td>
+                @if ( !in_array($row->source, $allsteeringcode) )
+                    <td> {{ $row->source }} </td>
+                @else
+                    <td><a href="steeringcontent?source={{$row->source}}"> {{ $row->source }} </a> </td>
+                @endif
+
                 <td> {{ $unit[$row->unit] }} </td>
                 <td>
                     @foreach(explode(',', $row->follow) as $i)
