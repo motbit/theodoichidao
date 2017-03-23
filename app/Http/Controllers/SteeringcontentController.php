@@ -29,6 +29,8 @@ class SteeringcontentController extends Controller
             $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
         }
 
+        $allsteeringcode = DB::table('sourcesteering')->pluck('code');
+
 
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
@@ -47,7 +49,7 @@ class SteeringcontentController extends Controller
         foreach ($sourcesteering as $row) {
             $sources[$row->id] = "" . $row->code . "";
         }
-        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,'steering'=>$steering]);
+        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,'steering'=>$steering,'allsteeringcode'=>$allsteeringcode->all()]);
     }
 
     public function edit(Request $request)
