@@ -106,9 +106,9 @@
                     @endforeach
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}}
+                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}
                     @if(\App\Roles::accessAction(Request::path(), 'status'))
-                    <a href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a>
+                    <!--a href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a-->
                     @endif
                 </td>
                 {{--<td>--}}
@@ -235,6 +235,11 @@
         }
 
         $(document).ready(function () {
+            $( ".progress-update" ).on( "click", function() {
+                showDetailProgress($( this ).attr("data-id"))
+                console.log( "#ID: " + $( this ).attr("data-id") );
+            });
+
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             $("#form-progress").submit(function (e) {

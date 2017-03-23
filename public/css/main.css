@@ -343,3 +343,13 @@ label {
 .label-note{
     float: left;
 }
+
+.progress-update {
+    background: url('../img/bullet-add.png') no-repeat bottom 5px right 5px;
+}
+.progress-update:hover {
+    background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #faf2cc;
+}
+.progress-update:visited,.progress-update:focus, .progress-update:active {
+    background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
+}
