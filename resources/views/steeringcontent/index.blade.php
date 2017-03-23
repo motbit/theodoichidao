@@ -33,12 +33,12 @@
         {!! Form::close() !!}
     <div class="row">
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)<br>
-            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
+            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-2"></span>)<br>
+            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)<br>
-            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
+            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-1"></span>)<br>
+            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
         </div>
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)<br>
