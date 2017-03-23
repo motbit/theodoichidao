@@ -169,39 +169,32 @@
         </div>
     </div>
     <div id="firt-unit" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs">
+                    <div class="panel-group">
                         @foreach($treeunit as $idx=>$u)
-                            <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab"
-                                                                       href="#first-{{$u->id}}">{{$u->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
+                                    </h4>
+                                </div>
 
-                    <div class="tab-content">
-                        @foreach($treeunit as $idx=>$u)
-                            <div id="first-{{$u->id}}" class="tab-pane fade in {{($idx == 0)?'active':''}}">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên Ban - Đơn vị</th>
-                                        <th>Tên viết tắt</th>
-                                    </tr>
-                                    @foreach($u->children as $c)
-                                        <tr>
-                                            <td><input type="radio" name="pfunit" class="pick-firt-unit"
-                                                       value="{{$c->id}}"></td>
-                                            <td>{{$c->name}}</td>
-                                            <td>{{$c->shortname}}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        @foreach($u->children as $c)
+                                            <li class="list-group-item">
+                                                <input {{($row->unit == $c->id) ? "checked" : ""}} type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                {{$c->name}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -210,39 +203,32 @@
         </div>
     </div>
     <div id="second-unit" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs">
+                    <div class="panel-group">
                         @foreach($treeunit as $idx=>$u)
-                            <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab"
-                                                                       href="#sc-{{$u->id}}">{{$u->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
+                                    </h4>
+                                </div>
 
-                    <div class="tab-content">
-                        @foreach($treeunit as $idx=>$u)
-                            <div id="sc-{{$u->id}}" class="tab-pane fade in {{($idx == 0)?'active':''}}">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên Ban - Đơn vị</th>
-                                        <th>Tên viết tắt</th>
-                                    </tr>
-                                    @foreach($u->children as $c)
-                                        <tr>
-                                            <td><input type="checkbox" name="psunit" class="pick-firt-unit"
-                                                       value="{{$c->id}}"></td>
-                                            <td>{{$c->name}}</td>
-                                            <td>{{$c->shortname}}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        @foreach($u->children as $c)
+                                            <li class="list-group-item">
+                                                <input {{ in_array($c->id, $dtfollowArr) ? "checked" : "" }} type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                {{$c->name}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -309,7 +295,8 @@
 
         $('input:radio[name=pfunit]').change(function () {
             var id = $('input[name="pfunit"]:checked').val();
-            $('#fList option[value=' + id +']').attr('selected','selected');
+            $("#fList").val(id).trigger('change');
+//            $('#fList option[value=' + id +']').attr('selected','selected');
         });
 
         $('input:checkbox[name=psunit]').change(function () {
@@ -324,7 +311,7 @@
 
         $('#fList').change(function() {
             var val = $("#fList option:selected").val();
-            $('input:radio[name=pfunit][value="' + val + '"]').attr('checked',true);
+            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
         });
 
         $('#sList').on("select2:select", function(event) {

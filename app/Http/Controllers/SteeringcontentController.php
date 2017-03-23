@@ -90,11 +90,11 @@ class SteeringcontentController extends Controller
         if($id > 0) {
             $data=Steeringcontent::where('id',$id)->get();
 
-//            $dtfollow = explode(",",$data[0]['follow']);
+            $dtfollowArr = explode(",",$data[0]['follow']);
             $dtfollow = $data[0]['follow'];
 
             return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
-                'data'=>$data,'dtfollow'=>$dtfollow, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
+                'data'=>$data,'dtfollow'=>$dtfollow, 'dtfollowArr'=>$dtfollowArr, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
                 'priority'=>$priority, 'viphuman'=>$viphuman]);
         } else {
 

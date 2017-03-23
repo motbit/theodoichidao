@@ -137,7 +137,7 @@
         </div>
     </div>
     <div id="firt-unit" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -153,7 +153,7 @@
                                     </h4>
                                 </div>
 
-                                <div id="collapse{{$u->id}}" class="panel-collapse collapse">
+                                <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
                                     <ul class="list-group">
                                         @foreach($u->children as $c)
                                             <li class="list-group-item">
@@ -171,7 +171,7 @@
         </div>
     </div>
     <div id="second-unit" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -187,7 +187,7 @@
                                     </h4>
                                 </div>
 
-                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse">
+                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
                                     <ul class="list-group">
                                         @foreach($u->children as $c)
                                             <li class="list-group-item">
