@@ -74,11 +74,11 @@
                     @endforeach
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}}
-                    @if(\App\Roles::accessAction(Request::path(), 'status'))
-                        <a href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a>
-                    @endif
-                </td>
+                @if(\App\Roles::accessAction(Request::path(), 'status'))
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
+                @else
+                    <td id="progress-{{$row->id}}">{{$row->progress}}</td>
+                @endif
             </tr>
         @endforeach
         </tbody>
@@ -144,7 +144,7 @@
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
-                url: "api/progress?s=" + id,
+                url: "/api/progress?s=" + id,
                 success: function (result) {
                     $(".loader").hide();
                     var html_table = "";
@@ -167,6 +167,15 @@
         }
 
         $(document).ready(function () {
+
+            @if(\App\Roles::accessAction(Request::path(), 'status'))
+            $( ".progress-update" ).on( "click", function() {
+                showDetailProgress($( this ).attr("data-id"))
+                console.log( "#ID: " + $( this ).attr("data-id") );
+            });
+            @endif
+
+
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
 
             $("#form-progress").submit(function (e) {
@@ -176,7 +185,7 @@
                 var status = $('input[name="pr_status"]:checked').val()
                 var time_log = $("#progress_time").val();
                 $(".loader").show();
-                var url = "api/updateprogress";
+                var url = "/api/updateprogress";
                 console.log(url);
                 $.ajax({
                     type: "GET",
