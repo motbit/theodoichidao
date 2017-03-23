@@ -21,9 +21,9 @@ class SteeringcontentController extends Controller
 
         if($source) {
             $steering = DB::table('sourcesteering')
-                ->where('id', '=', $source)
+                ->where('code', '=', $source)
                 ->get()->first();
-            $data=Steeringcontent::where('source',$source)->orderBy('created_at', 'DESC')->get();
+            $data=Steeringcontent::where('source',$steering->id)->orderBy('created_at', 'DESC')->get();
         } else {
             $steering = false;
             $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
@@ -43,11 +43,11 @@ class SteeringcontentController extends Controller
 
 
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
-        $source = array();
+        $sources = array();
         foreach ($sourcesteering as $row) {
-            $source[$row->id] = "" . $row->code . "";
+            $sources[$row->id] = "" . $row->code . "";
         }
-        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$source,'steering'=>$steering]);
+        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,'steering'=>$steering]);
     }
 
     public function edit(Request $request)

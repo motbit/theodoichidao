@@ -36,7 +36,9 @@
 
 
     <div class="text-center title">Nguồn chỉ đạo</div>
+    <?php if(\App\Roles::accessAction(Request::path(), 'add')): ?>
     <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
+    <?php endif; ?>
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
@@ -66,9 +68,10 @@
         </thead>
         <tbody>
         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx=>$row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php if(\App\Roles::accessRow(Request::path(), $row->created_by)): ?>
             <tr>
                 <td><?php echo e($idx + 1); ?></td>
-                <td><a href="steeringcontent?source=<?php echo e($row->id); ?>"><?php echo e($row->name); ?></a></td>
+                <td><a href="steeringcontent?source=<?php echo e($row->code); ?>"><?php echo e($row->name); ?></a></td>
                 <td><?php echo e($row->typename); ?></td>
                 <td><?php echo e($row->code); ?></td>
                 <td><?php echo e($row->sign_by); ?></td>
@@ -78,17 +81,20 @@
                     <?php endif; ?>
                 </td>
                 <td><?php echo e(date("d/m/Y", strtotime($row->time))); ?></td>
-                <?php if(\App\Roles::checkPermission()): ?>
+                <?php if(\App\Roles::accessAction(Request::path(), 'edit')): ?>
                     <td>
                         <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
                                                                               src="/img/edit.png"></a>
                     </td>
+                <?php endif; ?>
+                <?php if(\App\Roles::accessAction(Request::path(), 'delete')): ?>
                     <td>
                         <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="20" border="0"
                                                                                src="/img/delete.png"></a>
                     </td>
                 <?php endif; ?>
             </tr>
+            <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
     </table>
