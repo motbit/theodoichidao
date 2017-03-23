@@ -7,9 +7,7 @@
 @stop
 
 @section('content')
-
-    <h1>Thêm người chủ trì</h1>
-
+    <div class="text-center title">Thêm người chủ trì</div>
     <ul>
         @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -17,7 +15,7 @@
     </ul>
     {!! Form::open(array('route' => 'viphuman-update', 'class' => 'form')) !!}
     <div class="form-group">
-        {!! Form::label('Họ tên') !!}
+        <label>Họ tên:</label>
         {!! Form::text('name', '',
             array('required',
                   'class'=>'form-control',
@@ -25,7 +23,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('Chức vụ') !!}
+        <label>Chức vụ:</label>
         <select class="select2 form-control" name="function">
             @foreach ($functions as $item)
                 <option value="{{ $item->id }}">{{ $item->description }}</option>

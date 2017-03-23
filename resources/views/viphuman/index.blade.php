@@ -15,12 +15,13 @@
             }
         }
     </script>
+    <div class="text-center title">Người chủ trì</div>
+    {{ Html::linkAction('ViphumanController@edit', 'Thêm người chủ trì', array('id'=>0), array('class' => 'btn btn-my')) }}
 
-        {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
+    {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
         {!! Form::close() !!}
     @endif
-    <div class="text-center title">Người chủ trì</div>
 
 {{--    <div>
         <div class="pull-right">

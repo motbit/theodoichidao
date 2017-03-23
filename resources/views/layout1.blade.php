@@ -120,6 +120,7 @@
             display: none;
         }
     </style>
+
     <title>@section('page-title')
         @show</title>
 </head>

@@ -24,34 +24,38 @@
     }
 </script>
     @endif
-<table id="table" class="table table-bordered table-hover">
-    <thead>
-    <tr>
 
-        <th> Tên đơn vị <br />
-            <input type="text" style="max-width: 150px"></th>
-        <th> Tên viết tắt <br />
-            <input type="text" style="max-width: 150px"></th>
-        <th> Sắp xếp </th>
-        @if(\App\Roles::checkPermission())
-            <th> </th>
-        @endif
-    </tr>
-    </thead>
-    <tbody>
-    @foreach ($lstunit as $row)
-    <tr>
-        <td> {{$row->name}} </td>
-        <td> {{$row->shortname}} </td>
-        <td> {{$row->order}} </td>
-        @if(\App\Roles::checkPermission())
-            <td>
-                <a href="/unit/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-                <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
-            </td>
-        @endif
-    </tr>
-    @endforeach
-    </tbody>
-</table>
+        <ul class="nav nav-tabs">
+            @foreach($treeunit as $idx=>$u)
+                <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab" href="#first-{{$u->id}}">{{$u->name}}</a>
+                </li>
+            @endforeach
+        </ul>
+        <div class="tab-content">
+            @foreach($treeunit as $idx=>$u)
+                <div id="first-{{$u->id}}" class="tab-pane fade in {{($idx == 0)?'active':''}}">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Tên Ban - Đơn vị</th>
+                            <th>Tên viết tắt</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        @foreach($u->children as $c)
+                            <tr>
+                                <td>{{$c->name}}</td>
+                                <td>{{$c->shortname}}</td>
+                                <td><a href="/unit/update?id={{$c->id}}">
+                                        <img height="20" border="0" src="/img/edit.png"></a>
+                                </td>
+                                <td>
+                                    <a href="javascript:removebyid('{{$c->id}}')">
+                                        <img height="20" border="0" src="/img/delete.png"></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            @endforeach
+        </div>
 @stop
