@@ -46,19 +46,6 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-    <script>
-        $(document).ready(function () {
-            // Setup - add a text input to each footer cell
-            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
-            // DataTable
-        });
-    </script>
-    <style>
-        #table_filter {
-            display: none;
-        }
-    </style>
-
     <title>@section('page-title')
         @show</title>
 </head>

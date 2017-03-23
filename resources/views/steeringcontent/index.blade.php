@@ -29,6 +29,7 @@
         {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
+
     <div class="row">
         <div class="col-xs-3"><div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</div>
         <div class="col-xs-3"><div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</div>
@@ -256,8 +257,6 @@
                     }
                 });
             });
-            // Setup - add a text input to each footer cell
-            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
@@ -270,19 +269,17 @@
                                 page: 'current'
                             },
                         },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         orientation: 'landscape',
                         customize: function (doc) {
                             doc.defaultStyle.fontSize = 10;
                         },
-                        className: 'btn btn-xs btn-my',
                         text: 'Xuất ra PDF',
                     },
                     {
                         extend: 'excel',
-                        className: 'btn btn-xs btn-my',
                         text: 'Xuất ra Excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         stripHtml: false,
                         decodeEntities: true,
                         columns: ':visible',
@@ -305,10 +302,13 @@
                 bSort: false,
                 bLengthChange: false,
                 "pageLength": 20,
+                "language": {
+                    "url": "/js/datatables/Vietnamese.json"
+                },
+                "initComplete": function () {
+                    $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
+                }
             });
-
-            $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
-
 
             // Apply the search
             table.columns().every(function () {
