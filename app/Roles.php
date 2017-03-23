@@ -73,4 +73,23 @@ class Roles extends Model
         }
     }
 
+    public static function accessRow($path, $created_by){
+        $user = Auth::user();
+        if ($path == '' || $path == 'home' || $path == '/'){
+            $path = 'sourcesteering';
+        }
+        $checkpath = DB::table('views')
+            ->join('group_permission', 'group_permission.view', '=', 'views.id')
+            ->where([
+                ['views.path', 'like', $path],
+                ['group_permission.group', '=', Auth::user()->group]
+            ])
+            ->select('group_permission.only_auth')
+            ->get();
+        if (count($checkpath) == 0){
+            return false;
+        }
+        return ($checkpath->first()->only_auth == 0 || $created_by == $user->id);
+    }
+
 }

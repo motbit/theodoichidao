@@ -11,19 +11,24 @@
 
     <div class="row">
         <div class="col-xs-2 nopad">
-            <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
+            <div class="note-cl cl0"></div>
+            <span class="note-tx">Đang tiến hành</span>
         </div>
         <div class="col-xs-2 nopad">
-            <div class="note-cl cl1"></div><span class="note-tx">Hoàn thành đúng hạn</span>
+            <div class="note-cl cl1"></div>
+            <span class="note-tx">Hoàn thành đúng hạn</span>
         </div>
         <div class="col-xs-2 nopad">
-            <div class="note-cl cl2"></div><span class="note-tx">Hoàn thành quá hạn</span>
+            <div class="note-cl cl2"></div>
+            <span class="note-tx">Hoàn thành quá hạn</span>
         </div>
         <div class="col-xs-2 nopad">
-            <div class="note-cl cl4"></div><span class="note-tx">Sắp hết hạn</span>
+            <div class="note-cl cl4"></div>
+            <span class="note-tx">Sắp hết hạn</span>
         </div>
         <div class="col-xs-4 nopad">
-            <div class="note-cl cl3"></div><span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
+            <div class="note-cl cl3"></div>
+            <span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -42,16 +47,16 @@
         @foreach ($data as $idx=>$row)
             <?php
             $st = 0;
-            if($row->status == 1){
-                if ($row->complete_time < $row->deadline){
+            if ($row->status == 1) {
+                if ($row->complete_time < $row->deadline) {
                     $st = 1;
-                }else{
+                } else {
                     $st = 2;
                 }
-            }else{
-                if (date('Y-m-d') < $row->deadline){
+            } else {
+                if (date('Y-m-d') < $row->deadline) {
                     $st = 0;
-                }else{
+                } else {
                     $st = 3;
                 }
             }
@@ -69,8 +74,11 @@
                     @endforeach
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}} <a
-                            href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a></td>
+                <td id="progress-{{$row->id}}"> {{$row->progress}}
+                    @if(\App\Roles::accessAction(Request::path(), 'status'))
+                        <a href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a>
+                    @endif
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -187,7 +195,7 @@
             });
         });
 
-        function resetFromProgress(){
+        function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='-2']").prop('checked', true);

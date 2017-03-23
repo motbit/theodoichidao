@@ -51,68 +51,6 @@
             // Setup - add a text input to each footer cell
             var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
             // DataTable
-            var table = $('#table').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'pdfHtml5',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5],
-                            modifier: {
-                                page: 'current'
-                            },
-                        },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
-                        orientation: 'landscape',
-                        customize: function (doc) {
-                            doc.defaultStyle.fontSize = 10;
-                        },
-                        className: 'btn btn-success',
-                        text: 'Export to pdf',
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-success',
-                        text: 'Export to excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
-                        stripHtml: false,
-                        decodeEntities: true,
-                        columns: ':visible',
-                        modifier: {
-                            selected: true
-                        },
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5],
-                            format: {
-                                body: function (data, row, column, node) {
-
-                                    return column === 5 ?
-                                            data.replace(/[.]/g, 'pooja') :
-                                            data;
-                                }
-                            }
-                        }
-                    }
-                ],
-                bSort: false,
-                bLengthChange: false,
-                "pageLength": 20,
-            });
-
-            // Apply the search
-            table.columns().every(function () {
-                var that = this;
-                $('input', this.header()).on('keyup change', function () {
-                    if (that.search() !== this.value) {
-                        that.search(this.value).draw();
-                    }
-                });
-                $('select', this.header()).on('change', function () {
-                    if (that.search() !== this.value) {
-                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
-                    }
-                });
-            });
         });
     </script>
     <style>

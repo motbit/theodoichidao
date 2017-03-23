@@ -30,7 +30,9 @@
     {!! Form::close() !!}
 
     <div class="text-center title">Nguồn chỉ đạo</div>
+    @if(\App\Roles::accessAction(Request::path(), 'add'))
     <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
+    @endif
     <table id="table" class="table table-responsive table-bordered">
         <thead>
         <tr>
@@ -60,6 +62,7 @@
         </thead>
         <tbody>
         @foreach ($data as $idx=>$row)
+            @if(\App\Roles::accessRow(Request::path(), $row->created_by))
             <tr>
                 <td>{{$idx + 1}}</td>
                 <td><a href="steeringcontent?source={{$row->id}}">{{$row->name}}</a></td>
@@ -72,17 +75,20 @@
                     @endif
                 </td>
                 <td>{{date("d/m/Y", strtotime($row->time))}}</td>
-                @if(\App\Roles::checkPermission())
+                @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
                         <a href="/sourcesteering/update?id={{$row->id}}"><img height="20" border="0"
                                                                               src="/img/edit.png"></a>
                     </td>
+                @endif
+                @if(\App\Roles::accessAction(Request::path(), 'delete'))
                     <td>
                         <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="20" border="0"
                                                                                src="/img/delete.png"></a>
                     </td>
                 @endif
             </tr>
+            @endif
         @endforeach
         </tbody>
     </table>

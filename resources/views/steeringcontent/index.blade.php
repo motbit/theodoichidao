@@ -11,9 +11,9 @@
     @if ($steering != false)
         <p><u>Nguồn chỉ đạo:</u> [{{$steering->code}}] - {{$steering->name}}</p>
     @endif
-    @if(\App\Roles::checkPermission())
+    @if(\App\Roles::accessAction(Request::path(), 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
-
+    @endif
         <script language="javascript">
             function removebyid(id) {
 
@@ -29,23 +29,24 @@
         {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
-    @endif
-    {{Request::path()}}
     <div class="row">
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
+        <div class="col-xs-3"><div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</div>
+        <div class="col-xs-3"><div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</div>
+    </div>
+    <div class="row">
+        <div class="row col-xs-6">
+            <div class="label-note">Nhiệm vụ đã hoàn thành: </div>
+            <div class=" col-xs-6">
+                <div class="note-cl cl2"></div><span class="note-tx">Đúng hạn</span> (<span class="count-st" id="row-st-2"></span>)<br>
+                <div class="note-cl cl3"></div><span class="note-tx">Quá hạn</span> (<span class="count-st" id="row-st-3"></span>)
+            </div>
         </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl1"></div><span class="note-tx">Hoàn thành đúng hạn</span>
-        </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl2"></div><span class="note-tx">Hoàn thành quá hạn</span>
-        </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl4"></div><span class="note-tx">Sắp hết hạn</span>
-        </div>
-        <div class="col-xs-4 nopad">
-            <div class="note-cl cl3"></div><span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
+        <div class="row col-xs-6">
+            <div class="label-note">Nhiệm vụ chưa hoàn thành: </div>
+            <div class=" col-xs-6">
+                <div class="note-cl cl1"></div><span class="note-tx">Đang tiến hành</span> (<span class="count-st" id="row-st-1"></span>)<br>
+                <div class="note-cl cl4"></div><span class="note-tx">Quá hạn</span> (<span class="count-st" id="row-st-4"></span>)
+            </div>
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -66,22 +67,26 @@
         </thead>
         <tbody>
         @foreach ($lst as $idx=>$row)
+            @if(\App\Roles::accessRow(Request::path(), $row->created_by))
             <?php
-            $st = 0;
+            $st = 1;
             if($row->status == 1){
                 if ($row->complete_time < $row->deadline){
-                    $st = 1;
-                }else{
                     $st = 2;
-                }
-            }else{
-                if (date('Y-m-d') < $row->deadline){
-                    $st = 0;
                 }else{
                     $st = 3;
                 }
+            }else if ($row->status == -1){
+                $st = 6;
+            }else{
+                if (date('Y-m-d') < $row->deadline){
+                    $st = 1;
+                }else{
+                    $st = 4;
+                }
             }
             ?>
+
             <tr class="row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
@@ -95,8 +100,11 @@
                     @endforeach
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}} <a
-                            href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a></td>
+                <td id="progress-{{$row->id}}"> {{$row->progress}}
+                    @if(\App\Roles::accessAction(Request::path(), 'status'))
+                    <a href="javascript:showDetailProgress({{$row->id}})">Cập nhật</a>
+                    @endif
+                </td>
                 {{--<td>--}}
                 {{--@if($row->status === 1)--}}
                 {{--<span class="label label-sm label-success"> Hoàn thành </span>--}}
@@ -108,49 +116,50 @@
                 {{--<span class="label label-sm label-info"> Mới </span>--}}
                 {{--@endif--}}
                 {{--</td>--}}
-                @if(\App\Roles::checkPermission())
+                @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
                         <a href="/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
                                                                                src="/img/edit.png"></a>
                     </td>
+                @endif
+                @if(\App\Roles::accessAction(Request::path(), 'delete'))
                     <td>
                         <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
                                                                              src="/img/delete.png"></a>
                     </td>
                 @endif
             </tr>
+            @endif
         @endforeach
         </tbody>
     </table>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog"  style="min-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
-                <div class="modal-body">
-                    <a class="btn btn-my" href="javascript:showAddProgress()">Cập nhật tiến độ</a>
+                <div class="modal-body" style="padding-top: 0px !important;">
                     <form id="form-progress">
-                        <div class="form-group">
+                        <input id="steering_id" type="hidden" name="steering_id">;
+                        <div class="form-group from-inline">
                             <label>Ghi chú tiến độ</label>
                             <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
                         </div>
-                        <label>Tình trạng</label>
-                        <div class="form-group">
-                            <input type="radio" name="pr_status" value="-2" style="display: none" checked>
-                            <input type="radio" name="pr_status" value="0"> Chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="1"> Hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="-1"> Hủy
+
+                        <div class="form-group  from-inline">
+                            <label>Tình trạng</label>
+                            <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
                         </div>
                         <div class="form-group form-inline">
                             <label>Ngày cập nhật</label>
                             <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
                                    required value="{{date('d/m/Y')}}">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
                         </div>
-                        <input id="steering_id" type="hidden" name="steering_id">;
-                        <input class="btn btn-my" type="submit" value="Hoàn tất">
                     </form>
                     <table class="table table-bordered">
                         <thead>
@@ -168,17 +177,17 @@
     </div>
     <script>
         var current_date = "{{date('d/m/Y')}}";
-        var showpr = false;
-        $("#form-progress").hide();
-        function showAddProgress() {
-            if (showpr) {
-                showpr = false;
-                $("#form-progress").hide();
-            } else {
-                showpr = true;
-                $("#form-progress").show();
-            }
-        }
+//        var showpr = false;
+//        $("#form-progress").hide();
+//        function showAddProgress() {
+//            if (showpr) {
+//                showpr = false;
+//                $("#form-progress").hide();
+//            } else {
+//                showpr = true;
+//                $("#form-progress").show();
+//            }
+//        }
         function showDetailProgress(id) {
             $(".loader").show();
             $("#steering_id").val(id);
@@ -212,9 +221,16 @@
             $("#form-progress").hide();
         }
 
+        function reCount(){
+            $(".count-st").each(function() {
+                console.log($(this).attr('id'));
+                $(this).html($('.' + $(this).attr('id')).length);
+            });
+        }
+
         $(document).ready(function () {
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
-
+            reCount();
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
                 var note = $("#pr-note").val();
@@ -300,11 +316,13 @@
                 $('input', this.header()).on('keyup change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
+                        reCount();
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                        reCount();
                     }
                 });
             });
