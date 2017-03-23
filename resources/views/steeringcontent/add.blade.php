@@ -141,38 +141,31 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách đơn vị</h4>
+                    <h4 class="modal-title text-center">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs">
-                        @foreach($treeunit as $idx=>$u)
-                            <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab"
-                                                                       href="#first-{{$u->id}}">{{$u->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+                        <div class="panel-group">
+                            @foreach($treeunit as $idx=>$u)
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
+                                    </h4>
+                                </div>
 
-                    <div class="tab-content">
-                        @foreach($treeunit as $idx=>$u)
-                            <div id="first-{{$u->id}}" class="tab-pane fade in {{($idx == 0)?'active':''}}">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên Ban - Đơn vị</th>
-                                        <th>Tên viết tắt</th>
-                                    </tr>
-                                    @foreach($u->children as $c)
-                                        <tr>
-                                            <td><input type="radio" name="pfunit" class="pick-firt-unit"
-                                                       value="{{$c->id}}"></td>
-                                            <td>{{$c->name}}</td>
-                                            <td>{{$c->shortname}}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                <div id="collapse{{$u->id}}" class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        @foreach($u->children as $c)
+                                            <li class="list-group-item">
+                                                <input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                {{$c->name}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
                 </div>
             </div>
         </div>
@@ -185,32 +178,25 @@
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs">
+                    <div class="panel-group">
                         @foreach($treeunit as $idx=>$u)
-                            <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab"
-                                                                       href="#sc-{{$u->id}}">{{$u->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
+                                    </h4>
+                                </div>
 
-                    <div class="tab-content">
-                        @foreach($treeunit as $idx=>$u)
-                            <div id="sc-{{$u->id}}" class="tab-pane fade in {{($idx == 0)?'active':''}}">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên Ban - Đơn vị</th>
-                                        <th>Tên viết tắt</th>
-                                    </tr>
-                                    @foreach($u->children as $c)
-                                        <tr>
-                                            <td><input type="checkbox" name="psunit" class="pick-firt-unit"
-                                                       value="{{$c->id}}"></td>
-                                            <td>{{$c->name}}</td>
-                                            <td>{{$c->shortname}}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        @foreach($u->children as $c)
+                                            <li class="list-group-item">
+                                                <input type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                {{$c->name}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -268,39 +254,6 @@
             $( "#viphuman" ).autocomplete({
                 source: viphumans
             });
-//            $( "#funit" ).autocomplete({
-//                source: unitname
-//            });
-
-//            $( "#sunit" ).on( "keydown", function( event ) {
-//                if ( event.keyCode === $.ui.keyCode.TAB &&
-//                        $( this ).autocomplete( "instance" ).menu.active ) {
-//                    event.preventDefault();
-//                }
-//            })
-//                    .autocomplete({
-//                        minLength: 0,
-//                        source: function( request, response ) {
-//                            // delegate back to autocomplete, but extract the last term
-//                            response( $.ui.autocomplete.filter(
-//                                    unitname, extractLast( request.term ) ) );
-//                        },
-//                        focus: function() {
-//                            // prevent value inserted on focus
-//                            return false;
-//                        },
-//                        select: function( event, ui ) {
-//                            var terms = split( this.value );
-//                            // remove the current input
-//                            terms.pop();
-//                            // add the selected item
-//                            terms.push( ui.item.value );
-//                            // add placeholder to get the comma-and-space at the end
-//                            terms.push( "" );
-//                            this.value = terms.join( "," );
-//                            return false;
-//                        }
-//                    });
         });
         $('input:radio[name=psource]').change(function () {
             $('input[name="source"]').val($('input[name="psource"]:checked').val())
@@ -327,7 +280,8 @@
 
         $('input:radio[name=pfunit]').change(function () {
             var id = $('input[name="pfunit"]:checked').val();
-            $('#fList option[value=' + id +']').attr('selected','selected');
+            $("#fList").val(id).trigger('change');
+//            $('#fList option[value=' + id +']').attr('selected','selected');
         });
 
         $('input:checkbox[name=psunit]').change(function () {
@@ -342,7 +296,7 @@
 
         $('#fList').change(function() {
             var val = $("#fList option:selected").val();
-            $('input:radio[name=pfunit][value="' + val + '"]').attr('checked',true);
+            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
         });
 
         $('#sList').on("select2:select", function(event) {
