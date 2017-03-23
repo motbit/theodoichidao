@@ -71,4 +71,36 @@
     @endforeach
     </tbody>
 </table>
+    <script>
+        $(document).ready(function () {
+            // DataTable
+            var table = $('#table').DataTable({
+                dom: 'Bfrtip',
+                bSort: false,
+                bLengthChange: false,
+                "pageLength": 20,
+                "language": {
+                    "url": "/js/datatables/Vietnamese.json"
+                }
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+                $('select', this.header()).on('change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
 @stop

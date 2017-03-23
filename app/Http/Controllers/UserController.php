@@ -69,7 +69,7 @@ class UserController extends Controller
         $id = intval( $request->input('id') );
 
         $messages = [
-            'username.min' => 'Tên người dùng phải ít nhất 6 chữ cái.',
+            'username.min' => 'Tên người dùng phải ít nhất 4 chữ cái.',
             'username.alpha' => 'Tên người dùng chỉ bao gồm các chữ cái và số.',
             'username.required' => 'Yêu cầu nhập tên người dùng.',
             'username.unique' => 'Tên người dùng đã tồn tại.',
@@ -89,7 +89,7 @@ class UserController extends Controller
 
         } else {
             $validator = Validator::make($request->all(), [
-                'username' => 'required|unique:user,username|alpha_num|min:5|max:20',
+                'username' => 'required|unique:user,username|alpha_num|min:4|max:20',
                 'password' => 'required|min:6',
                 'group' => 'required',
             ], $messages);
