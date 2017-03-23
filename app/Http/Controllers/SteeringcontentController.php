@@ -13,7 +13,9 @@ class SteeringcontentController extends Controller
 {
     public function index(Request $request)
     {
-
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $source = intval( $request->input('source') );
 
         if($source) {

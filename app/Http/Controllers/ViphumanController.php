@@ -11,6 +11,9 @@ class ViphumanController extends Controller
 {
     public function index(Request $request)
     {
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $keyword = $request->input('k');
         $data = Viphuman::findAll($keyword);
 

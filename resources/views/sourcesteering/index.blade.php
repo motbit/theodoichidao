@@ -1,3 +1,4 @@
+<?php \App\Roles::accessView(Request::path()); ?>
 @extends('layout1')
 @section('page-title')
     Nguồn chỉ đạo

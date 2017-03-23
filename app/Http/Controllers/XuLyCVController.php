@@ -21,6 +21,9 @@ class XuLyCVController extends Controller
 {
     public function daumoi(Request $request)
     {
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $user = Auth::user();
         $data = DB::table('steeringcontent')
             ->where('unit', '=', $user->unit)
@@ -119,6 +122,9 @@ class XuLyCVController extends Controller
 
     public function phoihop(Request $request)
     {
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $user = Auth::user();
         $data = DB::table('steeringcontent')
             ->where('follow', 'like', '%,' . $user->unit)

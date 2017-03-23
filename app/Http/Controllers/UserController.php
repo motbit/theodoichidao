@@ -7,14 +7,15 @@ use App\Unit;
 use App\Group;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
 {
     public function index()
     {
-
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $unitdata=Unit::orderBy('created_at', 'DESC')->get();
         $unitgroup=Group::orderBy('created_at', 'DESC')->get();
 
