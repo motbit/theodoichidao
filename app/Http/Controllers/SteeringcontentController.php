@@ -7,6 +7,7 @@ use App\Unit;
 use App\Sourcesteering;
 use App\Viphuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SteeringcontentController extends Controller
@@ -144,7 +145,8 @@ class SteeringcontentController extends Controller
                 'priority'=>$request->input('priority'),
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => date("Y-m-d", strtotime($request->input('steer_time')) ),
-                'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) )
+                'deadline'=> date("Y-m-d", strtotime($request->input('deathline')) ),
+                'created_by'=> Auth::user()->id
             ]);
 
             if($result) {

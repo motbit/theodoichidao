@@ -85,6 +85,7 @@ class SourcesteeringController extends Controller
                 'file_attach' => $file_attach,
                 'status' => $status,
                 'time' => \DateTime::createFromFormat('d/m/Y', $request->input('time')),
+                'created_by'=> Auth::user()->id
             ]);
         }
         if (isset($file)) {
