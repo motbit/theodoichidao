@@ -30,7 +30,7 @@
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
     @endif
-
+    {{Request::path()}}
     <div class="row">
         <div class="col-xs-2 nopad">
             <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>

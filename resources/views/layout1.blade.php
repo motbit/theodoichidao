@@ -32,13 +32,13 @@
     <link href="/css/datepicker.css" rel="stylesheet">
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-{{--<script type="text/javascript">--}}
-        {{--bkLib.onDomLoaded(function () {--}}
-            {{--nicEditors.allTextAreas()--}}
-        {{--});--}}
+    {{--<script type="text/javascript">--}}
+    {{--bkLib.onDomLoaded(function () {--}}
+    {{--nicEditors.allTextAreas()--}}
+    {{--});--}}
     {{--</script>--}}
             <!-- Scripts -->
     <script>
@@ -46,6 +46,81 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <script>
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
+            // DataTable
+            var table = $('#table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5],
+                            modifier: {
+                                page: 'current'
+                            },
+                        },
+                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        orientation: 'landscape',
+                        customize: function (doc) {
+                            doc.defaultStyle.fontSize = 10;
+                        },
+                        className: 'btn btn-success',
+                        text: 'Export to pdf',
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-success',
+                        text: 'Export to excel',
+                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        stripHtml: false,
+                        decodeEntities: true,
+                        columns: ':visible',
+                        modifier: {
+                            selected: true
+                        },
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5],
+                            format: {
+                                body: function (data, row, column, node) {
+
+                                    return column === 5 ?
+                                            data.replace(/[.]/g, 'pooja') :
+                                            data;
+                                }
+                            }
+                        }
+                    }
+                ],
+                bSort: false,
+                bLengthChange: false,
+                "pageLength": 20,
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+                $('select', this.header()).on('change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        #table_filter {
+            display: none;
+        }
+    </style>
+
     <title>@section('page-title')
         @show</title>
 </head>
@@ -80,26 +155,33 @@
 <div class="main">
     <div id="mySidenav" class="sidenav">
         <div class="list-menu">
-            @if(\App\Roles::checkPermission())
+            <?php $menu_nd = \App\Roles::getMenu('ND'); ?>
+            @if(count($menu_nd) > 0)
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
-                    <li><a href="{{@route('user-index')}}">Người sử dụng</a></li>
-                    <li><a href="{{@route('unit-index')}}">Ban - Đơn vị</a></li>
-                    <li><a href="{{@route('viphuman-index')}}">Người chủ trì</a></li>
-                </ul>
-                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
-                <ul>
-                    <li><a href="{{@route('sourcesteering-index')}}">Nguồn chỉ đạo</a></li>
-                    <li><a href="{{@route('steeringcontent-index')}}">Danh mục nhiệm vụ</a></li>
+                    @foreach($menu_nd as $nd)
+                        <li><a href="/{{$nd->path}}">{{$nd->name}}</a></li>
+                    @endforeach
                 </ul>
             @endif
-            <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
-            <ul>
-                <li><a href="{{@route('xuly-daumoi')}}">Nhiệm vụ đầu mối</a></li>
-                <li><a href="{{@route('xuly-phoihop')}}">Nhiệm vụ phối hợp</a></li>
-                {{--<li><a href="{{@route('xuly-duocgiao')}}">Nhiệm vụ mới được giao</a></li>--}}
-                {{--<li><a href="{{@route('xuly-nguonchidao')}}">Nguồn chỉ đạo</a></li>--}}
-            </ul>
+            <?php $menu_ykcd = \App\Roles::getMenu('YKCD'); ?>
+            @if(count($menu_ykcd) > 0)
+                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
+                <ul>
+                    @foreach($menu_ykcd as $yk)
+                        <li><a href="/{{$yk->path}}">{{$yk->name}}</a></li>
+                    @endforeach
+                </ul>
+            @endif
+                <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
+                @if(count($menu_xlnv) > 0)
+                    <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
+                    <ul>
+                        @foreach($menu_xlnv as $xl)
+                            <li><a href="/{{$xl->path}}">{{$xl->name}}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
                 <li><a href="#">Báo cáo thống kê</a></li>

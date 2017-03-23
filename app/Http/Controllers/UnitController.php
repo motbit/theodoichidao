@@ -9,6 +9,9 @@ class UnitController extends Controller
 {
     public function index()
     {
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
+        }
         $unit = Unit::orderBy('created_at', 'DESC')->get();
 
         $treeUnit = array();

@@ -17,7 +17,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get( '/','SourcesteeringController@index' )->name('sourcesteering-index');
     Route::get('/home', 'SourcesteeringController@index' )->name('sourcesteering-index');
-
+    Route::get('/errpermission', function () {
+        return view('errpermission');
+    });
 
 
     Route::group(['prefix' => 'user'], function () {

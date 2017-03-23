@@ -12,11 +12,8 @@ class SourcesteeringController extends Controller
 {
     public function index()
     {
-        if (!Auth::check()){
-            return redirect("login");
-        }
-        if (!Roles::checkPermission()){
-            return redirect("xuly/duocgiao");
+        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+            return redirect('/errpermission');
         }
         $data = DB::table('sourcesteering')
             ->join('type', 'sourcesteering.type', '=', 'type.id')
