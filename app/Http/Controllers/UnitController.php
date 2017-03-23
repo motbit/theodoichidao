@@ -9,19 +9,37 @@ class UnitController extends Controller
 {
     public function index()
     {
-        $data=Unit::orderBy('created_at', 'DESC')->get();
-        return view("unit/index")->with('lstunit',$data);
+        $unit = Unit::orderBy('created_at', 'DESC')->get();
+
+        $treeUnit = array();
+        foreach ($unit as $row) {
+            if ($row->parent_id == 0){
+                $children = array();
+                foreach ($unit as $c) {
+                    if ($c->parent_id == $row->id){
+                        $children[$c->id] = $c;
+                    }
+                }
+                $row->children = $children;
+                $treeUnit[] = $row;
+            }
+        }
+
+        return view('unit.index',['lstunit' => $unit, 'treeunit'=>$treeUnit]);
 
     }
 
     public function edit(Request $request)
     {
         $id = intval( $request->input('id') );
+        $unit = Unit::orderBy('created_at', 'DESC')->get();
+
         if($id > 0) {
             $data=Unit::where('id',$id)->get();
-            return view("unit/update")->with('unit',$data);
+//            return view("unit/update")->with('unit', $unit, 'data' => $data);
+            return view('unit.update',['unit' => $unit, 'data' => $data]);
         } else {
-            return view("unit/add");
+            return view('unit.add',['unit' => $unit]);
         }
     }
 
@@ -34,10 +52,10 @@ class UnitController extends Controller
                 'name'=>$request->input('name'),
                 'description'=>$request->input('description'),
                 'shortname'=>$request->input('shortname'),
-                'order'=>$request->input('order'),
+                'parent_id' => $request->input('parent_id'),
             ]);
 
-            $data=Unit::where('id',$request->input('id'))->get();
+            $data = Unit::where('id',$request->input('id'))->get();
 
             return redirect()->action(
                 'UnitController@index', ['update' => $result]
@@ -45,11 +63,11 @@ class UnitController extends Controller
 
         } else {
 
-            $result=Unit::insert([
-                'name'=>$request->input('name'),
-                'description'=>$request->input('description'),
-                'shortname'=>$request->input('shortname'),
-                'order'=>$request->input('order'),
+            $result = Unit::insert([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'shortname' => $request->input('shortname'),
+                'parent_id' => $request->input('parent_id'),
             ]);
 
             if($result) {
