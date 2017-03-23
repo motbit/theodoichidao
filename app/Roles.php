@@ -24,10 +24,15 @@ class Roles extends Model
         }
     }
 
-    public static function accessView($path){
+    public static function makePath($path){
         if ($path == '' || $path == 'home' || $path == '/'){
             $path = 'sourcesteering';
         }
+        return $path;
+    }
+
+    public static function accessView($path){
+        $path = self::makePath($path);
         $check = DB::table('views')
             ->join('group_permission', 'group_permission.view', '=', 'views.id')
             ->where([
@@ -40,6 +45,7 @@ class Roles extends Model
     }
 
     public static function accessAction($path, $action){
+        $path = self::makePath($path);
         $check = DB::table('views')
             ->join('group_permission', 'group_permission.view', '=', 'views.id')
             ->where([
@@ -75,9 +81,7 @@ class Roles extends Model
 
     public static function accessRow($path, $created_by){
         $user = Auth::user();
-        if ($path == '' || $path == 'home' || $path == '/'){
-            $path = 'sourcesteering';
-        }
+        $path = self::makePath($path);
         $checkpath = DB::table('views')
             ->join('group_permission', 'group_permission.view', '=', 'views.id')
             ->where([
