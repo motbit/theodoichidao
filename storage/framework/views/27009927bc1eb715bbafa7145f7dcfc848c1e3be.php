@@ -32,13 +32,13 @@
     <link href="/css/datepicker.css" rel="stylesheet">
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-
-        
-            
-        
+    
+    
+    
+    
     
             <!-- Scripts -->
     <script>
@@ -82,26 +82,33 @@
 <div class="main">
     <div id="mySidenav" class="sidenav">
         <div class="list-menu">
-            <?php if(\App\Roles::checkPermission()): ?>
+            <?php $menu_nd = \App\Roles::getMenu('ND'); ?>
+            <?php if(count($menu_nd) > 0): ?>
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
-                    <li><a href="<?php echo e(@route('user-index')); ?>">Người sử dụng</a></li>
-                    <li><a href="<?php echo e(@route('unit-index')); ?>">Ban - Đơn vị</a></li>
-                    <li><a href="<?php echo e(@route('viphuman-index')); ?>">Người chủ trì</a></li>
-                </ul>
-                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
-                <ul>
-                    <li><a href="<?php echo e(@route('sourcesteering-index')); ?>">Nguồn chỉ đạo</a></li>
-                    <li><a href="<?php echo e(@route('steeringcontent-index')); ?>">Danh mục nhiệm vụ</a></li>
+                    <?php $__currentLoopData = $menu_nd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><a href="/<?php echo e($nd->path); ?>"><?php echo e($nd->name); ?></a></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             <?php endif; ?>
-            <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
-            <ul>
-                <li><a href="<?php echo e(@route('xuly-daumoi')); ?>">Nhiệm vụ đầu mối</a></li>
-                <li><a href="<?php echo e(@route('xuly-phoihop')); ?>">Nhiệm vụ phối hợp</a></li>
-                
-                
-            </ul>
+            <?php $menu_ykcd = \App\Roles::getMenu('YKCD'); ?>
+            <?php if(count($menu_ykcd) > 0): ?>
+                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
+                <ul>
+                    <?php $__currentLoopData = $menu_ykcd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $yk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><a href="/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            <?php endif; ?>
+                <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
+                <?php if(count($menu_xlnv) > 0): ?>
+                    <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
+                    <ul>
+                        <?php $__currentLoopData = $menu_xlnv; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $xl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><a href="/<?php echo e($xl->path); ?>"><?php echo e($xl->name); ?></a></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
+                <?php endif; ?>
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
                 <li><a href="#">Báo cáo thống kê</a></li>

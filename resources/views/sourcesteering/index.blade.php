@@ -22,6 +22,9 @@
         input {
             height: 23px;
         }
+        #table_filter {
+            display: none;
+        }
     </style>
 
 
@@ -86,4 +89,86 @@
         @endforeach
         </tbody>
     </table>
+    <script>
+        var current_date = "{{date('d/m/Y')}}";
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+            // DataTable
+            var table = $('#table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            modifier: {
+                                page: 'current'
+                            },
+                        },
+                        orientation: 'landscape',
+                        customize: function (doc) {
+                            doc.defaultStyle.fontSize = 10;
+                        },
+                        text: 'Xuất ra PDF',
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Xuất ra Excel',
+                        stripHtml: false,
+                        decodeEntities: true,
+                        columns: ':visible',
+                        modifier: {
+                            selected: true
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            format: {
+                                body: function (data, row, column, node) {
+
+                                    return column === 5 ?
+                                            data.replace(/[.]/g, 'pooja') :
+                                            data;
+                                }
+                            }
+                        }
+                    }
+                ],
+                bSort: false,
+                bLengthChange: false,
+                "pageLength": 20,
+                "language": {
+                    "url": "/js/datatables/Vietnamese.json"
+                },
+                "initComplete": function () {
+                    $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
+                }
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+                $('select', this.header()).on('change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                    }
+                });
+            });
+
+
+        });
+
+        function resetFromProgress(){
+            $("#pr-note").val("");
+            $("#progress_time").val(current_date);
+            $("input[name=pr_status][value='-2']").prop('checked', true);
+            $("#form-progress").hide();
+        }
+    </script>
+    <div class="panel-button"></div>
 @stop

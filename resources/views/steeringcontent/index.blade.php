@@ -30,7 +30,7 @@
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
     @endif
-    {{Request::path()}}
+
     <div class="row">
         <div class="col-xs-2 nopad">
             <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
@@ -240,8 +240,6 @@
                     }
                 });
             });
-            // Setup - add a text input to each footer cell
-            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
@@ -254,7 +252,7 @@
                                 page: 'current'
                             },
                         },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         orientation: 'landscape',
                         customize: function (doc) {
                             doc.defaultStyle.fontSize = 10;
@@ -264,7 +262,7 @@
                     {
                         extend: 'excel',
                         text: 'Xuất ra Excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         stripHtml: false,
                         decodeEntities: true,
                         columns: ':visible',
@@ -287,10 +285,13 @@
                 bSort: false,
                 bLengthChange: false,
                 "pageLength": 20,
+                "language": {
+                    "url": "/js/datatables/Vietnamese.json"
+                },
+                "initComplete": function () {
+                    $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
+                }
             });
-
-            $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
-
 
             // Apply the search
             table.columns().every(function () {

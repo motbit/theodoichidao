@@ -75,6 +75,7 @@
         @endforeach
         </tbody>
     </table>
+    <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -128,6 +129,73 @@
         $(document).ready(function () {
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
 
+            // DataTable
+            var table = $('#table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            modifier: {
+                                page: 'current'
+                            },
+                        },
+                        orientation: 'landscape',
+                        customize: function (doc) {
+                            doc.defaultStyle.fontSize = 10;
+                        },
+                        text: 'Xuất ra PDF',
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Xuất ra Excel',
+                        stripHtml: false,
+                        decodeEntities: true,
+                        columns: ':visible',
+                        modifier: {
+                            selected: true
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            format: {
+                                body: function (data, row, column, node) {
+
+                                    return column === 5 ?
+                                            data.replace(/[.]/g, 'pooja') :
+                                            data;
+                                }
+                            }
+                        }
+                    }
+                ],
+                bSort: false,
+                bLengthChange: false,
+                "pageLength": 20,
+                "language": {
+                    "url": "/js/datatables/Vietnamese.json"
+                },
+                "initComplete": function () {
+                    $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
+                }
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+                $('select', this.header()).on('change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                    }
+                });
+            });
+
+
         });
 
         function resetFromProgress(){
@@ -137,4 +205,9 @@
             $("#form-progress").hide();
         }
     </script>
+    <style>
+        #table_filter {
+            display: none;
+        }
+    </style>
 @stop
