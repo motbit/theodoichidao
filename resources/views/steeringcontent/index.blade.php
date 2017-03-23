@@ -240,8 +240,6 @@
                     }
                 });
             });
-            // Setup - add a text input to each footer cell
-            var currdate = Date.getDate + "-" + Date.getMonth + "-" + Date.getFullYear;
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
@@ -254,7 +252,7 @@
                                 page: 'current'
                             },
                         },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         orientation: 'landscape',
                         customize: function (doc) {
                             doc.defaultStyle.fontSize = 10;
@@ -264,7 +262,7 @@
                     {
                         extend: 'excel',
                         text: 'Xuất ra Excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
+                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
                         stripHtml: false,
                         decodeEntities: true,
                         columns: ':visible',
@@ -294,8 +292,6 @@
                     $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
                 }
             });
-
-
 
             // Apply the search
             table.columns().every(function () {
