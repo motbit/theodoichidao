@@ -124,7 +124,7 @@
                     {
                         extend: 'excel',
                         text: 'Xuất ra Excel',
-                        stripHtml: false,
+                        stripHtml: true,
                         decodeEntities: true,
                         columns: ':visible',
                         modifier: {

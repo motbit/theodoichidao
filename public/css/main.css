@@ -136,6 +136,8 @@ label {
 
 .navbar-right{
     margin-right: 0px !important;
+    float: right !important;
+    margin: 0;
 }
 
 .title{
