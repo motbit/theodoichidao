@@ -27,7 +27,7 @@ class UserController extends Controller
         }
 
         foreach ($unitgroup as $row) {
-            $group[$row->id] = $row->name;
+            $group[$row->id] = $row->description;
         }
 
         $data=User::orderBy('created_at', 'DESC')->get();
@@ -50,7 +50,7 @@ class UserController extends Controller
             $unit[$row->id] = $row->name;
         }
         foreach ($unitgroup as $row) {
-            $group[$row->id] = $row->name;
+            $group[$row->id] = $row->description;
         }
 
         if($id > 0) {

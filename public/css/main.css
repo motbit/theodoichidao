@@ -86,7 +86,7 @@ table {
     margin-top: 10px;
 }
 
-.form label {
+label {
     width: 150px;
 }
 
@@ -289,16 +289,22 @@ table {
 }
 /* End loader*/
 .row-st-1{
-    color: blue;
+    color: black;
 }
 .row-st-2{
-    color: green;
+    color: blue;
 }
 .row-st-3{
-    color: red;
+    color: green;
 }
 .row-st-4{
+    color: red;
+}
+.row-st-5{
     color: yellow;
+}
+.row-st-6{
+    color: gray;
 }
 
 .note-cl{
@@ -309,24 +315,31 @@ table {
 }
 .note-tx{
     line-height: 25px;
-    font-size: 0.85em;
-}
-.cl0{
-    background-color: black;
+    font-size: 1em;
 }
 .cl1{
-    background-color: blue;
+    background-color: black;
 }
 .cl2{
-    background-color: green;
+    background-color: blue;
 }
 .cl3{
-    background-color: red;
+    background-color: green;
 }
 .cl4{
+    background-color: red;
+}
+.cl5{
     background-color: yellow;
+}
+.cl6{
+    background-color: gray;
 }
 
 .nopad{
     padding: 0px !important;
+}
+
+.label-note{
+    float: left;
 }
