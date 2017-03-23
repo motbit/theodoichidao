@@ -166,6 +166,30 @@ table {
     color: white;
 }
 
+.buttons-pdf {
+    margin-bottom: 10px;
+    padding-right: 50px;
+    background: url('../img/pdf.png') no-repeat center right 10px;
+
+}
+
+.buttons-pdf:hover, .buttons-pdf:active, .buttons-pdf:focus, .buttons-pdf:visited {
+    background: url('../img/pdf.png') no-repeat center right 10px;
+
+}
+
+.buttons-excel {
+    margin-bottom: 10px;
+    padding-right: 50px;
+    background: url('../img/excel.gif') no-repeat center right 10px;
+
+}
+
+.buttons-excel:hover, .buttons-excel:active, .buttons-excel:focus, .buttons-excel:visited {
+    background: url('../img/excel.gif') no-repeat center right 10px;
+
+}
+
 #content {
     min-height: 450px;
 }

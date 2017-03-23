@@ -259,12 +259,10 @@
                         customize: function (doc) {
                             doc.defaultStyle.fontSize = 10;
                         },
-                        className: 'btn btn-xs btn-my',
                         text: 'Xuất ra PDF',
                     },
                     {
                         extend: 'excel',
-                        className: 'btn btn-xs btn-my',
                         text: 'Xuất ra Excel',
                         title: 'Danh mục nhiệm vụ (Ngày ' + currdate + ")",
                         stripHtml: false,
