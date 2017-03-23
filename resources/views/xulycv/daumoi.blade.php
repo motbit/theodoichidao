@@ -10,25 +10,17 @@
 
 
     <div class="row">
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl0"></div>
-            <span class="note-tx">Đang tiến hành</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)<br>
+            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
         </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl1"></div>
-            <span class="note-tx">Hoàn thành đúng hạn</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)<br>
+            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
         </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl2"></div>
-            <span class="note-tx">Hoàn thành quá hạn</span>
-        </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl4"></div>
-            <span class="note-tx">Sắp hết hạn</span>
-        </div>
-        <div class="col-xs-4 nopad">
-            <div class="note-cl cl3"></div>
-            <span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)<br>
+            <div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -46,18 +38,22 @@
         <tbody>
         @foreach ($data as $idx=>$row)
             <?php
-            $st = 0;
-            if ($row->status == 1) {
-                if ($row->complete_time < $row->deadline) {
-                    $st = 1;
-                } else {
+            $st = 1;
+            if($row->status == 1){
+                if ($row->complete_time < $row->deadline){
                     $st = 2;
-                }
-            } else {
-                if (date('Y-m-d') < $row->deadline) {
-                    $st = 0;
-                } else {
+                }else{
                     $st = 3;
+                }
+            }else if ($row->status == -1){
+                $st = 6;
+            }else{
+                if (date('Y-m-d',strtotime("+7 day")) < $row->deadline){
+                    $st = 5;
+                }else if (date('Y-m-d') < $row->deadline){
+                    $st = 1;
+                }else{
+                    $st = 4;
                 }
             }
             ?>
@@ -92,26 +88,25 @@
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
                 <div class="modal-body">
-                    <a class="btn btn-my" href="javascript:showAddProgress()">Cập nhật tiến độ</a>
                     <form id="form-progress">
-                        <div class="form-group">
+                        <input id="steering_id" type="hidden" name="steering_id">
+                        <div class="form-group from-inline">
                             <label>Ghi chú tiến độ</label>
                             <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
                         </div>
-                        <label>Tình trạng</label>
-                        <div class="form-group">
-                            <input type="radio" name="pr_status" value="-2" style="display: none" checked>
-                            <input type="radio" name="pr_status" value="0"> Chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="1"> Hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="-1"> Hủy
+
+                        <div class="form-group  from-inline">
+                            <label>Tình trạng</label>
+                            <input type="radio" name="pr_status" value="0" checked>  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
                         </div>
                         <div class="form-group form-inline">
                             <label>Ngày cập nhật</label>
                             <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
                                    required value="{{date('d/m/Y')}}">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
                         </div>
-                        <input id="steering_id" type="hidden" name="steering_id">;
-                        <input class="btn btn-my" type="submit" value="Hoàn tất">
                     </form>
                     <table class="table table-bordered">
                         <thead>
@@ -129,17 +124,17 @@
     </div>
     <script>
         var current_date = "{{date('d/m/Y')}}";
-        var showpr = false;
-        $("#form-progress").hide();
-        function showAddProgress() {
-            if (showpr) {
-                showpr = false;
-                $("#form-progress").hide();
-            } else {
-                showpr = true;
-                $("#form-progress").show();
-            }
-        }
+//        var showpr = false;
+//        $("#form-progress").hide();
+//        function showAddProgress() {
+//            if (showpr) {
+//                showpr = false;
+//                $("#form-progress").hide();
+//            } else {
+//                showpr = true;
+//                $("#form-progress").show();
+//            }
+//        }
         function showDetailProgress(id) {
             $(".loader").show();
             $("#steering_id").val(id);
@@ -278,7 +273,7 @@
         function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
-            $("input[name=pr_status][value='-2']").prop('checked', true);
+            $("input[name=pr_status][value='0']").prop('checked', true);
             $("#form-progress").hide();
         }
     </script>

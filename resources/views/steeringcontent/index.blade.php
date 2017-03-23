@@ -9,9 +9,11 @@
     <div class="text-center title">Danh mục nhiệm vụ</div>
 
     @if ($steering != false)
-        <p><u>Nguồn chỉ đạo:</u> [{{$steering->code}}] - {{$steering->name}}</p>
-    @endif
-    @if(\App\Roles::accessAction(Request::path(), 'add'))
+        <div class="text-center">
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
+            <div style="color: red">{{$steering->code}} - {{$steering->name}}</div>
+        </div>
+    @elseif(\App\Roles::accessAction(Request::path(), 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
         <script language="javascript">
@@ -29,25 +31,18 @@
         {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
-
     <div class="row">
-        <div class="col-xs-3"><div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</div>
-        <div class="col-xs-3"><div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</div>
-    </div>
-    <div class="row">
-        <div class="row col-xs-6">
-            <div class="label-note">Nhiệm vụ đã hoàn thành: </div>
-            <div class=" col-xs-6">
-                <div class="note-cl cl2"></div><span class="note-tx">Đúng hạn</span> (<span class="count-st" id="row-st-2"></span>)<br>
-                <div class="note-cl cl3"></div><span class="note-tx">Quá hạn</span> (<span class="count-st" id="row-st-3"></span>)
-            </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)<br>
+            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
         </div>
-        <div class="row col-xs-6">
-            <div class="label-note">Nhiệm vụ chưa hoàn thành: </div>
-            <div class=" col-xs-6">
-                <div class="note-cl cl1"></div><span class="note-tx">Đang tiến hành</span> (<span class="count-st" id="row-st-1"></span>)<br>
-                <div class="note-cl cl4"></div><span class="note-tx">Quá hạn</span> (<span class="count-st" id="row-st-4"></span>)
-            </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)<br>
+            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)<br>
+            <div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -80,7 +75,9 @@
             }else if ($row->status == -1){
                 $st = 6;
             }else{
-                if (date('Y-m-d') < $row->deadline){
+                if (date('Y-m-d',strtotime("+7 day")) < $row->deadline){
+                    $st = 5;
+                }else if (date('Y-m-d') < $row->deadline){
                     $st = 1;
                 }else{
                     $st = 4;
@@ -158,6 +155,7 @@
 
                         <div class="form-group  from-inline">
                             <label>Tình trạng</label>
+                            <input type="radio" name="pr_status" value="0" checked>  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
                         </div>
@@ -224,7 +222,7 @@
         function resetFromProgress(){
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
-            $("input[name=pr_status][value='-2']").prop('checked', true);
+            $("input[name=pr_status][value='0']").prop('checked', true);
             $("#form-progress").hide();
         }
 
