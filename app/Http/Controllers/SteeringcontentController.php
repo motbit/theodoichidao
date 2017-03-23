@@ -23,7 +23,7 @@ class SteeringcontentController extends Controller
             $steering = DB::table('sourcesteering')
                 ->where('code', '=', $source)
                 ->get()->first();
-            $data=Steeringcontent::where('source',$steering->id)->orderBy('created_at', 'DESC')->get();
+            $data=Steeringcontent::where('source',$source)->orderBy('created_at', 'DESC')->get();
         } else {
             $steering = false;
             $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
