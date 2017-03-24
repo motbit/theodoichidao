@@ -118,7 +118,7 @@ class ApiController extends Controller
         if ($status != -2) {
             $content['status'] = $status;
         }
-        if ($status == 0) {
+        if ($status != 0) {
             $content['complete_time'] = $time_log;
         }
         try {
@@ -127,7 +127,7 @@ class ApiController extends Controller
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        return response()->json($request);
+        return response()->json($content);
     }
 
     public function addProgress(Request $request)
@@ -149,11 +149,11 @@ class ApiController extends Controller
         if ($status != -2) {
             $content['status'] = $status;
         }
-        if ($status == 0) {
+        if ($status != 0) {
             $content['complete_time'] = $time_log;
         }
         $result1 = Progress::insert($data);
         $result2 = Steeringcontent::where('id', $steering_id)->update($content);
-        return response()->json($request);
+        return response()->json($content);
     }
 }

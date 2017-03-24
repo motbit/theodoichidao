@@ -85,7 +85,7 @@
             }
             ?>
 
-            <tr class="row-st-{{$st}}">
+            <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 @if ( !in_array($row->source, $allsteeringcode) )
@@ -147,7 +147,7 @@
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
                     <form id="form-progress">
-                        <input id="steering_id" type="hidden" name="steering_id">;
+                        <input id="steering_id" type="hidden" name="steering_id">
                         <div class="form-group from-inline">
                             <label>Ghi chú tiến độ</label>
                             <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
@@ -223,7 +223,7 @@
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
-            $("#form-progress").hide();
+//            $("#form-progress").hide();
         }
 
         function reCount(){
@@ -231,6 +231,20 @@
                 console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
+        }
+
+        function reStyleRow(id, status, time_log){
+            var time_split = time_log.split("/");
+            var time = time_split[2] + "-" + time_split[1] + "-" + time_split[0];
+            if (status == "-1"){
+                $("#row-" + id).attr('class', 'row-st-6');
+            }else if (status == "1"){
+                if (time <= $("#row-" + id).attr('deadline')){
+                    $("#row-" + id).attr('class', 'row-st-2');
+                }else{
+                    $("#row-" + id).attr('class', 'row-st-3');
+                }
+            }
         }
 
         $(document).ready(function () {
@@ -260,10 +274,12 @@
                     url: url,
                     data: {note: note, steering_id: steering_id, status: status, time_log: time_log},
                     success: function (result) {
+                        console.log(result);
                         $(".loader").hide();
                         $("#modal-progress").modal("hide");
                         $("#progress-" + steering_id).html(note + " <a href='javascript:showDetailProgress(" + steering_id + ")'>Cập nhật</a>")
                         resetFromProgress();
+                        reStyleRow(steering_id, status, time_log);
                     },
                     error: function () {
                         alert("Xảy ra lỗi nội bộ");
