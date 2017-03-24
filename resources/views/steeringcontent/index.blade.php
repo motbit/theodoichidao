@@ -279,6 +279,11 @@
                         extend: 'pdfHtml5',
                         exportOptions: {
                             columns: [ 0, 1, 2, 3, 4, 5 ],
+                            format: {
+                                body: function (data, row, column, node) {
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                }
+                            },
                             modifier: {
                                 page: 'current'
                             },
@@ -294,7 +299,7 @@
                         extend: 'excel',
                         text: 'Xuất ra Excel',
                         title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        stripHtml: false,
+                        stripHtml: true,
                         decodeEntities: true,
                         columns: ':visible',
                         modifier: {
@@ -304,10 +309,7 @@
                             columns: [ 0, 1, 2, 3, 4, 5 ],
                             format: {
                                 body: function (data, row, column, node) {
-
-                                    return column === 5 ?
-                                            data.replace(/[.]/g, 'pooja') :
-                                            data;
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
                                 }
                             }
                         }

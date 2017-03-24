@@ -114,6 +114,11 @@
                             modifier: {
                                 page: 'current'
                             },
+                            format: {
+                                body: function (data, row, column, node) {
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                }
+                            }
                         },
                         orientation: 'landscape',
                         customize: function (doc) {
@@ -134,10 +139,7 @@
                             columns: [ 0, 1, 2, 3, 4, 6 ],
                             format: {
                                 body: function (data, row, column, node) {
-
-                                    return column === 5 ?
-                                            data.replace(/[.]/g, 'pooja') :
-                                            data;
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
                                 }
                             }
                         }
