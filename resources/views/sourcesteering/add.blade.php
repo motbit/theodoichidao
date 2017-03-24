@@ -19,7 +19,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Trích yếu</label>
-        <textarea name="name" style="width: 100%;" class="form-control">{{($id == 0)?"":$steering->name}}</textarea>
+        <textarea name="name" style="width: 100%;" class="form-control" required>{{($id == 0)?"":$steering->name}}</textarea>
     </div>
     <div class="form-group form-inline">
         <label>Ngày ban hành</label>
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group form-inline">
         <label>Người ký</label>
-        <input type="text" required name="sign_by" class="form-control" value="{{($id == 0)?"":$steering->sign_by}}">
+        <input type="text" name="sign_by" class="form-control" value="{{($id == 0)?"":$steering->sign_by}}">
     </div>
     <div class="form-group form-inline">
         <label style="float: left">File đính kèm</label>
@@ -44,4 +44,8 @@
           array('class'=>'btn btn-my')) !!}
     </div>
     {!! Form::close() !!}
+    <script>$(document).ready(function () {
+            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+        });
+    </script>
 @stop
