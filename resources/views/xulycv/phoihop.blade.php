@@ -10,20 +10,17 @@
 
 
     <div class="row">
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl0"></div><span class="note-tx">Đang tiến hành</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-2"></span>)<br>
+            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
         </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl1"></div><span class="note-tx">Hoàn thành đúng hạn</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-1"></span>)<br>
+            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
         </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl2"></div><span class="note-tx">Hoàn thành quá hạn</span>
-        </div>
-        <div class="col-xs-2 nopad">
-            <div class="note-cl cl4"></div><span class="note-tx">Sắp hết hạn</span>
-        </div>
-        <div class="col-xs-4 nopad">
-            <div class="note-cl cl3"></div><span class="note-tx">Chưa hoàn thành(Quá hạn)</span>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)<br>
+            <div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -32,27 +29,31 @@
             <th></th>
             <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input type="text" style="max-width: 100px"></th>
+            <th> Đơn vị đầu mối<br><input type="text" style="max-width: 100px"></th>
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%"></th>
-            <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
         </tr>
         </thead>
         <tbody>
         @foreach ($data as $idx=>$row)
             <?php
-            $st = 0;
+            $st = 1;
             if($row->status == 1){
                 if ($row->complete_time < $row->deadline){
-                    $st = 1;
-                }else{
                     $st = 2;
-                }
-            }else{
-                if (date('Y-m-d') < $row->deadline){
-                    $st = 0;
                 }else{
                     $st = 3;
+                }
+            }else if ($row->status == -1){
+                $st = 6;
+            }else{
+                if (date('Y-m-d',strtotime("+7 day")) < $row->deadline){
+                    $st = 5;
+                }else if (date('Y-m-d') < $row->deadline){
+                    $st = 1;
+                }else{
+                    $st = 4;
                 }
             }
             ?>
@@ -128,7 +129,7 @@
 
         $(document).ready(function () {
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
-
+            reCount();
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
@@ -192,17 +193,26 @@
                 $('input', this.header()).on('keyup change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
+                        reCount();
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                        reCount();
                     }
                 });
             });
 
 
         });
+
+        function reCount(){
+            $(".count-st").each(function() {
+                console.log($(this).attr('id'));
+                $(this).html($('.' + $(this).attr('id')).length);
+            });
+        }
 
         function resetFromProgress(){
             $("#pr-note").val("");
