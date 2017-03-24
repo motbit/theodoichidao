@@ -96,11 +96,22 @@
 
                 <td> {{ $unit[$row->unit] }} </td>
                 <td>
+                    <ul class="unit-list" id="unit-list{{$idx}}">
                     @foreach(explode(',', $row->follow) as $i)
                         @if (isset($unit2[$i]))
-                            {{$unit2[$i]}},
+                            @if ($loop->iteration < 4)
+                                    <li>{{$unit2[$i]}}</li>
+                            @else
+                                    @if ($loop->iteration == 4)
+                                    <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
+                                    @endif
+                                    <li class="more">{{$unit2[$i]}}</li>
+                            @endif
+
+
                         @endif
                     @endforeach
+                    </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'status'))
@@ -232,7 +243,10 @@
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
-
+        function showunit(unit) {
+            $("#unit-list" + unit + " .more").show();
+            $("#unit-list" + unit + " .more-link").hide();
+        }
         $(document).ready(function () {
 
             @if(\App\Roles::accessAction(Request::path(), 'status'))
