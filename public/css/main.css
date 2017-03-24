@@ -365,3 +365,15 @@ label {
     color: #9f224e !important;
     font-weight: bold;
 }
+
+.navbar-nav .open .dropdown-menu {
+    position: absolute;
+    float: left;
+    min-width: 160px;
+    margin-top: 0;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
