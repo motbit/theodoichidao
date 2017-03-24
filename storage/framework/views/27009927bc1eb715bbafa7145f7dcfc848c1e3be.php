@@ -87,7 +87,7 @@
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
                     <?php $__currentLoopData = $menu_nd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $nd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><a href="/<?php echo e($nd->path); ?>"><?php echo e($nd->name); ?></a></li>
+                        <li class="<?php echo e((strpos(\Request::path(), $nd->path)  !== false )? 'active' : ''); ?>"><a href="/<?php echo e($nd->path); ?>"><?php echo e($nd->name); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             <?php endif; ?>
@@ -96,7 +96,7 @@
                 <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
                 <ul>
                     <?php $__currentLoopData = $menu_ykcd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $yk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><a href="/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
+                        <li class="<?php echo e((strpos(\Request::path(), $yk->path)  !== false )? 'active' : ''); ?>"><a href="/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             <?php endif; ?>
@@ -105,7 +105,7 @@
                     <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
                     <ul>
                         <?php $__currentLoopData = $menu_xlnv; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $xl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li><a href="/<?php echo e($xl->path); ?>"><?php echo e($xl->name); ?></a></li>
+                            <li class="<?php echo e((strpos(\Request::path(), $xl->path)  !== false )? 'active' : ''); ?>"><a href="/<?php echo e($xl->path); ?>"><?php echo e($xl->name); ?></a></li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 <?php endif; ?>
