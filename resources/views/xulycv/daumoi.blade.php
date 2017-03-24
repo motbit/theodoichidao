@@ -210,6 +210,13 @@
                             modifier: {
                                 page: 'current'
                             },
+                            format: {
+                                body: function (data, row, column, node) {
+
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+
+                                }
+                            }
                         },
                         title: 'Công việc đầu mối (Xuất ngày ' + current_date + ")",
                         orientation: 'landscape',
@@ -233,9 +240,8 @@
                             format: {
                                 body: function (data, row, column, node) {
 
-                                    return column === 5 ?
-                                            data.replace(/[.]/g, 'pooja') :
-                                            data;
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+
                                 }
                             }
                         }

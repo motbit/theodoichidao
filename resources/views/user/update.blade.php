@@ -10,7 +10,7 @@
 
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
-            <p class="bg-danger">{{ $message }}</p>
+            <p  class="alert alert-danger">{{ $message }}</p>
         @endforeach
     @endif
 
