@@ -355,3 +355,13 @@ label {
 .progress-update:visited,.progress-update:focus, .progress-update:active {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
 }
+
+.list-menu ul li.active a {
+    color: #9f224e !important;
+    font-weight: bold;
+}
+
+.list-menu ul li.active {
+    color: #9f224e !important;
+    font-weight: bold;
+}
