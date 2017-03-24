@@ -116,6 +116,11 @@ class UserController extends Controller
 
             $result=User::where('id',$request->input('id'))->update($data);
 
+            if($result) {
+                $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('username') . "</b> thành công!");
+            } else {
+                $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('fullname') . " </b>không thành công!");
+            }
 
             return redirect()->action(
                 'UserController@index', ['update' => $result]
@@ -130,6 +135,12 @@ class UserController extends Controller
                 'group'=>$request->input('group'),
                 'unit'=>$request->input('unit'),
             ]);
+
+            if($result) {
+                $request->session()->flash('message', "Thêm người dùng mới thành công!");
+            } else {
+                $request->session()->flash('message', "Thêm người dùng mới thất bại!");
+            }
 
             if($result) {
                 return redirect()->action(

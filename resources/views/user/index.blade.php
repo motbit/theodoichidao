@@ -27,6 +27,11 @@
     }
 </script>
 @endif
+
+    @if (Session::has('message'))
+        <div class="alert alert-info">{!!  Session::get('message') !!}</div>
+    @endif
+
 <table id="table" class="table table-bordered table-hover">
     <thead>
     <tr>
