@@ -203,7 +203,7 @@
                     success: function (result) {
                         $(".loader").hide();
                         $("#modal-progress").modal("hide");
-                        $("#progress-" + steering_id).html(note + " <a href='javascript:showDetailProgress(" + steering_id + ")'>Cập nhật</a>")
+                        $("#progress-" + steering_id).html(note)
                         resetFromProgress();
                         reStyleRow(steering_id, status, time_log);
                     },
