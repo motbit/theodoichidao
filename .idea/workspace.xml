@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" afterPath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" />
     </list>
     <ignored path="theodoichidao.iws" />
@@ -62,7 +62,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="phoihop.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="phoihop.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/xulycv/phoihop.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="539">
@@ -77,16 +77,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="902">
               <caret line="144" column="34" selection-start-line="144" selection-start-column="34" selection-end-line="144" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3795">
-              <caret line="119" column="64" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -140,6 +130,16 @@
                 <marker date="1490322397314" expanded="true" signature="1724:1758" ph="{...}" />
                 <marker date="1490322397314" expanded="true" signature="2201:3182" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1001">
+              <caret line="375" column="23" selection-start-line="375" selection-start-column="23" selection-end-line="375" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -228,7 +228,6 @@
         <option value="$PROJECT_DIR$/app/Sourcesteering.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
         <option value="$PROJECT_DIR$/resources/views/layout1.blade.php" />
-        <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/user/add.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/update.blade.php" />
@@ -237,6 +236,7 @@
         <option value="$PROJECT_DIR$/resources/views/xulycv/phoihop.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php" />
+        <option value="$PROJECT_DIR$/public/css/main.css" />
       </list>
     </option>
   </component>
@@ -791,7 +791,7 @@
       <workItem from="1490147021787" duration="7095000" />
       <workItem from="1490172525098" duration="2070000" />
       <workItem from="1490233712229" duration="19076000" />
-      <workItem from="1490323093109" duration="2901000" />
+      <workItem from="1490323093109" duration="4103000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -804,10 +804,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89445000" />
+    <option name="totallyTimeSpent" value="90647000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
+    <frame x="-13" y="-13" width="2906" height="1566" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20972222" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1148,14 +1148,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12045">
-          <caret line="365" column="22" selection-start-line="365" selection-start-column="22" selection-end-line="365" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3795">
@@ -1279,6 +1271,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="539">
           <caret line="142" column="37" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1001">
+          <caret line="375" column="23" selection-start-line="375" selection-start-column="23" selection-end-line="375" selection-end-column="23" />
           <folding />
         </state>
       </provider>
