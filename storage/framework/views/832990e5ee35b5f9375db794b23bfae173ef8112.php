@@ -115,6 +115,10 @@
                                 page: 'current'
                             },
                             format: {
+                                header: function (data, row, column, node) {
+                                    if(row === 2) return "Loại Nguồn";
+                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                },
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
                                 }
