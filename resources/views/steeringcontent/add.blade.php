@@ -183,6 +183,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
+                                        <input type="checkbox" name="psunit-parent" class="pick-firt-unit" value="{{$u->id}}">
                                         <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
                                     </h4>
                                 </div>
@@ -191,7 +192,7 @@
                                     <ul class="list-group">
                                         @foreach($u->children as $c)
                                             <li class="list-group-item">
-                                                <input type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                <input type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
                                                 {{$c->name}}
                                             </li>
                                         @endforeach
@@ -288,6 +289,22 @@
             var arr = [];
             var vl = '';
             $('input:checkbox[name=psunit]:checked').each(function(){
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#sList").val(arr).trigger('change');
+        });
+
+        $('input:checkbox[name=psunit-parent]').change(function () {
+            var id = $(this).val();
+            if(!$(this).is(":checked")){
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").attr('checked', false);
+            }else {
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").attr('checked', true);
+            }
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=psunit]:checked').each(function () {
                 vl = $(this).val();
                 arr.push(vl);
             });

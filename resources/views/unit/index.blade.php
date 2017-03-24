@@ -7,7 +7,7 @@
 @section('content')
     <div class="text-center title">Ban / Đơn vị</div>
 @if(\App\Roles::checkPermission())
-{{ Html::linkAction('UnitController@edit', 'Thêm Đơn vị', array('id'=>0), array('class' => 'btn btn-my')) }}
+{{ Html::linkAction('UnitController@edit', 'Thêm đơn vị', array('id'=>0), array('class' => 'btn btn-my')) }}
 
 {!! Form::open(array('route' => 'unit-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
 {{ Form::hidden('id', 0, array('id' => 'id')) }}

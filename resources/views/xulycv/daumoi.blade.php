@@ -57,7 +57,7 @@
                 }
             }
             ?>
-            <tr class="row-st-{{$st}}">
+            <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
@@ -161,6 +161,20 @@
             });
         }
 
+        function reStyleRow(id, status, time_log){
+            var time_split = time_log.split("/");
+            var time = time_split[2] + "-" + time_split[1] + "-" + time_split[0];
+            if (status == "-1"){
+                $("#row-" + id).attr('class', 'row-st-6');
+            }else if (status == "1"){
+                if (time <= $("#row-" + id).attr('deadline')){
+                    $("#row-" + id).attr('class', 'row-st-2');
+                }else{
+                    $("#row-" + id).attr('class', 'row-st-3');
+                }
+            }
+        }
+
         $(document).ready(function () {
 
             @if(\App\Roles::accessAction(Request::path(), 'status'))
@@ -172,7 +186,7 @@
 
 
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
-
+            reCount();
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
                 var note = $("#pr-note").val();
@@ -189,8 +203,9 @@
                     success: function (result) {
                         $(".loader").hide();
                         $("#modal-progress").modal("hide");
-                        $("#progress-" + steering_id).html(note + " <a href='javascript:showDetailProgress(" + steering_id + ")'>Cập nhật</a>")
+                        $("#progress-" + steering_id).html(note)
                         resetFromProgress();
+                        reStyleRow(steering_id, status, time_log);
                     },
                     error: function () {
                         alert("Xảy ra lỗi nội bộ");
@@ -264,23 +279,31 @@
                 $('input', this.header()).on('keyup change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
+                        reCount();
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                        reCount();
                     }
                 });
             });
 
 
         });
+        function reCount(){
+            $(".count-st").each(function() {
+                console.log($(this).attr('id'));
+                $(this).html($('.' + $(this).attr('id')).length);
+            });
+        }
 
         function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
-            $("#form-progress").hide();
+//            $("#form-progress").hide();
         }
     </script>
     <style>
