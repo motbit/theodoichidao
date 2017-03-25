@@ -94,18 +94,35 @@
                     <td><a href="steeringcontent?source={{$row->source}}"> {{ $row->source }} </a> </td>
                 @endif
 
-                <td> {{ $unit[$row->unit] }} </td>
                 <td>
                     <ul class="unit-list" id="unit-list{{$idx}}">
+                        @foreach(explode(',', $row->unit) as $i)
+                            @if (isset($unit[$i]))
+                                @if ($loop->iteration < 3)
+                                    <li> - {{$unit[$i]}}</li>
+                                @else
+                                    @if ($loop->iteration == 3)
+                                        <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
+                                    @endif
+                                    <li class="more"> - {{$unit[$i]}}</li>
+                                @endif
+
+
+                            @endif
+                        @endforeach
+                    </ul>
+                </td>
+                <td>
+                    <ul class="unit-list" id="follow-list{{$idx}}">
                     @foreach(explode(',', $row->follow) as $i)
                         @if (isset($unit2[$i]))
-                            @if ($loop->iteration < 4)
-                                    <li>{{$unit2[$i]}}</li>
+                            @if ($loop->iteration < 3)
+                                    <li> - {{$unit2[$i]}}</li>
                             @else
-                                    @if ($loop->iteration == 4)
-                                    <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
+                                    @if ($loop->iteration == 3)
+                                    <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more">{{$unit2[$i]}}</li>
+                                    <li class="more"> - {{$unit2[$i]}}</li>
                             @endif
 
 
@@ -248,7 +265,10 @@
             $("#unit-list" + unit + " .more").show();
             $("#unit-list" + unit + " .more-link").hide();
         }
-
+        function showfollow(unit) {
+            $("#follow-list" + unit + " .more").show();
+            $("#follow-list" + unit + " .more-link").hide();
+        }
 
         function reStyleRow(id, status, time_log){
             var time_split = time_log.split("/");

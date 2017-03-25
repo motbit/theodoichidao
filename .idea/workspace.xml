@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
     </list>
@@ -27,17 +28,37 @@
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="808">
-              <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
+            <state relative-caret-position="1054">
+              <caret line="124" column="56" selection-start-line="124" selection-start-column="56" selection-end-line="124" selection-end-column="56" />
               <folding>
-                <marker date="1490350732296" expanded="true" signature="10667:10743" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="10773:10958" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="10806:10947" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="10818:10946" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="11143:15909" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="11469:11518" ph="..." />
-                <marker date="1490350732296" expanded="true" signature="11584:12740" ph="..." />
+                <element signature="e#2325#2344#0#HTML" expanded="true" />
+                <element signature="e#2404#2428#0#HTML" expanded="true" />
+                <element signature="e#2485#2509#0#HTML" expanded="true" />
+                <element signature="e#2571#2590#0#HTML" expanded="true" />
+                <element signature="e#2663#2686#0#HTML" expanded="true" />
+                <element signature="e#2740#2764#0#HTML" expanded="true" />
+                <element signature="e#7703#7725#0#HTML" expanded="true" />
+                <element signature="e#7887#7894#0#HTML" expanded="true" />
+                <element signature="e#8033#8069#0#HTML" expanded="true" />
+                <element signature="e#8690#8696#0#HTML" expanded="true" />
+                <element signature="e#8696#8702#0#HTML" expanded="true" />
+                <element signature="e#8702#8708#0#HTML" expanded="true" />
+                <element signature="e#8708#8714#0#HTML" expanded="true" />
+                <element signature="e#8814#8820#0#HTML" expanded="true" />
+                <element signature="e#8820#8826#0#HTML" expanded="true" />
+                <element signature="e#8826#8832#0#HTML" expanded="true" />
+                <element signature="e#8832#8838#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/add.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1146">
+              <caret line="60" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="64" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,8 +66,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1034">
-              <caret line="387" column="18" selection-start-line="387" selection-start-column="18" selection-end-line="387" selection-end-column="18" />
+            <state relative-caret-position="1100">
+              <caret line="389" column="24" selection-start-line="389" selection-start-column="24" selection-end-line="389" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -55,19 +76,25 @@
       <file leaf-file-name="daumoi.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="218" column="29" selection-start-line="218" selection-start-column="29" selection-end-line="218" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="duocgiao.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/xulycv/duocgiao.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1353">
-              <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="990">
+              <caret line="233" column="29" selection-start-line="233" selection-start-column="29" selection-end-line="233" selection-end-column="29" />
+              <folding>
+                <element signature="e#1414#1433#0#HTML" expanded="true" />
+                <element signature="e#1493#1517#0#HTML" expanded="true" />
+                <element signature="e#1574#1598#0#HTML" expanded="true" />
+                <element signature="e#1660#1679#0#HTML" expanded="true" />
+                <element signature="e#1752#1775#0#HTML" expanded="true" />
+                <element signature="e#1829#1853#0#HTML" expanded="true" />
+                <element signature="e#3852#3859#0#HTML" expanded="true" />
+                <element signature="e#4618#4624#0#HTML" expanded="true" />
+                <element signature="e#4624#4630#0#HTML" expanded="true" />
+                <element signature="e#4630#4636#0#HTML" expanded="true" />
+                <element signature="e#4636#4642#0#HTML" expanded="true" />
+                <element signature="e#4742#4748#0#HTML" expanded="true" />
+                <element signature="e#4748#4754#0#HTML" expanded="true" />
+                <element signature="e#4754#4760#0#HTML" expanded="true" />
+                <element signature="e#4760#4766#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,9 +102,17 @@
       <file leaf-file-name="phoihop.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/xulycv/phoihop.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
-              <caret line="142" column="37" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
-              <folding />
+            <state relative-caret-position="572">
+              <caret line="143" column="37" selection-start-line="143" selection-start-column="37" selection-end-line="143" selection-end-column="37" />
+              <folding>
+                <element signature="e#1416#1435#0#HTML" expanded="true" />
+                <element signature="e#1495#1519#0#HTML" expanded="true" />
+                <element signature="e#1580#1604#0#HTML" expanded="true" />
+                <element signature="e#1666#1685#0#HTML" expanded="true" />
+                <element signature="e#1762#1785#0#HTML" expanded="true" />
+                <element signature="e#1839#1863#0#HTML" expanded="true" />
+                <element signature="e#3661#3668#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,9 +121,9 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3925">
-              <caret line="119" column="64" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="67" />
+              <caret line="120" column="20" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="67" />
               <folding>
-                <element signature="e#40#53#0#PHP" expanded="true" />
+                <element signature="e#54#67#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -756,7 +791,7 @@
       <workItem from="1490147021787" duration="7095000" />
       <workItem from="1490172525098" duration="2070000" />
       <workItem from="1490233712229" duration="19076000" />
-      <workItem from="1490323093109" duration="8583000" />
+      <workItem from="1490323093109" duration="10436000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -769,7 +804,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95127000" />
+    <option name="totallyTimeSpent" value="96980000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
@@ -998,13 +1033,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/add.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1947">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="64" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/update.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1034">
@@ -1170,14 +1198,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="218" column="29" selection-start-line="218" selection-start-column="29" selection-end-line="218" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/sourcesteering/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="902">
@@ -1215,41 +1235,91 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3925">
-          <caret line="119" column="64" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="67" />
+          <caret line="120" column="20" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="67" />
           <folding>
-            <element signature="e#40#53#0#PHP" expanded="true" />
+            <element signature="e#54#67#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1100">
+          <caret line="389" column="24" selection-start-line="389" selection-start-column="24" selection-end-line="389" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/add.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1146">
+          <caret line="60" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="64" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="233" column="29" selection-start-line="233" selection-start-column="29" selection-end-line="233" selection-end-column="29" />
+          <folding>
+            <element signature="e#1414#1433#0#HTML" expanded="true" />
+            <element signature="e#1493#1517#0#HTML" expanded="true" />
+            <element signature="e#1574#1598#0#HTML" expanded="true" />
+            <element signature="e#1660#1679#0#HTML" expanded="true" />
+            <element signature="e#1752#1775#0#HTML" expanded="true" />
+            <element signature="e#1829#1853#0#HTML" expanded="true" />
+            <element signature="e#3852#3859#0#HTML" expanded="true" />
+            <element signature="e#4618#4624#0#HTML" expanded="true" />
+            <element signature="e#4624#4630#0#HTML" expanded="true" />
+            <element signature="e#4630#4636#0#HTML" expanded="true" />
+            <element signature="e#4636#4642#0#HTML" expanded="true" />
+            <element signature="e#4742#4748#0#HTML" expanded="true" />
+            <element signature="e#4748#4754#0#HTML" expanded="true" />
+            <element signature="e#4754#4760#0#HTML" expanded="true" />
+            <element signature="e#4760#4766#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/xulycv/phoihop.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="142" column="37" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1034">
-          <caret line="387" column="18" selection-start-line="387" selection-start-column="18" selection-end-line="387" selection-end-column="18" />
-          <folding />
+        <state relative-caret-position="572">
+          <caret line="143" column="37" selection-start-line="143" selection-start-column="37" selection-end-line="143" selection-end-column="37" />
+          <folding>
+            <element signature="e#1416#1435#0#HTML" expanded="true" />
+            <element signature="e#1495#1519#0#HTML" expanded="true" />
+            <element signature="e#1580#1604#0#HTML" expanded="true" />
+            <element signature="e#1666#1685#0#HTML" expanded="true" />
+            <element signature="e#1762#1785#0#HTML" expanded="true" />
+            <element signature="e#1839#1863#0#HTML" expanded="true" />
+            <element signature="e#3661#3668#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="808">
-          <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
+        <state relative-caret-position="1054">
+          <caret line="124" column="56" selection-start-line="124" selection-start-column="56" selection-end-line="124" selection-end-column="56" />
           <folding>
-            <marker date="1490350732296" expanded="true" signature="10667:10743" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="10773:10958" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="10806:10947" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="10818:10946" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="11143:15909" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="11469:11518" ph="..." />
-            <marker date="1490350732296" expanded="true" signature="11584:12740" ph="..." />
+            <element signature="e#2325#2344#0#HTML" expanded="true" />
+            <element signature="e#2404#2428#0#HTML" expanded="true" />
+            <element signature="e#2485#2509#0#HTML" expanded="true" />
+            <element signature="e#2571#2590#0#HTML" expanded="true" />
+            <element signature="e#2663#2686#0#HTML" expanded="true" />
+            <element signature="e#2740#2764#0#HTML" expanded="true" />
+            <element signature="e#7703#7725#0#HTML" expanded="true" />
+            <element signature="e#7887#7894#0#HTML" expanded="true" />
+            <element signature="e#8033#8069#0#HTML" expanded="true" />
+            <element signature="e#8690#8696#0#HTML" expanded="true" />
+            <element signature="e#8696#8702#0#HTML" expanded="true" />
+            <element signature="e#8702#8708#0#HTML" expanded="true" />
+            <element signature="e#8708#8714#0#HTML" expanded="true" />
+            <element signature="e#8814#8820#0#HTML" expanded="true" />
+            <element signature="e#8820#8826#0#HTML" expanded="true" />
+            <element signature="e#8826#8832#0#HTML" expanded="true" />
+            <element signature="e#8832#8838#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
