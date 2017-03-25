@@ -381,7 +381,14 @@ label {
 }
 
 .unit-list {
+    padding: 0;
+    margin: 0;
 
+}
+
+.unit-list li {
+    padding-bottom: 5px;
+    list-style: none;
 }
 
 .unit-list .more {
