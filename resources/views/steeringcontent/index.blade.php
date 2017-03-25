@@ -51,8 +51,8 @@
             <th></th>
             <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%"></th>
+            <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-with: 120px;"></th>
+            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-with: 120px;"></th>
             <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             @if(\App\Roles::checkPermission())
@@ -99,12 +99,12 @@
                         @foreach(explode(',', $row->unit) as $i)
                             @if (isset($unit[$i]))
                                 @if ($loop->iteration < 3)
-                                    <li> - {{$unit[$i]}}</li>
+                                    <li> • {{$unit[$i]}}</li>
                                 @else
                                     @if ($loop->iteration == 3)
                                         <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> - {{$unit[$i]}}</li>
+                                    <li class="more"> • {{$unit[$i]}}</li>
                                 @endif
 
 
@@ -117,12 +117,12 @@
                     @foreach(explode(',', $row->follow) as $i)
                         @if (isset($unit2[$i]))
                             @if ($loop->iteration < 3)
-                                    <li> - {{$unit2[$i]}}</li>
+                                    <li> • {{$unit2[$i]}}</li>
                             @else
                                     @if ($loop->iteration == 3)
                                     <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> - {{$unit2[$i]}}</li>
+                                    <li class="more"> • {{$unit2[$i]}}</li>
                             @endif
 
 
