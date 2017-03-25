@@ -61,13 +61,41 @@
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
-                <td> {{ $unit[$row->unit] }} </td>
                 <td>
-                    @foreach(explode(',', $row->follow) as $i)
-                        @if (isset($unit2[$i]))
-                            {{$unit2[$i]}},
-                        @endif
-                    @endforeach
+                    <ul class="unit-list" id="unit-list{{$idx}}">
+                        @foreach(explode(',', $row->unit) as $i)
+                            @if (isset($unit[$i]))
+                                @if ($loop->iteration < 3)
+                                    <li> • {{$unit[$i]}}</li>
+                                @else
+                                    @if ($loop->iteration == 3)
+                                        <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
+                                    @endif
+                                    <li class="more"> • {{$unit[$i]}}</li>
+                                @endif
+
+
+                            @endif
+                        @endforeach
+                    </ul>
+                </td>
+                <td>
+                    <ul class="unit-list" id="follow-list{{$idx}}">
+                        @foreach(explode(',', $row->follow) as $i)
+                            @if (isset($unit2[$i]))
+                                @if ($loop->iteration < 3)
+                                    <li> • {{$unit2[$i]}}</li>
+                                @else
+                                    @if ($loop->iteration == 3)
+                                        <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
+                                    @endif
+                                    <li class="more"> • {{$unit2[$i]}}</li>
+                                @endif
+
+
+                            @endif
+                        @endforeach
+                    </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
                 <td id="progress-{{$row->id}}"> {{$row->progress}} <a
@@ -206,6 +234,16 @@
 
 
         });
+
+        function showunit(unit) {
+            $("#unit-list" + unit + " .more").show();
+            $("#unit-list" + unit + " .more-link").hide();
+        }
+        function showfollow(unit) {
+            $("#follow-list" + unit + " .more").show();
+            $("#follow-list" + unit + " .more-link").hide();
+        }
+
 
         function reCount(){
             $(".count-st").each(function() {
