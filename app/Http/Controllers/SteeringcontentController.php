@@ -94,10 +94,10 @@ class SteeringcontentController extends Controller
             $data=Steeringcontent::where('id',$id)->get();
 
             $dtfollowArr = explode(",",$data[0]['follow']);
-            $dtfollow = $data[0]['follow'];
+            $dtUnitArr = explode(",",$data[0]['unit']);
 
             return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
-                'data'=>$data,'dtfollow'=>$dtfollow, 'dtfollowArr'=>$dtfollowArr, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
+                'data'=>$data, 'dtfollowArr'=>$dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
                 'priority'=>$priority, 'viphuman'=>$viphuman]);
         } else {
 
@@ -117,7 +117,7 @@ class SteeringcontentController extends Controller
             $result=Steeringcontent::where('id',$request->input('id'))->update([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
-                'unit'=>$request->input('firtunit'),
+                'unit'=> implode(",", $request->input('firtunit')),
 //                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'follow'=>$secondunit,
 //                'note'=>$request->input('note'),
@@ -142,7 +142,7 @@ class SteeringcontentController extends Controller
             $result=Steeringcontent::insert([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
-                'unit'=>$request->input('firtunit'),
+                'unit'=> implode(",", $request->input('firtunit')),
                 'follow'=>$secondunit,
                 'priority'=>$request->input('priority'),
                 'conductor' => $request->input('viphuman'),

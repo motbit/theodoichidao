@@ -56,7 +56,7 @@
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân chủ trì:</label>
-        <select id="fList" name="firtunit" class="form-control select-single ipw">
+        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
                     <option {{($row->unit == $c->id) ? 'selected' : ''}}  value="{{$c->id}}" >{{$c->name}}</option>
@@ -181,6 +181,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
+                                        <input type="checkbox" name="pfunit-parent" class="pick-firt-unit" value="{{$u->id}}">
                                         <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
                                     </h4>
                                 </div>
@@ -189,7 +190,8 @@
                                     <ul class="list-group">
                                         @foreach($u->children as $c)
                                             <li class="list-group-item">
-                                                <input {{($row->unit == $c->id) ? "checked" : ""}} type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">
+                                                <input {{ in_array($c->id, $dtUnitArr) ? "checked" : "" }} type="checkbox" name="pfunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
+                                                {{--<input {{($row->unit == $c->id) ? "checked" : ""}} type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                                 {{$c->name}}
                                             </li>
                                         @endforeach
@@ -268,8 +270,10 @@
                 source: viphumans
             });
 
-            var arr = [{{$dtfollow}}];
-            $("#sList").val(arr).trigger('change');
+            var dtfollow = [{{$data[0]['follow']}}]
+            var dtunit = [{{$data[0]['unit']}}]
+            $("#sList").val(dtfollow).trigger('change');
+            $("#fList").val(dtunit).trigger('change');
         });
 
         $('input:radio[name=psource]').change(function () {
@@ -294,10 +298,34 @@
             $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked',true);
         });
 
-        $('input:radio[name=pfunit]').change(function () {
-            var id = $('input[name="pfunit"]:checked').val();
-            $("#fList").val(id).trigger('change');
-//            $('#fList option[value=' + id +']').attr('selected','selected');
+//        $('input:radio[name=pfunit]').change(function () {
+//            var id = $('input[name="pfunit"]:checked').val();
+//            $("#fList").val(id).trigger('change');
+////            $('#fList option[value=' + id +']').attr('selected','selected');
+//        });
+        $('input:checkbox[name=pfunit]').change(function () {
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=pfunit]:checked').each(function(){
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#fList").val(arr).trigger('change');
+        });
+        $('input:checkbox[name=pfunit-parent]').change(function () {
+            var id = $(this).val();
+            if(!$(this).is(":checked")){
+                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
+            }else {
+                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
+            }
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=pfunit]:checked').each(function () {
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#fList").val(arr).trigger('change');
         });
 
         $('input:checkbox[name=psunit]').change(function () {
@@ -313,9 +341,9 @@
         $('input:checkbox[name=psunit-parent]').change(function () {
             var id = $(this).val();
             if(!$(this).is(":checked")){
-                $("input:checkbox[name=psunit][parent-id=" + id + "]").attr('checked', false);
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
             }else {
-                $("input:checkbox[name=psunit][parent-id=" + id + "]").attr('checked', true);
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
             }
             var arr = [];
             var vl = '';
@@ -326,9 +354,24 @@
             $("#sList").val(arr).trigger('change');
         });
 
-        $('#fList').change(function() {
-            var val = $("#fList option:selected").val();
-            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
+//        $('#fList').change(function() {
+//            var val = $("#fList option:selected").val();
+//            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
+//        });
+
+        $('#fList').on("select2:select", function(event) {
+            $(event.currentTarget).find("option:selected").each(function(i, selected){
+                i = $(selected).val();
+                $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked',true);
+            });
+        });
+        $("#fList").on("select2:unselect", function (event) {
+            $('input:checkbox[name=pfunit]').prop('checked',false);
+
+            $(event.currentTarget).find("option:selected").each(function(i, selected){
+                i = $(selected).val();
+                $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked',true);
+            });
         });
 
         $('#sList').on("select2:select", function(event) {
@@ -339,11 +382,11 @@
         });
 
         $("#sList").on("select2:unselect", function (event) {
-            $('input:checkbox[name=psunit]').attr('checked',false);
+            $('input:checkbox[name=psunit]').prop('checked',false);
 
             $(event.currentTarget).find("option:selected").each(function(i, selected){
                 i = $(selected).val();
-                $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked',true);
+                $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked',true);
             });
         });
 
