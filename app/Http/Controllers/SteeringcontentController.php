@@ -111,13 +111,15 @@ class SteeringcontentController extends Controller
 
         $id = intval( $request->input('id') );
         if($id > 0) {
-            $secondunitArr = $request->input('secondunit');
-            $secondunit = implode(",", $secondunitArr);
+            $firstUnit = $request->input('firtunit');
+            if($firstUnit != '') $firstUnit = implode(",", $firstUnit);
+            $secondunit = $request->input('secondunit');
+            if($secondunit != '') $secondunit = implode(",", $secondunit);
 
             $result=Steeringcontent::where('id',$request->input('id'))->update([
                 'content'=>$request->input('content'),
-                'source'=>$request->input('source'),
-                'unit'=> implode(",", $request->input('firtunit')),
+                'source'=> $request->input('source'),
+                'unit'=> $firstUnit,
 //                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'follow'=>$secondunit,
 //                'note'=>$request->input('note'),
@@ -136,13 +138,15 @@ class SteeringcontentController extends Controller
             );
 
         } else {
-            $secondunitArr = $request->input('secondunit');
-            $secondunit = implode(",", $secondunitArr);
+            $firstUnit = $request->input('firtunit');
+            if($firstUnit != '') $firstUnit = implode(",", $firstUnit);
+            $secondunit = $request->input('secondunit');
+            if($secondunit != '') $secondunit = implode(",", $secondunit);
 
             $result=Steeringcontent::insert([
                 'content'=>$request->input('content'),
                 'source'=>$request->input('source'),
-                'unit'=> implode(",", $request->input('firtunit')),
+                'unit'=> $firstUnit,
                 'follow'=>$secondunit,
                 'priority'=>$request->input('priority'),
                 'conductor' => $request->input('viphuman'),

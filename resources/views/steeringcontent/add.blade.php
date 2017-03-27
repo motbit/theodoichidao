@@ -50,7 +50,7 @@
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân chủ trì:</label>
-        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple">
+        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple" required="required">
             @foreach($treeunit as $item)
                     @foreach($item->children as $c)
                         <option value="{{$c->id}}" >{{$c->name}}</option>
