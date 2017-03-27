@@ -27,7 +27,7 @@
         <thead>
         <tr>
             <th></th>
-            <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
+            <th> Tên nhiệm vụ<br><input type="text" style="width: 100%; min-width: 120px"></th>
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
             <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>

@@ -87,7 +87,7 @@
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
                     @foreach($menu_nd as $nd)
-                        <li class="{{ (strpos(\Request::path(), $nd->path)  !== false )? 'active' : '' }}"><a href="/{{$nd->path}}">{{$nd->name}}</a></li>
+                        <li class="{{ (strpos(\Request::path(), $nd->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$nd->path}}">{{$nd->name}}</a></li>
                     @endforeach
                 </ul>
             @endif
@@ -96,7 +96,7 @@
                 <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
                 <ul>
                     @foreach($menu_ykcd as $yk)
-                        <li class="{{ (strpos(\Request::path(), $yk->path)  !== false )? 'active' : '' }}"><a href="/{{$yk->path}}">{{$yk->name}}</a></li>
+                        <li class="{{ (strpos(\Request::path(), $yk->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
                     @endforeach
                 </ul>
             @endif
@@ -105,14 +105,14 @@
                     <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
                     <ul>
                         @foreach($menu_xlnv as $xl)
-                            <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="/{{$xl->path}}">{{$xl->name}}</a></li>
+                            <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
                         @endforeach
                     </ul>
                 @endif
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
-                <li><a href="#">Báo cáo thống kê</a></li>
-                <li><a href="#">Báo cáo chi tiết</a></li>
+                <li><a href="{{$_ENV['ALIAS']}}/steeringcontent">Báo cáo chi tiết</a></li>
+                {{--<li><a href="#">Báo cáo chi tiết</a></li>--}}
             </ul>
         </div>
     </div>
