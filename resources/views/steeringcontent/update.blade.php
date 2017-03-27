@@ -80,7 +80,7 @@
 
     <div class="form-group  form-inline">
         <label>Thời hạn hoàn thành:</label>
-        {!! Form::text('deathline', date("d-m-Y", strtotime($row->deadline)),
+        {!! Form::text('deathline', (strtotime($row->deadline) != "")?date("d-m-Y", strtotime($row->deadline)):'',
             array('required',
                   'class'=>'form-control datepicker',
                   'placeholder'=>'Thời gian hoàn thành')) !!}

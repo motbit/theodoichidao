@@ -51,8 +51,8 @@
             <th></th>
             <th> Tên nhiệm vụ<br><input type="text" style="width: 100%"></th>
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-with: 120px;"></th>
-            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-with: 120px;"></th>
+            <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
+            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             @if(\App\Roles::checkPermission())
@@ -130,7 +130,7 @@
                     @endforeach
                     </ul>
                 </td>
-                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'status'))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
                 @else
