@@ -157,7 +157,7 @@
                 bLengthChange: false,
                 "pageLength": 20,
                 "language": {
-                    "url": "/js/datatables/Vietnamese.json"
+                    "url": "<?php echo e($_ENV['ALIAS']); ?>/js/datatables/Vietnamese.json"
                 },
                 "initComplete": function () {
                     $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");

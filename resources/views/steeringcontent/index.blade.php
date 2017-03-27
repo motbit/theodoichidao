@@ -150,14 +150,14 @@
                 {{--</td>--}}
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
-                        <a href="/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
-                                                                               src="/img/edit.png"></a>
+                        <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
+                                                                               src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                     </td>
                 @endif
                 @if(\App\Roles::accessAction(Request::path(), 'delete'))
                     <td>
                         <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
-                                                                             src="/img/delete.png"></a>
+                                                                             src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
             </tr>
@@ -372,7 +372,7 @@
                 bLengthChange: false,
                 "pageLength": 20,
                 "language": {
-                    "url": "/js/datatables/Vietnamese.json"
+                    "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 },
                 "initComplete": function () {
                     $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
