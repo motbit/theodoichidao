@@ -64,8 +64,8 @@
                 <td> {{$row->description}} </td>
                 @if(\App\Roles::checkPermission())
                     <td>
-                        <a href="/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
-                        <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="/img/delete.png"></a>
+                        <a href="{{$_ENV['ALIAS']}}/viphuman/update?id={{$row->id}}"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
+                        <a href="javascript:removebyid('{{$row->id}}')"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
             </tr>

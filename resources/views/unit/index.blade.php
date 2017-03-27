@@ -45,12 +45,12 @@
                             <tr>
                                 <td>{{$c->name}}</td>
                                 <td>{{$c->shortname}}</td>
-                                <td><a href="/unit/update?id={{$c->id}}">
-                                        <img height="20" border="0" src="/img/edit.png"></a>
+                                <td><a href="{{$_ENV['ALIAS']}}/unit/update?id={{$c->id}}">
+                                        <img height="20" border="0" src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                                 </td>
                                 <td>
                                     <a href="javascript:removebyid('{{$c->id}}')">
-                                        <img height="20" border="0" src="/img/delete.png"></a>
+                                        <img height="20" border="0" src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                                 </td>
                             </tr>
                         @endforeach

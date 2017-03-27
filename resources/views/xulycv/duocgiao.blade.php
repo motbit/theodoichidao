@@ -51,8 +51,8 @@
         @foreach ($data as $row)
             <tr>
                 <td>
-                    <a href="javascript:cvconfirm({{$data[0]->unit}},{{$data[0]->id}},1)"><img height="16" border="0" src="/img/check.png"></a>
-                    <a href="javascript:cvconfirm({{$data[0]->unit}},{{$data[0]->id}},0)"><img height="16" border="0" src="/img/delete.png"></a>
+                    <a href="javascript:cvconfirm({{$data[0]->unit}},{{$data[0]->id}},1)"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/check.png"></a>
+                    <a href="javascript:cvconfirm({{$data[0]->unit}},{{$data[0]->id}},0)"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                 </td>
                 <td> {{$row->content}} </td>
                 <td> {{ $source[$row->source] }} </td>

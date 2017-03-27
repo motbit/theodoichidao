@@ -239,8 +239,8 @@
             </div>
         </div>
     </div>
-    <script src="/js/jquery-ui.js"></script>
-    <link href="/css/jquery-ui.css" rel="stylesheet">
+    <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
+    <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
 
     <script>
         var sources = [
