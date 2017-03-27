@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'delete','UserController@delete' )->name('user-delete');
         Route::get( 'update','UserController@edit' )->name('user-update');
         Route::post( 'update','UserController@update' )->name('user-update');
+        Route::post( 'changepass','UserController@changepass' )->name('user-changepass');
+        Route::get( 'changepass','UserController@changepass' )->name('user-changepass');
     });
 
     Route::group(['prefix' => 'group'], function () {

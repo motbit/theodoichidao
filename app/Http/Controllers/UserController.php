@@ -7,7 +7,7 @@ use App\Unit;
 use App\Group;
 use Validator;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -34,6 +34,31 @@ class UserController extends Controller
         return view('user.index',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
 
 
+    }
+
+    public function changepass(Request $request){
+        $id = 6;
+        if($request->input('old-password')){
+            $credentials = [
+                'username' => 'admin',
+                'password' => $request->input('old-password'),
+            ];
+            if(\Auth::validate($credentials)) {
+                $result = User::where('id', $id)->update([
+                    'password'=>  bcrypt($request->input('password')),
+                ]);
+                return redirect()->action(
+                    'UserController@index', ['add' => 1]
+                );
+            }else{
+                $request->session()->flash('message', "Mật khẩu cũ không đúng");
+                return redirect()->action(
+                    'UserController@changepass'
+                );
+            }
+        }
+        $data = User::where('id',$id)->get();
+        return view('user.changepass',['data'=>$data[0], 'id'=>$id]);
     }
 
     public function edit(Request $request)
