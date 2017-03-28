@@ -26,7 +26,8 @@ class XuLyCVController extends Controller
         }
         $user = Auth::user();
         $data = DB::table('steeringcontent')
-            ->where('unit', '=', $user->unit)
+            ->orwhere('unit', 'like', '%u|' . $user->unit . ',%')
+            ->orwhere('unit', 'like', '%h|' . $user->id . ',%')
             ->select('steeringcontent.*')
             ->get();
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
@@ -127,9 +128,8 @@ class XuLyCVController extends Controller
         }
         $user = Auth::user();
         $data = DB::table('steeringcontent')
-            ->where('follow', 'like', '%,' . $user->unit)
-            ->orwhere('follow', 'like', '%,' . $user->unit . ',%')
-            ->orwhere('follow', 'like', $user->unit . ',%')
+            ->orwhere('follow', 'like', '%u|' . $user->unit . ',%')
+            ->orwhere('follow', 'like', '%h|' . $user->id . ',%')
             ->get();
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
         $firstunit = array();

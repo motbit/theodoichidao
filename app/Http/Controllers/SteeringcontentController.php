@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
+use App\User;
 use App\Viphuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,22 +35,28 @@ class SteeringcontentController extends Controller
 
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
+        $datauser=User::orderBy('fullname', 'ASC')->get();
 
         $firstunit = array();
         $secondunit = array();
+        $user = array();
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
             $secondunit[$row->id] = $row->name;
         }
 
+        foreach($datauser as $row){
+            $user[$row->id] = $row->fullname;
+        }
 
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
         $sources = array();
         foreach ($sourcesteering as $row) {
             $sources[$row->id] = "" . $row->code . "";
         }
-        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,'steering'=>$steering,'allsteeringcode'=>$allsteeringcode->all()]);
+        return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,
+            'steering'=>$steering,'allsteeringcode'=>$allsteeringcode->all(), 'user'=>$user]);
     }
 
     public function edit(Request $request)
@@ -60,6 +67,7 @@ class SteeringcontentController extends Controller
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
         $priority = $type = DB::table('priority')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+        $user = User::orderBy('fullname', 'ASC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -98,11 +106,11 @@ class SteeringcontentController extends Controller
 
             return view('steeringcontent.update',['firstunit'=>$firstunit,'secondunit'=>$secondunit,'source'=>$source,
                 'data'=>$data, 'dtfollowArr'=>$dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering'=>$sourcesteering, 'treeunit'=>$tree_unit,'unit'=>$unit,
-                'priority'=>$priority, 'viphuman'=>$viphuman]);
+                'priority'=>$priority, 'viphuman'=>$viphuman, 'user'=>$user]);
         } else {
 
             return view('steeringcontent.add',['sourcesteering'=>$sourcesteering,
-                'treeunit'=>$tree_unit,'unit'=>$unit, 'priority'=>$priority, 'viphuman'=>$viphuman]);
+                'treeunit'=>$tree_unit,'unit'=>$unit, 'priority'=>$priority, 'viphuman'=>$viphuman, 'user'=>$user]);
         }
     }
 
@@ -112,9 +120,9 @@ class SteeringcontentController extends Controller
         $id = intval( $request->input('id') );
         if($id > 0) {
             $firstUnit = $request->input('firtunit');
-            if($firstUnit != '') $firstUnit = implode(",", $firstUnit);
+            if($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ",";
             $secondunit = $request->input('secondunit');
-            if($secondunit != '') $secondunit = implode(",", $secondunit);
+            if($secondunit != '') $secondunit = implode(",", $secondunit) . ",";
 
             $result=Steeringcontent::where('id',$request->input('id'))->update([
                 'content'=>$request->input('content'),
@@ -139,9 +147,9 @@ class SteeringcontentController extends Controller
 
         } else {
             $firstUnit = $request->input('firtunit');
-            if($firstUnit != '') $firstUnit = implode(",", $firstUnit);
+            if($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ',';
             $secondunit = $request->input('secondunit');
-            if($secondunit != '') $secondunit = implode(",", $secondunit);
+            if($secondunit != '') $secondunit = implode(",", $secondunit). ',';
 
             $result=Steeringcontent::insert([
                 'content'=>$request->input('content'),
