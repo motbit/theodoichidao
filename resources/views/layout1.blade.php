@@ -45,6 +45,12 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        $(document).ready(function () {
+            $('.datepicker').on('changeDate', function (ev) {
+                // do what you want here
+                $(this).datepicker('hide');
+            });
+        });
     </script>
     <title>@section('page-title')
         @show</title>
