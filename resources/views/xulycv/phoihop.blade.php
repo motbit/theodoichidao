@@ -124,8 +124,8 @@
                     </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}} <a
-                            href="javascript:showDetailProgress({{$row->id}})">Chi tiết</a></td>
+                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
+
             </tr>
         @endforeach
         </tbody>
@@ -182,6 +182,13 @@
         }
 
         $(document).ready(function () {
+
+            $( ".progress-update" ).on( "click", function() {
+                showDetailProgress($( this ).attr("data-id"))
+                console.log( "#ID: " + $( this ).attr("data-id") );
+            });
+
+
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             // DataTable

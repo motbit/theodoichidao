@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/img/fa-icon.png">
+    <link rel="icon" href="{{$_ENV['ALIAS']}}/img/fa-icon.png">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -87,7 +87,7 @@
         <!-- Example row of columns -->
         <div class="row footer">
             <div class="col-sm-4">
-                {{--<img src="/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
+                {{--<img src="{{$_ENV['ALIAS']}}/img/moet-logo.jpg" width="120" height="auto" border="0" />--}}
             </div>
             <div class="col-sm-8 pull-right" style="text-align: right">
                 <div class="footer-text">

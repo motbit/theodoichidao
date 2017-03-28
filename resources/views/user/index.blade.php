@@ -85,7 +85,7 @@
                 bLengthChange: false,
                 "pageLength": 20,
                 "language": {
-                    "url": "/js/datatables/Vietnamese.json"
+                    "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 }
             });
 
