@@ -126,7 +126,7 @@
     </table>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="min-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -153,7 +153,7 @@
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
-                url: "api/progress?s=" + id,
+                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
                 success: function (result) {
                     $(".loader").hide();
                     var html_table = "";
@@ -228,7 +228,7 @@
                 bLengthChange: false,
                 "pageLength": 20,
                 "language": {
-                    "url": "/js/datatables/Vietnamese.json"
+                    "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 },
                 "initComplete": function () {
                     $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
