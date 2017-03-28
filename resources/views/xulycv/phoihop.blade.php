@@ -124,8 +124,8 @@
                     </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td id="progress-{{$row->id}}"> {{$row->progress}} <a
-                            href="javascript:showDetailProgress({{$row->id}})">Chi tiết</a></td>
+                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
+
             </tr>
         @endforeach
         </tbody>
@@ -159,7 +159,7 @@
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
-                url: "api/progress?s=" + id,
+                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
                 success: function (result) {
                     $(".loader").hide();
                     var html_table = "";
@@ -182,6 +182,13 @@
         }
 
         $(document).ready(function () {
+
+            $( ".progress-update" ).on( "click", function() {
+                showDetailProgress($( this ).attr("data-id"))
+                console.log( "#ID: " + $( this ).attr("data-id") );
+            });
+
+
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             // DataTable
@@ -234,7 +241,7 @@
                 bLengthChange: false,
                 "pageLength": 20,
                 "language": {
-                    "url": "/js/datatables/Vietnamese.json"
+                    "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 },
                 "initComplete": function () {
                     $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");

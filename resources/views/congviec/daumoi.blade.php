@@ -32,7 +32,7 @@
         @foreach ($lst as $row)
             <tr>
                 <td>
-                    <a href="/congviec/daumoi?id={{$row->id}}"><img height="16" border="0" src="/img/edit.png"></a>
+                    <a href="{{$_ENV['ALIAS']}}/congviec/daumoi?id={{$row->id}}"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                 </td>
 
                 <td> {{$row->content}} </td>

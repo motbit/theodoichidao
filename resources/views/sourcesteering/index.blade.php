@@ -74,20 +74,20 @@
                 <td>{{$row->sign_by}}</td>
                 <td class="text-center td-file">
                     @if($row->file_attach != '')
-                        <a href="/file/{{$row->file_attach}}" download>Tải về</a>
+                        <a href="{{$_ENV['ALIAS']}}/file/{{$row->file_attach}}" download>Tải về</a>
                     @endif
                 </td>
                 <td>{{date("d/m/Y", strtotime($row->time))}}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
-                        <a href="/sourcesteering/update?id={{$row->id}}"><img height="20" border="0"
-                                                                              src="/img/edit.png"></a>
+                        <a href="{{$_ENV['ALIAS']}}/sourcesteering/update?id={{$row->id}}"><img height="20" border="0"
+                                                                              src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                     </td>
                 @endif
                 @if(\App\Roles::accessAction(Request::path(), 'delete'))
                     <td>
                         <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="20" border="0"
-                                                                               src="/img/delete.png"></a>
+                                                                               src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
             </tr>

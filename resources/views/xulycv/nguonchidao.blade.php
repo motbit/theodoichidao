@@ -25,7 +25,7 @@
                 <td>{{$row->conductorname}}</td>
                 <td class="text-center">
                     @if($row->file_attach != '')
-                        <a href="/file/{{$row->file_attach}}" download>Tải về</a>
+                        <a href="{{$_ENV['ALIAS']}}/file/{{$row->file_attach}}" download>Tải về</a>
                     @endif
                 </td>
                 <td class="text-center"><input type="checkbox" value="{{$row->id}}"
