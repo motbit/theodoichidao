@@ -254,6 +254,19 @@ label {
     background-size: 80% 80%;
     background-position: 3px;
     background-repeat: no-repeat;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 .ico-search{
@@ -348,6 +361,7 @@ label {
 
 .progress-update {
     background: url('../img/bullet-add.png') no-repeat bottom 5px right 5px;
+    cursor: pointer;
 }
 .progress-update:hover {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #faf2cc;
@@ -402,5 +416,17 @@ label {
 @media screen and (max-width: 600px) {
     .footer-text{
         font-size: 0.8em;
+    }
+    .title{
+        min-width: 300px;
+    }
+    .note-contain{
+        min-width: 300px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #table{
+        width: 100% !important;
     }
 }

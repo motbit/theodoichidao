@@ -57,8 +57,10 @@
             <th class="td-date">Ngày ban hành
                 <input type="text" class="datepicker" style="max-width: 100px">
             </th>
-            @if(\App\Roles::checkPermission())
+            @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class="td-action"></th>
+            @endif
+            @if(\App\Roles::accessAction(Request::path(), 'delete'))
                 <th class="td-action"></th>
             @endif
         </tr>

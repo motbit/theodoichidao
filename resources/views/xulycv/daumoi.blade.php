@@ -9,18 +9,18 @@
     <div class="text-center title">Công việc đầu mối</div>
 
 
-    <div class="row">
+    <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl2"></div><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)<br>
-            <div class="note-cl cl3"></div><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)
+            <div class="note-cl cl2"></div><a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
+            <div class="note-cl cl3"></div><a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl1"></div><span class="note-tx">Chưa hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)<br>
-            <div class="note-cl cl4"></div><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)
+            <div class="note-cl cl1"></div><a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
+            <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl5"></div><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)<br>
-            <div class="note-cl cl6"></div><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)
+            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -33,6 +33,7 @@
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
+            <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
         <tbody>
@@ -129,6 +130,7 @@
                 @else
                     <td id="progress-{{$row->id}}">{{$row->progress}}</td>
                 @endif
+                <td class="hidden">{{$st}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -358,7 +360,9 @@
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
-                        reCount();
+                        if (this.id != "filter-status") {
+                            reCount();
+                        }
                     }
                 });
                 $('select', this.header()).on('change', function () {
@@ -383,6 +387,14 @@
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
 //            $("#form-progress").hide();
+        }
+
+        //loc theo trang thai
+        function filterStatus(status){
+            $(".a-status").css('font-weight', 'normal');
+            $("#a" + status).css('font-weight', 'bold');
+            $("#filter-status").val(status);
+            $("#filter-status").trigger("change");
         }
     </script>
     <style>

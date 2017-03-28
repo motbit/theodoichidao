@@ -59,7 +59,7 @@
 <img src="{{$_ENV['ALIAS']}}/img/top-baner.png" width="100%" class="hidden-xs hidden-sm" height="auto">
 <img src="{{$_ENV['ALIAS']}}/img/mobile-banner.png" width="100%" class="visible-xs visible-sm" height="auto">
 <nav class="navbar navbar-my">
-    <a href="javascript:actionNav()" class="btn ico ico-menu">
+    <a href="javascript:actionNav()" class="ico ico-menu" style="margin-top: 5px;">
     </a>
     <ul class="nav navbar-nav navbar-right">
         @if (Auth::guest())
