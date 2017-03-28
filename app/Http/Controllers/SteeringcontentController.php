@@ -53,7 +53,11 @@ class SteeringcontentController extends Controller
         $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
         $sources = array();
         foreach ($sourcesteering as $row) {
-            $sources[$row->id] = "" . $row->code . "";
+            if (trim($row->code) != ''){
+                $sources[$row->id] = "" . $row->name . "";
+            }else {
+                $sources[$row->id] = "" . $row->code . "";
+            }
         }
         return view('steeringcontent.index',['lst'=>$data,'unit'=>$firstunit,'unit2'=>$secondunit,'source'=>$sources,
             'steering'=>$steering,'allsteeringcode'=>$allsteeringcode->all(), 'user'=>$user]);
