@@ -238,7 +238,7 @@
             // Apply the search
             table.columns().every(function () {
                 var that = this;
-                $('input', this.header()).on('keyup change', function () {
+                $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
                         reCount();
