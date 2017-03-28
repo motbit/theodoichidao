@@ -65,10 +65,12 @@
 
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                    <li><a href="<?php echo e(route('user-changepass')); ?>" style="color: black !important;">Sửa mật khẩu</a></li>
                     <li><a href="<?php echo e(route('logout')); ?>"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"
                            style="color: black !important;">Đăng xuất</a></li>
+
                 </ul>
             </li>
             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
@@ -111,8 +113,8 @@
                 <?php endif; ?>
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
-                <li><a href="#">Báo cáo thống kê</a></li>
-                <li><a href="#">Báo cáo chi tiết</a></li>
+                <li><a href="<?php echo e($_ENV['ALIAS']); ?>/steeringcontent">Báo cáo chi tiết</a></li>
+                
             </ul>
         </div>
     </div>
