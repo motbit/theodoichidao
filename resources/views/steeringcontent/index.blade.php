@@ -59,7 +59,7 @@
                 <th class="td-action"></th>
                 <th class="td-action"></th>
             @endif
-            <th><input type="text" id="filter-status"></th>
+            <th><input type="text" id="filter-status" class="hidden"></th>
         </tr>
         </thead>
         <tbody>
@@ -187,7 +187,7 @@
                                                                              src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
-                <td>{{$st}}</td>
+                <td class="hidden">{{$st}}</td>
             </tr>
             @endif
         @endforeach
