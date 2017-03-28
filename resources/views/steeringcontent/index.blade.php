@@ -245,7 +245,7 @@
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
-                url: "api/progress?s=" + id,
+                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
                 success: function (result) {
                     $(".loader").hide();
                     var html_table = "";
@@ -324,7 +324,7 @@
                 var status = $('input[name="pr_status"]:checked').val()
                 var time_log = $("#progress_time").val();
                 $(".loader").show();
-                var url = "api/updateprogress";
+                var url = "{{$_ENV['ALIAS']}}/api/updateprogress";
                 console.log(url);
                 $.ajax({
                     type: "GET",

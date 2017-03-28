@@ -129,7 +129,7 @@
     </table>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="min-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -187,7 +187,7 @@
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
-                url: "/api/progress?s=" + id,
+                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
                 success: function (result) {
                     $(".loader").hide();
                     var html_table = "";
@@ -251,7 +251,7 @@
                 var status = $('input[name="pr_status"]:checked').val()
                 var time_log = $("#progress_time").val();
                 $(".loader").show();
-                var url = "/api/updateprogress";
+                var url = "{{$_ENV['ALIAS']}}/api/updateprogress";
                 console.log(url);
                 $.ajax({
                     type: "GET",
