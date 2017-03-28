@@ -61,8 +61,9 @@
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
-                <td>
+                <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
+                        @php ($n = 0)
                         @foreach(explode(',', $row->unit) as $i)
                             <?php
                             $spl = explode('|', $i);
@@ -71,26 +72,29 @@
                             if ($spl[0] == 'u' && isset($unit[$spl[1]])){
                                 $validate = true;
                                 $val = $unit[$spl[1]];
+                                $n++;
                             }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
                                 $validate = true;
                                 $val = $user[$spl[1]];
+                                $n++;
                             }
                             ?>
                             @if ($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
-                                    @if ($loop->iteration == 3)
-                                        <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
-                                    @endif
                                     <li class="more"> • {{$val}}</li>
                                 @endif
                             @endif
                         @endforeach
+                        @if ($n > 2)
+                            <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                        @endif
                     </ul>
                 </td>
-                <td>
+                <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
+                        @php ($n = 0)
                         @foreach(explode(',', $row->follow) as $i)
                             <?php
                             $spl = explode('|', $i);
@@ -99,22 +103,24 @@
                             if ($spl[0] == 'u' && isset($unit[$spl[1]])){
                                 $validate = true;
                                 $val = $unit[$spl[1]];
+                                $n++;
                             }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
                                 $validate = true;
                                 $val = $user[$spl[1]];
+                                $n++;
                             }
                             ?>
                             @if ($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
-                                    @if ($loop->iteration == 3)
-                                        <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
-                                    @endif
                                     <li class="more"> • {{$val}}</li>
                                 @endif
                             @endif
                         @endforeach
+                        @if ($n > 2)
+                            <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                        @endif
                     </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
@@ -192,7 +198,7 @@
                             format: {
                                 body: function (data, row, column, node) {
 
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/\[\+\] Xem thêm/g,"").trim();
 
                                 }
                             }
@@ -217,7 +223,7 @@
                             format: {
                                 body: function (data, row, column, node) {
 
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/\[\+\] Xem thêm/g,"").trim();
 
                                 }
                             }
@@ -256,14 +262,30 @@
         });
 
         function showunit(unit) {
-            $("#unit-list" + unit + " .more").show();
-            $("#unit-list" + unit + " .more-link").hide();
+            if($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
+                $("#unit-list" + unit + " .more").show();
+                $("#unit-list" + unit + " .more-link a").text("[-] Thu gọn");
+                $("#unit-list" + unit + " .more-link").attr("hide",0);
+            } else {
+                $("#unit-list" + unit + " .more").hide();
+                $("#unit-list" + unit + " .more-link a").text("[+] Xem thêm");
+                $("#unit-list" + unit + " .more-link").attr("hide",1);
+            }
+
         }
         function showfollow(unit) {
-            $("#follow-list" + unit + " .more").show();
-            $("#follow-list" + unit + " .more-link").hide();
-        }
 
+            if($("#follow-list" + unit + " .more-link").attr("hide") == 1) {
+                $("#follow-list" + unit + " .more").show();
+                $("#follow-list" + unit + " .more-link a").text("[-] Thu gọn");
+                $("#follow-list" + unit + " .more-link").attr("hide",0);
+            } else {
+                $("#follow-list" + unit + " .more").hide();
+                $("#follow-list" + unit + " .more-link a").text("[+] Xem thêm");
+                $("#follow-list" + unit + " .more-link").attr("hide",1);
+            }
+
+        }
 
         function reCount(){
             $(".count-st").each(function() {
