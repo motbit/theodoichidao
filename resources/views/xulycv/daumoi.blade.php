@@ -64,17 +64,27 @@
                 <td>
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @foreach(explode(',', $row->unit) as $i)
-                            @if (isset($unit[$i]))
+                            <?php
+                            $spl = explode('|', $i);
+                            $validate = false;
+                            $val = "";
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                                $validate = true;
+                                $val = $unit[$spl[1]];
+                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                                $validate = true;
+                                $val = $user[$spl[1]];
+                            }
+                            ?>
+                            @if ($validate)
                                 @if ($loop->iteration < 3)
-                                    <li> • {{$unit[$i]}}</li>
+                                    <li> • {{$val}}</li>
                                 @else
                                     @if ($loop->iteration == 3)
                                         <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> • {{$unit[$i]}}</li>
+                                    <li class="more"> • {{$val}}</li>
                                 @endif
-
-
                             @endif
                         @endforeach
                     </ul>
@@ -82,17 +92,27 @@
                 <td>
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @foreach(explode(',', $row->follow) as $i)
-                            @if (isset($unit2[$i]))
+                            <?php
+                            $spl = explode('|', $i);
+                            $validate = false;
+                            $val = "";
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                                $validate = true;
+                                $val = $unit[$spl[1]];
+                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                                $validate = true;
+                                $val = $user[$spl[1]];
+                            }
+                            ?>
+                            @if ($validate)
                                 @if ($loop->iteration < 3)
-                                    <li> • {{$unit2[$i]}}</li>
+                                    <li> • {{$val}}</li>
                                 @else
                                     @if ($loop->iteration == 3)
                                         <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> • {{$unit2[$i]}}</li>
+                                    <li class="more"> • {{$val}}</li>
                                 @endif
-
-
                             @endif
                         @endforeach
                     </ul>

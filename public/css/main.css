@@ -394,3 +394,7 @@ label {
 .unit-list .more {
     display: none;
 }
+
+.list-group{
+    /*padding-left: 10px;*/
+}

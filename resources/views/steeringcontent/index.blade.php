@@ -53,7 +53,7 @@
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
             <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             @if(\App\Roles::checkPermission())
                 <th class="td-action"></th>
@@ -97,17 +97,27 @@
                 <td>
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @foreach(explode(',', $row->unit) as $i)
-                            @if (isset($unit[$i]))
+                            <?php
+                                $spl = explode('|', $i);
+                                $validate = false;
+                                $val = "";
+                                if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                                    $validate = true;
+                                    $val = $unit[$spl[1]];
+                                }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                                    $validate = true;
+                                    $val = $user[$spl[1]];
+                                }
+                            ?>
+                            @if ($validate)
                                 @if ($loop->iteration < 3)
-                                    <li> • {{$unit[$i]}}</li>
+                                    <li> • {{$val}}</li>
                                 @else
                                     @if ($loop->iteration == 3)
                                         <li class="more-link"><a href="javascript:showunit({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> • {{$unit[$i]}}</li>
+                                    <li class="more"> • {{$val}}</li>
                                 @endif
-
-
                             @endif
                         @endforeach
                     </ul>
@@ -115,18 +125,28 @@
                 <td>
                     <ul class="unit-list" id="follow-list{{$idx}}">
                     @foreach(explode(',', $row->follow) as $i)
-                        @if (isset($unit2[$i]))
-                            @if ($loop->iteration < 3)
-                                    <li> • {{$unit2[$i]}}</li>
-                            @else
+                            <?php
+                            $spl = explode('|', $i);
+                            $validate = false;
+                            $val = "";
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                                $validate = true;
+                                $val = $unit[$spl[1]];
+                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                                $validate = true;
+                                $val = $user[$spl[1]];
+                            }
+                            ?>
+                            @if ($validate)
+                                @if ($loop->iteration < 3)
+                                    <li> • {{$val}}</li>
+                                @else
                                     @if ($loop->iteration == 3)
-                                    <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
+                                        <li class="more-link"><a href="javascript:showfollow({{$idx}})"> Xem thêm...</a></li>
                                     @endif
-                                    <li class="more"> • {{$unit2[$i]}}</li>
+                                    <li class="more"> • {{$val}}</li>
+                                @endif
                             @endif
-
-
-                        @endif
                     @endforeach
                     </ul>
                 </td>

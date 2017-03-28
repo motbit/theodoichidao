@@ -44,17 +44,22 @@
     <div class="form-group form-inline">
         <label>Phân loại:</label>
         @foreach($priority as $idx=>$p)
-            <input type="radio" name="priority" value="{{$p->id}}" {{($idx == 0)?'checked':''}}> {{$p->name}} &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="priority" value="{{$p->id}}" {{($idx == 0)?'checked':''}}> {{$p->name}} &nbsp;
+            &nbsp;&nbsp;&nbsp;
         @endforeach
     </div>
 
     <div class="form-group form-inline">
         <label>Đơn vị/Cá nhân chủ trì:</label>
-        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple" required="required">
+        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple"
+                required="required">
             @foreach($treeunit as $item)
-                    @foreach($item->children as $c)
-                        <option value="{{$c->id}}" >{{$c->name}}</option>
+                @foreach($item->children as $c)
+                    <option value="u|{{$c->id}}">{{$c->name}}</option>
+                @endforeach
             @endforeach
+            @foreach($user as $u)
+                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -64,9 +69,12 @@
         <label>Đơn vị/Cá nhân phối hợp:</label>
         <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
             @foreach($treeunit as $item)
-                    @foreach($item->children as $c)
-                        <option value="{{$c->id}}" >{{$c->name}}</option>
-                    @endforeach
+                @foreach($item->children as $c)
+                    <option value="u|{{$c->id}}">{{$c->name}}</option>
+                @endforeach
+            @endforeach
+            @foreach($user as $u)
+                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -106,7 +114,8 @@
                     <table class="table table-bordered">
                         @foreach($sourcesteering as $s)
                             <tr>
-                                <td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}" data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>
+                                <td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}"
+                                           data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>
                                 <td>{{$s->code}}</td>
                                 <td>{{$s->name}}</td>
                             </tr>
@@ -127,7 +136,8 @@
                     <table class="table table-bordered">
                         @foreach($viphuman as $v)
                             <tr>
-                                <td><input type="radio" name="pviphuman" class="pick-source" value="{{$v->id}}"  data-name="{{$v->name}}"></td>
+                                <td><input type="radio" name="pviphuman" class="pick-source" value="{{$v->id}}"
+                                           data-name="{{$v->name}}"></td>
                                 <td>{{$v->name}}</td>
                             </tr>
                         @endforeach
@@ -144,30 +154,49 @@
                     <h4 class="modal-title text-center">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                        <div class="panel-group">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#fdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#fcanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="fdonvi">
                             @foreach($treeunit as $idx=>$u)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <input type="checkbox" name="pfunit-parent" class="pick-firt-unit" value="{{$u->id}}">
-                                        <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
-                                    </h4>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <input type="checkbox" name="pfunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
+                                            <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                                    <input type="checkbox" name="pfunit" class="pick-firt-unit"
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-
-                                <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
-                                    <ul class="list-group">
-                                        @foreach($u->children as $c)
-                                            <li class="list-group-item">
-                                                {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                                <input type="checkbox" name="pfunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
-                                                {{$c->name}}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
                             @endforeach
                         </div>
+                        <div id="fcanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($user as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="checkbox" name="pfunit" class="pick-firt-unit"
+                                               value="h|{{$u->id}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,210 +209,230 @@
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="panel-group">
-                        @foreach($treeunit as $idx=>$u)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <input type="checkbox" name="psunit-parent" class="pick-firt-unit" value="{{$u->id}}">
-                                        <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
-                                    </h4>
-                                </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#sdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#scanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="sdonvi">
+                            @foreach($treeunit as $idx=>$u)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <input type="checkbox" name="psunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
+                                            <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
 
-                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
-                                    <ul class="list-group">
-                                        @foreach($u->children as $c)
-                                            <li class="list-group-item">
-                                                <input type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
-                                                {{$c->name}}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    <input type="checkbox" name="psunit" class="pick-firt-unit"
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                        <div id="scanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($user as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="checkbox" name="psunit" class="pick-firt-unit"
+                                               value="h|{{$u->id}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
-    <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
-    <script>
-        var sources = [
-            @foreach($sourcesteering as $s)
-                    '{{$s->code}}',
-            @endforeach
-        ];
-        var viphumans = [
-            @foreach($viphuman as $v)
-                '{{$v->name}}',
-            @endforeach
-        ];
-        var unitname = [
-            @foreach($unit as $u)
-                    '{{$u->name}}',
-            @endforeach
-        ];
-        function split( val ) {
-            return val.split( /,\s*/ );
-        }
-        function extractLast( term ) {
-            return split( term ).pop();
-        }
-        function getCurrentDate(){
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-            if(dd<10){
-                dd='0'+dd;
+        <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
+        <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
+        <script>
+            var sources = [
+                @foreach($sourcesteering as $s)
+                        '{{$s->code}}',
+                @endforeach
+            ];
+            var viphumans = [
+                @foreach($viphuman as $v)
+                        '{{$v->name}}',
+                @endforeach
+            ];
+            var unitname = [
+                @foreach($unit as $u)
+                        '{{$u->name}}',
+                @endforeach
+            ];
+            function split(val) {
+                return val.split(/,\s*/);
             }
-            if(mm<10){
-                mm='0'+mm;
+            function extractLast(term) {
+                return split(term).pop();
             }
-            var today = dd+'-'+mm+'-'+yyyy;
-            return today;
-        }
-        $(document).ready(function () {
-            $('.datepicker').datepicker({
-                format: 'dd-mm-yyyy',
-                dateFormat: 'dd-mm-yy',
-            });
-            $('input[name="steer_time"]').val(getCurrentDate());
-            $( "#source" ).autocomplete({
-                source: sources
-            });
-            $( "#viphuman" ).autocomplete({
-                source: viphumans
-            });
-        });
-        $('input:radio[name=psource]').change(function () {
-            $('input[name="source"]').val($('input[name="psource"]:checked').val())
-            var time = $('input[name="psource"]:checked').attr('data-time');
-            $('input[name="steer_time"]').val(time);
-        });
-
-        $('input[name="source"]').change(function() {
-            var val = $('input[name="source"]').val();
-            $('input:radio[name=psource][value="' + val + '"]').attr('checked',true);
-        });
-
-
-        $('input:radio[name=pviphuman]').change(function () {
-            var name = $('input[name="pviphuman"]:checked').attr('data-name');
-            $('input[name="viphuman"]').val(name);
-        });
-
-        $('input[name="viphuman"]').change(function() {
-            var val = $('input[name="viphuman"]').val();
-            $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked',true);
-        });
-
-
-//        $('input:radio[name=pfunit]').change(function () {
-//            var id = $('input[name="pfunit"]:checked').val();
-//            $("#fList").val(id).trigger('change');
-////            $('#fList option[value=' + id +']').attr('selected','selected');
-//        });
-
-        $('input:checkbox[name=pfunit]').change(function () {
-            var arr = [];
-            var vl = '';
-            $('input:checkbox[name=pfunit]:checked').each(function(){
-                vl = $(this).val();
-                arr.push(vl);
-            });
-            $("#fList").val(arr).trigger('change');
-        });
-        $('input:checkbox[name=pfunit-parent]').change(function () {
-            var id = $(this).val();
-            if(!$(this).is(":checked")){
-                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
-            }else {
-                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
+            function getCurrentDate() {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = dd + '-' + mm + '-' + yyyy;
+                return today;
             }
-            var arr = [];
-            var vl = '';
-            $('input:checkbox[name=pfunit]:checked').each(function () {
-                vl = $(this).val();
-                arr.push(vl);
+            $(document).ready(function () {
+                $('.datepicker').datepicker({
+                    format: 'dd-mm-yyyy',
+                    dateFormat: 'dd-mm-yy',
+                });
+                $('input[name="steer_time"]').val(getCurrentDate());
+                $("#source").autocomplete({
+                    source: sources
+                });
+                $("#viphuman").autocomplete({
+                    source: viphumans
+                });
             });
-            $("#fList").val(arr).trigger('change');
-        });
-
-
-        $('input:checkbox[name=psunit]').change(function () {
-            var arr = [];
-            var vl = '';
-            $('input:checkbox[name=psunit]:checked').each(function(){
-                vl = $(this).val();
-                arr.push(vl);
+            $('input:radio[name=psource]').change(function () {
+                $('input[name="source"]').val($('input[name="psource"]:checked').val())
+                var time = $('input[name="psource"]:checked').attr('data-time');
+                $('input[name="steer_time"]').val(time);
             });
-            $("#sList").val(arr).trigger('change');
-        });
 
-        $('input:checkbox[name=psunit-parent]').change(function () {
-            var id = $(this).val();
-            if(!$(this).is(":checked")){
-                alert('t');
-                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
-            }else {
-                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
+            $('input[name="source"]').change(function () {
+                var val = $('input[name="source"]').val();
+                $('input:radio[name=psource][value="' + val + '"]').attr('checked', true);
+            });
+
+
+            $('input:radio[name=pviphuman]').change(function () {
+                var name = $('input[name="pviphuman"]:checked').attr('data-name');
+                $('input[name="viphuman"]').val(name);
+            });
+
+            $('input[name="viphuman"]').change(function () {
+                var val = $('input[name="viphuman"]').val();
+                $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked', true);
+            });
+
+
+            //        $('input:radio[name=pfunit]').change(function () {
+            //            var id = $('input[name="pfunit"]:checked').val();
+            //            $("#fList").val(id).trigger('change');
+            ////            $('#fList option[value=' + id +']').attr('selected','selected');
+            //        });
+
+            $('input:checkbox[name=pfunit]').change(function () {
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=pfunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#fList").val(arr).trigger('change');
+            });
+            $('input:checkbox[name=pfunit-parent]').change(function () {
+                var id = $(this).val();
+                if (!$(this).is(":checked")) {
+                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
+                } else {
+                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
+                }
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=pfunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#fList").val(arr).trigger('change');
+            });
+
+
+            $('input:checkbox[name=psunit]').change(function () {
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=psunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#sList").val(arr).trigger('change');
+            });
+
+            $('input:checkbox[name=psunit-parent]').change(function () {
+                var id = $(this).val();
+                if (!$(this).is(":checked")) {
+                    alert('t');
+                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
+                } else {
+                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
+                }
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=psunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#sList").val(arr).trigger('change');
+            });
+
+            //        $('#fList').change(function() {
+            //            var val = $("#fList option:selected").val();
+            //            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
+            //        });
+
+            $('#fList').on("select2:select", function (event) {
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked', true);
+                });
+            });
+            $("#fList").on("select2:unselect", function (event) {
+                $('input:checkbox[name=pfunit]').prop('checked', false);
+
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked', true);
+                });
+            });
+
+            $('#sList').on("select2:select", function (event) {
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked', true);
+                });
+            });
+
+            $("#sList").on("select2:unselect", function (event) {
+                $('input:checkbox[name=psunit]').prop('checked', false);
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked', true);
+                });
+            });
+
+            $(".select-multiple").select2();
+            $(".select-single").select2();
+        </script>
+        <style>
+            .ipw {
+                width: 300px !important;
             }
-            var arr = [];
-            var vl = '';
-            $('input:checkbox[name=psunit]:checked').each(function () {
-                vl = $(this).val();
-                arr.push(vl);
-            });
-            $("#sList").val(arr).trigger('change');
-        });
 
-//        $('#fList').change(function() {
-//            var val = $("#fList option:selected").val();
-//            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
-//        });
-
-        $('#fList').on("select2:select", function(event) {
-            $(event.currentTarget).find("option:selected").each(function(i, selected){
-                i = $(selected).val();
-                $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked',true);
-            });
-        });
-        $("#fList").on("select2:unselect", function (event) {
-            $('input:checkbox[name=pfunit]').prop('checked',false);
-
-            $(event.currentTarget).find("option:selected").each(function(i, selected){
-                i = $(selected).val();
-                $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked',true);
-            });
-        });
-
-        $('#sList').on("select2:select", function(event) {
-            $(event.currentTarget).find("option:selected").each(function(i, selected){
-                i = $(selected).val();
-                $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked',true);
-            });
-        });
-
-        $("#sList").on("select2:unselect", function (event) {
-            $('input:checkbox[name=psunit]').prop('checked',false);
-            $(event.currentTarget).find("option:selected").each(function(i, selected){
-                i = $(selected).val();
-                $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked',true);
-            });
-        });
-
-        $(".select-multiple").select2();
-        $(".select-single").select2();
-    </script>
-    <style>
-        .ipw{
-            width: 300px !important;
-        }
-        .select2{
-            width: 300px !important;
-        }
-    </style>
+            .select2 {
+                width: 300px !important;
+            }
+        </style>
 @stop
