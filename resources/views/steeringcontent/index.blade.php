@@ -31,7 +31,7 @@
         {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'id')) }}
         {!! Form::close() !!}
-    <div class="row">
+    <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl2"></div><a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
             <div class="note-cl cl3"></div><a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)</a>
@@ -55,11 +55,13 @@
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
-            @if(\App\Roles::checkPermission())
-                <th class="td-action"></th>
+            @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class="td-action"></th>
             @endif
-            <th><input type="text" id="filter-status" class="hidden"></th>
+            @if(\App\Roles::accessAction(Request::path(), 'delete'))
+                <th class="td-action"></th>
+            @endif
+            <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
         <tbody>
@@ -187,7 +189,7 @@
                                                                              src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
-                <td style="display: none !important;">{{$st}}</td>
+                <td class="hidden">{{$st}}</td>
             </tr>
             @endif
         @endforeach
