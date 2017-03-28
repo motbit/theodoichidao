@@ -187,7 +187,7 @@
                                                                              src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                     </td>
                 @endif
-                <td class="hidden">{{$st}}</td>
+                <td style="display: none !important;">{{$st}}</td>
             </tr>
             @endif
         @endforeach
@@ -430,7 +430,9 @@
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
-                        reCount();
+                        if (this.id != "filter-status") {
+                            reCount();
+                        }
                     }
                 });
                 $('select', this.header()).on('change', function () {
