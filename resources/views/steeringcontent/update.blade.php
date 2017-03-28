@@ -59,8 +59,11 @@
         <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple" required="required">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
-                    <option {{($row->unit == $c->id) ? 'selected' : ''}}  value="{{$c->id}}" >{{$c->name}}</option>
+                    <option value="u|{{$c->id}}">{{$c->name}}</option>
                 @endforeach
+            @endforeach
+            @foreach($user as $u)
+                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -71,8 +74,11 @@
         <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
-                    <option value="{{$c->id}}" >{{$c->name}}</option>
+                    <option value="u|{{$c->id}}">{{$c->name}}</option>
                 @endforeach
+            @endforeach
+            @foreach($user as $u)
+                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -176,29 +182,48 @@
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="panel-group">
-                        @foreach($treeunit as $idx=>$u)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <input type="checkbox" name="pfunit-parent" class="pick-firt-unit" value="{{$u->id}}">
-                                        <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
-                                    </h4>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#fdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#fcanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="fdonvi">
+                            @foreach($treeunit as $idx=>$u)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <input type="checkbox" name="pfunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
+                                            <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                                    <input type="checkbox" name="pfunit" class="pick-firt-unit"
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-
-                                <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
-                                    <ul class="list-group">
-                                        @foreach($u->children as $c)
-                                            <li class="list-group-item">
-                                                <input {{ in_array($c->id, $dtUnitArr) ? "checked" : "" }} type="checkbox" name="pfunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
-                                                {{--<input {{($row->unit == $c->id) ? "checked" : ""}} type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                                {{$c->name}}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                        <div id="fcanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($user as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="checkbox" name="pfunit" class="pick-firt-unit"
+                                               value="h|{{$u->id}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,28 +237,48 @@
                     <h4 class="modal-title">Danh sách đơn vị</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="panel-group">
-                        @foreach($treeunit as $idx=>$u)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <input type="checkbox" name="psunit-parent" class="pick-firt-unit" value="{{$u->id}}">
-                                        <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
-                                    </h4>
-                                </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#sdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#scanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="sdonvi">
+                            @foreach($treeunit as $idx=>$u)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <input type="checkbox" name="psunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
+                                            <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
 
-                                <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
-                                    <ul class="list-group">
-                                        @foreach($u->children as $c)
-                                            <li class="list-group-item">
-                                                <input {{ in_array($c->id, $dtfollowArr) ? "checked" : "" }} type="checkbox" name="psunit" class="pick-firt-unit" value="{{$c->id}}" parent-id="{{$u->id}}">
-                                                {{$c->name}}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    <input type="checkbox" name="psunit" class="pick-firt-unit"
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                        <div id="scanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($user as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="checkbox" name="psunit" class="pick-firt-unit"
+                                               value="h|{{$u->id}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
