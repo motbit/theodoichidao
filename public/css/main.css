@@ -398,3 +398,9 @@ label {
 .list-group{
     /*padding-left: 10px;*/
 }
+
+@media screen and (max-width: 600px) {
+    .footer-text{
+        font-size: 0.8em;
+    }
+}
