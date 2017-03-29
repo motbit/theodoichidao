@@ -269,7 +269,7 @@
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
-                                               value="h|{{$u->id}} {{in_array("h|".$c->id, $dtfollowArr)?"checked":""}}">
+                                               value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtfollowArr)?"checked":""}}>
                                         {{$u->fullname}}
                                     </li>
                                 @endforeach

@@ -417,6 +417,8 @@
                 ],
                 bSort: false,
                 bLengthChange: false,
+                'displayStart': 30,
+//                "responsive": true,
                 "pageLength": 20,
                 "language": {
                     "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
@@ -444,7 +446,6 @@
                     }
                 });
             });
-            $( "a[data-dt-idx='2']" ).trigger( "click" );
         });
 
         //loc theo trang thai
