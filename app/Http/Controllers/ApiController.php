@@ -95,6 +95,7 @@ class ApiController extends Controller
             ->join('user', 'user.id', '=', 'progress_log.created_by')
             ->where('steeringcontent', '=', $steering_id)
             ->select('progress_log.*', 'user.fullname as created')
+            ->orderBy('progress_log.id', 'desc')
             ->get();
         return response()->json($progress);
     }

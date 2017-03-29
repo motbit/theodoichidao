@@ -23,8 +23,6 @@
                     document.getElementById("id").value = id;
                     frmdelete.submit();
                 }
-
-
             }
         </script>
 
@@ -70,13 +68,15 @@
             <?php
             $st = 1;
             if($row->status == 1){
-                if ($row->complete_time < $row->deadline){
+                if ($row->deadline == "" || $row->complete_time < $row->deadline){
                     $st = 2;
                 }else{
                     $st = 3;
                 }
             }else if ($row->status == -1){
                 $st = 6;
+            }else if($row->deadline == ""){
+                $st = 1;
             }else{
                 if (date('Y-m-d') > $row->deadline){
                     $st = 4;
@@ -286,7 +286,7 @@
 
         function reCount(){
             $(".count-st").each(function() {
-                console.log($(this).attr('id'));
+//                console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
@@ -417,6 +417,8 @@
                 ],
                 bSort: false,
                 bLengthChange: false,
+                'displayStart': 30,
+//                "responsive": true,
                 "pageLength": 20,
                 "language": {
                     "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"

@@ -83,21 +83,17 @@
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
     </div>
-
-    <div class="form-group  form-inline">
-        <label>Thời hạn hoàn thành:</label>
-        {!! Form::text('deathline', (strtotime($row->deadline) != "")?date("d-m-Y", strtotime($row->deadline)):'',
-            array('required',
-                  'class'=>'form-control datepicker',
-                  'placeholder'=>'Thời gian hoàn thành')) !!}
-    </div>
-
     <div class="form-group  form-inline">
         <label>Ngày chỉ đạo:</label>
         {!! Form::text('steer_time', date("d-m-Y", strtotime($row->steer_time)),
-            array('required',
-                  'class'=>'form-control datepicker',
+            array('class'=>'form-control datepicker',
                   'placeholder'=>'Ngày bắt đầu')) !!}
+    </div>
+    <div class="form-group  form-inline">
+        <label>Thời hạn hoàn thành:</label>
+        {!! Form::text('deathline', (strtotime($row->deadline) != "")?date("d-m-Y", strtotime($row->deadline)):'',
+            array('class'=>'form-control datepicker',
+                  'placeholder'=>'Thời gian hoàn thành')) !!}
     </div>
 
     {{--<div class="form-group">--}}
@@ -273,7 +269,7 @@
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
-                                               value="h|{{$u->id}} {{in_array("h|".$c->id, $dtfollowArr)?"checked":""}}">
+                                               value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtfollowArr)?"checked":""}}>
                                         {{$u->fullname}}
                                     </li>
                                 @endforeach
