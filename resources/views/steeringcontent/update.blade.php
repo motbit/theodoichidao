@@ -59,11 +59,11 @@
         <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple" required="required">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
-                    <option value="u|{{$c->id}}">{{$c->name}}</option>
+                    <option value="u|{{$c->id}}" {{in_array("u|".$c->id, $dtUnitArr)?"selected":""}}>{{$c->name}}</option>
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"selected":""}}>{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -74,11 +74,11 @@
         <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
-                    <option value="u|{{$c->id}}">{{$c->name}}</option>
+                    <option value="u|{{$c->id}}" {{in_array("u|".$c->id, $dtfollowArr)?"selected":""}}>{{$c->name}}</option>
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -203,7 +203,7 @@
                                                 <li class="list-group-item">
                                                     {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                                     <input type="checkbox" name="pfunit" class="pick-firt-unit"
-                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}" {{in_array("u|".$c->id, $dtUnitArr)?"checked":""}}>
                                                     {{$c->name}}
                                                 </li>
                                             @endforeach
@@ -218,7 +218,7 @@
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="pfunit" class="pick-firt-unit"
-                                               value="h|{{$u->id}}">
+                                               value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"checked":""}}>
                                         {{$u->fullname}}
                                     </li>
                                 @endforeach
@@ -258,7 +258,7 @@
                                             @foreach($u->children as $c)
                                                 <li class="list-group-item">
                                                     <input type="checkbox" name="psunit" class="pick-firt-unit"
-                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}">
+                                                           value="u|{{$c->id}}" parent-id="{{$u->id}}" {{in_array("u|".$c->id, $dtfollowArr)?"checked":""}}>
                                                     {{$c->name}}
                                                 </li>
                                             @endforeach
@@ -273,7 +273,7 @@
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
-                                               value="h|{{$u->id}}">
+                                               value="h|{{$u->id}} {{in_array("h|".$c->id, $dtfollowArr)?"checked":""}}">
                                         {{$u->fullname}}
                                     </li>
                                 @endforeach
