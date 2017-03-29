@@ -31,7 +31,7 @@
             <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
             <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
@@ -41,13 +41,15 @@
             <?php
             $st = 1;
             if($row->status == 1){
-                if ($row->complete_time < $row->deadline){
+                if ($row->deadline == "" || $row->complete_time < $row->deadline){
                     $st = 2;
                 }else{
                     $st = 3;
                 }
             }else if ($row->status == -1){
                 $st = 6;
+            }else if($row->deadline == ""){
+                $st = 1;
             }else{
                 if (date('Y-m-d') > $row->deadline){
                     $st = 4;

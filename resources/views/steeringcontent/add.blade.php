@@ -81,21 +81,18 @@
     </div>
 
     <div class="form-group  form-inline">
-        <label>Thời hạn hoàn thành:</label>
-        {!! Form::text('deathline', "",
-            array('required',
-                  'class'=>'form-control datepicker',
-                  'placeholder'=>'Thời gian hoàn thành')) !!}
-    </div>
-
-    <div class="form-group  form-inline">
         <label>Ngày chỉ đạo:</label>
         {!! Form::text('steer_time', "",
-            array('required',
-                  'class'=>'form-control datepicker',
+            array('class'=>'form-control datepicker',
                   'placeholder'=>'Ngày bắt đầu')) !!}
     </div>
 
+    <div class="form-group  form-inline">
+        <label>Thời hạn hoàn thành:</label>
+        {!! Form::text('deathline', "",
+            array('class'=>'form-control datepicker',
+                  'placeholder'=>'Thời gian hoàn thành')) !!}
+    </div>
 
     <div class="form-group">
         {!! Form::submit('Cập nhật',

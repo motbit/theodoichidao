@@ -41,13 +41,15 @@
             <?php
             $st = 1;
             if($row->status == 1){
-                if ($row->complete_time < $row->deadline){
+                if ($row->deadline == "" || $row->complete_time < $row->deadline){
                     $st = 2;
                 }else{
                     $st = 3;
                 }
             }else if ($row->status == -1){
                 $st = 6;
+            }else if($row->deadline == ""){
+                $st = 1;
             }else{
                 if (date('Y-m-d') > $row->deadline){
                     $st = 4;
