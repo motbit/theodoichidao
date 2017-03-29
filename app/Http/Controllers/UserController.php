@@ -152,7 +152,6 @@ class UserController extends Controller
             );
 
         } else {
-            echo "aaaaaaaaaa";
             $result=User::insert([
                 'username'=>$request->input('username'),
                 'password'=>bcrypt($request->input('password')),

@@ -7,6 +7,7 @@ use App\Sourcesteering;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class SourcesteeringController extends Controller
 {
@@ -50,6 +51,13 @@ class SourcesteeringController extends Controller
         if (!Auth::check()){
             return redirect("login");
         }
+        $messages = [
+            'name.required' => 'Yêu cầu nhập trích yếu',
+            'type.required' => 'Yêu cầu chọn loại nguồn.',
+            'code.required' => 'Yêu cầu nhập mã kí hiệu.',
+            'code.unique' => 'Ký hiệu đã tồn tại.',
+        ];
+
         $id = intval($request->input('id'));
 //        dd($request->file('docs'));
         $status = 0;
@@ -63,6 +71,34 @@ class SourcesteeringController extends Controller
         if ($request->input('complete') != null) {
             $status = 1;
         }
+        if($id > 0) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'type' => 'required',
+                'code' => 'required|unique:sourcesteering,code,' . $id,
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('SourcesteeringController@update',["id"=>$id])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'type' => 'required',
+                'code' => 'required|unique:sourcesteering'
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('SourcesteeringController@update')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        }
+
         if ($id > 0) {
             $update = [
                 'name' => $request->input('name'),

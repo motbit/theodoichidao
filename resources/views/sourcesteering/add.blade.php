@@ -4,6 +4,12 @@
 @stop
 @section('content')
     <div class="text-center title">{{($id == 0)?"Thêm":"Chỉnh sửa"}} nguồn chỉ đạo</div>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p  class="alert alert-danger">{{ $message }}</p>
+        @endforeach
+    @endif
+
     {!! Form::open(array('route' => 'sourcesteering-update', 'class' => 'form', 'files'=>'true')) !!}
     <div class="form-group form-inline">
         <label>Loại nguồn:</label>

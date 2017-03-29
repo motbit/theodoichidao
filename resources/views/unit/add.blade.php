@@ -9,11 +9,11 @@
 @section('content')
     <div class="text-center title">Thêm mới Ban / Đơn vị</div>
 
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p  class="alert alert-danger">{{ $message }}</p>
         @endforeach
-    </ul>
+    @endif
     {!! Form::open(array('route' => 'unit-update', 'class' => 'form')) !!}
     <div class="form-group form-inline">
         <label>Tên ban - Đơn vị:</label>

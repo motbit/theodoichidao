@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Unit;
 use Illuminate\Http\Request;
+use Validator;
 
 class UnitController extends Controller
 {
@@ -50,6 +51,38 @@ class UnitController extends Controller
     {
 
         $id = intval( $request->input('id') );
+        $messages = [
+            'name.required' => 'Yêu cầu nhập tên Ban - đơn vị',
+            'shortname.required' => 'Yêu cầu nhập tên viết tắt Ban - đơn vị',
+            'name.unique' => 'Tên Ban - đơn vị đã tồn tại',
+            'shortname.unique' => 'Tên viết tắt Ban - đơn vị đã tồn tại.',
+        ];
+        if($id > 0) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:unit,name,' . $id,
+                'shortname' => 'required|unique:unit,shortname,' . $id,
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('UnitController@update',["id"=>$id])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:unit',
+                'shortname' => 'required|unique:unit'
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('UnitController@update')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        }
+
         if($id > 0) {
             $result=Unit::where('id',$request->input('id'))->update([
                 'name'=>$request->input('name'),

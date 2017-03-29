@@ -10,6 +10,7 @@ use App\Viphuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class SteeringcontentController extends Controller
 {
@@ -126,6 +127,18 @@ class SteeringcontentController extends Controller
     {
 
         $id = intval( $request->input('id') );
+        $messages = [
+            'content.required' => 'Yêu cầu nhập trích yếu',
+        ];
+        $validator = Validator::make($request->all(), [
+            'content' => 'required',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()->action('SteeringcontentController@update',["id"=>$id])
+                ->withErrors($validator)
+                ->withInput();
+        }
         if($id > 0) {
             $firstUnit = $request->input('firtunit');
             if($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ",";

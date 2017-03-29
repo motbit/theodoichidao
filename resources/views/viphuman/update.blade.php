@@ -6,11 +6,11 @@
 
 @section('content')
     <div class="text-center title">Sửa thông tin người chủ trì</div>
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p  class="alert alert-danger">{{ $message }}</p>
         @endforeach
-    </ul>
+    @endif
     @foreach ($nguoidung as $row)
         {!! Form::open(array('route' => 'viphuman-update', 'class' => 'form')) !!}
         {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}

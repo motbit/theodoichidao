@@ -7,11 +7,11 @@
 @section('content')
     <div class="text-center title">Sửa Ban / Đơn vị</div>
 
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p  class="alert alert-danger">{{ $message }}</p>
         @endforeach
-    </ul>
+    @endif
     @foreach ($data as $row)
     {!! Form::open(array('route' => 'unit-update', 'class' => 'form')) !!}
     {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
