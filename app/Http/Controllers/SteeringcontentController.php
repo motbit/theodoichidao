@@ -92,8 +92,12 @@ class SteeringcontentController extends Controller
 //        dd($tree_unit);
 
         foreach ($unit as $row) {
-            $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->shortname;
+            $firstunit["u|" . $row->id] = $row->name;
+            $secondunit["u|" . $row->id] = $row->shortname;
+        }
+        foreach ($user as $row){
+            $firstunit["h|" . $row->id] = $row->fullname;
+            $secondunit["h|" . $row->id] = $row->fullname;
         }
 
         $source = array();
