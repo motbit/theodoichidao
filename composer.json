@@ -11,8 +11,9 @@
         "illuminate/html": "~5.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.4"
-    },
+        "laravelcollective/html": "^5.4",
+        "phpexcel/phpexcel": "dev-master"
+},
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",

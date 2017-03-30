@@ -11,9 +11,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class ReportController extends Controller
 {
+    public function export(Request $request) {
+
+        $fileName = "C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\format-baocao.xlsx";
+
+        $excelobj = PHPExcel_IOFactory::load($fileName);
+        $excelobj->setActiveSheetIndex(0);
+        $excelobj->getActiveSheet()->toArray(null, true, true, true);
+        $excelobj->getActiveSheet()->setCellValue('A3', '4')
+            ->setCellValue('B3', '5')
+            ->setCellValue('C3', '6')
+            ->setCellValue('D3', '6')
+            ->setCellValue('E3', '7');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
+        $objWriter->save("C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\export-data-" . date("dmyhis") . ".xlsx");
+        header('Content-type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment; filename=export-data.xlsx");
+        readfile("C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\export-data-" . date("dmyhis") . ".xlsx");
+    }
     public function index(Request $request)
     {
 //        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
@@ -97,6 +118,8 @@ class ReportController extends Controller
             'unit'=>$unit, 'user'=>$user, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
             'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users]);
     }
+
+
 
 }
 

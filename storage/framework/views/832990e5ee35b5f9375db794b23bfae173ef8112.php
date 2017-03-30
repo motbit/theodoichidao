@@ -60,8 +60,10 @@
             <th class="td-date">Ngày ban hành
                 <input type="text" class="datepicker" style="max-width: 100px">
             </th>
-            <?php if(\App\Roles::checkPermission()): ?>
+            <?php if(\App\Roles::accessAction(Request::path(), 'edit')): ?>
                 <th class="td-action"></th>
+            <?php endif; ?>
+            <?php if(\App\Roles::accessAction(Request::path(), 'delete')): ?>
                 <th class="td-action"></th>
             <?php endif; ?>
         </tr>
@@ -77,20 +79,20 @@
                 <td><?php echo e($row->sign_by); ?></td>
                 <td class="text-center td-file">
                     <?php if($row->file_attach != ''): ?>
-                        <a href="/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
+                        <a href="<?php echo e($_ENV['ALIAS']); ?>/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
                     <?php endif; ?>
                 </td>
                 <td><?php echo e(date("d/m/Y", strtotime($row->time))); ?></td>
                 <?php if(\App\Roles::accessAction(Request::path(), 'edit')): ?>
                     <td>
-                        <a href="/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
-                                                                              src="/img/edit.png"></a>
+                        <a href="<?php echo e($_ENV['ALIAS']); ?>/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
+                                                                              src="<?php echo e($_ENV['ALIAS']); ?>/img/edit.png"></a>
                     </td>
                 <?php endif; ?>
                 <?php if(\App\Roles::accessAction(Request::path(), 'delete')): ?>
                     <td>
                         <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="20" border="0"
-                                                                               src="/img/delete.png"></a>
+                                                                               src="<?php echo e($_ENV['ALIAS']); ?>/img/delete.png"></a>
                     </td>
                 <?php endif; ?>
             </tr>
@@ -167,7 +169,7 @@
             // Apply the search
             table.columns().every(function () {
                 var that = this;
-                $('input', this.header()).on('keyup change', function () {
+                $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
                     }
