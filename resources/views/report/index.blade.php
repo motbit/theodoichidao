@@ -18,7 +18,7 @@
 
 
     <div class="row">
-            <div class="form-group form-inline col-md-6">
+            <div class="form-group form-inline col-md-6 col-sm-12">
                 <label>Nguồn chỉ đạo:</label>
                 {!! Form::text('source', "",
                         array('no-required',
@@ -26,24 +26,25 @@
                         'class'=>'form-control ipw', 'id'=>'source')
                 ) !!}
             </div>
-        <div class="form-group  form-inline col-md-6">
-            <label>Ngày chỉ đạo:</label>
-            Từ:
-            {!! Form::text('steertime_from', "",
-                array('class'=>'form-control datepicker', 'id'=>'steertime_from',
-                      'placeholder'=>'Từ ngày')) !!}
-            Đến:
-            {!! Form::text('steertime_to', "",
-                array('class'=>'form-control datepicker','id'=>'steertime_to',
-                      'placeholder'=>'Đến ngày')) !!}
-
+        <div class="form-group  form-inline col-md-6 col-sm-12">
+            <div class="col-sm-12">
+                <label>Ngày chỉ đạo:</label>
+                Từ:
+                {!! Form::text('steertime_from', "",
+                    array('class'=>'form-control datepicker', 'id'=>'steertime_from',
+                          'placeholder'=>'Từ ngày')) !!}
+                Đến:
+                {!! Form::text('steertime_to', "",
+                    array('class'=>'form-control datepicker','id'=>'steertime_to',
+                          'placeholder'=>'Đến ngày')) !!}
+            </div>
         </div>
 
     </div>
     <div class="row">
-        <div class="form-group form-inline col-md-6">
+        <div class="form-group form-inline col-md-6 col-sm-12">
             <label>Đơn vị đầu mối:</label>
-            <select id="fList" name="firtunit[]" class="form-control select-single ipw">
+            <select id="fList" name="firtunit[]" class="form-control select-single ipw"  style="max-width:80%;">
                 <option value="">...</option>
                 @foreach($treeunit as $item)
                     @foreach($item->children as $c)
@@ -56,9 +57,9 @@
             </select>
         </div>
 
-        <div class="form-group form-inline col-md-6">
+        <div class="form-group form-inline col-md-6 col-sm-12">
             <label>Đơn vị phối hợp:</label>
-            <select id="sList" name="secondunit[]" class="form-control select-single ipw">
+            <select id="sList" name="secondunit[]" class="form-control select-single ipw"  style="max-width:80%;">
                 <option value="">...</option>
                 @foreach($treeunit as $item)
                     @foreach($item->children as $c)
@@ -74,7 +75,7 @@
     </div>
 
     <div class="row">
-        <div class="form-group form-inline col-md-6">
+        <div class="form-group form-inline col-md-6 col-sm-12">
             <label>Tiến độ:</label>
             <select id="progress" name="progress" class="form-control select-single ipw">
                 <option value="">Toàn bộ</option>
@@ -87,21 +88,22 @@
             </select>
         </div>
 
-        <div class="form-group  form-inline col-md-6">
-            <label>Thời hạn hoàn thành:</label>
-            Từ:
-            {!! Form::text('deadline_from', "",
-                array('class'=>'form-control datepicker',
-                      'placeholder'=>'Từ ngày','id'=>'deadline_from'
-                      )) !!}
-            Đến:
-            {!! Form::text('deadline_to', "",
-                array('class'=>'form-control datepicker','id'=>'deadline_to',
-                      'placeholder'=>'Đến ngày')) !!}
+        <div class="form-group  form-inline col-md-6 col-sm-12">
+            <div class="col-sm-12">
+                <label>Thời hạn hoàn thành:</label>
+                    Từ: {!! Form::text('deadline_from', "",
+                        array('class'=>'form-control datepicker',
+                              'placeholder'=>'Từ ngày','id'=>'deadline_from'
+                              )) !!}
+                    Đến: {!! Form::text('deadline_to', "",
+                        array('class'=>'form-control datepicker','id'=>'deadline_to',
+                              'placeholder'=>'Đến ngày')) !!}
+            </div>
+
         </div>
     </div>
     <div class="row">
-        <div class="form-group form-inline col-md-6">
+        <div class="form-group form-inline col-md-6 col-sm-12">
             <label>Người chỉ đạo:</label>
             {!! Form::text('conductor', "",
                     array('no-required',
@@ -110,7 +112,7 @@
             ) !!}
         </div>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6 col-sm-12">
         {!! Form::submit('Tìm kiếm',
           array('class'=>'btn btn-primary', 'id'=>'search')) !!}
     </div>
@@ -299,7 +301,6 @@
 
             }
             function dateToTime(strDate) {
-
                 var split = strDate.split('/');
                 var time = new Date(split[2] , split[1]-1, split[0]);
                 return time;
