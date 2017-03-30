@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'report'], function () {
         Route::get( '/','ReportController@index' )->name('report-index');
         Route::post( '/','ReportController@index' )->name('report-index');
+        Route::get( '/export','ReportController@export' )->name('export-index');
     });
 
     Route::get('api/progress', 'ApiController@getProgress');
