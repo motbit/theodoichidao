@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="text-center title">Danh mục nhiệm vụ</div>
-
+    <a href="javascript:tableToExcel('table', 'export')">Export</a>
     @if ($steering != false)
         <div class="text-center">
             <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
@@ -385,7 +385,7 @@
                                 }
                             },
                             modifier: {
-                                page: 'current'
+                                page: 'all'
                             },
                         },
                         title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
@@ -402,6 +402,10 @@
                         stripHtml: true,
                         decodeEntities: true,
                         columns: ':visible',
+                        customize: function(xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                        },
                         modifier: {
                             selected: true
                         },
@@ -409,7 +413,11 @@
                             columns: [ 0, 1, 2, 3, 4, 5 ],
                             format: {
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"").trim();
+                                    return data.replace(/<(?:.|\n)*?>/gm, '')
+                                            .replace(/(\r\n|\n|\r)/gm,"")
+                                            .replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ')
+                                            .replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"")
+                                            .trim();
                                 }
                             }
                         }
@@ -417,8 +425,6 @@
                 ],
                 bSort: false,
                 bLengthChange: false,
-                'displayStart': 30,
-//                "responsive": true,
                 "pageLength": 20,
                 "language": {
                     "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
@@ -455,6 +461,19 @@
             $("#filter-status").val(status);
             $("#filter-status").trigger("change");
         }
+    </script>
+    <script>
+        var tableToExcel = (function() {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+            return function(table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
     </script>
     <style>
         #table_filter {
