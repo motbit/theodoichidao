@@ -93,6 +93,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'update','ChucnangController@update' )->name('chucnang-update');
     });
 
+    Route::group(['prefix' => 'report'], function () {
+        Route::get( '/','ReportController@index' )->name('report-index');
+        Route::post( '/','ReportController@index' )->name('report-index');
+    });
+
     Route::get('api/progress', 'ApiController@getProgress');
     Route::get('api/updateprogress', 'ApiController@updateProgress');
     Route::post('api/updateprogress', 'ApiController@addProgress');

@@ -117,7 +117,7 @@
                 @endif
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
-                <li><a href="{{$_ENV['ALIAS']}}/steeringcontent">Báo cáo chi tiết</a></li>
+                <li><a href="{{$_ENV['ALIAS']}}/report">Báo cáo chi tiết</a></li>
                 {{--<li><a href="#">Báo cáo chi tiết</a></li>--}}
             </ul>
         </div>
