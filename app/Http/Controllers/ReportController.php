@@ -18,22 +18,29 @@ class ReportController extends Controller
 {
     public function export(Request $request) {
 
-        $fileName = "C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\format-baocao.xlsx";
+
+        $total = intval( $request->input('total') );
+        $chuahoanthanh_dunghan = intval( $request->input('chuahoanthanh_dunghan') );
+        $chuahoanthanh_quahan = intval( $request->input('chuahoanthanh_quahan') );
+        $hoanthanh_dunghan = intval( $request->input('hoanthanh_dunghan') );
+        $hoanthanh_quahan = intval( $request->input('hoanthanh_quahan') );
+
+        $fileName = base_path() . "/storage/example/format-baocao.xlsx";
 
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
-        $excelobj->getActiveSheet()->setCellValue('A3', '4')
-            ->setCellValue('B3', '5')
-            ->setCellValue('C3', '6')
-            ->setCellValue('D3', '6')
-            ->setCellValue('E3', '7');
+        $excelobj->getActiveSheet()->setCellValue('A3', $total)
+            ->setCellValue('B3', $chuahoanthanh_dunghan)
+            ->setCellValue('C3', $chuahoanthanh_quahan)
+            ->setCellValue('D3', $hoanthanh_dunghan)
+            ->setCellValue('E3', $hoanthanh_quahan);
 
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $objWriter->save("C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\export-data-" . date("dmyhis") . ".xlsx");
+        $objWriter->save(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
         header('Content-type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=export-data.xlsx");
-        readfile("C:\\xampp\\htdocs\\theodoichidao\\storage\\example\\export-data-" . date("dmyhis") . ".xlsx");
+        readfile(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
     }
     public function index(Request $request)
     {
