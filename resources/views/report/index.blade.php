@@ -380,14 +380,14 @@
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
                         if (this.id != "filter-status") {
-                                reCount();
+                            reCount();
                         }
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
-                            reCount();
+                        reCount();
                     }
                 });
             });
@@ -432,6 +432,65 @@
                         if(steertime_from == '' && steertime_to != '' && steertime < steertimeTo){
                             if(deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)){
                                 return true;
+                            }
+                            else if(deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                            else if(deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
+                        }
+                        if(steertime_from != '' && steertime_to == '' && steertime > steertimeFrom){
+                            if(deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)){
+                                return true;
+                            }
+                            else if(deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                            else if(deadline_from == '' && deadline_to != '' && (time <= timeTo)){
+                                return true;
+                            }
+                        }
+                        if(steertime_from != '' && steertime_to != '' && steertime < steertimeTo && steertime > steertimeFrom){
+                            if(deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)){
+                                return true;
+                            }
+                            else if(deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                            else if(deadline_from == '' && deadline_to != '' && (time <= timeTo)){
+                                return true;
+                            }
+                        }
+                        if (deadline_from == '' && deadline_to == '') {
+                            if ( steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                                return true;
+                            }
+                            else if(steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                            else if(steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+
+                        }
+                        if(deadline_from != '' && deadline_to == '' & time > timeFrom){
+                            if ( steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                                return true;
+                            }
+                            else if(steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                            else if(steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                        }
+                        if(deadline_from == '' && deadline_to != '' && time < timeTo){
+                            if ( steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                                return true;
+                            }
+                            else if(steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                            else if(steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                        }
+                        if(deadline_from != '' && deadline_to != '' && time > timeFrom && time < timeTo){
+                            if ( steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                                return true;
+                            }
+                            else if(steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                            else if(steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                        }
+
+                        if (deadline_from != '' && deadline_to != '' && steertime_from != '' && steertime_to != '') {
+                            if ((timeFrom <= time && timeTo >= time) && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                                return true;
+                            }
+                        }
+
+                        return false;
                             }
                             else if(deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
                             else if(deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
