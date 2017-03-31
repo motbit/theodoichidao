@@ -15,8 +15,8 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get( '/','SourcesteeringController@index' )->name('sourcesteering-index');
-    Route::get('/home', 'SourcesteeringController@index' )->name('sourcesteering-index');
+    Route::get( '/','SteeringcontentController@index' )->name('steeringcontent-index');
+    Route::get( '/home','SteeringcontentController@index' )->name('steeringcontent-index');
     Route::get('/errpermission', function () {
         return view('errpermission');
     });
