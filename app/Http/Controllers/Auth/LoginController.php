@@ -26,7 +26,15 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-
+    /**
+     * Override the username method used to validate login
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
+    }
     /**
      * Create a new controller instance.
      *
