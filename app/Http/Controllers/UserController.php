@@ -56,7 +56,7 @@ class UserController extends Controller
         }
         if($request->input('old-password')){
             $credentials = [
-                'username' => 'admin',
+                'username' => Auth::user()->username,
                 'password' => $request->input('old-password'),
             ];
             if(\Auth::validate($credentials)) {
