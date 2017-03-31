@@ -19,7 +19,7 @@
             <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
             <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
@@ -32,6 +32,7 @@
             <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th class="hidden">Trạng thái</th>
             <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
@@ -59,6 +60,13 @@
                     $st = 1;
                 }
             }
+            $name_stt = array();
+            $name_stt[1] = "Chưa hoàn thành (trong hạn)";
+            $name_stt[2] = "Đã hoàn thành (đúng hạn)";
+            $name_stt[3] = "Đã hoàn thành (quá hạn)";
+            $name_stt[4] = "Chưa hoàn thành (quá hạn)";
+            $name_stt[5] = "Sắp hết hạn (7 ngày)";
+            $name_stt[6] = "Bị hủy";
             ?>
             <tr class="row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
@@ -127,6 +135,7 @@
                     </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td class="hidden">{{$name_stt[$st]}}</td>
                 <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
                 <td class="hidden">{{$st}}</td>
             </tr>
@@ -201,9 +210,9 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
                             modifier: {
-                                page: 'current'
+                                page: 'all'
                             },
                             format: {
                                 body: function (data, row, column, node) {
@@ -229,7 +238,7 @@
                             selected: true
                         },
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5 ],
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
                             format: {
                                 body: function (data, row, column, node) {
 
