@@ -41,7 +41,7 @@ class ReportController extends Controller
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $objWriter->save(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
         header('Content-type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename=export-data.xlsx");
+        header("Content-Disposition: attachment; filename=baocaonhiemvu.xlsx");
         readfile(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
     }
     public function index(Request $request)

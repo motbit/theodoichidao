@@ -124,7 +124,7 @@
             <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
             <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
@@ -132,15 +132,14 @@
         <thead>
         <tr>
             <th></th>
-            <th> Tên nhiệm vụ<br><input type="text" id="id_content" style="width: 100%; min-width: 120px"></th>
-            <th> Người chỉ đạo<br><input type="text" id="id_conductor" style="width: 100%; min-width: 120px"></th>
-            <th> Ngày chỉ đạo<br><input type="text" id="id_steertime" style="width: 100%; min-width: 120px"></th>
+            <th> Tên nhiệm vụ<br><input type="text" id="id_content" style="width: 100%; min-width: 250px"></th>
+            <th> Người chỉ đạo<br><input type="text" id="id_conductor" style="width: 100%; min-width: 90px"></th>
+            <th> Ngày chỉ đạo<br><input type="text" id="id_steertime" style="width: 100%; min-width: 90px"></th>
             <th> Nguồn chỉ đạo<br><input id="id_source" type="text" style="max-width: 100px"></th>
             <th> Đơn vị đầu mối<input id="id_funit" type="text" style="width: 100%; min-width: 120px;"></th>
             <th> Đơn vị phối hợp<br><input id="id_sunit" type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<br><input id="id_complete_time" type="text" class="datepicker" style="max-width: 80px">
-            </th>
-            <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
+            <th> Thời hạn HT<br><input id="id_complete_time" type="text" class="datepicker" style="max-width: 80px"></th>
+            <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
@@ -168,6 +167,13 @@
                     $st = 1;
                 }
             }
+            $name_stt = array();
+            $name_stt[1] = "Chưa hoàn thành (trong hạn)";
+            $name_stt[2] = "Đã hoàn thành (đúng hạn)";
+            $name_stt[3] = "Đã hoàn thành (quá hạn)";
+            $name_stt[4] = "Chưa hoàn thành (quá hạn)";
+            $name_stt[5] = "Sắp hết hạn (7 ngày)";
+            $name_stt[6] = "Bị hủy";
             ?>
 
             <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
@@ -244,25 +250,7 @@
                     </ul>
                 </td>
                 <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
-                @if(\App\Roles::accessAction(Request::path(), 'status'))
-                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
-                        class="progress-update"> {{$row->progress}}</td>
-                @else
-                    <td id="progress-{{$row->id}}">{{$row->progress}}</td>
-                @endif
-
-                @if(\App\Roles::accessAction(Request::path(), 'edit'))
-                    <td>
-                        <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
-                                                                                                 src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
-                    </td>
-                @endif
-                @if(\App\Roles::accessAction(Request::path(), 'delete'))
-                    <td>
-                        <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
-                                                                             src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
-                    </td>
-                @endif
+                <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
             </tr>
             {{--@endif--}}
@@ -336,14 +324,14 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5],
+                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
                                 }
                             },
                             modifier: {
-                                page: 'current'
+                                page: 'all'
                             },
                         },
                         title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
@@ -364,7 +352,7 @@
                             selected: true
                         },
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5],
+                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
@@ -375,7 +363,6 @@
                 ],
                 bSort: false,
                 bLengthChange: false,
-                'displayStart': 30,
 //                "responsive": true,
                 "pageLength": 20,
                 "language": {
