@@ -37,7 +37,7 @@ class UserController extends Controller
     }
 
     public function changepass(Request $request){
-        $id = 6;
+        $id = Auth::id();
         if($request->input('old-password')){
             $credentials = [
                 'username' => 'admin',
