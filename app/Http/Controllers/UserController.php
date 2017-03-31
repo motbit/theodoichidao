@@ -63,9 +63,13 @@ class UserController extends Controller
                 $result = User::where('id', $id)->update([
                     'password'=>  bcrypt($request->input('password')),
                 ]);
-                return redirect()->action(
-                    'UserController@index', ['add' => 1]
-                );
+                if (! \App\Roles::accessView("user")){
+                    return redirect('/steeringcontent');
+                }else {
+                    return redirect()->action(
+                        'UserController@index', ['add' => 1]
+                    );
+                }
             }else{
                 $request->session()->flash('message', "Mật khẩu cũ không đúng");
                 return redirect()->action(
