@@ -186,7 +186,7 @@
 
         $(document).ready(function () {
 
-            $( ".progress-update" ).on( "click", function() {
+            $( ".progress-view" ).on( "click", function() {
                 showDetailProgress($( this ).attr("data-id"))
                 console.log( "#ID: " + $( this ).attr("data-id") );
             });

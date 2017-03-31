@@ -54,7 +54,6 @@ class UserController extends Controller
                     ->withInput();
             }
         }
-
         if($request->input('old-password')){
             $credentials = [
                 'username' => 'admin',
