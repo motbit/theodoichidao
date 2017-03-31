@@ -370,6 +370,17 @@ label {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
 }
 
+.progress-view {
+    background: url('../img/bullet-view.png') no-repeat bottom 5px right 5px;
+    cursor: pointer;
+}
+.progress-view:hover {
+    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #faf2cc;
+}
+.progress-view:visited,.progress-view:focus, .progress-view:active {
+    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #fff2cc;
+}
+
 .list-menu ul li.active a {
     color: #9f224e !important;
     font-weight: bold;

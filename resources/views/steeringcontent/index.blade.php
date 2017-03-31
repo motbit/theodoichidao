@@ -7,7 +7,6 @@
 @section('content')
 
     <div class="text-center title">Danh mục nhiệm vụ</div>
-    <a href="javascript:tableToExcel('table', 'export')">Export</a>
     @if ($steering != false)
         <div class="text-center">
             <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
