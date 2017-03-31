@@ -26,7 +26,8 @@ class Roles extends Model
 
     public static function makePath($path){
         if ($path == '' || $path == 'home' || $path == '/'){
-            $path = 'sourcesteering';
+//            $path = 'sourcesteering';
+            $path = 'steeringcontent';
         }
         return $path;
     }

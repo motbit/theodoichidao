@@ -102,7 +102,7 @@
                 <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
                 <ul>
                     @foreach($menu_ykcd as $yk)
-                        <li class="{{ (strpos(\Request::path(), $yk->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
+                        <li class="{{ (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
                     @endforeach
                 </ul>
             @endif
