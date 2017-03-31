@@ -123,7 +123,7 @@
     {{--</div>--}}
 
     <div class="form-group">
-        {!! Form::submit('Cập nhật',
+        {!! Form::submit('Hoàn tất',
           array('class'=>'btn btn-my')) !!}
     </div>
     {!! Form::close() !!}

@@ -19,22 +19,24 @@ class ReportController extends Controller
     public function export(Request $request) {
 
 
-        $total = intval( $request->input('total') );
-        $chuahoanthanh_dunghan = intval( $request->input('chuahoanthanh_dunghan') );
-        $chuahoanthanh_quahan = intval( $request->input('chuahoanthanh_quahan') );
-        $hoanthanh_dunghan = intval( $request->input('hoanthanh_dunghan') );
-        $hoanthanh_quahan = intval( $request->input('hoanthanh_quahan') );
+        $chuahoanthanh_dunghan = intval( $request->input('v1') );
+        $chuahoanthanh_quahan = intval( $request->input('v2') );
+        $hoanthanh_dunghan = intval( $request->input('v3') );
+        $hoanthanh_quahan = intval( $request->input('v4') );
+        $bi_huy = intval( $request->input('v5') );
+        $total = $chuahoanthanh_dunghan + $chuahoanthanh_quahan + $hoanthanh_dunghan + $hoanthanh_quahan + $bi_huy;
 
         $fileName = base_path() . "/storage/example/format-baocao.xlsx";
 
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
-        $excelobj->getActiveSheet()->setCellValue('A3', $total)
-            ->setCellValue('B3', $chuahoanthanh_dunghan)
-            ->setCellValue('C3', $chuahoanthanh_quahan)
-            ->setCellValue('D3', $hoanthanh_dunghan)
-            ->setCellValue('E3', $hoanthanh_quahan);
+        $excelobj->getActiveSheet()->setCellValue('A4', $total)
+            ->setCellValue('B4', $chuahoanthanh_dunghan)
+            ->setCellValue('C4', $chuahoanthanh_quahan)
+            ->setCellValue('D4', $hoanthanh_dunghan)
+            ->setCellValue('E4', $hoanthanh_quahan)
+            ->setCellValue('F4', $bi_huy);
 
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $objWriter->save(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
@@ -50,7 +52,7 @@ class ReportController extends Controller
 
         $unit=Unit::orderBy('created_at', 'DESC')->get();
         $users = User::orderBy('fullname', 'ASC')->get();
-        $sourcesteering=Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
         $firstunit = array();

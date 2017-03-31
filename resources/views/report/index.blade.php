@@ -7,7 +7,11 @@
 @stop
 
 @section('content')
-    <div class="text-center title">Báo cáo chi tiết</div>
+    <div>
+        <div class="text-center title">Báo cáo chi tiết</div>
+        <a class="btn btn-my pull-right" style="margin-top: -50px;" href="javascript:clearFilter()">Xóa tìm kiếm</a>
+    </div>
+
 
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
@@ -50,19 +54,18 @@
                 </select>
             </div>
             <div class="form-group form-inline">
-                <label>Đơn vị phối hợp:</label>
-                <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
-                    <option value="">...</option>
-                    @foreach($treeunit as $item)
-                        @foreach($item->children as $c)
-                            <option value="{{$c->name}}">{{$c->name}}</option>
-                        @endforeach
-                    @endforeach
-                    @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
-                    @endforeach
+                <label>Tiến độ:</label>
+                <select id="progress" name="progress" class="form-control select-single ipw">
+                    <option value="">Toàn bộ</option>
+                    <option value="2">Đã hoàn thành(Đúng hạn)</option>
+                    <option value="3">Đã hoàn thành(Quá hạn)</option>
+                    <option value="1">Chưa hoàn thành(Trong hạn)</option>
+                    <option value="4">Chưa hoàn thành(Quá hạn)</option>
+                    <option value="5">Nhiệm vụ sắp hết hạn</option>
+                    <option value="6">Nhiệm vụ đã bị hủy</option>
                 </select>
             </div>
+
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="form-group form-inline">
@@ -87,20 +90,23 @@
                               'placeholder'=>'Đến ngày')) !!}
             </div>
             <div class="form-group form-inline">
-                <label>Tiến độ:</label>
-                <select id="progress" name="progress" class="form-control select-single ipw">
-                    <option value="">Toàn bộ</option>
-                    <option value="2">Đã hoàn thành(Đúng hạn)</option>
-                    <option value="3">Đã hoàn thành(Quá hạn)</option>
-                    <option value="1">Chưa hoàn thành(Trong hạn)</option>
-                    <option value="4">Chưa hoàn thành(Quá hạn)</option>
-                    <option value="5">Nhiệm vụ sắp hết hạn</option>
-                    <option value="6">Nhiệm vụ đã bị hủy</option>
+                <label>Đơn vị phối hợp:</label>
+                <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
+                    <option value="">...</option>
+                    @foreach($treeunit as $item)
+                        @foreach($item->children as $c)
+                            <option value="{{$c->name}}">{{$c->name}}</option>
+                        @endforeach
+                    @endforeach
+                    @foreach($users as $u)
+                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                    @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group form-inline pull-right">
                 {!! Form::submit('Tìm kiếm',
-                  array('class'=>'btn btn-primary', 'id'=>'search')) !!}
+                  array('class'=>'btn btn-my', 'id'=>'search')) !!}
+                <a id="btn-export" class="btn btn-my" href="#" target="_blank">Xuất báo cáo</a>
             </div>
         </div>
 
@@ -108,7 +114,20 @@
 
 
     {!! Form::close() !!}
-
+    <div class="row note-contain">
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl2"></div><a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
+            <div class="note-cl cl3"></div><a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)</a>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl1"></div><a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
+            <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
+        </div>
+    </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
@@ -302,7 +321,7 @@
                 format: 'dd-mm-yyyy',
                 dateFormat: 'dd-mm-yy',
             });
-
+            reCount();
             $("#source").autocomplete({
                 source: sources
             });
@@ -374,14 +393,14 @@
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
                         if (this.id != "filter-status") {
-//                                reCount();
+                                reCount();
                         }
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
-//                            reCount();
+                            reCount();
                     }
                 });
             });
@@ -468,6 +487,10 @@
 
         });
 
+        function clearFilter(){
+
+        }
+
         //            $('input[name="source"]').change(function () {
         //                var val = $('input[name="source"]').val();
         //                $("#id_source").val(val);
@@ -502,6 +525,27 @@
         // select2 - multiple select
         $(".select-multiple").select2();
         $(".select-single").select2();
+    </script>
+    <script>
+        //loc theo trang thai
+        function reCount(){
+            $(".count-st").each(function() {
+//                console.log($(this).attr('id'));
+                $(this).html($('.' + $(this).attr('id')).length);
+            });
+            var v1 = $('.row-st-1').length + $('.row-st-5').length;
+            var v2 = $('.row-st-4').length;
+            var v3 = $('.row-st-2').length;
+            var v4 = $('.row-st-3').length;
+            var v5 = $('.row-st-6').length;
+            $("#btn-export").attr('href', '{{$_ENV['ALIAS']}}/report/export?v1=' + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4 + "&v5=" + v5);
+        }
+        function filterStatus(status){
+            $(".a-status").css('font-weight', 'normal');
+            $("#a" + status).css('font-weight', 'bold');
+            $("#filter-status").val(status);
+            $("#filter-status").trigger("change");
+        }
     </script>
     <style>
         #table_filter {
