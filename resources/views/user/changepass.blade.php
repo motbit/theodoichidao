@@ -6,6 +6,11 @@
 
 @section('content')
     <div class="text-center title">Cập nhật thông tin Người sử dụng</div>
+    @if ( $errors->count() > 0 )
+        @foreach( $errors->all() as $message )
+            <p  class="alert alert-danger">{{ $message }}</p>
+        @endforeach
+    @endif
 
     <div id="err">
         @if (Session::has('message'))
