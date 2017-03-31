@@ -488,7 +488,17 @@
         });
 
         function clearFilter(){
+            $('input[name="source"]').val("");
+            $('input[name="conductor"]').val("");
+            $("#fList").val(0).trigger('change');
+            $("#sList").val(0).trigger('change');
+            $("#progress").val(0).trigger('change');
+            $('input[name="steertime_from"]').val("");
+            $('input[name="steertime_to"]').val("");
+            $('input[name="deadline_from"]').val("");
+            $('input[name="deadline_to"]').val("");
 
+            $("#form").submit();
         }
 
         //            $('input[name="source"]').change(function () {
