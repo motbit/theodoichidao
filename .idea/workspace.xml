@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,12 +81,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="814">
               <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="726">
+              <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
+              <folding>
+                <element signature="e#40#64#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,7 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Viphuman.php" />
         <option value="$PROJECT_DIR$/app/Chucnang.php" />
         <option value="$PROJECT_DIR$/resources/views/viphuman/update.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/viphuman/add.blade.php" />
@@ -183,6 +194,7 @@
         <option value="$PROJECT_DIR$/public/tcpdf/examples/example_004.php" />
         <option value="$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
       </list>
     </option>
   </component>
@@ -760,7 +772,7 @@
       <workItem from="1490675988063" duration="5554000" />
       <workItem from="1490688368101" duration="4550000" />
       <workItem from="1490845152460" duration="1052000" />
-      <workItem from="1490923952148" duration="358000" />
+      <workItem from="1490923952148" duration="1287000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -773,10 +785,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115023000" />
+    <option name="totallyTimeSpent" value="115952000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-12" y="0" width="2884" height="1552" extended-state="0" />
+    <frame x="-12" y="0" width="2884" height="1552" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20923723" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -827,13 +839,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Unit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Chucnang.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1170,6 +1175,16 @@
         <state relative-caret-position="814">
           <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
+          <folding>
+            <element signature="e#40#64#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
