@@ -38,6 +38,22 @@ class UserController extends Controller
 
     public function changepass(Request $request){
         $id = Auth::id();
+        $messages = [
+            'password.min' => 'Mật khẩu phải ít nhất 6 ký tự.',
+            'password.required' => 'Yêu cầu nhập mật khẩu.'
+        ];
+        if ($request->isMethod('post')){
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|nullable|min:6',
+
+            ], $messages);
+
+            if ($validator->fails()) {
+                return redirect()->action('UserController@changepass')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
         if($request->input('old-password')){
             $credentials = [
                 'username' => 'admin',
