@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Unit;
 use App\Group;
+use Illuminate\Support\Facades\Response;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +111,6 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-
         $id = intval( $request->input('id') );
 
         $messages = [
