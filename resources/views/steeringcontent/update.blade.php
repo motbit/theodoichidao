@@ -29,11 +29,11 @@
 
     <div class="form-group form-inline">
         <label>Nguồn chỉ đạo:</label>
-        {!! Form::text('source', $row->source,
-                array('no-required',
-                'placeholder'=>'Nguồn chỉ đạo',
-                'class'=>'form-control ipw', 'id'=>'source')
-        ) !!}
+        <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
+            @foreach($sourcesteering as $sr)
+                <option value="{{$sr->code}}" {{in_array($sr->code, explode('|', $row->source))?'selected':''}}>{{$sr->code}}</option>
+            @endforeach
+        </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
     </div>
 
@@ -140,7 +140,7 @@
                     <table class="table table-bordered">
                         @foreach($sourcesteering as $s)
                             <tr>
-                                <td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}" data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>
+                                <td><input type="checkbox" name="psource" class="pick-source" value="{{$s->code}}" {{in_array($s->code, explode('|', $row->source))?'checked':''}}></td>
                                 <td>{{$s->code}}</td>
                                 <td>{{$s->name}}</td>
                             </tr>
@@ -317,10 +317,15 @@
             $("#fList").val(dtunit).trigger('change');
         });
 
-        $('input:radio[name=psource]').change(function () {
-            $('input[name="source"]').val($('input[name="psource"]:checked').val())
-            var time = $('input[name="psource"]:checked').attr('data-time');
-            $('input[name="steer_time"]').val(time);
+        $('input:checkbox[name=psource]').change(function () {
+//            $('input[name="source"]').val($('input[name="psource"]:checked').val())
+//            var time = $('input[name="psource"]:checked').attr('data-time');
+//            $('input[name="steer_time"]').val(time);
+            var arr = [];
+            $('input:checkbox[name=psource]:checked').each(function(){
+                arr.push($(this).val());
+            });
+            $("#msource").val(arr).trigger('change');
         });
 
         $('input[name="source"]').change(function() {

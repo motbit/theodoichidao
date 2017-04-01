@@ -441,3 +441,10 @@ label {
         width: 100% !important;
     }
 }
+.select2-container {
+    min-width: 300px !important;
+}
+
+ul>ul>li>a{
+    font-size: 0.9em !important;
+}

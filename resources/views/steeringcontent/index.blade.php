@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="text-center title">Danh mục nhiệm vụ</div>
+    <div class="text-center title">Danh mục nhiệm vụ<span id="title-filter"></span></div>
     @if ($steering != false)
         <div class="text-center">
             <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
@@ -60,6 +60,7 @@
                 <th class="td-action"></th>
             @endif
             <th class="hidden"><input type="text" id="filter-status"></th>
+            <td class="hidden"><input type="text" id="filter-type"></td>
         </tr>
         </thead>
         <tbody>
@@ -98,11 +99,19 @@
             <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                @if ( !in_array($row->source, $allsteeringcode) )
-                    <td> {{ $row->source }} </td>
-                @else
-                    <td><a href="steeringcontent?source={{$row->source}}"> {{ $row->source }} </a> </td>
-                @endif
+                <td>
+                    @foreach(explode('|', $row->source) as $s)
+                        <ul class="unit-list">
+                            @if($s != '')
+                                @if ( !in_array($s, $allsteeringcode) )
+                                    <li> {{ $s }} </li>
+                                @else
+                                    <li><a href="steeringcontent?source={{$s}}"> {{ $s }} </a> </li>
+                                @endif
+                            @endif
+                        </ul>
+                    @endforeach
+                </td>
 
                 <td onclick="javascript:showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
@@ -174,17 +183,6 @@
                     <td id="progress-{{$row->id}}">{{$row->progress}}</td>
                 @endif
 
-                {{--<td>--}}
-                {{--@if($row->status === 1)--}}
-                {{--<span class="label label-sm label-success"> Hoàn thành </span>--}}
-                {{--@elseif($row->status === 0)--}}
-                {{--<span class="label label-sm label-warning"> Chưa hoàn thành </span>--}}
-                {{--@elseif($row->status === -1)--}}
-                {{--<span class="label label-sm label-danger"> Hủy </span>--}}
-                {{--@else--}}
-                {{--<span class="label label-sm label-info"> Mới </span>--}}
-                {{--@endif--}}
-                {{--</td>--}}
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
                         <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
@@ -198,6 +196,13 @@
                     </td>
                 @endif
                 <td class="hidden">{{$st}}</td>
+                <td class="hidden">
+                    @foreach(explode('|', $row->source) as $s)
+                        @if($s != '' && array_key_exists($s, $sourcetype))
+                            {{$sourcetype[$s]}}|
+                        @endif
+                    @endforeach
+                </td>
             </tr>
             @endif
         @endforeach
@@ -469,19 +474,13 @@
             $("#filter-status").val(status);
             $("#filter-status").trigger("change");
         }
-    </script>
-    <script>
-        var tableToExcel = (function() {
-            var uri = 'data:application/vnd.ms-excel;base64,'
-                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-                    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-                    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-            return function(table, name) {
-                if (!table.nodeType) table = document.getElementById(table)
-                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-                window.location.href = uri + base64(format(template, ctx))
-            }
-        })()
+        // loc theo loai nguon
+        function filterTypeSource(type, name){
+            highlightSourceType(type);
+            $("#filter-type").val(type + "|");
+            $("#filter-type").trigger("change");
+            $("#title-filter").html(" (theo " + name + ")")
+        }
     </script>
     <style>
         #table_filter {

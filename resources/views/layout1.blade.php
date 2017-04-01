@@ -103,6 +103,13 @@
                 <ul>
                     @foreach($menu_ykcd as $yk)
                         <li class="{{ (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
+                        @if($yk->path == 'steeringcontent' && (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent')))
+                            <ul style="padding-left: 20px">
+                            @foreach(\App\Utils::listTypeSource() as $type)
+                                <li class="s-type" id="s-type-{{$type->id}}"><a href="javascript:filterTypeSource('{{$type->id}}','{{$type->name}}')">{{$type->name}}</a></li>
+                            @endforeach
+                            </ul>
+                        @endif
                     @endforeach
                 </ul>
             @endif
@@ -171,5 +178,9 @@
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
+    function highlightSourceType(id){
+        $(".s-type").removeClass('active');
+        $("#s-type-" + id).addClass('active');
+    }
 </script>
 </html>
