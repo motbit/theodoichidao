@@ -127,6 +127,13 @@
                 <li class="{{ (strpos(\Request::path(), 'report')  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report">Báo cáo chi tiết</a></li>
                 {{--<li><a href="#">Báo cáo chi tiết</a></li>--}}
             </ul>
+            <div style="padding: 10px; border-top: solid 1px #ccc; color: #818181;">
+                <div style="color: #43aa76"><strong>THÔNG TIN HỖ TRỢ <br>(VĂN PHÒNG, CỤC CNTT):</strong></div>
+                Mr. Hà: <strong>0904.069.966</strong> <br>
+                Mr. Tiến: <strong>0989.268.118</strong> <br>
+                Mr. Tú: <strong>0972.541.665</strong><br>
+                EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
+            </div>
         </div>
     </div>
     <div id="content">
