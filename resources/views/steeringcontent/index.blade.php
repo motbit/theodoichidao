@@ -217,7 +217,7 @@
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
-                    <form id="form-progress">
+                    {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
                         <input id="steering_id" type="hidden" name="steering_id">
                         <div class="form-group from-inline">
                             <label>Ghi chú tiến độ</label>
@@ -226,9 +226,13 @@
 
                         <div class="form-group  from-inline">
                             <label>Tình trạng</label>
-                            <input type="radio" name="pr_status" value="0" checked>  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="0">  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
+                        </div>
+                        <div class="form-group form-inline" id="input-file" style="display: none">
+                            <label style="float: left">File đính kèm:</label>
+                            <input type="file" name="file">
                         </div>
                         <div class="form-group form-inline">
                             <label>Ngày cập nhật</label>
@@ -236,7 +240,7 @@
                                    required value="{{date('d/m/Y')}}">
                             <input class="btn btn-my pull-right" type="submit" value="Lưu">
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -270,12 +274,17 @@
             $.ajax({
                 url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
                 success: function (result) {
+                    console.log(result);
                     $(".loader").hide();
                     var html_table = "";
                     for (var i = 0; i < result.length; i++) {
                         var r = result[i];
                         html_table += "<tr>";
-                        html_table += "<td>" + r.note + "</td>"
+                        html_table += "<td>" + r.note
+                        if (r.file_attach != ""){
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach+"'>File đính kèm</a>)"
+                        }
+                        html_table +="</td>"
                         html_table += "<td>" + r.created + "</td>"
                         html_table += "<td>" + r.time_log + "</td>"
                         html_table += "</tr>"
@@ -295,6 +304,7 @@
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
 //            $("#form-progress").hide();
+            $("#input-file").hide();
         }
 
         function reCount(){
@@ -359,17 +369,19 @@
             reCount();
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
+                var formData = new FormData($(this)[0]);
                 var note = $("#pr-note").val();
                 var steering_id = $("#steering_id").val();
                 var status = $('input[name="pr_status"]:checked').val()
                 var time_log = $("#progress_time").val();
                 $(".loader").show();
-                var url = "{{$_ENV['ALIAS']}}/api/updateprogress";
+                var url = $(this).attr("action");
                 console.log(url);
                 $.ajax({
-                    type: "GET",
                     url: url,
-                    data: {note: note, steering_id: steering_id, status: status, time_log: time_log},
+                    type: 'POST',
+                    data: formData,
+                    async: false,
                     success: function (result) {
                         console.log(result);
                         $(".loader").hide();
@@ -380,8 +392,10 @@
                     },
                     error: function () {
                         alert("Xảy ra lỗi nội bộ");
-                        $(".loader").hide();
-                    }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
                 });
             });
             // DataTable
@@ -464,6 +478,15 @@
                         reCount();
                     }
                 });
+            });
+
+            $('input:radio[name=pr_status]').change(function () {
+                var stt = $('input:radio[name=pr_status]:checked').val();
+                if (stt == "1"){
+                    $("#input-file").show();
+                }else{
+                    $("#input-file").hide();
+                }
             });
         });
 

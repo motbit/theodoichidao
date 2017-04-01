@@ -98,10 +98,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( '/','ReportController@index' )->name('report-index');
         Route::get( '/export','ReportController@export' )->name('export-index');
     });
-
-    Route::get('api/progress', 'ApiController@getProgress');
-    Route::get('api/updateprogress', 'ApiController@updateProgress');
-    Route::post('api/updateprogress', 'ApiController@addProgress');
-    Route::resource('api', 'ApiController');
+    Route::group(['prefix' => 'api'], function () {
+        Route::get('progress', 'ApiController@getProgress');
+        Route::get('updateprogress', 'ApiController@updateProgress');
+        Route::post( 'updateprogress','ApiController@addProgress' )->name('add-progress');
+    });
 
 });

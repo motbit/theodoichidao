@@ -11,82 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $user = DB::table('user')->get();
-        return response()->json($user);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function getProgress(Request $request)
     {
@@ -131,30 +55,40 @@ class ApiController extends Controller
         return response()->json($content);
     }
 
+
     public function addProgress(Request $request)
     {
         $steering_id = $request->steering_id;
         $note = $request->note;
-        $status = intval($request->status);
+        $status = intval($request->pr_status);
         $time_log = \DateTime::createFromFormat('d/m/Y', $request->time_log);
         $data = array();
         $data['created_by'] = Auth::user()->id;
         $data['steeringcontent'] = $steering_id;
         $data['note'] = $note;
         $data['time_log'] = $time_log;
-        if ($status != -2) {
-            $data['status'] = $status;
-        }
+        $data['status'] = $status;
         $content = array();
         $content['progress'] = $note;
-        if ($status != -2) {
-            $content['status'] = $status;
-        }
-        if ($status != 0) {
+        $content['status'] = $status;
+        if ($status == 1) {
             $content['complete_time'] = $time_log;
         }
-        $result1 = Progress::insert($data);
-        $result2 = Steeringcontent::where('id', $steering_id)->update($content);
+        $file = $request->file('file');
+        if (isset($file)) {
+            $data['file_attach'] = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+        }
+        try {
+            $result1 = DB::table('progress_log')->insertGetId($data);
+            $result2 = Steeringcontent::where('id', $steering_id)->update($content);
+            if (isset($file)) {
+                $file_attach = "status_file_" . $result1 . "." . pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+                $destinationPath = 'file';
+                $file->move($destinationPath, $file_attach);
+            }
+        } catch (Exception $e) {
+            return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
+        }
         return response()->json($content);
     }
 }
