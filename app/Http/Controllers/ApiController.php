@@ -108,7 +108,7 @@ class ApiController extends Controller
         }
         $progress_note = 'Anh/chị ' . $users[$sender] . ' chuyển nhiệm vụ cho anh/chị ' . $users[$receiver];
         #update nhiem vu
-        $update = DB::table('steeringcontent')->where([['id', '=', $steering], ['created_by', '=', $sender]])
+        $update = DB::table('steeringcontent')->where('id', '=', $steering)
             ->update(['created_by' => $receiver, 'progress' => $progress_note]);
         if (! $update){
             return response()->json(['result'=>false,

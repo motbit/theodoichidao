@@ -316,7 +316,7 @@
 
             $('input[name="source"]').change(function () {
                 var val = $('input[name="source"]').val();
-                $('input:radio[name=psource][value="' + val + '"]').attr('checked', true);
+                $('input:checkbox[name=psource][value="' + val + '"]').attr('checked', true);
             });
 
 
