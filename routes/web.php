@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'nhancongviec','XuLyCVController@nhancongviec' )->name('xuly-nhancongviec');
         Route::get( 'updatecv','XuLyCVController@updatecv' )->name('xuly-updatecv');
         Route::post( 'updatecv','XuLyCVController@updatecv' )->name('xuly-updatecv');
+        Route::get( 'tranfer','XuLyCVController@tranfer' )->name('xuly-tranfer  ');
 
     });
 
@@ -102,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('progress', 'ApiController@getProgress');
         Route::get('updateprogress', 'ApiController@updateProgress');
         Route::post( 'updateprogress','ApiController@addProgress' )->name('add-progress');
+        Route::post( 'tranfer','ApiController@tranfer' )->name('steering-tranfer');
     });
 
 });

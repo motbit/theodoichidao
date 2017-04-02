@@ -352,6 +352,7 @@ class ComposerStaticInitd5b911854ef33e3924ab695ce9f81694
         'App\\Steeringcontent' => __DIR__ . '/../..' . '/app/Steeringcontent.php',
         'App\\Unit' => __DIR__ . '/../..' . '/app/Unit.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\Utils' => __DIR__ . '/../..' . '/app/Utils.php',
         'App\\Viphuman' => __DIR__ . '/../..' . '/app/Viphuman.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

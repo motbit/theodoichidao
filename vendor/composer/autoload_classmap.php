@@ -44,6 +44,7 @@ return array(
     'App\\Steeringcontent' => $baseDir . '/app/Steeringcontent.php',
     'App\\Unit' => $baseDir . '/app/Unit.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\Utils' => $baseDir . '/app/Utils.php',
     'App\\Viphuman' => $baseDir . '/app/Viphuman.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

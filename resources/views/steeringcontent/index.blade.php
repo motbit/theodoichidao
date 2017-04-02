@@ -15,31 +15,43 @@
     @elseif(\App\Roles::accessAction(Request::path(), 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
-        <script language="javascript">
-            function removebyid(id) {
+    <script language="javascript">
+        function removebyid(id) {
 
-                if (confirm("Bạn có muốn xóa?")) {
-                    document.getElementById("id").value = id;
-                    frmdelete.submit();
-                }
+            if (confirm("Bạn có muốn xóa?")) {
+                document.getElementById("id").value = id;
+                frmdelete.submit();
             }
-        </script>
+        }
+    </script>
 
-        {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
-        {{ Form::hidden('id', 0, array('id' => 'id')) }}
-        {!! Form::close() !!}
+    {!! Form::open(array('route' => 'steeringcontent-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
+    {{ Form::hidden('id', 0, array('id' => 'id')) }}
+    {!! Form::close() !!}
     <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl2"></div><a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
-            <div class="note-cl cl3"></div><a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)</a>
+            <div class="note-cl cl2"></div>
+            <a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng
+                hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
+            <div class="note-cl cl3"></div>
+            <a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá
+                hạn, <span class="count-st" id="row-st-3"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl1"></div><a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
-            <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
+            <div class="note-cl cl1"></div>
+            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong
+                hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
+            <div class="note-cl cl4"></div>
+            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá
+                hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
-            <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
+            <div class="note-cl cl5"></div>
+            <a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span>
+                (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl6"></div>
+            <a id="a6" class="a-status" href="javascript:filterStatus(6)"><span
+                        class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -56,6 +68,9 @@
             @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class="td-action"></th>
             @endif
+            @if(\App\Roles::accessAction(Request::path(), 'trans'))
+                <th class="td-action"></th>
+            @endif
             @if(\App\Roles::accessAction(Request::path(), 'delete'))
                 <th class="td-action"></th>
             @endif
@@ -66,151 +81,162 @@
         <tbody>
         @foreach ($lst as $idx=>$row)
             @if(\App\Roles::accessRow(Request::path(), $row->created_by))
-            <?php
-            $st = 1;
-            if($row->status == 1){
-                if ($row->deadline == "" || $row->complete_time < $row->deadline){
-                    $st = 2;
-                }else{
-                    $st = 3;
-                }
-            }else if ($row->status == -1){
-                $st = 6;
-            }else if($row->deadline == ""){
+                <?php
                 $st = 1;
-            }else{
-                if (date('Y-m-d') > $row->deadline){
-                    $st = 4;
-                }else if (date('Y-m-d',strtotime("+7 day")) > $row->deadline){
-                    $st = 5;
-                }else{
+                if ($row->status == 1) {
+                    if ($row->deadline == "" || $row->complete_time < $row->deadline) {
+                        $st = 2;
+                    } else {
+                        $st = 3;
+                    }
+                } else if ($row->status == -1) {
+                    $st = 6;
+                } else if ($row->deadline == "") {
                     $st = 1;
+                } else {
+                    if (date('Y-m-d') > $row->deadline) {
+                        $st = 4;
+                    } else if (date('Y-m-d', strtotime("+7 day")) > $row->deadline) {
+                        $st = 5;
+                    } else {
+                        $st = 1;
+                    }
                 }
-            }
-            $name_stt = array();
-            $name_stt[1] = "Chưa hoàn thành (trong hạn)";
-            $name_stt[2] = "Đã hoàn thành (đúng hạn)";
-            $name_stt[3] = "Đã hoàn thành (quá hạn)";
-            $name_stt[4] = "Chưa hoàn thành (quá hạn)";
-            $name_stt[5] = "Sắp hết hạn (7 ngày)";
-            $name_stt[6] = "Bị hủy";
-            ?>
+                $name_stt = array();
+                $name_stt[1] = "Chưa hoàn thành (trong hạn)";
+                $name_stt[2] = "Đã hoàn thành (đúng hạn)";
+                $name_stt[3] = "Đã hoàn thành (quá hạn)";
+                $name_stt[4] = "Chưa hoàn thành (quá hạn)";
+                $name_stt[5] = "Sắp hết hạn (7 ngày)";
+                $name_stt[6] = "Bị hủy";
+                ?>
 
-            <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
-                <td>{{$idx + 1}}</td>
-                <td> {{$row->content}} </td>
-                <td>
-                    @foreach(explode('|', $row->source) as $s)
-                        <ul class="unit-list">
-                            @if($s != '')
-                                @if ( !in_array($s, $allsteeringcode) )
-                                    <li> {{ $s }} </li>
-                                @else
-                                    <li><a href="steeringcontent?source={{$s}}"> {{ $s }} </a> </li>
+                <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
+                    <td>{{$idx + 1}}</td>
+                    <td> {{$row->content}} </td>
+                    <td>
+                        @foreach(explode('|', $row->source) as $s)
+                            <ul class="unit-list">
+                                @if($s != '')
+                                    @if ( !in_array($s, $allsteeringcode) )
+                                        <li> {{ $s }} </li>
+                                    @else
+                                        <li><a href="steeringcontent?source={{$s}}"> {{ $s }} </a></li>
+                                    @endif
                                 @endif
-                            @endif
-                        </ul>
-                    @endforeach
-                </td>
+                            </ul>
+                        @endforeach
+                    </td>
 
-                <td onclick="javascript:showunit({{$idx}})">
-                    <ul class="unit-list" id="unit-list{{$idx}}">
-                        @php ($n = 0)
-                        @foreach($units = explode(',', $row->unit) as $i)
-                            <?php
+                    <td onclick="javascript:showunit({{$idx}})">
+                        <ul class="unit-list" id="unit-list{{$idx}}">
+                            @php ($n = 0)
+                            @foreach($units = explode(',', $row->unit) as $i)
+                                <?php
                                 $spl = explode('|', $i);
                                 $validate = false;
                                 $val = "";
-                                if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                                if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                     $validate = true;
                                     $val = $unit[$spl[1]];
                                     $n++;
-                                } else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                                } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                     $validate = true;
                                     $val = $user[$spl[1]];
                                     $n++;
                                 }
-                            ?>
-                            @if ($validate)
-                                @if ($loop->iteration < 3)
-                                    <li> • {{$val}}</li>
-                                @else
-                                    <li class="more"> • {{$val}}</li>
+                                ?>
+                                @if ($validate)
+                                    @if ($loop->iteration < 3)
+                                        <li> • {{$val}}</li>
+                                    @else
+                                        <li class="more"> • {{$val}}</li>
+                                    @endif
                                 @endif
+                            @endforeach
+                            @if ($n > 2)
+                                <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                            @endif
+                        </ul>
+                    </td>
+                    <td onclick="javascript:showfollow({{$idx}})">
+                        <ul class="unit-list" id="follow-list{{$idx}}">
+                            @php ($n = 0)
+                            @foreach($units = explode(',', $row->follow) as $i)
+                                <?php
+                                $spl = explode('|', $i);
+                                $validate = false;
+                                $val = "";
+                                if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
+                                    $validate = true;
+                                    $val = $unit[$spl[1]];
+                                    $n++;
+                                } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
+                                    $validate = true;
+                                    $val = $user[$spl[1]];
+                                    $n++;
+                                }
+                                ?>
+                                @if ($validate)
+                                    @if ($loop->iteration < 3)
+                                        <li> • {{$val}}</li>
+                                    @else
+                                        <li class="more"> • {{$val}}</li>
+                                    @endif
+                                @endif
+                            @endforeach
+                            @if ($n > 2)
+                                <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                            @endif
+                        </ul>
+                    </td>
+                    <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
+                    <td class="hidden">{{$name_stt[$st]}}</td>
+                    @if(\App\Roles::accessAction(Request::path(), 'status'))
+                        <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                            class="progress-update"> {{$row->progress}}</td>
+                    @else
+                        <td id="progress-{{$row->id}}">{{$row->progress}}</td>
+                    @endif
+
+                    @if(\App\Roles::accessAction(Request::path(), 'edit'))
+                        <td>
+                            <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20"
+                                                                                                     border="0"
+                                                                                                     src="{{$_ENV['ALIAS']}}/img/edit.png"
+                                                                                                     title="Chỉnh sửa nhiệm vụ"></a>
+                        </td>
+                    @endif
+                    @if(\App\Roles::accessAction(Request::path(), 'trans'))
+                        <td>
+                            <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img title="Chuyển nhiệm vụ cho người khác"
+                                                                                height="20" border="0"
+                                                                                src="{{$_ENV['ALIAS']}}/img/tranfer.png"></a>
+                        </td>
+                    @endif
+                    @if(\App\Roles::accessAction(Request::path(), 'delete'))
+                        <td>
+                            <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
+                                                                                 src="{{$_ENV['ALIAS']}}/img/delete.png"
+                                                                                 title="Xóa nhiệm vụ"></a>
+                        </td>
+                    @endif
+                    <td class="hidden">{{$st}}</td>
+                    <td class="hidden">
+                        @foreach(explode('|', $row->source) as $s)
+                            @if($s != '' && array_key_exists($s, $sourcetype))
+                                {{$sourcetype[$s]}}|
                             @endif
                         @endforeach
-                        @if ($n > 2)
-                                <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
-                        @endif
-                    </ul>
-                </td>
-                <td onclick="javascript:showfollow({{$idx}})">
-                    <ul class="unit-list" id="follow-list{{$idx}}">
-                    @php ($n = 0)
-                    @foreach($units = explode(',', $row->follow) as $i)
-                            <?php
-                            $spl = explode('|', $i);
-                            $validate = false;
-                            $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
-                                $validate = true;
-                                $val = $unit[$spl[1]];
-                                $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
-                                $validate = true;
-                                $val = $user[$spl[1]];
-                                $n++;
-                            }
-                            ?>
-                            @if ($validate)
-                                @if ($loop->iteration < 3)
-                                    <li> • {{$val}}</li>
-                                @else
-                                    <li class="more"> • {{$val}}</li>
-                                @endif
-                            @endif
-                    @endforeach
-                    @if ($n > 2)
-                        <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
-                    @endif
-                    </ul>
-                </td>
-                <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
-                <td class="hidden">{{$name_stt[$st]}}</td>
-                @if(\App\Roles::accessAction(Request::path(), 'status'))
-                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
-                @else
-                    <td id="progress-{{$row->id}}">{{$row->progress}}</td>
-                @endif
-
-                @if(\App\Roles::accessAction(Request::path(), 'edit'))
-                    <td>
-                        <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20" border="0"
-                                                                               src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                     </td>
-                @endif
-                @if(\App\Roles::accessAction(Request::path(), 'delete'))
-                    <td>
-                        <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
-                                                                             src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
-                    </td>
-                @endif
-                <td class="hidden">{{$st}}</td>
-                <td class="hidden">
-                    @foreach(explode('|', $row->source) as $s)
-                        @if($s != '' && array_key_exists($s, $sourcetype))
-                            {{$sourcetype[$s]}}|
-                        @endif
-                    @endforeach
-                </td>
-            </tr>
+                </tr>
             @endif
         @endforeach
         </tbody>
     </table>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog"  style="min-width: 80%">
+        <div class="modal-dialog" style="min-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -218,28 +244,27 @@
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
                     {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
-                        <input id="steering_id" type="hidden" name="steering_id">
-                        <div class="form-group from-inline">
-                            <label>Ghi chú tiến độ</label>
-                            <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
-                        </div>
-
-                        <div class="form-group  from-inline">
-                            <label>Tình trạng</label>
-                            <input type="radio" name="pr_status" value="0">  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
-                        </div>
-                        <div class="form-group form-inline" id="input-file" style="display: none">
-                            <label style="float: left">File đính kèm:</label>
-                            <input type="file" name="file">
-                        </div>
-                        <div class="form-group form-inline">
-                            <label>Ngày cập nhật</label>
-                            <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
-                                   required value="{{date('d/m/Y')}}">
-                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                        </div>
+                    <input id="steering_id" type="hidden" name="steering_id">
+                    <div class="form-group from-inline">
+                        <label>Ghi chú tiến độ</label>
+                        <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group  from-inline">
+                        <label>Tình trạng</label>
+                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
+                    </div>
+                    <div class="form-group form-inline" id="input-file" style="display: none">
+                        <label style="float: left">File đính kèm:</label>
+                        <input type="file" name="file">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày cập nhật</label>
+                        <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
+                               required value="{{date('d/m/Y')}}">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                    </div>
                     {!! Form::close() !!}
                     <table class="table table-bordered">
                         <thead>
@@ -255,19 +280,58 @@
             </div>
         </div>
     </div>
+
+    <div id="modal-tranfer" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chuyển nhiệm vụ</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 10px !important; padding-bottom: 50px !important;">
+                    <div id="content-tranfer" style="padding-bottom: 10px"></div>
+                    {!! Form::open(array('route' => 'steering-tranfer', 'id' => 'form-tranfer', 'files'=>'true')) !!}
+                    <input id="sid" type="hidden" name="sid">
+                    <div class="form-group from-inline">
+                        <label>Người tiếp nhận</label>
+                        <select class="js-example-basic-single js-states form-control" name="receiver" id="receiver">
+                            <option value="0"></option>
+                            @foreach($datauser as $u)
+                                @if($u->id != \Illuminate\Support\Facades\Auth::user()->id && $u->group==3)
+                                <option id="reciever-{{$u->id}}" value="{{$u->id}}">{{$u->fullname}} ({{$u->username}})</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group from-inline">
+                        <label>Ghi chú</label>
+                        <textarea name="note" required id="tranfer-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <input class="btn btn-my pull-right" type="submit" value="Xác nhận chuyển">
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         var current_date = "{{date('d/m/Y')}}";
-//        var showpr = false;
-//        $("#form-progress").hide();
-//        function showAddProgress() {
-//            if (showpr) {
-//                showpr = false;
-//                $("#form-progress").hide();
-//            } else {
-//                showpr = true;
-//                $("#form-progress").show();
-//            }
-//        }
+        //        var showpr = false;
+        //        $("#form-progress").hide();
+        //        function showAddProgress() {
+        //            if (showpr) {
+        //                showpr = false;
+        //                $("#form-progress").hide();
+        //            } else {
+        //                showpr = true;
+        //                $("#form-progress").show();
+        //            }
+        //        }
+
+        function showTranfer(id, content) {
+            $("#content-tranfer").html("\"" + content + "\"")
+            $("#modal-tranfer").modal("show");
+            $("#sid").val(id);
+        }
         function showDetailProgress(id) {
             $(".loader").show();
             $("#steering_id").val(id);
@@ -281,10 +345,10 @@
                         var r = result[i];
                         html_table += "<tr>";
                         html_table += "<td>" + r.note
-                        if (r.file_attach != ""){
-                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach+"'>File đính kèm</a>)"
+                        if (r.file_attach != null) {
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
                         }
-                        html_table +="</td>"
+                        html_table += "</td>"
                         html_table += "<td>" + r.created + "</td>"
                         html_table += "<td>" + r.time_log + "</td>"
                         html_table += "</tr>"
@@ -299,56 +363,61 @@
             });
         }
 
-        function resetFromProgress(){
+        function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
-//            $("#form-progress").hide();
             $("#input-file").hide();
         }
 
-        function reCount(){
-            $(".count-st").each(function() {
+        function resetFormTranfer(){
+            $("#receiver").val("");
+            $("#tranfer-note").val("");
+            $("#content-tranfer").html("");
+        }
+
+        function reCount() {
+            $(".count-st").each(function () {
 //                console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
 
         function showunit(unit) {
-            if($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
+            if ($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
                 $("#unit-list" + unit + " .more").show();
                 $("#unit-list" + unit + " .more-link a").text("[-] Thu gọn");
-                $("#unit-list" + unit + " .more-link").attr("hide",0);
+                $("#unit-list" + unit + " .more-link").attr("hide", 0);
             } else {
                 $("#unit-list" + unit + " .more").hide();
                 $("#unit-list" + unit + " .more-link a").text("[+] Xem thêm");
-                $("#unit-list" + unit + " .more-link").attr("hide",1);
+                $("#unit-list" + unit + " .more-link").attr("hide", 1);
             }
 
         }
         function showfollow(unit) {
 
-            if($("#follow-list" + unit + " .more-link").attr("hide") == 1) {
+            if ($("#follow-list" + unit + " .more-link").attr("hide") == 1) {
                 $("#follow-list" + unit + " .more").show();
                 $("#follow-list" + unit + " .more-link a").text("[-] Thu gọn");
-                $("#follow-list" + unit + " .more-link").attr("hide",0);
+                $("#follow-list" + unit + " .more-link").attr("hide", 0);
             } else {
                 $("#follow-list" + unit + " .more").hide();
                 $("#follow-list" + unit + " .more-link a").text("[+] Xem thêm");
-                $("#follow-list" + unit + " .more-link").attr("hide",1);
+                $("#follow-list" + unit + " .more-link").attr("hide", 1);
             }
 
         }
 
-        function reStyleRow(id, status, time_log){
+        function reStyleRow(id, status, time_log) {
             var time_split = time_log.split("/");
             var time = time_split[2] + "-" + time_split[1] + "-" + time_split[0];
-            if (status == "-1"){
+            if (status == "-1") {
                 $("#row-" + id).attr('class', 'row-st-6');
-            }else if (status == "1"){
-                if (time <= $("#row-" + id).attr('deadline')){
+            } else if (status == "1") {
+                if (time <= $("#row-" + id).attr('deadline')) {
                     $("#row-" + id).attr('class', 'row-st-2');
-                }else{
+                } else {
                     $("#row-" + id).attr('class', 'row-st-3');
                 }
             }
@@ -357,16 +426,19 @@
         $(document).ready(function () {
 
             @if(\App\Roles::accessAction(Request::path(), 'status'))
-            $( ".progress-update" ).on( "click", function() {
-                showDetailProgress($( this ).attr("data-id"))
-                console.log( "#ID: " + $( this ).attr("data-id") );
+            $(".progress-update").on("click", function () {
+                showDetailProgress($(this).attr("data-id"))
+                console.log("#ID: " + $(this).attr("data-id"));
             });
             @endif
 
-
+            $(".js-example-basic-single").select2({
+                placeholder: "Chọn người tiếp nhận"
+            });
 
             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
+            // cap nhat trang thai
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
                 var formData = new FormData($(this)[0]);
@@ -398,6 +470,43 @@
                     processData: false
                 });
             });
+            //End cap nhat trang thai
+
+            //Chuyen nhiem vu
+            $("#form-tranfer").submit(function (e) {
+                e.preventDefault();
+                var formData = new FormData($(this)[0]);
+                var receiver = $("#receiver").val();
+                var sid = $("#sid").val();
+                $(".loader").show();
+                var url = $(this).attr("action");
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    success: function (result) {
+                        $(".loader").hide();
+                        console.log(result);
+                        alert("Anh chị đã chuyển thành công nhiệm vụ " +
+                                $("#content-tranfer").html() + " cho " +
+                                $("#reciever-" + receiver).html());
+                        $("#modal-tranfer").modal("hide");
+                        resetFormTranfer();
+                        $("#row-" + sid).remove();
+                        reCount();
+                    },
+                    error: function () {
+                        alert("Xảy ra lỗi nội bộ");
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+            //End Chuyen nhiem vu
+
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
@@ -405,10 +514,10 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                            columns: [0, 1, 2, 3, 4, 5, 6],
                             format: {
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"").trim();
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
                                 }
                             },
                             modifier: {
@@ -429,7 +538,7 @@
                         stripHtml: true,
                         decodeEntities: true,
                         columns: ':visible',
-                        customize: function(xlsx) {
+                        customize: function (xlsx) {
                             var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                         },
@@ -437,13 +546,13 @@
                             selected: true
                         },
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                            columns: [0, 1, 2, 3, 4, 5, 6],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '')
-                                            .replace(/(\r\n|\n|\r)/gm,"")
-                                            .replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ')
-                                            .replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"")
+                                            .replace(/(\r\n|\n|\r)/gm, "")
+                                            .replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ')
+                                            .replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "")
                                             .trim();
                                 }
                             }
@@ -482,23 +591,23 @@
 
             $('input:radio[name=pr_status]').change(function () {
                 var stt = $('input:radio[name=pr_status]:checked').val();
-                if (stt == "1"){
+                if (stt == "1") {
                     $("#input-file").show();
-                }else{
+                } else {
                     $("#input-file").hide();
                 }
             });
         });
 
         //loc theo trang thai
-        function filterStatus(status){
+        function filterStatus(status) {
             $(".a-status").css('font-weight', 'normal');
             $("#a" + status).css('font-weight', 'bold');
             $("#filter-status").val(status);
             $("#filter-status").trigger("change");
         }
         // loc theo loai nguon
-        function filterTypeSource(type, name){
+        function filterTypeSource(type, name) {
             highlightSourceType(type);
             $("#filter-type").val(type + "|");
             $("#filter-type").trigger("change");
