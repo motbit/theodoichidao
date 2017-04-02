@@ -68,7 +68,7 @@
             $name_stt[5] = "Sắp hết hạn (7 ngày)";
             $name_stt[6] = "Bị hủy";
             ?>
-            <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
+            <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
@@ -146,6 +146,7 @@
         @endforeach
         </tbody>
     </table>
+    <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
@@ -154,27 +155,30 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
-                <div class="modal-body">
-                    <form id="form-progress">
-                        <input id="steering_id" type="hidden" name="steering_id">
-                        <div class="form-group from-inline">
-                            <label>Ghi chú tiến độ</label>
-                            <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
-                        </div>
-
-                        <div class="form-group  from-inline">
-                            <label>Tình trạng</label>
-                            <input type="radio" name="pr_status" value="0" checked>  Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="1">  Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
-                        </div>
-                        <div class="form-group form-inline">
-                            <label>Ngày cập nhật</label>
-                            <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
-                                   required value="{{date('d/m/Y')}}">
-                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                        </div>
-                    </form>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
+                    <input id="steering_id" type="hidden" name="steering_id">
+                    <div class="form-group from-inline">
+                        <label>Ghi chú tiến độ</label>
+                        <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group  from-inline">
+                        <label>Tình trạng</label>
+                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
+                    </div>
+                    <div class="form-group form-inline" id="input-file" style="display: none">
+                        <label style="float: left">File đính kèm:</label>
+                        <input type="file" name="file">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày cập nhật</label>
+                        <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
+                               required value="{{date('d/m/Y')}}">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                    </div>
+                    {!! Form::close() !!}
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -213,7 +217,11 @@
                     for (var i = 0; i < result.length; i++) {
                         var r = result[i];
                         html_table += "<tr>";
-                        html_table += "<td>" + r.note + "</td>"
+                        html_table += "<td>" + r.note
+                        if (r.file_attach != null) {
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
+                        }
+                        html_table += "</td>"
                         html_table += "<td>" + r.created + "</td>"
                         html_table += "<td>" + r.time_log + "</td>"
                         html_table += "</tr>"
@@ -272,7 +280,6 @@
             @if(\App\Roles::accessAction(Request::path(), 'status'))
             $( ".progress-update" ).on( "click", function() {
                 showDetailProgress($( this ).attr("data-id"))
-                console.log( "#ID: " + $( this ).attr("data-id") );
             });
             @endif
 
@@ -281,18 +288,21 @@
             reCount();
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
+                var formData = new FormData($(this)[0]);
                 var note = $("#pr-note").val();
                 var steering_id = $("#steering_id").val();
                 var status = $('input[name="pr_status"]:checked').val()
                 var time_log = $("#progress_time").val();
                 $(".loader").show();
-                var url = "{{$_ENV['ALIAS']}}/api/updateprogress";
+                var url = $(this).attr("action");
                 console.log(url);
                 $.ajax({
-                    type: "GET",
                     url: url,
-                    data: {note: note, steering_id: steering_id, status: status, time_log: time_log},
+                    type: 'POST',
+                    data: formData,
+                    async: false,
                     success: function (result) {
+                        console.log(result);
                         $(".loader").hide();
                         $("#modal-progress").modal("hide");
                         $("#progress-" + steering_id).html(note)
@@ -301,8 +311,10 @@
                     },
                     error: function () {
                         alert("Xảy ra lỗi nội bộ");
-                        $(".loader").hide();
-                    }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
                 });
             });
 
@@ -332,27 +344,27 @@
                         },
                         text: 'Xuất ra PDF',
                     },
-                    {
-                        extend: 'excel',
-                        text: 'Xuất ra Excel',
-                        title: 'Công việc đầu mối (Xuất ngày ' + current_date + ")",
-                        stripHtml: false,
-                        decodeEntities: true,
-                        columns: ':visible',
-                        modifier: {
-                            selected: true
-                        },
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
-                            format: {
-                                body: function (data, row, column, node) {
-
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"").trim();
-
-                                }
-                            }
-                        }
-                    }
+//                    {
+//                        extend: 'excel',
+//                        text: 'Xuất ra Excel',
+//                        title: 'Công việc đầu mối (Xuất ngày ' + current_date + ")",
+//                        stripHtml: false,
+//                        decodeEntities: true,
+//                        columns: ':visible',
+//                        modifier: {
+//                            selected: true
+//                        },
+//                        exportOptions: {
+//                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+//                            format: {
+//                                body: function (data, row, column, node) {
+//
+//                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"").trim();
+//
+//                                }
+//                            }
+//                        }
+//                    }
                 ],
                 bSort: false,
                 bLengthChange: false,
@@ -387,8 +399,8 @@
 
         });
         function reCount(){
+            reloadDataExport();
             $(".count-st").each(function() {
-                console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
@@ -398,6 +410,7 @@
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
 //            $("#form-progress").hide();
+            $("#input-file").hide();
         }
 
         //loc theo trang thai

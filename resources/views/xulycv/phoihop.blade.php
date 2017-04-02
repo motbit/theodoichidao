@@ -68,7 +68,7 @@
             $name_stt[5] = "Sắp hết hạn (7 ngày)";
             $name_stt[6] = "Bị hủy";
             ?>
-            <tr class="row-st-{{$st}}">
+            <tr class="row-export row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{ $row->source }} </td>
@@ -142,6 +142,7 @@
         @endforeach
         </tbody>
     </table>
+    <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
@@ -178,7 +179,11 @@
                     for (var i = 0; i < result.length; i++) {
                         var r = result[i];
                         html_table += "<tr>";
-                        html_table += "<td>" + r.note + "</td>"
+                        html_table += "<td>" + r.note
+                        if (r.file_attach != null) {
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
+                        }
+                        html_table += "</td>"
                         html_table += "<td>" + r.created + "</td>"
                         html_table += "<td>" + r.time_log + "</td>"
                         html_table += "</tr>"
@@ -228,26 +233,26 @@
                         },
                         text: 'Xuất ra PDF',
                     },
-                    {
-                        extend: 'excel',
-                        text: 'Xuất ra Excel',
-                        stripHtml: false,
-                        decodeEntities: true,
-                        columns: ':visible',
-                        modifier: {
-                            selected: true
-                        },
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
-                            format: {
-                                body: function (data, row, column, node) {
-
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/\[\+\] Xem thêm/g,"").trim();
-
-                                }
-                            }
-                        }
-                    }
+//                    {
+//                        extend: 'excel',
+//                        text: 'Xuất ra Excel',
+//                        stripHtml: false,
+//                        decodeEntities: true,
+//                        columns: ':visible',
+//                        modifier: {
+//                            selected: true
+//                        },
+//                        exportOptions: {
+//                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+//                            format: {
+//                                body: function (data, row, column, node) {
+//
+//                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/\[\+\] Xem thêm/g,"").trim();
+//
+//                                }
+//                            }
+//                        }
+//                    }
                 ],
                 bSort: false,
                 bLengthChange: false,
@@ -309,8 +314,8 @@
         }
 
         function reCount(){
+            reloadDataExport();
             $(".count-st").each(function() {
-                console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }

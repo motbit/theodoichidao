@@ -7,8 +7,8 @@
 @section('content')
     <div class="text-center title">Danh sách nhiệm vụ chuyển nhận</div>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#tab-send">Nhiệm vụ đã chuyển</a></li>
-        <li><a data-toggle="tab" href="#tab-receive">Nhiệm vụ đã nhận</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab-send">Nhiệm vụ đã chuyển ({{count($send)}})</a></li>
+        <li><a data-toggle="tab" href="#tab-receive">Nhiệm vụ đã nhận ({{count($receive)}})</a></li>
     </ul>
     <div class="tab-content">
         <div id="tab-send" class="tab-pane fade in active">
@@ -17,9 +17,9 @@
                 <tr>
                     <th></th>
                     <th>Nhiệm vụ</th>
-                    <th>Người nhận</th>
-                    <th>Ghi chú</th>
-                    <th>Thời gian</th>
+                    <th style="min-width: 120px">Người nhận</th>
+                    <th style="min-width: 150px">Ghi chú</th>
+                    <th style="min-width: 00px">Thời gian</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,9 +41,9 @@
                 <tr>
                     <th></th>
                     <th>Nhiệm vụ</th>
-                    <th>Người nhận</th>
-                    <th>Ghi chú</th>
-                    <th>Thời gian</th>
+                    <th style="min-width: 120px">Người nhận</th>
+                    <th style="min-width: 150px">Ghi chú</th>
+                    <th style="min-width: 00px">Thời gian</th>
                 </tr>
                 </thead>
                 <tbody>

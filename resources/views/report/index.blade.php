@@ -321,45 +321,45 @@
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    {
-                        extend: 'pdfHtml5',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
-                            format: {
-                                body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
-                                }
-                            },
-                            modifier: {
-                                page: 'all'
-                            },
-                        },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        orientation: 'landscape',
-                        customize: function (doc) {
-                            doc.defaultStyle.fontSize = 10;
-                        },
-                        text: 'Xuất ra PDF',
-                    },
-                    {
-                        extend: 'excel',
-                        text: 'Xuất ra Excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        stripHtml: true,
-                        decodeEntities: true,
-                        columns: ':visible',
-                        modifier: {
-                            selected: true
-                        },
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
-                            format: {
-                                body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
-                                }
-                            }
-                        }
-                    }
+//                    {
+//                        extend: 'pdfHtml5',
+//                        exportOptions: {
+//                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
+//                            format: {
+//                                body: function (data, row, column, node) {
+//                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
+//                                }
+//                            },
+//                            modifier: {
+//                                page: 'all'
+//                            },
+//                        },
+//                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
+//                        orientation: 'landscape',
+//                        customize: function (doc) {
+//                            doc.defaultStyle.fontSize = 10;
+//                        },
+//                        text: 'Xuất ra PDF',
+//                    },
+//                    {
+//                        extend: 'excel',
+//                        text: 'Xuất ra Excel',
+//                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
+//                        stripHtml: true,
+//                        decodeEntities: true,
+//                        columns: ':visible',
+//                        modifier: {
+//                            selected: true
+//                        },
+//                        exportOptions: {
+//                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
+//                            format: {
+//                                body: function (data, row, column, node) {
+//                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
+//                                }
+//                            }
+//                        }
+//                    }
                 ],
                 bSort: false,
                 bLengthChange: false,

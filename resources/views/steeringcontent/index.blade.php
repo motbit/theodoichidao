@@ -111,7 +111,7 @@
                 $name_stt[6] = "Bị hủy";
                 ?>
 
-                <tr class="row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
+                <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                     <td>{{$idx + 1}}</td>
                     <td> {{$row->content}} </td>
                     <td>
@@ -234,6 +234,7 @@
         @endforeach
         </tbody>
     </table>
+    <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a>
     <div class="panel-button"></div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
@@ -377,8 +378,8 @@
         }
 
         function reCount() {
+            reloadDataExport();
             $(".count-st").each(function () {
-//                console.log($(this).attr('id'));
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
@@ -424,7 +425,6 @@
         }
 
         $(document).ready(function () {
-
             @if(\App\Roles::accessAction(Request::path(), 'status'))
             $(".progress-update").on("click", function () {
                 showDetailProgress($(this).attr("data-id"))
@@ -531,33 +531,33 @@
                         },
                         text: 'Xuất ra PDF',
                     },
-                    {
-                        extend: 'excel',
-                        text: 'Xuất ra Excel',
-                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        stripHtml: true,
-                        decodeEntities: true,
-                        columns: ':visible',
-                        customize: function (xlsx) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-                        },
-                        modifier: {
-                            selected: true
-                        },
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6],
-                            format: {
-                                body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '')
-                                            .replace(/(\r\n|\n|\r)/gm, "")
-                                            .replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ')
-                                            .replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "")
-                                            .trim();
-                                }
-                            }
-                        }
-                    }
+//                    {
+//                        extend: 'excel',
+//                        text: 'Xuất ra Excel',
+//                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
+//                        stripHtml: true,
+//                        decodeEntities: true,
+//                        columns: ':visible',
+//                        customize: function (xlsx) {
+//                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+//
+//                        },
+//                        modifier: {
+//                            selected: true
+//                        },
+//                        exportOptions: {
+//                            columns: [0, 1, 2, 3, 4, 5, 6],
+//                            format: {
+//                                body: function (data, row, column, node) {
+//                                    return data.replace(/<(?:.|\n)*?>/gm, '')
+//                                            .replace(/(\r\n|\n|\r)/gm, "")
+//                                            .replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ')
+//                                            .replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "")
+//                                            .trim();
+//                                }
+//                            }
+//                        }
+//                    }
                 ],
                 bSort: false,
                 bLengthChange: false,
@@ -588,6 +588,7 @@
                     }
                 });
             });
+            console.log( $(".buttons-excel").html);
 
             $('input:radio[name=pr_status]').change(function () {
                 var stt = $('input:radio[name=pr_status]:checked').val();
@@ -613,6 +614,7 @@
             $("#filter-type").trigger("change");
             $("#title-filter").html(" (theo " + name + ")")
         }
+
     </script>
     <style>
         #table_filter {

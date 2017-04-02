@@ -18,7 +18,6 @@ class ReportController extends Controller
 {
     public function export(Request $request) {
 
-
         $chuahoanthanh_dunghan = intval( $request->input('v1') );
         $chuahoanthanh_quahan = intval( $request->input('v2') );
         $hoanthanh_dunghan = intval( $request->input('v3') );
@@ -43,6 +42,27 @@ class ReportController extends Controller
         header('Content-type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=baocaonhiemvu.xlsx");
         readfile(base_path() . "/storage/example/export-data-" . date("dmyhis") . ".xlsx");
+    }
+
+    public function exportSteering(Request $request) {
+        $fileName = base_path() . "/storage/example/template_steering.xlsx";
+        $excelobj = PHPExcel_IOFactory::load($fileName);
+        $excelobj->setActiveSheetIndex(0);
+        $excelobj->getActiveSheet()->toArray(null, true, true, true);
+//        return response()->json(['mess' => $request->data[0]['content']]);
+        foreach($request->data as $idx=>$data){
+            $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 2), $idx + 1)
+                ->setCellValue('B'. ($idx + 2), $data['content'])
+                ->setCellValue('C'. ($idx + 2), $data['source'])
+                ->setCellValue('D'. ($idx + 2), $data['unit'])
+                ->setCellValue('E'. ($idx + 2), $data['follow'])
+                ->setCellValue('F'. ($idx + 2), $data['deadline'])
+                ->setCellValue('G'. ($idx + 2), $data['status']);
+        }
+        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
+        $output_file = "/file/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
+        $objWriter->save(base_path() . "/public" . $output_file);
+        return response()->json(['file' => $output_file]);
     }
     public function index(Request $request)
     {
