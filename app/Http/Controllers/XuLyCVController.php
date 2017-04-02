@@ -165,4 +165,23 @@ class XuLyCVController extends Controller
             return view('xulycv.updatecv', ['data' => $data]);
         }
     }
+
+    public function tranfer(Request $request){
+        $users = array();
+        $select_user = DB::table('user')->get();
+        foreach ($select_user as $row){
+            $users[$row->id] = $row->fullname . " (" . $row->username .")";
+        }
+        $steering = array();
+        $select_steering = DB::table('steeringcontent')->get();
+        foreach ($select_steering as $row){
+            $steering[$row->id] = $row->content;
+        }
+        $send = DB::table('tranfer_log')->where('sender', '=', Auth::id())
+            ->orderBy('id', 'desc')->get();
+        $receive =  DB::table('tranfer_log')->where('receiver', '=', Auth::id())
+            ->orderBy('id', 'desc')->get();
+        return view('xulycv.tranfer', ['user' => $users, 'steering' => $steering,
+            'send' => $send, 'receive' => $receive]);
+    }
 }

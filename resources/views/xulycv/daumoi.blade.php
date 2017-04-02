@@ -1,12 +1,12 @@
 @extends('layout1')
 
 @section('page-title')
-    Công việc đầu mối
+    Nhiệm vụ đầu mối
 @stop
 
 @section('content')
 
-    <div class="text-center title">Công việc đầu mối</div>
+    <div class="text-center title">Nhiệm vụ đầu mối</div>
 
 
     <div class="row note-contain">

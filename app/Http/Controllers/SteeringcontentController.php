@@ -40,6 +40,7 @@ class SteeringcontentController extends Controller
         $firstunit = array();
         $secondunit = array();
         $user = array();
+        $user4tranfer = array();
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
@@ -64,7 +65,7 @@ class SteeringcontentController extends Controller
             $sourcetype[$row->code] = "" . $row->type . "";
         }
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $sources,
-            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user, 'sourcetype' => $sourcetype]);
+            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user, 'sourcetype' => $sourcetype, "datauser" => $datauser]);
     }
 
     public function edit(Request $request)
@@ -215,6 +216,7 @@ class SteeringcontentController extends Controller
         }
     }
     #endregion
+
 
 }
 

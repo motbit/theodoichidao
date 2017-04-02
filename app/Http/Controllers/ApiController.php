@@ -91,4 +91,48 @@ class ApiController extends Controller
         }
         return response()->json($content);
     }
+
+    #api tranfer
+    public function tranfer(Request $request)
+    {
+//        return response()->json($request);
+        $sender = Auth::id();
+        $receiver = $request->receiver;
+        $steering = $request->sid;
+        $note = $request->note;
+
+        $users = array();
+        $select_user = DB::table('user')->get();
+        foreach ($select_user as $row){
+            $users[$row->id] = $row->fullname;
+        }
+        $progress_note = 'Anh/chị ' . $users[$sender] . ' chuyển nhiệm vụ cho anh/chị ' . $users[$receiver];
+        #update nhiem vu
+        $update = DB::table('steeringcontent')->where([['id', '=', $steering], ['created_by', '=', $sender]])
+            ->update(['created_by' => $receiver, 'progress' => $progress_note]);
+        if (! $update){
+            return response()->json(['result'=>false,
+                'mess'=>'Nhiệm vụ không tồn tại hoặc không do tài khoản anh/chị quản lý'
+            ]);
+        }
+        #ghi log tranfer
+        DB::table('tranfer_log')->insert([
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'steering' => $steering,
+            'note' => $note,
+            'time_log' => date('Y-m-d')
+        ]);
+        #ghi log tien do
+        DB::table('progress_log')->insert([
+            'created_by' => $sender,
+            'time_log' => date('Y-m-d'),
+            'steeringcontent' => $steering,
+            'note' => $progress_note
+        ]);
+        return response()->json(['result'=>true,
+            'mess'=>'Nhiệm vụ chuyển thành công'
+        ]);
+    }
+    #end api
 }
