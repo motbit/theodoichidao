@@ -442,7 +442,7 @@ label {
     }
 }
 .select2-container {
-    min-width: 300px !important;
+    min-width: 200px !important;
 }
 
 ul>ul>li>a{
