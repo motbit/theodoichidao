@@ -215,10 +215,13 @@
     function exportExcel(){
         console.log(data_export);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: "{{$_ENV['ALIAS']}}/report/exportsteering",
             type: 'POST',
             dataType: 'json',
-            data: {filename: "Danh mục Nhiệm vụ", data: data_export},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_export},
             async: false,
             success: function (result) {
                 console.log(result);
@@ -257,10 +260,13 @@
     function exportReportExcel(){
         console.log(data_report);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: "{{$_ENV['ALIAS']}}/report/exportreport",
             type: 'POST',
             dataType: 'json',
-            data: {filename: "Danh mục Nhiệm vụ", data: data_report},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_report},
             async: false,
             success: function (result) {
                 console.log(result);
