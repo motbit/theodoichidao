@@ -595,8 +595,10 @@
             $('input:radio[name=pr_status]').change(function () {
                 var stt = $('input:radio[name=pr_status]:checked').val();
                 if (stt == "1") {
+                    $("#pr-note").val("Nhiệm vụ đã hoàn thành!");
                     $("#input-file").show();
                 } else {
+                    $("#pr-note").val("");
                     $("#input-file").hide();
                 }
             });
