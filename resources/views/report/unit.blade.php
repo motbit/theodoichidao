@@ -868,10 +868,13 @@
             var filter = getFilterString();
             console.log("filer: " + filter);
             $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 url: "{{$_ENV['ALIAS']}}/report/exportunit",
                 type: 'POST',
                 dataType: 'json',
-                data: {filter:filter, data: data_unit},
+                data: {_token: $('meta[name="csrf-token"]').attr('content'), filter:filter, data: data_unit},
                 async: false,
                 success: function (result) {
                     console.log(result);
