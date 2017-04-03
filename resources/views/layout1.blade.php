@@ -132,7 +132,8 @@
                 Mr. Hà: <strong>0904.069.966</strong> (đầu mối)<br>
                 Mr. Tiến: <strong>0989.268.118</strong> <br>
                 Mr. Tú: <strong>0972.541.665</strong><br>
-                EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
+                EMAIL: <strong>theodoichidao@moet.gov.vn</strong><br>
+                <a style="color: #337ab7 !important;" href="{{$_ENV['ALIAS']}}/file/hdsd.pdf" download>Hướng dẫn sử dụng (Tải về)</a>
             </div>
         </div>
     </div>

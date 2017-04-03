@@ -26,7 +26,7 @@
                 @foreach($send as $idx=>$row)
                 <tr>
                     <td>{{$idx + 1}}</td>
-                    <td>{{(array_key_exists($row->steering, $steering))?$steering[$row->steering]:''}}</td>
+                    <td>{{$row->steering_name}}</td>
                     <td>{{(array_key_exists($row->receiver, $user))?$user[$row->receiver]:""}}</td>
                     <td>{{$row->note}}</td>
                     <td>{{date("d/m/Y", strtotime($row->time_log))}}</td>
@@ -50,7 +50,7 @@
                 @foreach($receive as $idx=>$row)
                     <tr>
                         <td>{{$idx + 1}}</td>
-                        <td>{{(array_key_exists($row->steering, $steering))?$steering[$row->steering]:''}}</td>
+                        <td>{{$row->steering_name}}</td>
                         <td>{{(array_key_exists($row->sender, $user))?$user[$row->sender]:""}}</td>
                         <td>{{$row->note}}</td>
                         <td>{{date("d/m/Y", strtotime($row->time_log))}}</td>

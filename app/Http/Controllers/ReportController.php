@@ -41,7 +41,7 @@ class ReportController extends Controller
             ->setCellValue('G5', $filter)
             ->setCellValue('A6', $footer);
 
-        $output_file = "/public/file/export-data-" . date("dmYHis") . ".xlsx";
+        $output_file = "/public/baocao/export-data-" . date("dmYHis") . ".xlsx";
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $objWriter->save(base_path() . $output_file);
         header('Content-type: application/vnd.ms-excel');
@@ -65,7 +65,7 @@ class ReportController extends Controller
                 ->setCellValue('G'. ($idx + 2), $data['status']);
         }
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $output_file = "/file/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
+        $output_file = "/baocao/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
         $objWriter->save(base_path() . "/public" . $output_file);
         return response()->json(['file' => $output_file]);
     }
@@ -87,7 +87,7 @@ class ReportController extends Controller
                 ->setCellValue('I'. ($idx + 2), $data['status']);
         }
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $output_file = "/file/Danhmucbaocao" . date("dmyhis") . ".xlsx";
+        $output_file = "/baocao/Danhmucbaocao" . date("dmyhis") . ".xlsx";
         $objWriter->save(base_path() . "/public" . $output_file);
         return response()->json(['file' => $output_file]);
     }
@@ -127,7 +127,7 @@ class ReportController extends Controller
         $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
         $excelobj->getActiveSheet()->setCellValue('A' . ($count + 1), $footer);
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $output_file = "/file/Baocaodonvi" . date("dmyhis") . ".xlsx";
+        $output_file = "/baocao/Baocaodonvi" . date("dmyhis") . ".xlsx";
         $objWriter->save(base_path() . "/public" . $output_file);
         return response()->json(['file' => $output_file]);
     }
