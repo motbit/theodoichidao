@@ -209,7 +209,7 @@
                     @endif
                     @if(\App\Roles::accessAction(Request::path(), 'trans'))
                         <td>
-                            <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img title="Chuyển nhiệm vụ cho người khác"
+                            <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img title="Chuyển nhiệm vụ"
                                                                                 height="20" border="0"
                                                                                 src="{{$_ENV['ALIAS']}}/img/tranfer.png"></a>
                         </td>

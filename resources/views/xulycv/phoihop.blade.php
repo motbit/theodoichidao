@@ -71,7 +71,13 @@
             <tr class="row-export row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> {{ $row->source }} </td>
+                <td> @foreach(explode('|', $row->source) as $s)
+                        <ul class="unit-list">
+                            @if($s != '')
+                                <li> {{ $s }} </li>
+                            @endif
+                        </ul>
+                    @endforeach  </td>
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)

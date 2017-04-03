@@ -8,7 +8,7 @@
 
 @section('content')
     <div>
-        <div class="text-center title">Báo cáo thống kê chi tiết</div>
+        <div class="text-center title">Báo cáo thống kê đơn vị</div>
         <a class="btn btn-my pull-right hidden-xs hidden-sm" style="margin-top: -50px;" href="javascript:clearFilter()">Xóa
             tìm kiếm</a>
         <a class="btn btn-my pull-right visible-xs visible-sm" style="margin-top: -50px;"
@@ -115,7 +115,7 @@
             <div class="form-group form-inline pull-right">
                 {!! Form::submit('Tìm kiếm',
                   array('class'=>'btn btn-my', 'id'=>'search')) !!}
-                <a id="btn-export" class="btn btn-my" href="#" target="_blank">Xuất báo cáo</a>
+                <a class="btn btn-my" href="javascript:exportUnit()" target="_blank">Xuất báo cáo</a>
             </div>
         </div>
 
@@ -213,7 +213,7 @@
                     @endforeach
                 </td>
 
-                <td onclick="javascript:showunit({{$idx}})">
+                <td onclick="javascript:showunit({{$idx}})" class="unit-st-{{$st}}">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
                         @foreach($units = explode(',', $row->unit) as $i)
@@ -759,6 +759,7 @@
             var v4 = $('.row-st-3').length;
             var v5 = $('.row-st-6').length;
             $("#btn-export").attr('href', '{{$_ENV['ALIAS']}}/report/export?v1=' + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4 + "&v5=" + v5 + "&f=" + getFilterString() + "");
+            getDataExport();
             reloadDataReport();
         }
         function getFilterString() {
@@ -807,6 +808,80 @@
             $("#filter-status").trigger("change");
         }
 
+        var data_unit = {};
+        function getDataExport(){
+            var data =  new Array();
+            if ($("#fList").val() != "") {
+                var v1 = $('.row-st-1').length + $('.row-st-5').length;
+                var v2 = $('.row-st-4').length;
+                var v3 = $('.row-st-2').length;
+                var v4 = $('.row-st-3').length;
+                var v5 = $('.row-st-6').length;
+                data.push({
+                    "unit" : $("#fList").val(),
+                    "v1" : v1,
+                    "v2" : v2,
+                    "v3" : v3,
+                    "v4" : v4,
+                    "v5" : v5,
+                    "total": v1 + v2 + v3 + v4 + v5
+                });
+            }else{
+                var d = {};
+                @foreach($unitall as $u)
+                    d = countByUnit("{{$u->name}}");
+                    if (d.total != 0){
+                        data.push(d)
+                    }
+                @endforeach
+            }
+            data_unit =  data;
+        }
+
+        function countByUnit(unit){
+            var data = [];
+            var countall = 0;
+            for (var i = 1; i <= 6; i++){
+                var count = 0;
+                $(".unit-st-" + i).each(function(){
+//                    console.log($(this).text());
+                    if ($(this).text().indexOf(unit) !== -1){
+                        count ++;
+                        countall ++;
+                    }
+                });
+                data[i] = count;
+            }
+            return {
+                'unit': unit,
+                "v1" : data[1] + data[5],
+                "v2" : data[4],
+                "v3" : data[2],
+                "v4" : data[3],
+                "v5" : data[6],
+                "total": countall
+            }
+        }
+
+        function exportUnit(){
+            console.log(data_unit);
+            var filter = getFilterString();
+            console.log("filer: " + filter);
+            $.ajax({
+                url: "{{$_ENV['ALIAS']}}/report/exportunit",
+                type: 'POST',
+                dataType: 'json',
+                data: {filter:filter, data: data_unit},
+                async: false,
+                success: function (result) {
+                    console.log(result);
+                    window.location.href = "{{$_ENV['ALIAS']}}" + result.file;
+                },
+                error: function () {
+                    alert("Xảy ra lỗi nội bộ");
+                },
+            });
+        }
     </script>
     <style>
         #table_filter {
