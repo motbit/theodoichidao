@@ -124,8 +124,8 @@
                 @endif
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
-                <li class="{{ (strpos(\Request::path(), 'report')  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report">Báo cáo chi tiết</a></li>
-                {{--<li><a href="#">Báo cáo chi tiết</a></li>--}}
+                <li class="{{ (\Request::path() == 'report')? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report">Báo cáo thống kê chi tiết</a></li>
+                <li class="{{ (strpos(\Request::path(), 'report/unit')  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report/unit">Báo cáo thống kê đơn vị</a></li>
             </ul>
             <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
                 <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
@@ -190,6 +190,10 @@
         $("#s-type-" + id).addClass('active');
     }
 
+    /*
+    Danh mục nhiệm vụ
+     */
+
     var data_export = {};
     function reloadDataExport(){
         var data =  new Array();
@@ -215,6 +219,48 @@
             type: 'POST',
             dataType: 'json',
             data: {filename: "Danh mục Nhiệm vụ", data: data_export},
+            async: false,
+            success: function (result) {
+                console.log(result);
+                window.location.href = "{{$_ENV['ALIAS']}}" + result.file;
+            },
+            error: function () {
+                alert("Xảy ra lỗi nội bộ");
+            },
+        });
+    }
+
+    /*
+    Danh mục chi tiết báo cáo
+     */
+
+    var data_report = {};
+    function reloadDataReport(){
+        var data =  new Array();
+        $(".row-export").each(function(){
+            var td = $(this).children();
+            data.push({
+                "idx" : formatExport(td.get(0).innerHTML),
+                "content" : formatExport(td.get(1).innerHTML),
+                "conductor" : formatExport(td.get(2).innerHTML),
+                "time" : formatExport(td.get(3).innerHTML),
+                "source" : formatExport(td.get(4).innerHTML),
+                "unit" : formatExport(td.get(5).innerHTML),
+                "follow" : formatExport(td.get(6).innerHTML),
+                "deadline" : formatExport(td.get(7).innerHTML),
+                "status" : formatExport(td.get(8).innerHTML),
+            });
+        });
+        data_report = data;
+    }
+
+    function exportReportExcel(){
+        console.log(data_report);
+        $.ajax({
+            url: "{{$_ENV['ALIAS']}}/report/exportreport",
+            type: 'POST',
+            dataType: 'json',
+            data: {filename: "Danh mục Nhiệm vụ", data: data_report},
             async: false,
             success: function (result) {
                 console.log(result);

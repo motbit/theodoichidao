@@ -96,9 +96,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'report'], function () {
         Route::get( '/','ReportController@index' )->name('report-index');
+        Route::get( '/unit','ReportController@unit' )->name('report-unit');
         Route::post( '/','ReportController@index' )->name('report-index');
         Route::get( '/export','ReportController@export' )->name('export-index');
         Route::post( '/exportsteering','ReportController@exportSteering' )->name('export-steering');
+        Route::post( '/exportunit','ReportController@exportUnit' )->name('export-unit');
+        Route::post( '/exportreport','ReportController@exportReport' )->name('export-report');
     });
     Route::group(['prefix' => 'api'], function () {
         Route::get('progress', 'ApiController@getProgress');
