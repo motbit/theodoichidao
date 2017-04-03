@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use PHPExcel_Style_Border;
 
 class ReportController extends Controller
 {
@@ -108,8 +109,20 @@ class ReportController extends Controller
                 ->setCellValue('F'. ($idx + 5), $data['v3'])
                 ->setCellValue('G'. ($idx + 5), $data['v4'])
                 ->setCellValue('H'. ($idx + 5), $data['v5']);
+
+            $excelobj->getActiveSheet()
+                ->getStyle('A'.($idx + 5).':I'.($idx + 5))
+                ->getBorders()
+                ->getAllBorders()
+                ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+                ->getColor()
+                ->setRGB('000000');
+
             $count ++;
         }
+        $excelobj->getActiveSheet()->mergeCells('I5:I'.($count-1));
+
+
         $excelobj->getActiveSheet()->setCellValue('I5', $filter);
         $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
         $excelobj->getActiveSheet()->setCellValue('A' . ($count + 1), $footer);
