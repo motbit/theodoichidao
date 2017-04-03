@@ -104,7 +104,14 @@
                 <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
                 <ul>
                     <?php $__currentLoopData = $menu_ykcd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $yk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li class="<?php echo e((strpos(\Request::path(), $yk->path)  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
+                        <li class="<?php echo e((strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
+                        <?php if($yk->path == 'steeringcontent' && (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))): ?>
+                            <ul style="padding-left: 20px">
+                            <?php $__currentLoopData = \App\Utils::listTypeSource(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li class="s-type" id="s-type-<?php echo e($type->id); ?>"><a href="javascript:filterTypeSource('<?php echo e($type->id); ?>','<?php echo e($type->name); ?>')"><?php echo e($type->name); ?></a></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </ul>
+                        <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             <?php endif; ?>
@@ -119,9 +126,16 @@
                 <?php endif; ?>
             <div class="left-head">THỐNG KÊ BÁO CÁO</div>
             <ul>
-                <li><a href="<?php echo e($_ENV['ALIAS']); ?>/report">Báo cáo chi tiết</a></li>
-                
+                <li class="<?php echo e((\Request::path() == 'report')? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report">Báo cáo thống kê chi tiết</a></li>
+                <li class="<?php echo e((strpos(\Request::path(), 'report/unit')  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report/unit">Báo cáo thống kê đơn vị</a></li>
             </ul>
+            <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
+                <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
+                Mr. Hà: <strong>0904.069.966</strong> <br>
+                Mr. Tiến: <strong>0989.268.118</strong> <br>
+                Mr. Tú: <strong>0972.541.665</strong><br>
+                EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
+            </div>
         </div>
     </div>
     <div id="content">
@@ -173,5 +187,95 @@
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
+    function highlightSourceType(id){
+        $(".s-type").removeClass('active');
+        $("#s-type-" + id).addClass('active');
+    }
+
+    /*
+    Danh mục nhiệm vụ
+     */
+
+    var data_export = {};
+    function reloadDataExport(){
+        var data =  new Array();
+        $(".row-export").each(function(){
+            var td = $(this).children();
+            data.push({
+                "idx" : formatExport(td.get(0).innerHTML),
+                "content" : formatExport(td.get(1).innerHTML),
+                "source" : formatExport(td.get(2).innerHTML),
+                "unit" : formatExport(td.get(3).innerHTML),
+                "follow" : formatExport(td.get(4).innerHTML),
+                "deadline" : formatExport(td.get(5).innerHTML),
+                "status" : formatExport(td.get(6).innerHTML),
+            });
+        });
+        data_export = data;
+    }
+
+    function exportExcel(){
+        console.log(data_export);
+        $.ajax({
+            url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportsteering",
+            type: 'POST',
+            dataType: 'json',
+            data: {filename: "Danh mục Nhiệm vụ", data: data_export},
+            async: false,
+            success: function (result) {
+                console.log(result);
+                window.location.href = "<?php echo e($_ENV['ALIAS']); ?>" + result.file;
+            },
+            error: function () {
+                alert("Xảy ra lỗi nội bộ");
+            },
+        });
+    }
+
+    /*
+    Danh mục chi tiết báo cáo
+     */
+
+    var data_report = {};
+    function reloadDataReport(){
+        var data =  new Array();
+        $(".row-export").each(function(){
+            var td = $(this).children();
+            data.push({
+                "idx" : formatExport(td.get(0).innerHTML),
+                "content" : formatExport(td.get(1).innerHTML),
+                "conductor" : formatExport(td.get(2).innerHTML),
+                "time" : formatExport(td.get(3).innerHTML),
+                "source" : formatExport(td.get(4).innerHTML),
+                "unit" : formatExport(td.get(5).innerHTML),
+                "follow" : formatExport(td.get(6).innerHTML),
+                "deadline" : formatExport(td.get(7).innerHTML),
+                "status" : formatExport(td.get(8).innerHTML),
+            });
+        });
+        data_report = data;
+    }
+
+    function exportReportExcel(){
+        console.log(data_report);
+        $.ajax({
+            url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportreport",
+            type: 'POST',
+            dataType: 'json',
+            data: {filename: "Danh mục Nhiệm vụ", data: data_report},
+            async: false,
+            success: function (result) {
+                console.log(result);
+                window.location.href = "<?php echo e($_ENV['ALIAS']); ?>" + result.file;
+            },
+            error: function () {
+                alert("Xảy ra lỗi nội bộ");
+            },
+        });
+    }
+
+    function formatExport(data){
+        return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
+    }
 </script>
 </html>
