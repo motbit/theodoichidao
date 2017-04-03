@@ -214,7 +214,6 @@
             });
 
 
-            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             // DataTable
             var table = $('#table').DataTable({

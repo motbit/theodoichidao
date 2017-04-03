@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="form-group form-inline">
-                <label>Đơn vị đầu mối:</label>
+                <label>Đơn vị/Cá nhân đầu mối:</label>
                 <select id="fList" name="firtunit[]" class="form-control select-single ipw" style="max-width:80%;">
                     <option value="">...</option>
                     @foreach($treeunit as $item)
@@ -59,17 +59,23 @@
                             <option value="{{$c->name}}">{{$c->name}}</option>
                         @endforeach
                     @endforeach
+                    @foreach($users as $u)
+                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                    @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
             </div>
             <div class="form-group form-inline">
-                <label>Đơn vị phối hợp:</label>
+                <label>Đơn vị/Cá nhân phối hợp:</label>
                 <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
                     <option value="">...</option>
                     @foreach($treeunit as $item)
                         @foreach($item->children as $c)
                             <option value="{{$c->name}}">{{$c->name}}</option>
                         @endforeach
+                    @endforeach
+                    @foreach($users as $u)
+                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
                     @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -284,7 +290,8 @@
         </tbody>
     </table>
     <div>
-        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportReportExcel()"><span>Xuất ra Excel</span></a></span>
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportReportExcel()"><span>Xuất ra Excel</span></a></span>
         <span class="panel-button"></span>
     </div>
     <div id="modal-source" class="modal fade" role="dialog">
@@ -335,30 +342,50 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">Danh sách đơn vị</h4>
+                    <h4 class="modal-title text-center">Danh sách đơn vị/Cá nhân</h4>
                 </div>
                 <div class="modal-body">
-                    @foreach($treeunit as $idx=>$u)
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
-                                </h4>
-                            </div>
-                            <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
-                                <ul class="list-group">
-                                    @foreach($u->children as $c)
-                                        <li class="list-group-item">
-                                            {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                            <input type="radio" name="pfunit" class="pick-firt-unit"
-                                                   value="{{$c->name}}" parent-id="{{$u->id}}">
-                                            {{$c->name}}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#fdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#fcanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="fdonvi">
+                            @foreach($treeunit as $idx=>$u)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                                    <input type="radio" name="pfunit" class="pick-firt-unit"
+                                                           value="{{$c->name}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                        <div id="fcanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($users as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="radio" name="pfunit" class="pick-firt-unit"
+                                               value="{{$u->fullname}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -368,30 +395,50 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách đơn vị</h4>
+                    <h4 class="modal-title">Danh sách đơn vị/Cá nhân</h4>
                 </div>
                 <div class="modal-body">
-                    @foreach($treeunit as $idx=>$u)
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
-                                </h4>
-                            </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#sdonvi">Đơn vị</a></li>
+                        <li><a data-toggle="tab" href="#scanhan">Cá nhân</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="panel-group tab-pane fade in active" id="sdonvi">
+                            @foreach($treeunit as $idx=>$u)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
+                                        </h4>
+                                    </div>
 
-                            <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
-                                <ul class="list-group">
-                                    @foreach($u->children as $c)
-                                        <li class="list-group-item">
-                                            <input type="radio" name="psunit" class="pick-firt-unit"
-                                                   value="{{$c->name}}" parent-id="{{$u->id}}">
-                                            {{$c->name}}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                    <div id="collapse2{{$u->id}}" class="panel-collapse collapse in">
+                                        <ul class="list-group">
+                                            @foreach($u->children as $c)
+                                                <li class="list-group-item">
+                                                    <input type="radio" name="psunit" class="pick-firt-unit"
+                                                           value="{{$c->name}}" parent-id="{{$u->id}}">
+                                                    {{$c->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                        <div id="scanhan" class="tab-pane fade in">
+                            <ul class="list-group">
+                                @foreach($users as $u)
+                                    <li class="list-group-item">
+                                        {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
+                                        <input type="radio" name="psunit" class="pick-firt-unit"
+                                               value="{{$u->fullname}}">
+                                        {{$u->fullname}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -442,17 +489,6 @@
         }
 
         $(document).ready(function () {
-            $('.datepicker').datepicker({
-                format: 'dd-mm-yyyy',
-                dateFormat: 'dd-mm-yy',
-                monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
-                    'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
-                monthNamesShort: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
-                    'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
-                dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-                dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-            });
             reCount();
             $("#source").autocomplete({
                 source: sources
@@ -507,7 +543,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5,6,7,8],
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
@@ -672,7 +708,6 @@
                                 return true;
                             }
                         }
-                        reCount();
                         return false;
                     }
             );
@@ -698,7 +733,7 @@
                 var val = $("#progress").val();
                 $("#filter-status").val(val);
                 $("#filter-status").trigger("change");
-
+                reCount();
                 return false;
 
             });
@@ -837,6 +872,10 @@
         .search-box {
             border-bottom: 1px solid #ccc;
             margin-bottom: 10px;
+        }
+
+        label{
+            width: 180px !important;
         }
 
         @media screen and (max-width: 600px) {

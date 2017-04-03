@@ -453,7 +453,6 @@
                 placeholder: "Chọn người tiếp nhận"
             });
 
-            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             // cap nhat trang thai
             $("#form-progress").submit(function (e) {

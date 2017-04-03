@@ -292,7 +292,6 @@
             @endif
 
 
-            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             reCount();
             $("#form-progress").submit(function (e) {
                 e.preventDefault();
