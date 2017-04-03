@@ -177,10 +177,18 @@ class XuLyCVController extends Controller
         foreach ($select_steering as $row){
             $steering[$row->id] = $row->content;
         }
-        $send = DB::table('tranfer_log')->where('sender', '=', Auth::id())
-            ->orderBy('id', 'desc')->get();
-        $receive =  DB::table('tranfer_log')->where('receiver', '=', Auth::id())
-            ->orderBy('id', 'desc')->get();
+        $send = DB::table('tranfer_log')
+            ->join('steeringcontent', 'steeringcontent.id', '=', 'tranfer_log.steering')
+            ->where('tranfer_log.sender', '=', Auth::id())
+            ->orderBy('tranfer_log.id', 'desc')
+            ->select('tranfer_log.*', 'steeringcontent.content as steering_name')
+            ->get();
+        $receive =  DB::table('tranfer_log')
+            ->join('steeringcontent', 'steeringcontent.id', '=', 'tranfer_log.steering')
+            ->where('tranfer_log.receiver', '=', Auth::id())
+            ->orderBy('tranfer_log.id', 'desc')
+            ->select('tranfer_log.*', 'steeringcontent.content as steering_name')
+            ->get();
         return view('xulycv.tranfer', ['user' => $users, 'steering' => $steering,
             'send' => $send, 'receive' => $receive]);
     }
