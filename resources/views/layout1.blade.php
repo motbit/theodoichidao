@@ -103,7 +103,7 @@
                 <ul>
                     @foreach($menu_ykcd as $yk)
                         <li class="{{ (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
-                        @if($yk->path == 'steeringcontent' && (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent')))
+                        @if($yk->path == 'steeringcontent' && (\Request::path() == $yk->path || (Request::path() == '/' && $yk->path == 'steeringcontent')))
                             <ul style="padding-left: 20px">
                             @foreach(\App\Utils::listTypeSource() as $type)
                                 <li class="s-type" id="s-type-{{$type->id}}"><a href="javascript:filterTypeSource('{{$type->id}}','{{$type->name}}')">{{$type->name}}</a></li>
@@ -129,7 +129,7 @@
             </ul>
             <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
                 <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
-                Mr. Hà: <strong>0904.069.966</strong> <br>
+                Mr. Hà: <strong>0904.069.966</strong> (đầu mối VP)<br>
                 Mr. Tiến: <strong>0989.268.118</strong> <br>
                 Mr. Tú: <strong>0972.541.665</strong><br>
                 EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
