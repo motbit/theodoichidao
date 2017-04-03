@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/logs/laravel.log" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="478" column="33" selection-start-line="478" selection-start-column="33" selection-end-line="478" selection-end-column="33" />
+            <state relative-caret-position="549">
+              <caret line="471" column="54" selection-start-line="471" selection-start-column="54" selection-end-line="471" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -862,7 +861,7 @@
       <workItem from="1490688368101" duration="4550000" />
       <workItem from="1490845152460" duration="1052000" />
       <workItem from="1490923952148" duration="1287000" />
-      <workItem from="1491187779011" duration="6898000" />
+      <workItem from="1491187779011" duration="7048000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -875,7 +874,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122850000" />
+    <option name="totallyTimeSpent" value="123000000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-12" y="0" width="2884" height="1552" extended-state="0" />
@@ -1358,8 +1357,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="478" column="33" selection-start-line="478" selection-start-column="33" selection-end-line="478" selection-end-column="33" />
+        <state relative-caret-position="549">
+          <caret line="471" column="54" selection-start-line="471" selection-start-column="54" selection-end-line="471" selection-end-column="54" />
           <folding />
         </state>
       </provider>

@@ -469,10 +469,9 @@
                 console.log("#date: "+time_log + "-" + time_deadline + "=" + datediff);
 
                 if(datediff < 0) {
-                    alert("Ngày nhập vào không hợp lệ.");
+                    alert("Ngày nhập vào không hợp lệ!");
                     return false;
                 }
-
 
                 $(".loader").show();
                 var url = $(this).attr("action");
