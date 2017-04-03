@@ -148,8 +148,10 @@
         @endforeach
         </tbody>
     </table>
-    <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a>
-    <div class="panel-button"></div>
+    <div>
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
+        <div class="panel-button"></div>
+    </div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
             <div class="modal-content">
@@ -267,7 +269,7 @@
                     "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 },
                 "initComplete": function () {
-                    $("#table_wrapper > .dt-buttons").appendTo("div.panel-button");
+                    $("#table_wrapper > .dt-buttons").appendTo("span.panel-button");
                 }
             });
 
