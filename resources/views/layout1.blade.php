@@ -129,7 +129,7 @@
             </ul>
             <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
                 <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
-                Mr. Hà: <strong>0904.069.966</strong> (đầu mối VP)<br>
+                Mr. Hà: <strong>0904.069.966</strong> (đầu mối)<br>
                 Mr. Tiến: <strong>0989.268.118</strong> <br>
                 Mr. Tú: <strong>0972.541.665</strong><br>
                 EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
