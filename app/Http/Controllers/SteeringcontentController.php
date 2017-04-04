@@ -178,7 +178,7 @@ class SteeringcontentController extends Controller
 
             $result = Steeringcontent::insert([
                 'content' => $request->input('content'),
-                'source' => $request->input('source'),
+                'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $firstUnit,
                 'follow' => $secondunit,
                 'priority' => $request->input('priority'),
@@ -198,7 +198,6 @@ class SteeringcontentController extends Controller
                 );
             }
         }
-
     }
 
     #region Nguoidung Delete
