@@ -491,3 +491,19 @@ ul > ul > li > a {
         float: left !important;
     }
 }
+
+.mnu-hotro {
+    padding: 15px;
+    border-top: solid 1px #ccc;
+    color: #818181;
+    font-size: 1em
+}
+.mnu-hotro li {
+    list-style: none;
+    padding: 3px 0 2px;
+}
+
+.mnu-hotro li a{
+    list-style: none;
+    padding: 0;
+}

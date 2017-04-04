@@ -46,6 +46,17 @@
             'csrfToken' => csrf_token(),
         ]); ?>;
         $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                dateFormat: 'dd/mm/yy',
+                monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
+                    'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
+                monthNamesShort: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                    'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+                dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            });
             $('.datepicker').on('changeDate', function (ev) {
                 // do what you want here
                 $(this).datepicker('hide');
@@ -105,7 +116,7 @@
                 <ul>
                     <?php $__currentLoopData = $menu_ykcd; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $yk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="<?php echo e((strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/<?php echo e($yk->path); ?>"><?php echo e($yk->name); ?></a></li>
-                        <?php if($yk->path == 'steeringcontent' && (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))): ?>
+                        <?php if($yk->path == 'steeringcontent' && (\Request::path() == $yk->path || (Request::path() == '/' && $yk->path == 'steeringcontent'))): ?>
                             <ul style="padding-left: 20px">
                             <?php $__currentLoopData = \App\Utils::listTypeSource(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li class="s-type" id="s-type-<?php echo e($type->id); ?>"><a href="javascript:filterTypeSource('<?php echo e($type->id); ?>','<?php echo e($type->name); ?>')"><?php echo e($type->name); ?></a></li>
@@ -129,13 +140,14 @@
                 <li class="<?php echo e((\Request::path() == 'report')? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report">Báo cáo thống kê chi tiết</a></li>
                 <li class="<?php echo e((strpos(\Request::path(), 'report/unit')  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report/unit">Báo cáo thống kê đơn vị</a></li>
             </ul>
-            <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
-                <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
-                Mr. Hà: <strong>0904.069.966</strong> <br>
-                Mr. Tiến: <strong>0989.268.118</strong> <br>
-                Mr. Tú: <strong>0972.541.665</strong><br>
-                EMAIL: <strong>theodoichidao@moet.gov.vn</strong>
-            </div>
+            <div class="left-head">THÔNG TIN HỖ TRỢ</div>
+            <ul class="mnu-hotro">
+                <li>Mr. Hà:     <strong>0904.069.966</strong> (đầu mối)</li>
+                <li>Mr. Tiến:   <strong>0989.268.118</strong> </li>
+                <li>Mr. Tú:     <strong>0972.541.665</strong></li>
+                <li>Email:      <strong>theodoichidao@moet.gov.vn</strong></li>
+                <li><a style="color: #337ab7 !important; font-weight: bold" href="<?php echo e($_ENV['ALIAS']); ?>/file/hdsd.pdf" download>Tải về hướng dẫn sử dụng</a></li>
+            </ul>
         </div>
     </div>
     <div id="content">
@@ -217,10 +229,13 @@
     function exportExcel(){
         console.log(data_export);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportsteering",
             type: 'POST',
             dataType: 'json',
-            data: {filename: "Danh mục Nhiệm vụ", data: data_export},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_export},
             async: false,
             success: function (result) {
                 console.log(result);
@@ -259,10 +274,13 @@
     function exportReportExcel(){
         console.log(data_report);
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportreport",
             type: 'POST',
             dataType: 'json',
-            data: {filename: "Danh mục Nhiệm vụ", data: data_report},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_report},
             async: false,
             success: function (result) {
                 console.log(result);
