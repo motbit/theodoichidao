@@ -52,4 +52,21 @@ $app->singleton(
 |
 */
 
+
+$app->configureMonologUsing(function ($monolog) {
+
+    $mongoHandler = new Monolog\Handler\MongoDBHandler(
+        new MongoClient("localhost:27017"),
+        'theodoichidao', // you may use default one 'test'
+        'logs' // that's a table or collection in MongoDB terms. Please create one with robomongo
+    );
+
+    $monolog->pushHandler($mongoHandler);
+/*    $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
+    $monolog->pushProcessor(function ($record) {
+        $record['extra']['session_id'] = Cookie::get(Config::get('session.cookie'));
+        return $record;
+    });*/
+});
+
 return $app;
