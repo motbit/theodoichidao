@@ -332,6 +332,7 @@ class ComposerStaticInitd5b911854ef33e3924ab695ce9f81694
         'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\SourcesteeringController' => __DIR__ . '/../..' . '/app/Http/Controllers/SourcesteeringController.php',
         'App\\Http\\Controllers\\SteeringcontentController' => __DIR__ . '/../..' . '/app/Http/Controllers/SteeringcontentController.php',
+        'App\\Http\\Controllers\\TypeSourceController' => __DIR__ . '/../..' . '/app/Http/Controllers/TypeSourceController.php',
         'App\\Http\\Controllers\\UnitController' => __DIR__ . '/../..' . '/app/Http/Controllers/UnitController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\ViphumanController' => __DIR__ . '/../..' . '/app/Http/Controllers/ViphumanController.php',

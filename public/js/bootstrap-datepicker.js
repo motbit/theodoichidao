@@ -378,7 +378,7 @@
 			daysShort: ["CN", "T2", "T3", "T4", "T5", "T6", "T7", "CN"],
 			daysMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7", "CN"],
 			months: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
-			monthsShort: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12']
+			monthsShort: ['TH 1', 'TH 2', 'TH 3', 'TH 4', 'TH 5', 'TH 6', 'TH 7', 'TH 8', 'TH 9', 'TH 10', 'TH 11', 'TH 12']
 		},
 		isLeapYear: function (year) {
 			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
