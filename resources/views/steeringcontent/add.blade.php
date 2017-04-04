@@ -16,7 +16,7 @@
     {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
 
     <div class="form-group ">
-        <label>Tên nhiệm vụ:</label>
+        <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
         {!! Form::textarea('content', "",
             array('required',
                   'class'=>'form-control',
@@ -24,7 +24,7 @@
                   'rows'=>'2')) !!}
     </div>
     <div class="form-group form-inline">
-        <label>Nguồn chỉ đạo:</label>
+        <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
         <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
             @foreach($sourcesteering as $sr)
                 <option value="{{$sr->code}}">{{$sr->code}}</option>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Đơn vị/Cá nhân chủ trì:</label>
+        <label>Đơn vị/Cá nhân chủ trì: <span class="required">(*)</span></label>
         <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple"
                 required="required">
             @foreach($treeunit as $item)

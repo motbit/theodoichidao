@@ -73,7 +73,7 @@
             <?php if(\App\Roles::accessRow(Request::path(), $row->created_by)): ?>
             <tr>
                 <td><?php echo e($idx + 1); ?></td>
-                <td><a href="steeringcontent?source=<?php echo e($row->code); ?>"><?php echo e($row->name); ?></a></td>
+                <td><a href="steeringcontent?source=<?php echo e(urlencode($row->code)); ?>"><?php echo e($row->name); ?></a></td>
                 <td><?php echo e($row->typename); ?></td>
                 <td><?php echo e($row->code); ?></td>
                 <td><?php echo e($row->sign_by); ?></td>

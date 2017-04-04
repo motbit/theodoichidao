@@ -23,7 +23,7 @@
 
 
     <div class="form-group">
-        <label>Mật khẩu cũ:</label>
+        <label>Mật khẩu cũ: <span class="required">(*)</span></label>
         {!! Form::password('old-password',
             array(
             'required',
@@ -32,7 +32,7 @@
     </div>
 
     <div class="form-group">
-        <label>Mật khẩu mới:</label>
+        <label>Mật khẩu mới: <span class="required">(*)</span></label>
         {!! Form::password('password',
             array(
             'required',
@@ -41,7 +41,7 @@
     </div>
 
     <div class="form-group">
-        <label>Nhập lại mật khẩu:</label>
+        <label>Nhập lại mật khẩu: <span class="required">(*)</span></label>
         {!! Form::password('confirm-password',
             array(
             'required',

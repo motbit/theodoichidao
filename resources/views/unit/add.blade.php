@@ -16,7 +16,7 @@
     @endif
     {!! Form::open(array('route' => 'unit-update', 'class' => 'form')) !!}
     <div class="form-group form-inline">
-        <label>Tên ban - Đơn vị:</label>
+        <label>Tên ban - Đơn vị: <span class="required">(*)</span></label>
         {!! Form::text('name', "",
             array('required',
                   'class'=>'form-control',
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Tên viết tắt:</label>
+        <label>Tên viết tắt: <span class="required">(*)</span></label>
         {!! Form::text('shortname', "",
             array('required',
                   'class'=>'form-control',
