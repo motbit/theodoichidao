@@ -55,6 +55,7 @@ $app->singleton(
 
 $app->configureMonologUsing(function ($monolog) {
 
+    
     $mongoHandler = new Monolog\Handler\MongoDBHandler(
         new MongoClient("localhost:27017"),
         'theodoichidao', // you may use default one 'test'
