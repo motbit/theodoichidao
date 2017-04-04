@@ -138,14 +138,14 @@
                 <li class="{{ (\Request::path() == 'report')? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report">Báo cáo thống kê chi tiết</a></li>
                 <li class="{{ (strpos(\Request::path(), 'report/unit')  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report/unit">Báo cáo thống kê đơn vị</a></li>
             </ul>
-            <div style="padding: 15px; border-top: solid 1px #ccc; color: #818181; font-size: 0.9em">
-                <div style="color: #43aa76; font-size: 1.2em"><strong>THÔNG TIN HỖ TRỢ</strong></div>
-                Mr. Hà: <strong>0904.069.966</strong> (đầu mối)<br>
-                Mr. Tiến: <strong>0989.268.118</strong> <br>
-                Mr. Tú: <strong>0972.541.665</strong><br>
-                EMAIL: <strong>theodoichidao@moet.gov.vn</strong><br>
-                <a style="color: #337ab7 !important;" href="{{$_ENV['ALIAS']}}/file/hdsd.pdf" download>Hướng dẫn sử dụng (Tải về)</a>
-            </div>
+            <div class="left-head">THÔNG TIN HỖ TRỢ</div>
+            <ul class="mnu-hotro">
+                <li>Mr. Hà:     <strong>0904.069.966</strong> (đầu mối)</li>
+                <li>Mr. Tiến:   <strong>0989.268.118</strong> </li>
+                <li>Mr. Tú:     <strong>0972.541.665</strong></li>
+                <li>Email:      <strong>theodoichidao@moet.gov.vn</strong></li>
+                <li><a style="color: #337ab7 !important; font-weight: bold" href="{{$_ENV['ALIAS']}}/file/hdsd.pdf" download>Tải về hướng dẫn sử dụng</a></li>
+            </ul>
         </div>
     </div>
     <div id="content">
