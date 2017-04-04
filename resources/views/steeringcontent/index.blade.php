@@ -121,7 +121,7 @@
                                     @if ( !in_array($s, $allsteeringcode) )
                                         <li> {{ $s }} </li>
                                     @else
-                                        <li><a href="steeringcontent?source={{$s}}"> {{ $s }} </a></li>
+                                        <li><a href="steeringcontent?source={{urlencode($s)}}"> {{ $s }} </a></li>
                                     @endif
                                 @endif
                             </ul>
