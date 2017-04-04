@@ -617,8 +617,8 @@
                         var deadline_to = $('#deadline_to').val();
                         var deadline = data[7]; // use data for the age column
 
-                        deadline_from = deadline_from.split('-').join('/');
-                        deadline_to = deadline_to.split('-').join('/');
+//                        deadline_from = deadline_from.split('-').join('/');
+//                        deadline_to = deadline_to.split('-').join('/');
 
                         var timeFrom = dateToTime(deadline_from);
                         var timeTo = dateToTime(deadline_to);
@@ -626,9 +626,9 @@
 
 
                         var steertime_from = $('#steertime_from').val();
-                        steertime_from = steertime_from.split('-').join('/');
+//                        steertime_from = steertime_from.split('-').join('/');
                         var steertime_to = $('#steertime_to').val();
-                        steertime_to = steertime_to.split('-').join('/');
+//                        steertime_to = steertime_to.split('-').join('/');
                         var steertime = data[3];
 
                         var steertimeFrom = dateToTime(steertime_from);

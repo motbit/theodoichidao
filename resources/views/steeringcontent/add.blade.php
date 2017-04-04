@@ -287,7 +287,7 @@
                 if (mm < 10) {
                     mm = '0' + mm;
                 }
-                var today = dd + '-' + mm + '-' + yyyy;
+                var today = dd + '/' + mm + '/' + yyyy;
                 return today;
             }
             $(document).ready(function () {
