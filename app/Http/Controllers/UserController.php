@@ -95,7 +95,9 @@ class UserController extends Controller
         $group = array();
 
         foreach ($unitdata as $row) {
-            $unit[$row->id] = $row->name;
+            if ($row->parent_id != 0) {
+                $unit[$row->id] = $row->name;
+            }
         }
         foreach ($unitgroup as $row) {
             $group[$row->id] = $row->description;
