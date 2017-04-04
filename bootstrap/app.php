@@ -62,11 +62,11 @@ $app->configureMonologUsing(function ($monolog) {
     );
 
     $monolog->pushHandler($mongoHandler);
-/*    $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
+    $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
     $monolog->pushProcessor(function ($record) {
         $record['extra']['session_id'] = Cookie::get(Config::get('session.cookie'));
         return $record;
-    });*/
+    });
 });
 
 return $app;
