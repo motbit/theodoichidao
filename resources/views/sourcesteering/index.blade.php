@@ -70,7 +70,7 @@
             @if(\App\Roles::accessRow(Request::path(), $row->created_by))
             <tr>
                 <td>{{$idx + 1}}</td>
-                <td><a href="steeringcontent?source={{$row->code}}">{{$row->name}}</a></td>
+                <td><a href="steeringcontent?source={{urlencode($row->code)}}">{{$row->name}}</a></td>
                 <td>{{$row->typename}}</td>
                 <td>{{$row->code}}</td>
                 <td>{{$row->sign_by}}</td>
