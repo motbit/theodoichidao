@@ -15,7 +15,7 @@
         {!! Form::open(array('route' => 'viphuman-update', 'class' => 'form')) !!}
         {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
         <div class="form-group">
-            <label>Họ tên:</label>
+            <label>Họ tên: <span class="required">(*)</span></label>
             {!! Form::text('name', $row->name,
                 array('required',
                       'class'=>'form-control',
@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            <label>Chức vụ:</label>
+            <label>Chức vụ: <span class="required">(*)</span></label>
             <select class="select2 form-control" name="function">
                 @foreach ($functions as $item)
                     <option value="{{ $item->id }}">{{ $item->description }}</option>

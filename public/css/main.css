@@ -507,3 +507,6 @@ ul > ul > li > a {
     list-style: none;
     padding: 0;
 }
+.required{
+    color: red;
+}
