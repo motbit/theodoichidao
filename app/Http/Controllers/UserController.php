@@ -68,6 +68,7 @@ class UserController extends Controller
                 if (! \App\Roles::accessView("user")){
                     return redirect('/steeringcontent');
                 }else {
+                    Log::alert('User ID #' . $id . ' Change Password!');
                     return redirect()->action(
                         'UserController@index', ['add' => 1]
                     );
@@ -80,7 +81,6 @@ class UserController extends Controller
             }
         }
         $data = User::where('id',$id)->get();
-        Log::alert('User ID #' . $id . ' Change Password!');
         return view('user.changepass',['data'=>$data[0], 'id'=>$id]);
     }
 
@@ -103,7 +103,6 @@ class UserController extends Controller
 
         if($id > 0) {
             $data=User::where('id',$id)->get();
-
             return view('user.update',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
 
         } else {
@@ -168,25 +167,29 @@ class UserController extends Controller
             } else {
                 $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('fullname') . " </b>không thành công!");
             }
+            Log::info('Admin ID #' . Auth::id() . ' update user #' . $id, $data);
 
             return redirect()->action(
                 'UserController@index', ['update' => $result]
             );
 
         } else {
-            $result=User::insert([
+
+            $data = [
                 'username'=>$request->input('username'),
                 'password'=>bcrypt($request->input('password')),
                 'fullname'=>$request->input('fullname'),
                 'group'=>$request->input('group'),
                 'unit'=>$request->input('unit'),
-            ]);
+            ];
+            $result=User::insertGetId($data);
 
             if($result) {
                 $request->session()->flash('message', "Thêm người dùng mới thành công!");
             } else {
                 $request->session()->flash('message', "Thêm người dùng mới thất bại!");
             }
+            Log::info('Admin ID #' . Auth::id() . ' add new user #' . $result, $data);
 
             if($result) {
                 return redirect()->action(
