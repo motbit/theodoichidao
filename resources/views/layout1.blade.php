@@ -47,8 +47,8 @@
         ]) !!};
         $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: 'dd-mm-yyyy',
-                dateFormat: 'dd-mm-yy',
+                format: 'dd/mm/yyyy',
+                dateFormat: 'dd/mm/yy',
                 monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
                     'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
                 monthNamesShort: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
