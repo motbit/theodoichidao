@@ -24,6 +24,7 @@ return array(
     'App\\Http\\Controllers\\ReportController' => $baseDir . '/app/Http/Controllers/ReportController.php',
     'App\\Http\\Controllers\\SourcesteeringController' => $baseDir . '/app/Http/Controllers/SourcesteeringController.php',
     'App\\Http\\Controllers\\SteeringcontentController' => $baseDir . '/app/Http/Controllers/SteeringcontentController.php',
+    'App\\Http\\Controllers\\TypeSourceController' => $baseDir . '/app/Http/Controllers/TypeSourceController.php',
     'App\\Http\\Controllers\\UnitController' => $baseDir . '/app/Http/Controllers/UnitController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Controllers\\ViphumanController' => $baseDir . '/app/Http/Controllers/ViphumanController.php',

@@ -507,3 +507,7 @@ ul > ul > li > a {
     list-style: none;
     padding: 0;
 }
+
+th.action{
+    width: 30px;
+}

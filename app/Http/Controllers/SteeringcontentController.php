@@ -11,6 +11,7 @@ use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\CountValidator\Exception;
 use Validator;
 
 class SteeringcontentController extends Controller
@@ -26,7 +27,10 @@ class SteeringcontentController extends Controller
             $steering = DB::table('sourcesteering')
                 ->where('code', '=', $source)
                 ->get()->first();
-            $data = Steeringcontent::where('source', $source)->orderBy('id', 'DESC')->get();
+//            $data = Steeringcontent::where('source', 'like',  '%|'. $source . "|%")->orderBy('id', 'DESC')->get();
+            $data = DB::table('steeringcontent')
+                ->where('source', 'like', '%|'. $source . "|%")
+                ->orderBy('id', 'DESC')->get();
         } else {
             $steering = false;
             $data = Steeringcontent::orderBy('id', 'DESC')->get();
@@ -144,6 +148,8 @@ class SteeringcontentController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        $deadline = \DateTime::createFromFormat('d/m/Y', $request->input('deathline'));
+        if (!$deadline) $deadline = null;
         if ($id > 0) {
             $firstUnit = $request->input('firtunit');
             if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ",";
@@ -153,14 +159,9 @@ class SteeringcontentController extends Controller
                 'content' => $request->input('content'),
                 'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $firstUnit,
-//                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'follow' => $secondunit,
-//                'note'=>$request->input('note'),
-//                'deadline'=>$request->input('deadline'),
-//                'xn'=>$request->input('confirm'),
-//                'status'=>$request->input('status'),
                 'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
-                'deadline' => \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
+                'deadline' => $deadline,
                 'conductor' => $request->input('viphuman')
             ]);
 
@@ -184,7 +185,7 @@ class SteeringcontentController extends Controller
                 'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
-                'deadline' =>  \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
+                'deadline' => $deadline,
                 'created_by' => Auth::user()->id
             ]);
 
