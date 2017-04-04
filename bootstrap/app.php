@@ -55,17 +55,19 @@ $app->singleton(
 
 $app->configureMonologUsing(function ($monolog) {
 
-    
     $mongoHandler = new Monolog\Handler\MongoDBHandler(
-        new MongoClient("localhost:27017"),
-        'theodoichidao', // you may use default one 'test'
-        'logs' // that's a table or collection in MongoDB terms. Please create one with robomongo
+        new MongoClient(Config::get('mongolog.server')),
+        Config::get('mongolog.database'),
+        Config::get('mongolog.collection')
     );
+
+    Session::put('request_id', uniqid());
 
     $monolog->pushHandler($mongoHandler);
     $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
     $monolog->pushProcessor(function ($record) {
         $record['extra']['session_id'] = Cookie::get(Config::get('session.cookie'));
+        $record['extra']['request_id'] = Session::get('request_id');
         return $record;
     });
 });
