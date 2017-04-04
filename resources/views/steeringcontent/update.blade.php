@@ -432,7 +432,9 @@
             });
         });
 
-        $(".select-multiple").select2();
+        $(".select-multiple").select2({
+            tags: true
+        });
         $(".select-single").select2();
     </script>
 @stop
