@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Unit;
 use App\Group;
+use Log;
 use Illuminate\Support\Facades\Response;
 use Validator;
 use Illuminate\Http\Request;
@@ -30,7 +31,6 @@ class UserController extends Controller
         foreach ($unitgroup as $row) {
             $group[$row->id] = $row->description;
         }
-
         $data=User::orderBy('created_at', 'DESC')->get();
         return view('user.index',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
 
@@ -39,6 +39,7 @@ class UserController extends Controller
 
     public function changepass(Request $request){
         $id = Auth::id();
+
         $messages = [
             'password.min' => 'Mật khẩu phải ít nhất 6 ký tự.',
             'password.required' => 'Yêu cầu nhập mật khẩu.'
@@ -79,6 +80,7 @@ class UserController extends Controller
             }
         }
         $data = User::where('id',$id)->get();
+        Log::alert('User ID #' . $id . ' Change Password!');
         return view('user.changepass',['data'=>$data[0], 'id'=>$id]);
     }
 
