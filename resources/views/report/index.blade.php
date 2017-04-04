@@ -857,7 +857,7 @@
             display: none;
         }
 
-        .datepicker {
+        input.datepicker {
             max-width: 120px;
         }
 
