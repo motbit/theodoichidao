@@ -7,6 +7,7 @@ use App\Unit;
 use App\Sourcesteering;
 use App\User;
 use App\Viphuman;
+use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -158,8 +159,8 @@ class SteeringcontentController extends Controller
 //                'deadline'=>$request->input('deadline'),
 //                'xn'=>$request->input('confirm'),
 //                'status'=>$request->input('status'),
-                'steer_time' => date("Y-m-d", strtotime($request->input('steer_time'))),
-                'deadline' => date("Y-m-d", strtotime($request->input('deathline'))),
+                'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
+                'deadline' => \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
                 'conductor' => $request->input('viphuman')
             ]);
 
@@ -182,8 +183,8 @@ class SteeringcontentController extends Controller
                 'follow' => $secondunit,
                 'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman'),
-                'steer_time' => date("Y-m-d", strtotime($request->input('steer_time'))),
-                'deadline' => date("Y-m-d", strtotime($request->input('deathline'))),
+                'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
+                'deadline' =>  \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
                 'created_by' => Auth::user()->id
             ]);
 
