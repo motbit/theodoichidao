@@ -28,10 +28,14 @@ class ReportController extends Controller
         $filter = $request->input('f');
 
         $fileName = base_path() . "/storage/example/format-baocao.xlsx";
-        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
+        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn" . $_ENV["ALIAS"] . " (" . date('H:i d/m/Y') .")";
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
+
+        $excelobj->getActiveSheet()->setCellValue('A2', "BÁO CÁO TÌNH HÌNH THỰC HIỆN NHIỆM VỤ " . $_ENV["SYSNAME"]);
+
+
         $excelobj->getActiveSheet()->setCellValue('A5', $total)
             ->setCellValue('B5', $chuahoanthanh_dunghan . " (" . round(($chuahoanthanh_dunghan/$total)*100) . "%)")
             ->setCellValue('C5', $chuahoanthanh_quahan . " (" . round(($chuahoanthanh_quahan/$total)*100) . "%)")
@@ -101,16 +105,32 @@ class ReportController extends Controller
 
         $filter = $request->input('filter');
         $count = 5;
+        $total = 0;
+        $total_v1 = 0;
+        $total_v2 = 0;
+        $total_v3 = 0;
+        $total_v4 = 0;
+        $total_v5 = 0;
+
+        $excelobj->getActiveSheet()->setCellValue('A2', "BÁO CÁO TÌNH HÌNH THỰC HIỆN NHIỆM VỤ " . $_ENV["SYSNAME"]);
 
         foreach($request->data as $idx=>$data){
+
+            $total += $data['total'];
+            $total_v1 += $data['v1'];
+            $total_v2 += $data['v2'];
+            $total_v3 += $data['v3'];
+            $total_v4 += $data['v4'];
+            $total_v5 += $data['v5'];
+
             $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 5), $idx + 1)
                 ->setCellValue('B'. ($idx + 5), $data['unit'])
                 ->setCellValue('C'. ($idx + 5), $data['total'])
-                ->setCellValue('D'. ($idx + 5), $data['v1'])
-                ->setCellValue('E'. ($idx + 5), $data['v2'])
-                ->setCellValue('F'. ($idx + 5), $data['v3'])
-                ->setCellValue('G'. ($idx + 5), $data['v4'])
-                ->setCellValue('H'. ($idx + 5), $data['v5']);
+                ->setCellValue('D'. ($idx + 5), $data['v1'] . " (" . round(($data['v1']/$data['total'])*100) . "%)")
+                ->setCellValue('E'. ($idx + 5), $data['v2'] . " (" . round(($data['v2']/$data['total'])*100) . "%)")
+                ->setCellValue('F'. ($idx + 5), $data['v3'] . " (" . round(($data['v3']/$data['total'])*100) . "%)")
+                ->setCellValue('G'. ($idx + 5), $data['v4'] . " (" . round(($data['v4']/$data['total'])*100) . "%)")
+                ->setCellValue('H'. ($idx + 5), $data['v5'] . " (" . round(($data['v5']/$data['total'])*100) . "%)");
 
             $excelobj->getActiveSheet()
                 ->getStyle('A'.($idx + 5).':I'.($idx + 5))
@@ -123,21 +143,21 @@ class ReportController extends Controller
             $count ++;
         }
 
-        $excelobj->getActiveSheet()
+/*        $excelobj->getActiveSheet()
             ->setCellValue('B'. ($idx + 6), $_ENV["DEPTNAME"])
-            ->setCellValue('C'. ($idx + 6),  '=SUM(C5:C'. ($idx + 5) . ")")
-            ->setCellValue('D'. ($idx + 6),  '=SUM(D5:D'. ($idx + 5) . ")")
-            ->setCellValue('E'. ($idx + 6),  '=SUM(E5:E'. ($idx + 5) . ")")
-            ->setCellValue('F'. ($idx + 6),  '=SUM(F5:F'. ($idx + 5) . ")")
-            ->setCellValue('G'. ($idx + 6),  '=SUM(G5:G'. ($idx + 5) . ")")
-            ->setCellValue('H'. ($idx + 6),  '=SUM(H5:H'. ($idx + 5) . ")");
+            ->setCellValue('C'. ($idx + 6),  $total)
+            ->setCellValue('D'. ($idx + 6),  $total_v1)
+            ->setCellValue('E'. ($idx + 6),  $total_v2)
+            ->setCellValue('F'. ($idx + 6),  $total_v3)
+            ->setCellValue('G'. ($idx + 6),  $total_v4)
+            ->setCellValue('H'. ($idx + 6),  $total_v5);*/
 
-        $styleArray = array(
+/*        $styleArray = array(
             'font'  => array(
                 'bold'  => true,
                 'color' => array('rgb' => 'FF0000')
             ));
-        $excelobj->getActiveSheet()->getStyle('A'.($idx + 6).':H'.($idx + 6))->applyFromArray($styleArray);
+        $excelobj->getActiveSheet()->getStyle('A'.($idx + 6).':H'.($idx + 6))->applyFromArray($styleArray);*/
 
         $excelobj->getActiveSheet()
             ->getStyle('A'.($idx + 6).':I'.($idx + 6))
@@ -145,13 +165,13 @@ class ReportController extends Controller
             ->getAllBorders()
             ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
             ->getColor()
-            ->setRGB('FF0000');
+            ->setRGB('000000');
 
-        $excelobj->getActiveSheet()->mergeCells('I5:I'.($count));
+        $excelobj->getActiveSheet()->mergeCells('I5:I'.($count-1));
 
 
         $excelobj->getActiveSheet()->setCellValue('I5', $filter);
-        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
+        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn" . $_ENV["ALIAS"] . " (" . date('H:i d/m/Y') .")";
         $excelobj->getActiveSheet()->setCellValue('A' . ($count + 1), $footer);
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $output_file = "/baocao/Baocaodonvi" . date("dmyhis") . ".xlsx";
