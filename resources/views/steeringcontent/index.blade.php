@@ -350,6 +350,7 @@
             return diffDays;
         }
         function showDetailProgress(id,deadline) {
+            resetFromProgress();
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({
@@ -386,6 +387,7 @@
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
             $("#input-file").hide();
+            $("#input-file").val("");
         }
 
         function resetFormTranfer(){
