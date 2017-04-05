@@ -33,11 +33,11 @@ class ReportController extends Controller
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
         $excelobj->getActiveSheet()->setCellValue('A5', $total)
-            ->setCellValue('B5', $chuahoanthanh_dunghan)
-            ->setCellValue('C5', $chuahoanthanh_quahan)
-            ->setCellValue('D5', $hoanthanh_dunghan)
-            ->setCellValue('E5', $hoanthanh_quahan)
-            ->setCellValue('F5', $bi_huy)
+            ->setCellValue('B5', $chuahoanthanh_dunghan . " (" . round(($chuahoanthanh_dunghan/$total)*100) . "%)")
+            ->setCellValue('C5', $chuahoanthanh_quahan . " (" . round(($chuahoanthanh_quahan/$total)*100) . "%)")
+            ->setCellValue('D5', $hoanthanh_dunghan . " (" . round(($hoanthanh_dunghan/$total)*100) . "%)")
+            ->setCellValue('E5', $hoanthanh_quahan . " (" . round(($hoanthanh_quahan/$total)*100) . "%)")
+            ->setCellValue('F5', $bi_huy . " (" . round(($bi_huy/$total)*100) . "%)")
             ->setCellValue('G5', $filter)
             ->setCellValue('A6', $footer);
 
