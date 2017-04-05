@@ -2,33 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417024642.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417031512.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417031519.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417031630.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417124019.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417124118.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417124613.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417124803.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Baocaodonvi030417125231.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucbaocao030417011804.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucbaocao030417030941.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucnhiemvu020417101936.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucnhiemvu020417102415.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucnhiemvu020417102606.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/Danhmucnhiemvu030417030837.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-020417103801.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-020417104508.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-020417104622.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-020417104643.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017230945.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017231034.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017231349.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017231423.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017231510.xlsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/file/export-data-02042017231549.xlsx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,17 +23,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="153" column="61" selection-start-line="153" selection-start-column="61" selection-end-line="153" selection-end-column="61" />
+            <state relative-caret-position="620">
+              <caret line="163" column="64" selection-start-line="163" selection-start-column="64" selection-end-line="163" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
@@ -221,8 +195,8 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/app/Exceptions/Handler.php" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
       </list>
     </option>
   </component>
@@ -869,7 +843,7 @@
       <workItem from="1491271648227" duration="744000" />
       <workItem from="1491272603609" duration="8988000" />
       <workItem from="1491295118434" duration="1243000" />
-      <workItem from="1491356690116" duration="8909000" />
+      <workItem from="1491356690116" duration="10602000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -882,7 +856,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138582000" />
+    <option name="totallyTimeSpent" value="140275000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2884" height="1566" extended-state="0" />
@@ -1324,18 +1298,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="153" column="61" selection-start-line="153" selection-start-column="61" selection-end-line="153" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="163" column="64" selection-start-line="163" selection-start-column="64" selection-end-line="163" selection-end-column="64" />
           <folding />
         </state>
       </provider>
