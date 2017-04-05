@@ -101,6 +101,7 @@ class ReportController extends Controller
 
         $filter = $request->input('filter');
         $count = 5;
+
         foreach($request->data as $idx=>$data){
             $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 5), $idx + 1)
                 ->setCellValue('B'. ($idx + 5), $data['unit'])
@@ -121,7 +122,32 @@ class ReportController extends Controller
 
             $count ++;
         }
-        $excelobj->getActiveSheet()->mergeCells('I5:I'.($count-1));
+
+        $excelobj->getActiveSheet()
+            ->setCellValue('B'. ($idx + 6), $_ENV["DEPTNAME"])
+            ->setCellValue('C'. ($idx + 6),  '=SUM(C5:C'. ($idx + 5) . ")")
+            ->setCellValue('D'. ($idx + 6),  '=SUM(D5:D'. ($idx + 5) . ")")
+            ->setCellValue('E'. ($idx + 6),  '=SUM(E5:E'. ($idx + 5) . ")")
+            ->setCellValue('F'. ($idx + 6),  '=SUM(F5:F'. ($idx + 5) . ")")
+            ->setCellValue('G'. ($idx + 6),  '=SUM(G5:G'. ($idx + 5) . ")")
+            ->setCellValue('H'. ($idx + 6),  '=SUM(H5:H'. ($idx + 5) . ")");
+
+        $styleArray = array(
+            'font'  => array(
+                'bold'  => true,
+                'color' => array('rgb' => 'FF0000')
+            ));
+        $excelobj->getActiveSheet()->getStyle('A'.($idx + 6).':H'.($idx + 6))->applyFromArray($styleArray);
+
+        $excelobj->getActiveSheet()
+            ->getStyle('A'.($idx + 6).':I'.($idx + 6))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
+            ->getColor()
+            ->setRGB('FF0000');
+
+        $excelobj->getActiveSheet()->mergeCells('I5:I'.($count));
 
 
         $excelobj->getActiveSheet()->setCellValue('I5', $filter);
