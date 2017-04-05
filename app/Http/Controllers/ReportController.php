@@ -54,7 +54,6 @@ class ReportController extends Controller
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
-//        return response()->json(['mess' => $request->data[0]['content']]);
         foreach($request->data as $idx=>$data){
             $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 2), $idx + 1)
                 ->setCellValue('B'. ($idx + 2), $data['content'])

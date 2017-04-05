@@ -26,14 +26,14 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
-            <th></th>
-            <th> Tên nhiệm vụ<br><input type="text" style="width: 100%; min-width: 120px"></th>
-            <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th style="width: 15px"></th>
+            <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
+            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
+            <th style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
             <th class="hidden">Trạng thái</th>
-            <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
+            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>

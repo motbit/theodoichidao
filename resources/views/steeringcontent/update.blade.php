@@ -63,7 +63,7 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"selected":""}}>{{$u->fullname}}({{$u->username}}) - {{$dictunit[$u->unit]}}</option>
+                <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"selected":""}}>{{$u->fullname}}({{$u->username}}){{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -78,7 +78,7 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}({{$u->username}}) - {{$dictunit[$u->unit]}}</option>
+                <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}({{$u->username}}){{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -215,7 +215,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="pfunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"checked":""}}>
-                                        {{$u->fullname}}({{$u->username}}) - {{$dictunit[$u->unit]}}
+                                        {{$u->fullname}}({{$u->username}}){{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -270,7 +270,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtfollowArr)?"checked":""}}>
-                                        {{$u->fullname}}({{$u->username}}) - {{$dictunit[$u->unit]}}
+                                        {{$u->fullname}}({{$u->username}}){{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
