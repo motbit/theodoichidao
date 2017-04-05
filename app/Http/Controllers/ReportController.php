@@ -28,10 +28,14 @@ class ReportController extends Controller
         $filter = $request->input('f');
 
         $fileName = base_path() . "/storage/example/format-baocao.xlsx";
-        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
+        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn" . $_ENV["ALIAS"] . " (" . date('H:i d/m/Y') .")";
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
+
+        $excelobj->getActiveSheet()->setCellValue('A2', "BÁO CÁO TÌNH HÌNH THỰC HIỆN NHIỆM VỤ " . $_ENV["SYSNAME"]);
+
+
         $excelobj->getActiveSheet()->setCellValue('A5', $total)
             ->setCellValue('B5', $chuahoanthanh_dunghan . " (" . round(($chuahoanthanh_dunghan/$total)*100) . "%)")
             ->setCellValue('C5', $chuahoanthanh_quahan . " (" . round(($chuahoanthanh_quahan/$total)*100) . "%)")
@@ -108,6 +112,9 @@ class ReportController extends Controller
         $total_v3 = 0;
         $total_v4 = 0;
         $total_v5 = 0;
+
+        $excelobj->getActiveSheet()->setCellValue('A2', "BÁO CÁO TÌNH HÌNH THỰC HIỆN NHIỆM VỤ " . $_ENV["SYSNAME"]);
+
         foreach($request->data as $idx=>$data){
 
             $total += $data['total'];
@@ -165,7 +172,7 @@ class ReportController extends Controller
 
 
         $excelobj->getActiveSheet()->setCellValue('I5', $filter);
-        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn (" . date('H:i d/m/Y') .")";
+        $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn" . $_ENV["ALIAS"] . " (" . date('H:i d/m/Y') .")";
         $excelobj->getActiveSheet()->setCellValue('A' . ($count + 1), $footer);
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $output_file = "/baocao/Baocaodonvi" . date("dmyhis") . ".xlsx";
