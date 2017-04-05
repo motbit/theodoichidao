@@ -60,7 +60,7 @@
                         @endforeach
                     @endforeach
                     @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                     @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -75,7 +75,7 @@
                         @endforeach
                     @endforeach
                     @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                     @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -380,7 +380,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="radio" name="pfunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -433,7 +433,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="radio" name="psunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>

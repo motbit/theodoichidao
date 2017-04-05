@@ -83,7 +83,6 @@ class SteeringcontentController extends Controller
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
         $user = User::orderBy('unit', 'ASC')->get();
 
-        $dictunit = array();
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0) {
@@ -98,6 +97,7 @@ class SteeringcontentController extends Controller
             }
         }
 
+        $dictunit = array();
         foreach ($unit as $row) {
             $dictunit[$row->id] = $row->name;
         }

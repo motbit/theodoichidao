@@ -215,6 +215,7 @@
 //            }
 //        }
         function showDetailProgress(id) {
+            resetFromProgress();
             $(".loader").show();
             $("#steering_id").val(id);
             $.ajax({

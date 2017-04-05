@@ -139,8 +139,6 @@ class ReportController extends Controller
         $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
-        $firstunit = array();
-        $secondunit = array();
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0){
@@ -154,17 +152,8 @@ class ReportController extends Controller
                 $tree_unit[] = $row;
             }
         }
-        foreach ($unit as $row) {
-            $firstunit["u|" . $row->id] = $row->name;
-            $secondunit["u|" . $row->id] = $row->shortname;
-        }
-        foreach ($users as $row){
-            $firstunit["h|" . $row->id] = $row->fullname;
-            $secondunit["h|" . $row->id] = $row->fullname;
-        }
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
-        $datauser=User::orderBy('fullname', 'ASC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -184,8 +173,13 @@ class ReportController extends Controller
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');
 
+        $dictunit = array();
+        foreach ($unit as $row) {
+            $dictunit[$row->id] = $row->name;
+        }
 
-        return view('report.index',['lst'=>$data, 'firstunit'=>$firstunit,'secondunit'=>$secondunit, 'treeunit'=>$tree_unit,
+
+        return view('report.index',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unit'=>$unit, 'user'=>$user, 'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
             'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users]);
     }
@@ -198,8 +192,6 @@ class ReportController extends Controller
         $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
-        $firstunit = array();
-        $secondunit = array();
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0){
@@ -213,17 +205,8 @@ class ReportController extends Controller
                 $tree_unit[] = $row;
             }
         }
-        foreach ($unit as $row) {
-            $firstunit["u|" . $row->id] = $row->name;
-            $secondunit["u|" . $row->id] = $row->shortname;
-        }
-        foreach ($users as $row){
-            $firstunit["h|" . $row->id] = $row->fullname;
-            $secondunit["h|" . $row->id] = $row->fullname;
-        }
 
         $dataunit=Unit::orderBy('created_at', 'DESC')->get();
-        $datauser=User::orderBy('fullname', 'ASC')->get();
 
         $firstunit = array();
         $secondunit = array();
@@ -243,8 +226,12 @@ class ReportController extends Controller
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');
 
+        $dictunit = array();
+        foreach ($unit as $row) {
+            $dictunit[$row->id] = $row->name;
+        }
 
-        return view('report.unit',['lst'=>$data, 'firstunit'=>$firstunit,'secondunit'=>$secondunit, 'treeunit'=>$tree_unit,
+        return view('report.unit',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unitall'=>$unitall, 'user'=>$user,'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
             'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users]);
     }
