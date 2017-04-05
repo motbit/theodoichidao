@@ -514,3 +514,7 @@ th.action{
 .required{
     color: red;
 }
+
+th>input{
+    width: 100%;
+}
