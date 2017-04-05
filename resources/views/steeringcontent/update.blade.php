@@ -84,7 +84,7 @@
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
     </div>
     <div class="form-group  form-inline">
-        <label>Ngày chỉ đạo:</label>
+        <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
         {!! Form::text('steer_time', date("d/m/Y", strtotime($row->steer_time)),
             array('class'=>'form-control datepicker',
                   'placeholder'=>'Ngày bắt đầu')) !!}

@@ -81,10 +81,10 @@
     </div>
 
     <div class="form-group  form-inline">
-        <label>Ngày chỉ đạo:</label>
+        <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
         {!! Form::text('steer_time', "",
-            array('class'=>'form-control datepicker',
-                  'placeholder'=>'Ngày bắt đầu')) !!}
+            array('required', 'class'=>'form-control datepicker',
+                  'placeholder'=>'Ngày chỉ đạo')) !!}
     </div>
 
     <div class="form-group  form-inline">
@@ -291,7 +291,7 @@
                 return today;
             }
             $(document).ready(function () {
-                $('input[name="steer_time"]').val(getCurrentDate());
+//                $('input[name="steer_time"]').val(getCurrentDate());
                 $("#source").autocomplete({
                     source: sources
                 });
