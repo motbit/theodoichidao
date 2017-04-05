@@ -33,9 +33,9 @@
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
     </div>
     <div class="form-group form-inline">
-        <label>Người chỉ đạo:</label>
+        <label>Người chỉ đạo:<span class="required">(*)</span></label>
         {!! Form::text('viphuman', "",
-                array('no-required',
+                array('required',
                 'placeholder'=>'Người chỉ đạo',
                 'class'=>'form-control ipw', 'id'=>'viphuman')
         ) !!}
