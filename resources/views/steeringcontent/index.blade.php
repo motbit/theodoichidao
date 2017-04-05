@@ -387,7 +387,7 @@
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='0']").prop('checked', true);
             $("#input-file").hide();
-            $("#input-file").val("");
+            $('input[name=file]').val("");
         }
 
         function resetFormTranfer(){

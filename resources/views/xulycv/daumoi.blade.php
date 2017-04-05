@@ -419,6 +419,8 @@
             $("input[name=pr_status][value='0']").prop('checked', true);
 //            $("#form-progress").hide();
             $("#input-file").hide();
+            $('input[name=file]').val("");
+
         }
 
         //loc theo trang thai
