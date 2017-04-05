@@ -21,7 +21,7 @@ class SteeringcontentController extends Controller
         if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
             return redirect('/errpermission');
         }
-        $source = intval($request->input('source'));
+        $source = $request->input('source');
 
         if ($source) {
             $steering = DB::table('sourcesteering')
@@ -81,10 +81,9 @@ class SteeringcontentController extends Controller
         $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
         $priority = $type = DB::table('priority')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
-        $user = User::orderBy('fullname', 'ASC')->get();
+        $user = User::orderBy('unit', 'ASC')->get();
 
-        $firstunit = array();
-        $secondunit = array();
+        $dictunit = array();
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0) {
@@ -99,20 +98,12 @@ class SteeringcontentController extends Controller
             }
         }
 
-//        dd($tree_unit);
-
         foreach ($unit as $row) {
-            $firstunit["u|" . $row->id] = $row->name;
-            $secondunit["u|" . $row->id] = $row->shortname;
-        }
-        foreach ($user as $row) {
-            $firstunit["h|" . $row->id] = $row->fullname;
-            $secondunit["h|" . $row->id] = $row->fullname;
+            $dictunit[$row->id] = $row->name;
         }
 
         $source = array();
         foreach ($sourcesteering as $row) {
-//            $source[$row->id] = "[" . $row->code . "] " . $row->name;
             $source[$row->id] = $row->code;
         }
 
@@ -122,12 +113,12 @@ class SteeringcontentController extends Controller
             $dtfollowArr = explode(",", $data[0]['follow']);
             $dtUnitArr = explode(",", $data[0]['unit']);
 
-            return view('steeringcontent.update', ['firstunit' => $firstunit, 'secondunit' => $secondunit, 'source' => $source,
+            return view('steeringcontent.update', ['dictunit' => $dictunit, 'source' => $source,
                 'data' => $data, 'dtfollowArr' => $dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering' => $sourcesteering, 'treeunit' => $tree_unit, 'unit' => $unit,
                 'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
         } else {
 
-            return view('steeringcontent.add', ['sourcesteering' => $sourcesteering,
+            return view('steeringcontent.add', ['sourcesteering' => $sourcesteering, 'dictunit' => $dictunit,
                 'treeunit' => $tree_unit, 'unit' => $unit, 'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
         }
     }
