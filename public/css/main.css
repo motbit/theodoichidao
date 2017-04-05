@@ -518,3 +518,6 @@ th.action{
 th>input{
     width: 100%;
 }
+th{
+    text-align: center !important;
+}

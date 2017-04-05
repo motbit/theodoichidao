@@ -32,8 +32,8 @@
     <link href="{{$_ENV['ALIAS']}}/css/datepicker.css" rel="stylesheet">
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="{{$_ENV['ALIAS']}}/css/select2.css" rel="stylesheet"/>
+    <script src="{{$_ENV['ALIAS']}}/js/select2.js"></script>
 
     {{--<script type="text/javascript">--}}
     {{--bkLib.onDomLoaded(function () {--}}
