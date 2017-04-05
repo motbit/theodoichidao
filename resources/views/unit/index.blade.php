@@ -25,6 +25,10 @@
 </script>
     @endif
 
+    @if (Session::has('message'))
+        <div class="alert alert-info">{!!  Session::get('message') !!}</div>
+    @endif
+
         <ul class="nav nav-tabs">
             @foreach($treeunit as $idx=>$u)
                 <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab" href="#first-{{$u->id}}">{{$u->name}}</a>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Steeringcontent;
+use App\Sourcesteering;
 use App\Unit;
 use App\Group;
 use Log;
@@ -210,16 +212,21 @@ class UserController extends Controller
     public function delete(Request $request)
     {
 
-        $result=User::where('id',$request->input('id'))->delete();
-        if($result) {
-            return redirect()->action(
-                'UserController@index', ['delete' => $request->input('id')]
-            );
+        $id = $request->input('id');
+        $st_count1 = Steeringcontent::where([['unit', 'like', '%h|' . $id . ",%"]])
+            ->orWhere([['follow', 'like', '%h|' . $id . ",%"]])
+            ->orWhere([['created_by', '=', $id]])
+            ->count();
+        $st_count2 = Sourcesteering::Where([['created_by', '=', $id]])->count();
+
+        if($st_count1 > 0 || $st_count2 > 0) {
+            $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Vui bỏ <u>Người sử dụng</u> này khỏi <u>Đơn vị/Cá nhân chủ trì</u> và <u>Đơn vị/Cá nhân phối hợp</u> trong mục <b>Nhiệm vụ</b> trước khi xóa <u>Người sử dụng</u>.");
         } else {
-            return redirect()->action(
-                'UserController@index', ['delete' => "0:".$request->input('id')]
-            );
+            $request->session()->flash('message', "<strong>Xóa Người sử dụng thành công. #ID Người Sử Dụng: " . $id . "</strong>");
+            $result=User::where('id',$id)->delete();
         }
+
+        return redirect()->action('UserController@index');
     }
     #endregion
 

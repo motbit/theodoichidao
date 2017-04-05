@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Unit;
 use Illuminate\Http\Request;
 use Validator;
+use App\Steeringcontent;
 
 class UnitController extends Controller
 {
@@ -123,16 +124,17 @@ class UnitController extends Controller
     public function delete(Request $request)
     {
 
-        $result=Unit::where('id',$request->input('id'))->delete();
-        if($result) {
-            return redirect()->action(
-                'UnitController@index', ['delete' => $request->input('id')]
-            );
+        $id = $request->input('id');
+        $st_count = Steeringcontent::where([['unit', 'like', '%u|' . $id . ",%"]])->orWhere([['follow', 'like', '%u|' . $id . ",%"]])->count();
+
+        if($st_count > 0) {
+            $request->session()->flash('message', "<strong>Bạn không thể xóa Đơn vị này.</strong><br /> Vui bỏ <u>Đơn vị</u> này khỏi <u>Đơn vị/Cá nhân chủ trì</u> và <u>Đơn vị/Cá nhân phối hợp</u> trong mục <b>Nhiệm vụ</b> trước khi xóa <u>Đơn vị</u>.");
+
         } else {
-            return redirect()->action(
-                'UnitController@index', ['delete' => "0:".$request->input('id')]
-            );
+            $request->session()->flash('message', "<strong>Xóa Đơn vị thành công. #ID Đơn vị: " . $id . "</strong>");
+            $result=Unit::where('id',$id)->delete();
         }
+        return redirect()->action('UnitController@index');
     }
     #endregion
 

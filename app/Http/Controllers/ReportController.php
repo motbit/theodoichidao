@@ -63,6 +63,8 @@ class ReportController extends Controller
                 ->setCellValue('E'. ($idx + 2), $data['follow'])
                 ->setCellValue('F'. ($idx + 2), $data['deadline'])
                 ->setCellValue('G'. ($idx + 2), $data['status']);
+            $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
+
         }
         $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $output_file = "/baocao/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
