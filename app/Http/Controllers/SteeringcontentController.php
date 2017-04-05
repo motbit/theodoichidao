@@ -167,7 +167,6 @@ class SteeringcontentController extends Controller
             if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ',';
             $secondunit = $request->input('secondunit');
             if ($secondunit != '') $secondunit = implode(",", $secondunit) . ',';
-
             $result = Steeringcontent::insert([
                 'content' => $request->input('content'),
                 'source' => '|' . implode('|', $request->input('msource')) . '|',
@@ -177,7 +176,8 @@ class SteeringcontentController extends Controller
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
                 'deadline' => $deadline,
-                'created_by' => Auth::user()->id
+                'created_by' => Auth::user()->id,
+                'manager' => Auth::user()->id,
             ]);
 
             if ($result) {

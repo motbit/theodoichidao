@@ -80,7 +80,7 @@
         </thead>
         <tbody>
         @foreach ($lst as $idx=>$row)
-            @if(\App\Roles::accessRow(Request::path(), $row->created_by))
+            @if(\App\Roles::accessRow(Request::path(), $row->manager))
                 <?php
                 $st = 1;
                 if ($row->status == 1) {
