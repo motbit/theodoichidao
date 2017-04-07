@@ -61,23 +61,23 @@
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
             <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
             <th style="width: 120px"> Tiến độ<br><input type="text"></th>
-            <th style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
-            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
+            <th class="hidden-xs hidden-sm" style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th class="hidden-xs hidden-sm" style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
             {{--<th style="width: 85px"> Người chỉ đạo<br><input type="text"></th>--}}
-            <th style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
-            <th class="hidden">Trạng thái</th>
+            <th class="hidden-xs hidden-sm" style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
+            <th class="hidden-xs hidden-sm hidden">Trạng thái</th>
 
             @if(\App\Roles::accessAction(Request::path(), 'edit'))
-                <th class="td-action"></th>
+                <th class="hidden-xs hidden-sm td-action"></th>
             @endif
             @if(\App\Roles::accessAction(Request::path(), 'trans'))
-                <th class="td-action"></th>
+                <th class="hidden-xs hidden-sm td-action"></th>
             @endif
             @if(\App\Roles::accessAction(Request::path(), 'delete'))
-                <th class="td-action"></th>
+                <th class="hidden-xs hidden-sm td-action"></th>
             @endif
-            <th class="hidden"><input type="text" id="filter-status"></th>
-            <td class="hidden"><input type="text" id="filter-type"></td>
+            <th class="hidden-xs hidden-sm hidden"><input type="text" id="filter-status"></th>
+            <td class="hidden-xs hidden-sm hidden"><input type="text" id="filter-type"></td>
         </tr>
         </thead>
         <tbody>
@@ -159,7 +159,7 @@
                         <td id="progress-{{$row->id}}">{{$row->progress}}</td>
                     @endif
 
-                    <td onclick="javascript:showfollow({{$idx}})">
+                    <td class="hidden-xs hidden-sm" onclick="javascript:showfollow({{$idx}})">
                         <ul class="unit-list" id="follow-list{{$idx}}">
                             @php ($n = 0)
                             @foreach($units = explode(',', $row->follow) as $i)
@@ -193,7 +193,7 @@
                         </ul>
                     </td>
 
-                    <td>
+                    <td class="hidden-xs hidden-sm">
                         @foreach(explode('|', $row->source) as $s)
                             <ul class="unit-list">
                                 @if($s != '')
@@ -210,10 +210,10 @@
                     {{--<td> {{$row->conductor}} </td>--}}
 
 
-                    <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
+                    <td class="hidden-xs hidden-sm"> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
 
                     @if(\App\Roles::accessAction(Request::path(), 'edit'))
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                             <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20"
                                                                                                      border="0"
                                                                                                      src="{{$_ENV['ALIAS']}}/img/edit.png"
@@ -221,7 +221,7 @@
                         </td>
                     @endif
                     @if(\App\Roles::accessAction(Request::path(), 'trans'))
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                             <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img
                                         title="Chuyển nhiệm vụ"
                                         height="20" border="0"
@@ -229,14 +229,14 @@
                         </td>
                     @endif
                     @if(\App\Roles::accessAction(Request::path(), 'delete'))
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                             <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
                                                                                  src="{{$_ENV['ALIAS']}}/img/delete.png"
                                                                                  title="Xóa nhiệm vụ"></a>
                         </td>
                     @endif
-                    <td class="hidden">{{$st}}</td>
-                    <td class="hidden">
+                    <td class="hidden-xs hidden-sm hidden">{{$st}}</td>
+                    <td class="hidden-xs hidden-sm hidden">
                         @foreach(explode('|', $row->source) as $s)
                             @if($s != '' && array_key_exists($s, $sourcetype))
                                 {{$sourcetype[$s]}}|
