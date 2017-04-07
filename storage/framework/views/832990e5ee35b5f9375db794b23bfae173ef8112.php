@@ -104,7 +104,6 @@
         var current_date = "<?php echo e(date('d/m/Y')); ?>";
 
         $(document).ready(function () {
-            $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',

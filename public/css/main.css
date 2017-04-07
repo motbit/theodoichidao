@@ -74,15 +74,15 @@ li a:hover {
     color: white !important;
 }
 
-table th, td {
+#table th, td {
     font-size: 0.9em;
 }
 
-table th {
+#table th {
     background-color: #eee;
 }
 
-table {
+#table {
     margin-top: 10px;
 }
 
@@ -216,12 +216,6 @@ label {
 
 .footer-text {
     padding: 5px 30px 5px 0;
-}
-
-/*table style*/
-.row {
-    margin-right: 0px !important;
-    margin-left: 0px !important;
 }
 
 .td-file {
