@@ -26,14 +26,14 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
-            <th></th>
-            <th> Tên nhiệm vụ<br><input type="text" style="width: 100%; min-width: 120px"></th>
-            <th> Nguồn chỉ đạo<br><input type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Đơn vị phối hợp<br><input type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<br><input type="text" class="datepicker" style="max-width: 80px"></th>
+            <th style="width: 15px"></th>
+            <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
+            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
+            <th style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
             <th class="hidden">Trạng thái</th>
-            <th> Tiến độ<br><input type="text" style="max-width: 100px"></th>
+            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
@@ -81,22 +81,22 @@
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->unit) as $i)
+                        @foreach($units = explode(',', $row->unit) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
-                                $validate = true;
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
-                                $validate = true;
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
@@ -112,22 +112,24 @@
                 <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->follow) as $i)
+                        @foreach($units = explode(',', $row->follow) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $validate = true;
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $validate = true;
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else

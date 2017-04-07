@@ -160,13 +160,13 @@ class ReportController extends Controller
             ));
         $excelobj->getActiveSheet()->getStyle('A'.($idx + 6).':H'.($idx + 6))->applyFromArray($styleArray);*/
 
-        $excelobj->getActiveSheet()
+/*        $excelobj->getActiveSheet()
             ->getStyle('A'.($idx + 6).':I'.($idx + 6))
             ->getBorders()
             ->getAllBorders()
             ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN)
             ->getColor()
-            ->setRGB('000000');
+            ->setRGB('000000');*/
 
         $excelobj->getActiveSheet()->mergeCells('I5:I'.($count-1));
 
