@@ -7,128 +7,138 @@
 @stop
 
 @section('content')
-    <div>
+    <div class="row">
+        <div class="col-xs-12">
         <div class="text-center title">Báo cáo thống kê chi tiết</div>
         <a class="btn btn-my pull-right hidden-xs hidden-sm" style="margin-top: -50px;" href="javascript:clearFilter()">Xóa
             tìm kiếm</a>
         <a class="btn btn-my pull-right visible-xs visible-sm" style="margin-top: -50px;"
            href="javascript:clearFilter()">Xóa</a>
+        </div>
     </div>
 
 
+    <div class="row">
+        <div class="col-xs-12">
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
             <p class="alert alert-danger">{{ $message }}</p>
         @endforeach
     @endif
-    {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
-
-
-    <div class="row search-box">
-        <div class="col-md-6 col-sm-12">
-            <div class="form-group form-inline ">
-                <label>Nguồn chỉ đạo:</label>
-                <div class="input-contain form-group form-inline">
-                    {!! Form::text('source', "",
-                            array('no-required',
-                            'placeholder'=>'Nguồn chỉ đạo',
-                            'class'=>'form-control ipw mi fl', 'id'=>'source')
-                    ) !!}
-                    <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                         data-target="#modal-source"></div>
-                </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>Người chỉ đạo:</label>
-                <div class="input-contain">
-                    {!! Form::text('conductor', "",
-                            array('no-required',
-                            'placeholder'=>'Người chỉ đạo',
-                            'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
-                    ) !!}
-                    <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                         data-target="#modal-viphuman"></div>
-                </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>Đơn vị/Cá nhân đầu mối:</label>
-                <select id="fList" name="firtunit[]" class="form-control select-single ipw" style="max-width:80%;">
-                    <option value="">...</option>
-                    @foreach($treeunit as $item)
-                        @foreach($item->children as $c)
-                            <option value="{{$c->name}}">{{$c->name}}</option>
-                        @endforeach
-                    @endforeach
-                    @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                    @endforeach
-                </select>
-                <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
-            </div>
-            <div class="form-group form-inline">
-                <label>Đơn vị/Cá nhân phối hợp:</label>
-                <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
-                    <option value="">...</option>
-                    @foreach($treeunit as $item)
-                        @foreach($item->children as $c)
-                            <option value="{{$c->name}}">{{$c->name}}</option>
-                        @endforeach
-                    @endforeach
-                    @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                    @endforeach
-                </select>
-                <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
-            </div>
-
         </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="form-group form-inline">
-                <label>Ngày chỉ đạo:</label>
-                <div class="input-contain">
-                    {!! Form::text('steertime_from', "",
-                        array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
-                              'placeholder'=>'Từ ngày')) !!}
-                    {!! Form::text('steertime_to', "",
-                        array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
-                              'placeholder'=>'Đến ngày')) !!}
-                </div>
-            </div>
-            <div class="form-group  form-inline">
-                <label>Thời hạn hoàn thành:</label>
-                <div class="input-contain">
-                    {!! Form::text('deadline_from', "",
-                            array('class'=>'form-control datepicker fl',
-                                  'placeholder'=>'Từ ngày','id'=>'deadline_from'
-                                  )) !!}
-                    {!! Form::text('deadline_to', "",
-                            array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
-                                  'placeholder'=>'Đến ngày')) !!}
-                </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>Tiến độ:</label>
-                <select id="progress" name="progress" class="form-control mi ipw">
-                    <option value="">Toàn bộ</option>
-                    <option value="2">Đã hoàn thành(Đúng hạn)</option>
-                    <option value="3">Đã hoàn thành(Quá hạn)</option>
-                    <option value="1">Chưa hoàn thành(Trong hạn)</option>
-                    <option value="4">Chưa hoàn thành(Quá hạn)</option>
-                    <option value="5">Nhiệm vụ sắp hết hạn</option>
-                    <option value="6">Nhiệm vụ đã bị hủy</option>
-                </select>
-            </div>
-            <div class="form-group form-inline pull-right">
-                {!! Form::submit('Tìm kiếm',
-                  array('class'=>'btn btn-my', 'id'=>'search')) !!}
-                <a id="btn-export" class="btn btn-my" href="#" target="_blank">Xuất báo cáo</a>
-            </div>
-        </div>
-
     </div>
 
+    <div class="row" style="min-width: 350px">
+        <div class="col-xs-12">
+        {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
 
-    {!! Form::close() !!}
+        <div class="row search-box">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group form-inline ">
+                    <label>Nguồn chỉ đạo:</label>
+                    <div class="input-contain form-group form-inline">
+                        {!! Form::text('source', "",
+                                array('no-required',
+                                'placeholder'=>'Nguồn chỉ đạo',
+                                'class'=>'form-control ipw mi fl', 'id'=>'source')
+                        ) !!}
+                        <div class="btn btn-default ico ico-search fl" data-toggle="modal"
+                             data-target="#modal-source"></div>
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <label>Người chỉ đạo:</label>
+                    <div class="input-contain">
+                        {!! Form::text('conductor', "",
+                                array('no-required',
+                                'placeholder'=>'Người chỉ đạo',
+                                'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
+                        ) !!}
+                        <div class="btn btn-default ico ico-search fl" data-toggle="modal"
+                             data-target="#modal-viphuman"></div>
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <label>Đơn vị/Cá nhân đầu mối:</label>
+                    <select id="fList" name="firtunit[]" class="form-control select-single ipw" style="max-width:80%;">
+                        <option value="">...</option>
+                        @foreach($treeunit as $item)
+                            @foreach($item->children as $c)
+                                <option value="{{$c->name}}">{{$c->name}}</option>
+                            @endforeach
+                        @endforeach
+                        @foreach($users as $u)
+                            <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                        @endforeach
+                    </select>
+                    <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
+                </div>
+                <div class="form-group form-inline">
+                    <label>Đơn vị/Cá nhân phối hợp:</label>
+                    <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
+                        <option value="">...</option>
+                        @foreach($treeunit as $item)
+                            @foreach($item->children as $c)
+                                <option value="{{$c->name}}">{{$c->name}}</option>
+                            @endforeach
+                        @endforeach
+                        @foreach($users as $u)
+                            <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                        @endforeach
+                    </select>
+                    <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group form-inline">
+                    <label>Ngày chỉ đạo:</label>
+                    <div class="input-contain">
+                        {!! Form::text('steertime_from', "",
+                            array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
+                                  'placeholder'=>'Từ ngày')) !!}
+                        {!! Form::text('steertime_to', "",
+                            array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
+                                  'placeholder'=>'Đến ngày')) !!}
+                    </div>
+                </div>
+                <div class="form-group  form-inline">
+                    <label>Thời hạn hoàn thành:</label>
+                    <div class="input-contain">
+                        {!! Form::text('deadline_from', "",
+                                array('class'=>'form-control datepicker fl',
+                                      'placeholder'=>'Từ ngày','id'=>'deadline_from'
+                                      )) !!}
+                        {!! Form::text('deadline_to', "",
+                                array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
+                                      'placeholder'=>'Đến ngày')) !!}
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <label>Tiến độ:</label>
+                    <select id="progress" name="progress" class="form-control mi ipw">
+                        <option value="">Toàn bộ</option>
+                        <option value="2">Đã hoàn thành(Đúng hạn)</option>
+                        <option value="3">Đã hoàn thành(Quá hạn)</option>
+                        <option value="1">Chưa hoàn thành(Trong hạn)</option>
+                        <option value="4">Chưa hoàn thành(Quá hạn)</option>
+                        <option value="5">Nhiệm vụ sắp hết hạn</option>
+                        <option value="6">Nhiệm vụ đã bị hủy</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline pull-right">
+                    {!! Form::submit('Tìm kiếm',
+                      array('class'=>'btn btn-my', 'id'=>'search')) !!}
+                    <a id="btn-export" class="btn btn-my" href="#" target="_blank">Xuất báo cáo</a>
+                </div>
+            </div>
+
+        </div>
+
+        {!! Form::close() !!}
+
+        </div>
+    </div>
     <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl2"></div>
