@@ -81,22 +81,22 @@
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->unit) as $i)
+                        @foreach($units = explode(',', $row->unit) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
-                                $validate = true;
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
-                                $validate = true;
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
@@ -112,22 +112,24 @@
                 <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->follow) as $i)
+                        @foreach($units = explode(',', $row->follow) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $validate = true;
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $validate = true;
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else

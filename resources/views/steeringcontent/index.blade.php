@@ -134,19 +134,19 @@
                             @foreach($units = explode(',', $row->unit) as $i)
                                 <?php
                                 $spl = explode('|', $i);
-                                $validate = false;
+                                $validate = ($i != "");
                                 $val = "";
                                 if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
-                                    $validate = true;
                                     $val = $unit[$spl[1]];
                                     $n++;
                                 } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
-                                    $validate = true;
                                     $val = $user[$spl[1]];
                                     $n++;
+                                } else {
+                                    $val = $i;
                                 }
                                 ?>
-                                @if ($validate)
+                                @if($validate)
                                     @if ($loop->iteration < 3)
                                         <li> • {{$val}}</li>
                                     @else
@@ -165,7 +165,7 @@
                             @foreach($units = explode(',', $row->follow) as $i)
                                 <?php
                                 $spl = explode('|', $i);
-                                $validate = false;
+                                $validate = ($i != "");
                                 $val = "";
                                 if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                     $validate = true;
@@ -175,9 +175,11 @@
                                     $validate = true;
                                     $val = $user[$spl[1]];
                                     $n++;
+                                } else {
+                                    $val = $i;
                                 }
                                 ?>
-                                @if ($validate)
+                                @if($validate)
                                     @if ($loop->iteration < 3)
                                         <li> • {{$val}}</li>
                                     @else
@@ -193,7 +195,8 @@
                     <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
                     <td class="hidden">{{$name_stt[$st]}}</td>
                     @if(\App\Roles::accessAction(Request::path(), 'status'))
-                        <td id="progress-{{$row->id}}" data-id="{{$row->id}}" data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }}"
+                        <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                            data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }}"
                             class="progress-update"> {{$row->progress}}</td>
                     @else
                         <td id="progress-{{$row->id}}">{{$row->progress}}</td>
@@ -209,9 +212,10 @@
                     @endif
                     @if(\App\Roles::accessAction(Request::path(), 'trans'))
                         <td>
-                            <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img title="Chuyển nhiệm vụ"
-                                                                                height="20" border="0"
-                                                                                src="{{$_ENV['ALIAS']}}/img/tranfer.png"></a>
+                            <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img
+                                        title="Chuyển nhiệm vụ"
+                                        height="20" border="0"
+                                        src="{{$_ENV['ALIAS']}}/img/tranfer.png"></a>
                         </td>
                     @endif
                     @if(\App\Roles::accessAction(Request::path(), 'delete'))
@@ -235,7 +239,8 @@
         </tbody>
     </table>
     <div>
-        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
         <span class="panel-button"></span>
     </div>
     <div id="modal-progress" class="modal fade" role="dialog">
@@ -302,7 +307,9 @@
                             <option value="0"></option>
                             @foreach($datauser as $u)
                                 @if($u->id != \Illuminate\Support\Facades\Auth::user()->id && $u->group==3)
-                                <option id="reciever-{{$u->id}}" value="{{$u->id}}">{{$u->fullname}} ({{$u->username}})</option>
+                                    <option id="reciever-{{$u->id}}" value="{{$u->id}}">{{$u->fullname}}
+                                        ({{$u->username}})
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -338,18 +345,18 @@
         }
 
         function getDateDiff(time1, time2) {
-            var str1= time1.split('/');
-            var str2= time2.split('/');
+            var str1 = time1.split('/');
+            var str2 = time2.split('/');
 
-            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-            var date1 = new Date(str1[2], str1[1]-1, str1[0]);
-            var date2 = new Date(str2[2], str2[1]-1, str2[0]);
+            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            var date1 = new Date(str1[2], str1[1] - 1, str1[0]);
+            var date2 = new Date(str2[2], str2[1] - 1, str2[0]);
 
             var diffDays = parseInt((date1 - date2) / (1000 * 60 * 60 * 24));
 
             return diffDays;
         }
-        function showDetailProgress(id,deadline) {
+        function showDetailProgress(id, deadline) {
             resetFromProgress();
             $(".loader").show();
             $("#steering_id").val(id);
@@ -390,7 +397,7 @@
             $('input[name=file]').val("");
         }
 
-        function resetFormTranfer(){
+        function resetFormTranfer() {
             $("#receiver").val("");
             $("#tranfer-note").val("");
             $("#content-tranfer").html("");
@@ -446,7 +453,7 @@
         $(document).ready(function () {
             @if(\App\Roles::accessAction(Request::path(), 'status'))
             $(".progress-update").on("click", function () {
-                showDetailProgress($(this).attr("data-id"),$(this).attr("data-deadline"))
+                showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
                 console.log("#ID: " + $(this).attr("data-id"));
             });
             @endif
@@ -466,10 +473,10 @@
                 var time_log = $("#progress_time").val();
                 var time_deadline = $("#process-deadline").val();
 
-                datediff = getDateDiff(time_log,time_deadline);
-                console.log("#date: "+time_log + "-" + time_deadline + "=" + datediff);
+                datediff = getDateDiff(time_log, time_deadline);
+                console.log("#date: " + time_log + "-" + time_deadline + "=" + datediff);
 
-                if(datediff < 0) {
+                if (datediff < 0) {
                     alert("Ngày cập nhật không hợp lệ!");
                     return false;
                 }
@@ -615,7 +622,7 @@
                     }
                 });
             });
-            console.log( $(".buttons-excel").html);
+            console.log($(".buttons-excel").html);
 
             $('input:radio[name=pr_status]').change(function () {
                 var stt = $('input:radio[name=pr_status]:checked').val();

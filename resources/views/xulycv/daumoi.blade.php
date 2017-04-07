@@ -11,16 +11,28 @@
 
     <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl2"></div><a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
-            <div class="note-cl cl3"></div><a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-3"></span>)</a>
+            <div class="note-cl cl2"></div>
+            <a id="a2" class="a-status" href="javascript:filterStatus(2)"><span class="note-tx">Đã hoàn thành</span>(Đúng
+                hạn, <span class="count-st" id="row-st-2"></span>)</a><br>
+            <div class="note-cl cl3"></div>
+            <a id="a3" class="a-status" href="javascript:filterStatus(3)"><span class="note-tx">Đã hoàn thành</span>(Quá
+                hạn, <span class="count-st" id="row-st-3"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl1"></div><a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
-            <div class="note-cl cl4"></div><a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá hạn, <span class="count-st" id="row-st-4"></span>)</a>
+            <div class="note-cl cl1"></div>
+            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong
+                hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
+            <div class="note-cl cl4"></div>
+            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá
+                hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
-            <div class="note-cl cl5"></div><a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span> (<span class="count-st" id="row-st-5"></span>)</a><br>
-            <div class="note-cl cl6"></div><a id="a6" class="a-status" href="javascript:filterStatus(6)"><span class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
+            <div class="note-cl cl5"></div>
+            <a id="a5" class="a-status" href="javascript:filterStatus(5)"><span class="note-tx">Nhiệm vụ sắp hết hạn(7 ngày)</span>
+                (<span class="count-st" id="row-st-5"></span>)</a><br>
+            <div class="note-cl cl6"></div>
+            <a id="a6" class="a-status" href="javascript:filterStatus(6)"><span
+                        class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
@@ -41,22 +53,22 @@
         @foreach ($data as $idx=>$row)
             <?php
             $st = 1;
-            if($row->status == 1){
-                if ($row->deadline == "" || $row->complete_time < $row->deadline){
+            if ($row->status == 1) {
+                if ($row->deadline == "" || $row->complete_time < $row->deadline) {
                     $st = 2;
-                }else{
+                } else {
                     $st = 3;
                 }
-            }else if ($row->status == -1){
+            } else if ($row->status == -1) {
                 $st = 6;
-            }else if($row->deadline == ""){
+            } else if ($row->deadline == "") {
                 $st = 1;
-            }else{
-                if (date('Y-m-d') > $row->deadline){
+            } else {
+                if (date('Y-m-d') > $row->deadline) {
                     $st = 4;
-                }else if (date('Y-m-d',strtotime("+7 day")) > $row->deadline){
+                } else if (date('Y-m-d', strtotime("+7 day")) > $row->deadline) {
                     $st = 5;
-                }else{
+                } else {
                     $st = 1;
                 }
             }
@@ -81,22 +93,22 @@
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->unit) as $i)
+                        @foreach($units = explode(',', $row->unit) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
-                                $validate = true;
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
-                                $validate = true;
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
@@ -104,30 +116,32 @@
                                 @endif
                             @endif
                         @endforeach
-                            @if ($n > 2)
-                                <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
-                            @endif
+                        @if ($n > 2)
+                            <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                        @endif
                     </ul>
                 </td>
                 <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
-                        @foreach(explode(',', $row->follow) as $i)
+                        @foreach($units = explode(',', $row->follow) as $i)
                             <?php
                             $spl = explode('|', $i);
-                            $validate = false;
+                            $validate = ($i != "");
                             $val = "";
-                            if ($spl[0] == 'u' && isset($unit[$spl[1]])){
+                            if ($spl[0] == 'u' && isset($unit[$spl[1]])) {
                                 $validate = true;
                                 $val = $unit[$spl[1]];
                                 $n++;
-                            }else if ($spl[0] == 'h' && isset($user[$spl[1]])){
+                            } else if ($spl[0] == 'h' && isset($user[$spl[1]])) {
                                 $validate = true;
                                 $val = $user[$spl[1]];
                                 $n++;
+                            } else {
+                                $val = $i;
                             }
                             ?>
-                            @if ($validate)
+                            @if($validate)
                                 @if ($loop->iteration < 3)
                                     <li> • {{$val}}</li>
                                 @else
@@ -135,15 +149,16 @@
                                 @endif
                             @endif
                         @endforeach
-                            @if ($n > 2)
-                                <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
-                            @endif
+                        @if ($n > 2)
+                            <li class="more-link" hide="1"><a name="more-link-{{$idx}}">[+] Xem thêm</a></li>
+                        @endif
                     </ul>
                 </td>
                 <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
-            @if(\App\Roles::accessAction(Request::path(), 'status'))
-                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-update"> {{$row->progress}}</td>
+                @if(\App\Roles::accessAction(Request::path(), 'status'))
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                        class="progress-update"> {{$row->progress}}</td>
                 @else
                     <td id="progress-{{$row->id}}">{{$row->progress}}</td>
                 @endif
@@ -153,7 +168,8 @@
         </tbody>
     </table>
     <div>
-        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table" href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
         <span class="panel-button"></span>
     </div>
     <div id="modal-progress" class="modal fade" role="dialog">
@@ -203,17 +219,17 @@
     </div>
     <script>
         var current_date = "{{date('d/m/Y')}}";
-//        var showpr = false;
-//        $("#form-progress").hide();
-//        function showAddProgress() {
-//            if (showpr) {
-//                showpr = false;
-//                $("#form-progress").hide();
-//            } else {
-//                showpr = true;
-//                $("#form-progress").show();
-//            }
-//        }
+        //        var showpr = false;
+        //        $("#form-progress").hide();
+        //        function showAddProgress() {
+        //            if (showpr) {
+        //                showpr = false;
+        //                $("#form-progress").hide();
+        //            } else {
+        //                showpr = true;
+        //                $("#form-progress").show();
+        //            }
+        //        }
         function showDetailProgress(id) {
             resetFromProgress();
             $(".loader").show();
@@ -246,39 +262,39 @@
         }
 
         function showunit(unit) {
-            if($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
+            if ($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
                 $("#unit-list" + unit + " .more").show();
                 $("#unit-list" + unit + " .more-link a").text("[-] Thu gọn");
-                $("#unit-list" + unit + " .more-link").attr("hide",0);
+                $("#unit-list" + unit + " .more-link").attr("hide", 0);
             } else {
                 $("#unit-list" + unit + " .more").hide();
                 $("#unit-list" + unit + " .more-link a").text("[+] Xem thêm");
-                $("#unit-list" + unit + " .more-link").attr("hide",1);
+                $("#unit-list" + unit + " .more-link").attr("hide", 1);
             }
 
         }
         function showfollow(unit) {
 
-            if($("#follow-list" + unit + " .more-link").attr("hide") == 1) {
+            if ($("#follow-list" + unit + " .more-link").attr("hide") == 1) {
                 $("#follow-list" + unit + " .more").show();
                 $("#follow-list" + unit + " .more-link a").text("[-] Thu gọn");
-                $("#follow-list" + unit + " .more-link").attr("hide",0);
+                $("#follow-list" + unit + " .more-link").attr("hide", 0);
             } else {
                 $("#follow-list" + unit + " .more").hide();
                 $("#follow-list" + unit + " .more-link a").text("[+] Xem thêm");
-                $("#follow-list" + unit + " .more-link").attr("hide",1);
+                $("#follow-list" + unit + " .more-link").attr("hide", 1);
             }
 
         }
-        function reStyleRow(id, status, time_log){
+        function reStyleRow(id, status, time_log) {
             var time_split = time_log.split("/");
             var time = time_split[2] + "-" + time_split[1] + "-" + time_split[0];
-            if (status == "-1"){
+            if (status == "-1") {
                 $("#row-" + id).attr('class', 'row-st-6');
-            }else if (status == "1"){
-                if (time <= $("#row-" + id).attr('deadline')){
+            } else if (status == "1") {
+                if (time <= $("#row-" + id).attr('deadline')) {
                     $("#row-" + id).attr('class', 'row-st-2');
-                }else{
+                } else {
                     $("#row-" + id).attr('class', 'row-st-3');
                 }
             }
@@ -287,8 +303,8 @@
         $(document).ready(function () {
 
             @if(\App\Roles::accessAction(Request::path(), 'status'))
-            $( ".progress-update" ).on( "click", function() {
-                showDetailProgress($( this ).attr("data-id"))
+            $(".progress-update").on("click", function () {
+                showDetailProgress($(this).attr("data-id"))
             });
             @endif
 
@@ -333,14 +349,14 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                            columns: [0, 1, 2, 3, 4, 5, 6],
                             modifier: {
                                 page: 'all'
                             },
                             format: {
                                 body: function (data, row, column, node) {
 
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/[+] Xem thêm/g,"").trim();
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
 
                                 }
                             }
@@ -406,9 +422,9 @@
 
 
         });
-        function reCount(){
+        function reCount() {
             reloadDataExport();
-            $(".count-st").each(function() {
+            $(".count-st").each(function () {
                 $(this).html($('.' + $(this).attr('id')).length);
             });
         }
@@ -424,7 +440,7 @@
         }
 
         //loc theo trang thai
-        function filterStatus(status){
+        function filterStatus(status) {
             $(".a-status").css('font-weight', 'normal');
             $("#a" + status).css('font-weight', 'bold');
             $("#filter-status").val(status);
