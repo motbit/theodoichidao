@@ -59,12 +59,14 @@
         <tr>
             <th style="width: 15px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
             <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
+            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
             <th style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
+            {{--<th style="width: 85px"> Người chỉ đạo<br><input type="text"></th>--}}
             <th style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
             <th class="hidden">Trạng thái</th>
-            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
+
             @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class="td-action"></th>
             @endif
@@ -114,19 +116,7 @@
                 <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                     <td>{{$idx + 1}}</td>
                     <td> {{$row->content}} </td>
-                    <td>
-                        @foreach(explode('|', $row->source) as $s)
-                            <ul class="unit-list">
-                                @if($s != '')
-                                    @if ( !in_array($s, $allsteeringcode) )
-                                        <li> {{ $s }} </li>
-                                    @else
-                                        <li><a href="steeringcontent?source={{urlencode($s)}}"> {{ $s }} </a></li>
-                                    @endif
-                                @endif
-                            </ul>
-                        @endforeach
-                    </td>
+
 
                     <td onclick="javascript:showunit({{$idx}})">
                         <ul class="unit-list" id="unit-list{{$idx}}">
@@ -159,6 +149,16 @@
                             @endif
                         </ul>
                     </td>
+
+                    <td class="hidden">{{$name_stt[$st]}}</td>
+                    @if(\App\Roles::accessAction(Request::path(), 'status'))
+                        <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                            data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }}"
+                            class="progress-update"> {{$row->progress}}</td>
+                    @else
+                        <td id="progress-{{$row->id}}">{{$row->progress}}</td>
+                    @endif
+
                     <td onclick="javascript:showfollow({{$idx}})">
                         <ul class="unit-list" id="follow-list{{$idx}}">
                             @php ($n = 0)
@@ -192,15 +192,25 @@
                             @endif
                         </ul>
                     </td>
+
+                    <td>
+                        @foreach(explode('|', $row->source) as $s)
+                            <ul class="unit-list">
+                                @if($s != '')
+                                    @if ( !in_array($s, $allsteeringcode) )
+                                        <li> {{ $s }} </li>
+                                    @else
+                                        <li><a href="steeringcontent?source={{urlencode($s)}}"> {{ $s }} </a></li>
+                                    @endif
+                                @endif
+                            </ul>
+                        @endforeach
+                    </td>
+
+                    {{--<td> {{$row->conductor}} </td>--}}
+
+
                     <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
-                    <td class="hidden">{{$name_stt[$st]}}</td>
-                    @if(\App\Roles::accessAction(Request::path(), 'status'))
-                        <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
-                            data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }}"
-                            class="progress-update"> {{$row->progress}}</td>
-                    @else
-                        <td id="progress-{{$row->id}}">{{$row->progress}}</td>
-                    @endif
 
                     @if(\App\Roles::accessAction(Request::path(), 'edit'))
                         <td>
