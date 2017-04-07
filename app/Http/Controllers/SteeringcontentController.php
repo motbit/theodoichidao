@@ -11,6 +11,7 @@ use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\CountValidator\Exception;
 use Validator;
 
 class SteeringcontentController extends Controller
@@ -20,13 +21,16 @@ class SteeringcontentController extends Controller
         if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
             return redirect('/errpermission');
         }
-        $source = intval($request->input('source'));
+        $source = $request->input('source');
 
         if ($source) {
             $steering = DB::table('sourcesteering')
                 ->where('code', '=', $source)
                 ->get()->first();
-            $data = Steeringcontent::where('source', $source)->orderBy('id', 'DESC')->get();
+//            $data = Steeringcontent::where('source', 'like',  '%|'. $source . "|%")->orderBy('id', 'DESC')->get();
+            $data = DB::table('steeringcontent')
+                ->where('source', 'like', '%|'. $source . "|%")
+                ->orderBy('id', 'DESC')->get();
         } else {
             $steering = false;
             $data = Steeringcontent::orderBy('id', 'DESC')->get();
@@ -77,10 +81,8 @@ class SteeringcontentController extends Controller
         $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
         $priority = $type = DB::table('priority')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
-        $user = User::orderBy('fullname', 'ASC')->get();
+        $user = User::orderBy('unit', 'ASC')->get();
 
-        $firstunit = array();
-        $secondunit = array();
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0) {
@@ -95,20 +97,13 @@ class SteeringcontentController extends Controller
             }
         }
 
-//        dd($tree_unit);
-
+        $dictunit = array();
         foreach ($unit as $row) {
-            $firstunit["u|" . $row->id] = $row->name;
-            $secondunit["u|" . $row->id] = $row->shortname;
-        }
-        foreach ($user as $row) {
-            $firstunit["h|" . $row->id] = $row->fullname;
-            $secondunit["h|" . $row->id] = $row->fullname;
+            $dictunit[$row->id] = $row->name;
         }
 
         $source = array();
         foreach ($sourcesteering as $row) {
-//            $source[$row->id] = "[" . $row->code . "] " . $row->name;
             $source[$row->id] = $row->code;
         }
 
@@ -118,12 +113,12 @@ class SteeringcontentController extends Controller
             $dtfollowArr = explode(",", $data[0]['follow']);
             $dtUnitArr = explode(",", $data[0]['unit']);
 
-            return view('steeringcontent.update', ['firstunit' => $firstunit, 'secondunit' => $secondunit, 'source' => $source,
+            return view('steeringcontent.update', ['dictunit' => $dictunit, 'source' => $source,
                 'data' => $data, 'dtfollowArr' => $dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering' => $sourcesteering, 'treeunit' => $tree_unit, 'unit' => $unit,
                 'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
         } else {
 
-            return view('steeringcontent.add', ['sourcesteering' => $sourcesteering,
+            return view('steeringcontent.add', ['sourcesteering' => $sourcesteering, 'dictunit' => $dictunit,
                 'treeunit' => $tree_unit, 'unit' => $unit, 'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
         }
     }
@@ -144,6 +139,8 @@ class SteeringcontentController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        $deadline = \DateTime::createFromFormat('d/m/Y', $request->input('deathline'));
+        if (!$deadline) $deadline = null;
         if ($id > 0) {
             $firstUnit = $request->input('firtunit');
             if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ",";
@@ -153,14 +150,9 @@ class SteeringcontentController extends Controller
                 'content' => $request->input('content'),
                 'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $firstUnit,
-//                'follow'=> !empty($request->input('secondunit')) ? implode(",",$request->input('secondunit')) : "",
                 'follow' => $secondunit,
-//                'note'=>$request->input('note'),
-//                'deadline'=>$request->input('deadline'),
-//                'xn'=>$request->input('confirm'),
-//                'status'=>$request->input('status'),
                 'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
-                'deadline' => \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
+                'deadline' => $deadline,
                 'conductor' => $request->input('viphuman')
             ]);
 
@@ -175,17 +167,17 @@ class SteeringcontentController extends Controller
             if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ',';
             $secondunit = $request->input('secondunit');
             if ($secondunit != '') $secondunit = implode(",", $secondunit) . ',';
-
             $result = Steeringcontent::insert([
                 'content' => $request->input('content'),
-                'source' => $request->input('source'),
+                'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $firstUnit,
                 'follow' => $secondunit,
                 'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => \DateTime::createFromFormat('d/m/Y', $request->input('steer_time')),
-                'deadline' =>  \DateTime::createFromFormat('d/m/Y', $request->input('deathline')),
-                'created_by' => Auth::user()->id
+                'deadline' => $deadline,
+                'created_by' => Auth::user()->id,
+                'manager' => Auth::user()->id,
             ]);
 
             if ($result) {
@@ -198,7 +190,6 @@ class SteeringcontentController extends Controller
                 );
             }
         }
-
     }
 
     #region Nguoidung Delete

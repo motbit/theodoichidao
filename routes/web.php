@@ -110,4 +110,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'tranfer','ApiController@tranfer' )->name('steering-tranfer');
     });
 
+    Route::group(['prefix' => 'type'], function () {
+        Route::get( '/','TypeSourceController@index' )->name('type-index');
+        Route::post( 'delete','TypeSourceController@delete' )->name('type-delete');
+        Route::get( 'update','TypeSourceController@edit' )->name('type-update');
+        Route::post( 'update','TypeSourceController@update' )->name('type-update');
+    });
+
 });

@@ -60,7 +60,7 @@
                         @endforeach
                     @endforeach
                     @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                     @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -75,7 +75,7 @@
                         @endforeach
                     @endforeach
                     @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}</option>
+                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                     @endforeach
                 </select>
                 <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
@@ -158,14 +158,14 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
-            <th></th>
-            <th> Tên nhiệm vụ<br><input type="text" id="id_content" style="width: 100%; min-width: 250px"></th>
-            <th> Người chỉ đạo<br><input type="text" id="id_conductor" style="width: 100%; min-width: 90px"></th>
-            <th> Ngày chỉ đạo<br><input type="text" id="id_steertime" style="width: 100%; min-width: 90px"></th>
-            <th> Nguồn chỉ đạo<br><input id="id_source" type="text" style="max-width: 100px"></th>
-            <th> Đơn vị đầu mối<input id="id_funit" type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Đơn vị phối hợp<br><input id="id_sunit" type="text" style="width: 100%; min-width: 120px;"></th>
-            <th> Thời hạn HT<br><input id="id_complete_time" type="text" class="datepicker" style="max-width: 80px">
+            <th style="width: 10px"></th>
+            <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
+            <th style="width: 85px"> Người chỉ đạo<br><input type="text" id="id_conductor"></th>
+            <th style="width: 85px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
+            <th style="width: 90px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
+            <th style="width: 145px"> Đơn vị/Cá nhân đầu mối<input id="id_funit" type="text"></th>
+            <th style="width: 155px"> Đơn vị/Cá nhân phối hợp<br><input id="id_sunit" type="text"></th>
+            <th style="width: 75px"> Thời hạn HT<br><input id="id_complete_time" type="text" class="datepicker">
             </th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
@@ -380,7 +380,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="radio" name="pfunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -433,7 +433,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="radio" name="psunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>

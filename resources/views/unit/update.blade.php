@@ -16,7 +16,7 @@
     {!! Form::open(array('route' => 'unit-update', 'class' => 'form')) !!}
     {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
     <div class="form-group form-inline">
-        <label>Tên ban - Đơn vị:</label>
+        <label>Tên ban - Đơn vị: <span class="required">(*)</span></label>
         {!! Form::text('name', $row->name,
             array('required',
                   'class'=>'form-control',
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Tên viết tắt:</label>
+        <label>Tên viết tắt: <span class="required">(*)</span></label>
         {!! Form::text('shortname', $row->shortname,
             array('required',
                   'class'=>'form-control',

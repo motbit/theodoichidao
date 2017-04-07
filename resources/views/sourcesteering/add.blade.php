@@ -20,15 +20,15 @@
         </select>
     </div>
     <div class="form-group form-inline">
-        <label>Số kí hiệu:</label>
+        <label>Số kí hiệu: <span class="required">(*)</span></label>
         <input type="text" required name="code" class="form-control" value="{{($id == 0)?"":$steering->code}}">
     </div>
     <div class="form-group form-inline">
-        <label>Trích yếu:</label>
+        <label>Trích yếu: <span class="required">(*)</span></label>
         <textarea name="name" style="width: 100%;" class="form-control" required>{{($id == 0)?"":$steering->name}}</textarea>
     </div>
     <div class="form-group form-inline">
-        <label>Ngày ban hành:</label>
+        <label>Ngày ban hành: <span class="required">(*)</span></label>
         <input id="my-time" name="time" type="text" class="form-control datepicker" required value="{{($id == 0)?"":date("d/m/Y", strtotime($steering->time))}}">
     </div>
     <div class="form-group form-inline">

@@ -23,28 +23,6 @@
         {!! Form::close() !!}
     @endif
 
-{{--    <div>
-        <div class="pull-right">
-            <form class="form" action="" method="get" id="searchform">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-content">
-                            <input class="form-control" id="searchinput" type="text" name="k" value="{{$key}}" placeholder="Search username">
-                        </div>
-                        <div class="input-group-btn">
-                            <button type="submit" value="search" class="btn btn-default" tabindex="-1"><i class="fa fa-search"></i>&nbsp;Search</button>
-                        </div>
-                    </div><!--end .input-group -->
-                </div>
-            </form>
-        </div>
-        @if(\App\Roles::checkPermission())
-            <div class="pull-left" style="margin-bottom: 10px">
-                <a href="viphuman/update?id=0" class="btn btn-my"><i class="fa fa-plus"></i> Thêm mới</a>
-            </div>
-        @endif
-    </div>--}}
-
     <table id="table" class="table table-bordered table-hover">
         <thead>
         <tr>

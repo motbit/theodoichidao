@@ -16,7 +16,7 @@
     {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
 
     <div class="form-group ">
-        <label>Tên nhiệm vụ:</label>
+        <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
         {!! Form::textarea('content', "",
             array('required',
                   'class'=>'form-control',
@@ -24,7 +24,7 @@
                   'rows'=>'2')) !!}
     </div>
     <div class="form-group form-inline">
-        <label>Nguồn chỉ đạo:</label>
+        <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
         <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
             @foreach($sourcesteering as $sr)
                 <option value="{{$sr->code}}">{{$sr->code}}</option>
@@ -33,9 +33,9 @@
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
     </div>
     <div class="form-group form-inline">
-        <label>Người chỉ đạo:</label>
+        <label>Người chỉ đạo:<span class="required">(*)</span></label>
         {!! Form::text('viphuman', "",
-                array('no-required',
+                array('required',
                 'placeholder'=>'Người chỉ đạo',
                 'class'=>'form-control ipw', 'id'=>'viphuman')
         ) !!}
@@ -50,7 +50,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Đơn vị/Cá nhân chủ trì:</label>
+        <label>Đơn vị/Cá nhân chủ trì: <span class="required">(*)</span></label>
         <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple"
                 required="required">
             @foreach($treeunit as $item)
@@ -59,7 +59,7 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -74,17 +74,17 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
     </div>
 
     <div class="form-group  form-inline">
-        <label>Ngày chỉ đạo:</label>
+        <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
         {!! Form::text('steer_time', "",
-            array('class'=>'form-control datepicker',
-                  'placeholder'=>'Ngày bắt đầu')) !!}
+            array('required', 'class'=>'form-control datepicker',
+                  'placeholder'=>'Ngày chỉ đạo')) !!}
     </div>
 
     <div class="form-group  form-inline">
@@ -188,7 +188,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="pfunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -243,7 +243,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}">
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -291,7 +291,7 @@
                 return today;
             }
             $(document).ready(function () {
-                $('input[name="steer_time"]').val(getCurrentDate());
+//                $('input[name="steer_time"]').val(getCurrentDate());
                 $("#source").autocomplete({
                     source: sources
                 });

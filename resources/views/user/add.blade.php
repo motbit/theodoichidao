@@ -18,7 +18,7 @@
 
         {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
         <div class="form-group">
-            <label>Tên đăng nhập:</label>
+            <label>Tên đăng nhập: <span class="required">(*)</span></label>
             {!! Form::text('username', "",
                 array('required',
                       'class'=>'form-control',
@@ -26,7 +26,7 @@
         </div>
 
     <div class="form-group">
-        <label>Mật khẩu:</label>
+        <label>Mật khẩu: <span class="required">(*)</span></label>
         {!! Form::password('password',
             array('required',
                   'class'=>'form-control',
@@ -36,7 +36,7 @@
 
 
         <div class="form-group">
-            <label>Họ & tên:</label>
+            <label>Họ & tên: <span class="required">(*)</span></label>
             {!! Form::text('fullname', "",
                 array('required',
                       'class'=>'form-control',

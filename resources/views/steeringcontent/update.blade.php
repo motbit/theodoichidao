@@ -19,7 +19,7 @@
     {{ Form::hidden('id', $row->id, array('id' => 'id')) }}
 
     <div class="form-group ">
-        <label>Tên nhiệm vụ:</label>
+        <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
         {!! Form::textarea('content', $row->content,
             array('required',
                   'class'=>'form-control',
@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Nguồn chỉ đạo:</label>
+        <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
         <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
             @foreach($sourcesteering as $sr)
                 <option value="{{$sr->code}}" {{in_array($sr->code, explode('|', $row->source))?'selected':''}}>{{$sr->code}}</option>
@@ -38,9 +38,9 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Người chỉ đạo:</label>
+        <label>Người chỉ đạo: <span class="required">(*)</span></label>
         {!! Form::text('viphuman', $row->conductor,
-                array('no-required',
+                array('required',
                 'placeholder'=>'Người chỉ đạo',
                 'class'=>'form-control ipw', 'id'=>'viphuman')
         ) !!}
@@ -55,7 +55,7 @@
     </div>
 
     <div class="form-group form-inline">
-        <label>Đơn vị/Cá nhân chủ trì:</label>
+        <label>Đơn vị/Cá nhân chủ trì: <span class="required">(*)</span></label>
         <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple" required="required">
             @foreach($treeunit as $item)
                 @foreach($item->children as $c)
@@ -63,7 +63,7 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"selected":""}}>{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"selected":""}}>{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
@@ -78,13 +78,13 @@
                 @endforeach
             @endforeach
             @foreach($user as $u)
-                <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}</option>
+                <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
     </div>
     <div class="form-group  form-inline">
-        <label>Ngày chỉ đạo:</label>
+        <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
         {!! Form::text('steer_time', date("d/m/Y", strtotime($row->steer_time)),
             array('class'=>'form-control datepicker',
                   'placeholder'=>'Ngày bắt đầu')) !!}
@@ -215,7 +215,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="pfunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtUnitArr)?"checked":""}}>
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -270,7 +270,7 @@
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
                                         <input type="checkbox" name="psunit" class="pick-firt-unit"
                                                value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtfollowArr)?"checked":""}}>
-                                        {{$u->fullname}}
+                                        {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -432,7 +432,9 @@
             });
         });
 
-        $(".select-multiple").select2();
+        $(".select-multiple").select2({
+            tags: true
+        });
         $(".select-single").select2();
     </script>
 @stop
