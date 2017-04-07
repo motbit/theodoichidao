@@ -28,13 +28,13 @@
         <tr>
             <th style="width: 15px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
             <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
-            <th style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
-            <th style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
-            <th class="hidden">Trạng thái</th>
             <th style="width: 120px"> Tiến độ<br><input type="text"></th>
-            <th class="hidden"><input type="text" id="filter-status"></th>
+            <th style="width: 160px" class="hidden-xs hidden-sm "> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th style="width: 120px" class="hidden-xs hidden-sm "> Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="width: 80px" class="hidden-xs hidden-sm "> Thời hạn HT<br><input type="text" class="datepicker"></th>
+            <th class="hidden hidden-xs hidden-sm ">Trạng thái</th>
+            <th class="hidden hidden-xs hidden-sm "><input type="text" id="filter-status"></th>
         </tr>
         </thead>
         <tbody>
@@ -71,13 +71,6 @@
             <tr class="row-export row-st-{{$st}}">
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> @foreach(explode('|', $row->source) as $s)
-                        <ul class="unit-list">
-                            @if($s != '')
-                                <li> {{ $s }} </li>
-                            @endif
-                        </ul>
-                    @endforeach  </td>
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
@@ -109,7 +102,8 @@
                         @endif
                     </ul>
                 </td>
-                <td onclick="showfollow({{$idx}})">
+                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                <td class="hidden-xs hidden-sm " onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
                         @foreach($units = explode(',', $row->follow) as $i)
@@ -142,10 +136,16 @@
                         @endif
                     </ul>
                 </td>
-                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td class="hidden">{{$name_stt[$st]}}</td>
-                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
-                <td class="hidden">{{$st}}</td>
+                <td class="hidden-xs hidden-sm "> @foreach(explode('|', $row->source) as $s)
+                        <ul class="unit-list">
+                            @if($s != '')
+                                <li> {{ $s }} </li>
+                            @endif
+                        </ul>
+                    @endforeach  </td>
+                <td class="hidden-xs hidden-sm "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td class="hidden hidden-xs hidden-sm ">{{$name_stt[$st]}}</td>
+                <td class="hidden hidden-xs hidden-sm ">{{$st}}</td>
             </tr>
         @endforeach
         </tbody>

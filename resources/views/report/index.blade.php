@@ -7,18 +7,21 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12">
-        <div class="text-center title">Báo cáo thống kê chi tiết</div>
-        <a class="btn btn-my pull-right hidden-xs hidden-sm" style="margin-top: -50px;" href="javascript:clearFilter()">Xóa
-            tìm kiếm</a>
-        <a class="btn btn-my pull-right visible-xs visible-sm" style="margin-top: -50px;"
-           href="javascript:clearFilter()">Xóa</a>
+    <div class="row title" style="min-width: 350px">
+        <div class="col-xs-10">
+            <div class="text-center ">Báo cáo thống kê chi tiết</div>
         </div>
+        <div class="col-xs-2">
+            <a class="btn btn-sm btn-my pull-right hidden-xs hidden-sm" style="margin: 0" href="javascript:clearFilter()">Xóa
+                tìm kiếm</a>
+            <a class="btn btn-xs btn-my pull-right visible-xs visible-sm" style="margin: 0"
+               href="javascript:clearFilter()">Xóa</a>
+        </div>
+
     </div>
 
 
-    <div class="row">
+    <div class="row" style="min-width: 350px">
         <div class="col-xs-12">
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
