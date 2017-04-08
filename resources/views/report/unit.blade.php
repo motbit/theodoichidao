@@ -112,8 +112,8 @@
                     <option value="">Toàn bộ</option>
                     <option value="2">Đã hoàn thành(Đúng hạn)</option>
                     <option value="3">Đã hoàn thành(Quá hạn)</option>
-                    <option value="1">Chưa hoàn thành(Trong hạn)</option>
-                    <option value="4">Chưa hoàn thành(Quá hạn)</option>
+                    <option value="1">Đang thực hiện(Trong hạn)</option>
+                    <option value="4">Đang thực hiện(Quá hạn)</option>
                     <option value="5">Nhiệm vụ sắp hết hạn</option>
                     <option value="6">Nhiệm vụ đã bị hủy</option>
                 </select>
@@ -140,10 +140,10 @@
         </div>
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl1"></div>
-            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong
+            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Đang thực hiện</span>(Trong
                 hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
             <div class="note-cl cl4"></div>
-            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá
+            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Đang thực hiện</span>(Quá
                 hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
@@ -196,10 +196,10 @@
                 }
             }
             $name_stt = array();
-            $name_stt[1] = "Chưa hoàn thành (trong hạn)";
+            $name_stt[1] = "Đang thực hiện (trong hạn)";
             $name_stt[2] = "Đã hoàn thành (đúng hạn)";
             $name_stt[3] = "Đã hoàn thành (quá hạn)";
-            $name_stt[4] = "Chưa hoàn thành (quá hạn)";
+            $name_stt[4] = "Đang thực hiện (quá hạn)";
             $name_stt[5] = "Sắp hết hạn (7 ngày)";
             $name_stt[6] = "Bị hủy";
             ?>

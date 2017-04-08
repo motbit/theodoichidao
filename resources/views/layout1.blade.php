@@ -209,17 +209,20 @@
     var data_export = {};
     function reloadDataExport(){
         var data =  new Array();
-        $(".row-export").each(function(){
-            var td = $(this).children();
-            data.push({
-                "idx" : formatExport(td.get(0).innerHTML),
-                "content" : formatExport(td.get(1).innerHTML),
-                "source" : formatExport(td.get(2).innerHTML),
-                "unit" : formatExport(td.get(3).innerHTML),
-                "follow" : formatExport(td.get(4).innerHTML),
-                "deadline" : formatExport(td.get(5).innerHTML),
-                "status" : formatExport(td.get(6).innerHTML),
-            });
+        $(".row-export").each(function(idx){
+            if (idx < 100) {
+                var td = $(this).children();
+                data.push({
+                    "idx": formatExport(td.get(0).innerHTML),
+                    "content": formatExport(td.get(1).innerHTML),
+                    "source": formatExport(td.get(5).innerHTML),
+                    "unit": formatExport(td.get(2).innerHTML),
+                    "follow": formatExport(td.get(4).innerHTML),
+                    "deadline": formatExport(td.get(6).innerHTML),
+                    "status": formatExport(td.get(7).innerHTML),
+                    "progress": formatExport(td.get(3).innerHTML),
+                });
+            }
         });
         data_export = data;
     }

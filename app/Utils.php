@@ -17,4 +17,8 @@ class Utils extends  Model
     public static function listTypeSource(){
         return DB::table('type')->get();
     }
+
+    public static function getDataExport($data, $row_sort = "id", $type_sort = "DESC"){
+
+    }
 }

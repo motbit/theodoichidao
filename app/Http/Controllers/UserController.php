@@ -171,7 +171,7 @@ class UserController extends Controller
             } else {
                 $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('fullname') . " </b>không thành công!");
             }
-            Log::info('Admin ID #' . Auth::id() . ' update user #' . $id, $data);
+//            Log::info('Admin ID #' . Auth::id() . ' update user #' . $id, $data);
 
             return redirect()->action(
                 'UserController@index', ['update' => $result]
@@ -193,7 +193,7 @@ class UserController extends Controller
             } else {
                 $request->session()->flash('message', "Thêm người dùng mới thất bại!");
             }
-            Log::info('Admin ID #' . Auth::id() . ' add new user #' . $result, $data);
+//            Log::info('Admin ID #' . Auth::id() . ' add new user #' . $result, $data);
 
             if($result) {
                 return redirect()->action(

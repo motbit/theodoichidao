@@ -20,10 +20,10 @@
         </div>
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl1"></div>
-            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Chưa hoàn thành</span>(Trong
+            <a id="a1" class="a-status" href="javascript:filterStatus(1)"><span class="note-tx">Đang thực hiện</span>(Trong
                 hạn, <span class="count-st" id="row-st-1"></span>)</a><br>
             <div class="note-cl cl4"></div>
-            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Chưa hoàn thành</span>(Quá
+            <a id="a4" class="a-status" href="javascript:filterStatus(4)"><span class="note-tx">Đang thực hiện</span>(Quá
                 hạn, <span class="count-st" id="row-st-4"></span>)</a>
         </div>
         <div class="col-xs-12 col-md-4">
@@ -40,13 +40,15 @@
         <tr>
             <th style="width: 15px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
+            <th style="min-width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
             <th style="width: 120px"> Tiến độ<br><input type="text"></th>
-            <th class="hidden-xs hidden-sm " style="width: 160px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
-            <th class="hidden-xs hidden-sm " style="width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
-            <th class="hidden-xs hidden-sm " style="width: 80px"> Thời hạn HT<br><input type="text" class="datepicker"></th>
-            <th class="hidden-xs hidden-sm hidden">Trạng thái</th>
-            <th class="hidden-xs hidden-sm hidden"><input type="text" id="filter-status"></th>
+            <th class="" style="min-width: 180px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
+            <th class="" style="min-width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
+            {{--<th style="width: 85px"> Người chỉ đạo<br><input type="text"></th>--}}
+            <th class="" style="min-width: 80px"> Thời hạn HT<br><input type="text" class="datepicker">
+            </th>
+            <th class=" hidden">Trạng thái</th>
+            <th class=" hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
         <tbody>
@@ -73,10 +75,10 @@
                 }
             }
             $name_stt = array();
-            $name_stt[1] = "Chưa hoàn thành (trong hạn)";
+            $name_stt[1] = "Đang thực hiện (trong hạn)";
             $name_stt[2] = "Đã hoàn thành (đúng hạn)";
             $name_stt[3] = "Đã hoàn thành (quá hạn)";
-            $name_stt[4] = "Chưa hoàn thành (quá hạn)";
+            $name_stt[4] = "Đang thực hiện (quá hạn)";
             $name_stt[5] = "Sắp hết hạn (7 ngày)";
             $name_stt[6] = "Bị hủy";
             ?>
@@ -120,7 +122,7 @@
                 @else
                     <td id="progress-{{$row->id}}">{{$row->progress}}</td>
                 @endif
-                <td class="hidden-xs hidden-sm" onclick="showfollow({{$idx}})">
+                <td class="" onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
                         @foreach($units = explode(',', $row->follow) as $i)
@@ -153,16 +155,16 @@
                         @endif
                     </ul>
                 </td>
-                <td class="hidden-xs hidden-sm "> @foreach(explode('|', $row->source) as $s)
+                <td class=" "> @foreach(explode('|', $row->source) as $s)
                         <ul class="unit-list">
                             @if($s != '')
                                 <li> {{ $s }} </li>
                             @endif
                         </ul>
                     @endforeach </td>
-                <td class="hidden-xs hidden-sm "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td class="hidden hidden-xs hidden-sm ">{{$name_stt[$st]}}</td>
-                <td class="hidden hidden-xs hidden-sm ">{{$st}}</td>
+                <td class=" "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td class="hidden  ">{{$name_stt[$st]}}</td>
+                <td class="hidden  ">{{$st}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -188,7 +190,7 @@
                     </div>
                     <div class="form-group  from-inline">
                         <label>Tình trạng</label>
-                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ chưa hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
                     </div>

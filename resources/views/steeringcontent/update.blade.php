@@ -116,7 +116,7 @@
 
     {{--<div class="form-group">--}}
         {{--{!! Form::label('Đánh giá') !!}--}}
-        {{--{!! Form::radio('status', 0,($row->status==0)) !!} Chưa hoàn thành--}}
+        {{--{!! Form::radio('status', 0,($row->status==0)) !!} Đang thực hiện--}}
         {{--{!! Form::radio('status', 1,($row->status==1)) !!} Hoàn thành--}}
         {{--{!! Form::radio('status', -1,($row->status==-1)) !!} Bị hủy--}}
 
