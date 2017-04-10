@@ -244,26 +244,6 @@
                         },
                         text: 'Xuất ra PDF',
                     },
-//                    {
-//                        extend: 'excel',
-//                        text: 'Xuất ra Excel',
-//                        stripHtml: false,
-//                        decodeEntities: true,
-//                        columns: ':visible',
-//                        modifier: {
-//                            selected: true
-//                        },
-//                        exportOptions: {
-//                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
-//                            format: {
-//                                body: function (data, row, column, node) {
-//
-//                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ').replace(/•/g,"\r\n•").replace(/\[\+\] Xem thêm/g,"").trim();
-//
-//                                }
-//                            }
-//                        }
-//                    }
                 ],
                 bSort: false,
                 bLengthChange: false,
@@ -276,21 +256,32 @@
                 }
             });
 
-            // Apply the search
+            var oSettings = table.settings();
+
             table.columns().every(function () {
                 var that = this;
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
+                        oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
+                        table.draw();
                         if (this.id != "filter-status") {
                             reCount();
+                        }else{
+                            reloadDataExport();
                         }
+                        oSettings[0]._iDisplayLength=20;
+                        table.draw();
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                        oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
+                        table.draw();
                         reCount();
+                        oSettings[0]._iDisplayLength=20;
+                        table.draw();
                     }
                 });
             });

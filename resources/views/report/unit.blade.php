@@ -593,23 +593,32 @@
                 }
             });
 
-            // Apply the search
+            var oSettings = table.settings();
+
             table.columns().every(function () {
                 var that = this;
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value).draw();
+                        oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
+                        table.draw();
                         if (this.id != "filter-status") {
                             reCount();
                         }else{
                             reloadDataExport();
                         }
+                        oSettings[0]._iDisplayLength=20;
+                        table.draw();
                     }
                 });
                 $('select', this.header()).on('change', function () {
                     if (that.search() !== this.value) {
                         that.search(this.value ? '^' + this.value + '$' : '', true, false).draw();
+                        oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
+                        table.draw();
                         reCount();
+                        oSettings[0]._iDisplayLength=20;
+                        table.draw();
                     }
                 });
             });
@@ -736,7 +745,11 @@
                 var val = $("#progress").val();
                 $("#filter-status").val(val);
                 $("#filter-status").trigger("change");
+                oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
+                table.draw();
                 reCount();
+                oSettings[0]._iDisplayLength=20;
+                table.draw();
                 return false;
 
             });
@@ -877,6 +890,7 @@
                 var d = {};
                 @foreach($unitall as $u)
                     d = countByUnit("{{$u->name}}");
+                    console.log(d);
                     if (d.total != 0){
                         data.push(d)
                     }
@@ -886,6 +900,7 @@
         }
 
         function countByUnit(unit){
+            unit = unit.replace(/&amp;/g, '&');
             var data = [];
             var countall = 0;
             for (var i = 1; i <= 6; i++){

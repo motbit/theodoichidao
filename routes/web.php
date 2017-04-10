@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'delete','SourcesteeringController@delete' )->name('sourcesteering-delete');
         Route::get( 'update','SourcesteeringController@edit' )->name('sourcesteering-update');
         Route::post( 'update','SourcesteeringController@update' )->name('sourcesteering-update');
+        Route::post( 'addsource','SourcesteeringController@apiAddSource' )->name('sourcesteering-addsource');
     });
 
     Route::group(['prefix' => 'steeringcontent'], function () {

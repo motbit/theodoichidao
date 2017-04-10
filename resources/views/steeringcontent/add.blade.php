@@ -10,7 +10,7 @@
     <div class="text-center title">Thêm nhiệm vụ mới</div>
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
-            <p  class="alert alert-danger">{{ $message }}</p>
+            <p class="alert alert-danger">{{ $message }}</p>
         @endforeach
     @endif
     {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
@@ -31,6 +31,7 @@
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
+        <div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>
     </div>
     <div class="form-group form-inline">
         <label>Người chỉ đạo:<span class="required">(*)</span></label>
@@ -118,6 +119,52 @@
                             </tr>
                         @endforeach
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-add-source" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm nguồn chỉ đạo:</h4>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(array('route' => 'sourcesteering-addsource', 'class' => 'form', 'files'=>'true', 'id'=>'form-add-source')) !!}
+                    <div class="form-group form-inline">
+                        <label>Loại nguồn:</label>
+                        <select name="type" class="form-control">
+                            @foreach($type as $t)
+                                <option value="{{$t->id}}">{{$t->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Số kí hiệu: <span class="required">(*)</span></label>
+                        <input id="new-source-code" type="text" required name="code" class="form-control" value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Trích yếu: <span class="required">(*)</span></label>
+                        <textarea name="name" style="width: 100%;" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày ban hành: <span class="required">(*)</span></label>
+                        <input id="my-time" name="time" type="text" class="form-control datepicker" required value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Người ký:</label>
+                        <input type="text" name="sign_by" class="form-control" value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label style="float: left">File đính kèm:</label>
+                        {!! Form::file('docs', array('class'=>'')) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::submit('Hoàn tất',
+                          array('class'=>'btn btn-my')) !!}
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -252,187 +299,220 @@
                 </div>
             </div>
         </div>
-        <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
-        <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
-        <script>
-            var sources = [
-                @foreach($sourcesteering as $s)
-                        '{{$s->code}}',
-                @endforeach
-            ];
-            var viphumans = [
-                @foreach($viphuman as $v)
-                        '{{$v->name}}',
-                @endforeach
-            ];
-            var unitname = [
-                @foreach($unit as $u)
-                        '{{$u->name}}',
-                @endforeach
-            ];
-            function split(val) {
-                return val.split(/,\s*/);
+    </div>
+    <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
+    <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
+    <script>
+        var sources = [
+            @foreach($sourcesteering as $s)
+                '{{$s->code}}',
+            @endforeach
+        ];
+        var viphumans = [
+            @foreach($viphuman as $v)
+                '{{$v->name}}',
+            @endforeach
+        ];
+        var unitname = [
+            @foreach($unit as $u)
+                '{{$u->name}}',
+            @endforeach
+        ];
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        function getCurrentDate() {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
             }
-            function extractLast(term) {
-                return split(term).pop();
+            if (mm < 10) {
+                mm = '0' + mm;
             }
-            function getCurrentDate() {
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1; //January is 0!
-                var yyyy = today.getFullYear();
-                if (dd < 10) {
-                    dd = '0' + dd;
-                }
-                if (mm < 10) {
-                    mm = '0' + mm;
-                }
-                var today = dd + '/' + mm + '/' + yyyy;
-                return today;
-            }
-            $(document).ready(function () {
+            var today = dd + '/' + mm + '/' + yyyy;
+            return today;
+        }
+        $(document).ready(function () {
 //                $('input[name="steer_time"]').val(getCurrentDate());
-                $("#source").autocomplete({
-                    source: sources
-                });
-                $("#viphuman").autocomplete({
-                    source: viphumans
-                });
+            $("#source").autocomplete({
+                source: sources
             });
-            $('input:checkbox[name=psource]').change(function () {
+            $("#viphuman").autocomplete({
+                source: viphumans
+            });
+        });
+        $('input:checkbox[name=psource]').change(function () {
 //            $('input[name="source"]').val($('input[name="psource"]:checked').val())
 //            var time = $('input[name="psource"]:checked').attr('data-time');
 //            $('input[name="steer_time"]').val(time);
-                var arr = [];
-                $('input:checkbox[name=psource]:checked').each(function(){
-                    arr.push($(this).val());
-                });
-                $("#msource").val(arr).trigger('change');
+            var arr = [];
+            $('input:checkbox[name=psource]:checked').each(function () {
+                arr.push($(this).val());
             });
+            $("#msource").val(arr).trigger('change');
+        });
 
-            $('input[name="source"]').change(function () {
-                var val = $('input[name="source"]').val();
-                $('input:checkbox[name=psource][value="' + val + '"]').attr('checked', true);
+        $('input[name="source"]').change(function () {
+            var val = $('input[name="source"]').val();
+            $('input:checkbox[name=psource][value="' + val + '"]').attr('checked', true);
+        });
+
+
+        $('input:radio[name=pviphuman]').change(function () {
+            var name = $('input[name="pviphuman"]:checked').attr('data-name');
+            $('input[name="viphuman"]').val(name);
+        });
+
+        $('input[name="viphuman"]').change(function () {
+            var val = $('input[name="viphuman"]').val();
+            $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked', true);
+        });
+
+
+        //        $('input:radio[name=pfunit]').change(function () {
+        //            var id = $('input[name="pfunit"]:checked').val();
+        //            $("#fList").val(id).trigger('change');
+        ////            $('#fList option[value=' + id +']').attr('selected','selected');
+        //        });
+
+        $('input:checkbox[name=pfunit]').change(function () {
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=pfunit]:checked').each(function () {
+                vl = $(this).val();
+                arr.push(vl);
             });
-
-
-            $('input:radio[name=pviphuman]').change(function () {
-                var name = $('input[name="pviphuman"]:checked').attr('data-name');
-                $('input[name="viphuman"]').val(name);
-            });
-
-            $('input[name="viphuman"]').change(function () {
-                var val = $('input[name="viphuman"]').val();
-                $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked', true);
-            });
-
-
-            //        $('input:radio[name=pfunit]').change(function () {
-            //            var id = $('input[name="pfunit"]:checked').val();
-            //            $("#fList").val(id).trigger('change');
-            ////            $('#fList option[value=' + id +']').attr('selected','selected');
-            //        });
-
-            $('input:checkbox[name=pfunit]').change(function () {
-                var arr = [];
-                var vl = '';
-                $('input:checkbox[name=pfunit]:checked').each(function () {
-                    vl = $(this).val();
-                    arr.push(vl);
-                });
-                $("#fList").val(arr).trigger('change');
-            });
-            $('input:checkbox[name=pfunit-parent]').change(function () {
-                var id = $(this).val();
-                if (!$(this).is(":checked")) {
-                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
-                } else {
-                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
-                }
-                var arr = [];
-                var vl = '';
-                $('input:checkbox[name=pfunit]:checked').each(function () {
-                    vl = $(this).val();
-                    arr.push(vl);
-                });
-                $("#fList").val(arr).trigger('change');
-            });
-
-
-            $('input:checkbox[name=psunit]').change(function () {
-                var arr = [];
-                var vl = '';
-                $('input:checkbox[name=psunit]:checked').each(function () {
-                    vl = $(this).val();
-                    arr.push(vl);
-                });
-                $("#sList").val(arr).trigger('change');
-            });
-
-            $('input:checkbox[name=psunit-parent]').change(function () {
-                var id = $(this).val();
-                if (!$(this).is(":checked")) {
-                    alert('t');
-                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
-                } else {
-                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
-                }
-                var arr = [];
-                var vl = '';
-                $('input:checkbox[name=psunit]:checked').each(function () {
-                    vl = $(this).val();
-                    arr.push(vl);
-                });
-                $("#sList").val(arr).trigger('change');
-            });
-
-            //        $('#fList').change(function() {
-            //            var val = $("#fList option:selected").val();
-            //            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
-            //        });
-
-            $('#fList').on("select2:select", function (event) {
-                $(event.currentTarget).find("option:selected").each(function (i, selected) {
-                    i = $(selected).val();
-                    $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked', true);
-                });
-            });
-            $("#fList").on("select2:unselect", function (event) {
-                $('input:checkbox[name=pfunit]').prop('checked', false);
-
-                $(event.currentTarget).find("option:selected").each(function (i, selected) {
-                    i = $(selected).val();
-                    $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked', true);
-                });
-            });
-
-            $('#sList').on("select2:select", function (event) {
-                $(event.currentTarget).find("option:selected").each(function (i, selected) {
-                    i = $(selected).val();
-                    $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked', true);
-                });
-            });
-
-            $("#sList").on("select2:unselect", function (event) {
-                $('input:checkbox[name=psunit]').prop('checked', false);
-                $(event.currentTarget).find("option:selected").each(function (i, selected) {
-                    i = $(selected).val();
-                    $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked', true);
-                });
-            });
-
-            $(".select-multiple").select2({
-                tags: true
-            });
-            $(".select-single").select2();
-        </script>
-        <style>
-            .ipw {
-                width: 300px !important;
+            $("#fList").val(arr).trigger('change');
+        });
+        $('input:checkbox[name=pfunit-parent]').change(function () {
+            var id = $(this).val();
+            if (!$(this).is(":checked")) {
+                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
+            } else {
+                $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
             }
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=pfunit]:checked').each(function () {
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#fList").val(arr).trigger('change');
+        });
 
-            .select2 {
-                width: 300px !important;
+
+        $('input:checkbox[name=psunit]').change(function () {
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=psunit]:checked').each(function () {
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#sList").val(arr).trigger('change');
+        });
+
+        $('input:checkbox[name=psunit-parent]').change(function () {
+            var id = $(this).val();
+            if (!$(this).is(":checked")) {
+                alert('t');
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
+            } else {
+                $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
             }
-        </style>
+            var arr = [];
+            var vl = '';
+            $('input:checkbox[name=psunit]:checked').each(function () {
+                vl = $(this).val();
+                arr.push(vl);
+            });
+            $("#sList").val(arr).trigger('change');
+        });
+
+        //        $('#fList').change(function() {
+        //            var val = $("#fList option:selected").val();
+        //            $("input:radio[name=pfunit][value=" + val + "]").attr('checked', true);
+        //        });
+
+        $('#fList').on("select2:select", function (event) {
+            $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                i = $(selected).val();
+                $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked', true);
+            });
+        });
+        $("#fList").on("select2:unselect", function (event) {
+            $('input:checkbox[name=pfunit]').prop('checked', false);
+
+            $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                i = $(selected).val();
+                $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked', true);
+            });
+        });
+
+        $('#sList').on("select2:select", function (event) {
+            $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                i = $(selected).val();
+                $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked', true);
+            });
+        });
+
+        $("#sList").on("select2:unselect", function (event) {
+            $('input:checkbox[name=psunit]').prop('checked', false);
+            $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                i = $(selected).val();
+                $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked', true);
+            });
+        });
+
+        $(".select-multiple").select2({
+            tags: true
+        });
+        $(".select-single").select2();
+
+        $("#form-add-source").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+            var code = $("#new-source-code").val();
+
+            $ (".loader").show();
+            var url = $(this).attr("action");
+            console.log(url);
+            return;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                async: false,
+                success: function (result) {
+                    console.log(result);
+                    $(".loader").hide();
+                    $("#modal-").modal("hide");
+                    $("#progress-" + steering_id).html(note)
+                    resetFromProgress();
+                    reStyleRow(steering_id, status, time_log);
+                },
+                error: function () {
+                    $(".loader").hide();
+                    alert("Xảy ra lỗi nội bộ");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    </script>
+    <style>
+        .ipw {
+            width: 300px !important;
+        }
+
+        .select2 {
+            width: 300px !important;
+        }
+    </style>
 @stop

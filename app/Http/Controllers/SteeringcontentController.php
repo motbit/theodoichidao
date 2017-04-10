@@ -106,7 +106,7 @@ class SteeringcontentController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = $row->code;
         }
-
+        $type = DB::table('type')->orderBy('_order', 'ASC')->get();
         if ($id > 0) {
             $data = Steeringcontent::where('id', $id)->get();
 
@@ -115,11 +115,12 @@ class SteeringcontentController extends Controller
 
             return view('steeringcontent.update', ['dictunit' => $dictunit, 'source' => $source,
                 'data' => $data, 'dtfollowArr' => $dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering' => $sourcesteering, 'treeunit' => $tree_unit, 'unit' => $unit,
-                'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
+                'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user, 'type' => $type]);
         } else {
 
             return view('steeringcontent.add', ['sourcesteering' => $sourcesteering, 'dictunit' => $dictunit,
-                'treeunit' => $tree_unit, 'unit' => $unit, 'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user]);
+                'treeunit' => $tree_unit, 'unit' => $unit, 'priority' => $priority, 'viphuman' => $viphuman,
+                'user' => $user, 'type' => $type]);
         }
     }
 

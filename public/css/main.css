@@ -274,6 +274,10 @@ label {
     background-image: url("../img/ico-search.png");
 }
 
+.ico-add {
+    background-image: url("../img/ico-add.png");
+}
+
 .ico-menu {
     background-image: url("../img/ico-menu.png");
 }
