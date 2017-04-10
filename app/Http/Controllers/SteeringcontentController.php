@@ -151,50 +151,57 @@ class SteeringcontentController extends Controller
 
         $firstUnit = $request->input('firtunit');
         $fu = "";
-        foreach ($firstUnit as $u) {
-            if(preg_match('/[uh]\|\d+/',$u)) {
-                $fu .= $u . ",";
-            } else {
 
-                $words = explode(" ", Utils::stripUnicode($u));
-                $letters = "";
-                foreach ($words as $value) {
-                    $letters .= substr($value, 0, 1);
+        if(!empty($firstUnit)) {
+            foreach ($firstUnit as $u) {
+                if(preg_match('/[uh]\|\d+/',$u)) {
+                    $fu .= $u . ",";
+                } else {
+
+                    $words = explode(" ", Utils::stripUnicode($u));
+                    $letters = "";
+                    foreach ($words as $value) {
+                        $letters .= substr($value, 0, 1);
+                    }
+                    // Them Unit moi neu khong ton tai
+                    $newuid = Unit::insertGetId([
+                        'name' => $u,
+                        'shortname' => strtoupper($letters),
+                        'parent_id' => $khacid,
+                    ]);
+
+                    $fu .= "u|" . $newuid . ",";
                 }
-                // Them Unit moi neu khong ton tai
-                $newuid = Unit::insertGetId([
-                    'name' => $u,
-                    'shortname' => strtoupper($letters),
-                    'parent_id' => $khacid,
-                ]);
 
-                $fu .= "u|" . $newuid . ",";
             }
 
         }
         $secondunit = $request->input('secondunit');
 
         $su = "";
-        foreach ($secondunit as $u) {
-            if(preg_match('/[uh]\|\d+/',$u)) {
-                $su .= $u . ",";
-            } else {
 
-                $words = explode(" ", Utils::stripUnicode($u));
-                $letters = "";
-                foreach ($words as $value) {
-                    $letters .= substr($value, 0, 1);
+        if(!empty($secondunit)) {
+            foreach ($secondunit as $u) {
+                if(preg_match('/[uh]\|\d+/',$u)) {
+                    $su .= $u . ",";
+                } else {
+
+                    $words = explode(" ", Utils::stripUnicode($u));
+                    $letters = "";
+                    foreach ($words as $value) {
+                        $letters .= substr($value, 0, 1);
+                    }
+                    // Them Unit moi neu khong ton tai
+                    $newuid = Unit::insertGetId([
+                        'name' => $u,
+                        'shortname' => strtoupper($letters),
+                        'parent_id' => $khacid,
+                    ]);
+
+                    $su .= "u|" . $newuid . ",";
                 }
-                // Them Unit moi neu khong ton tai
-                $newuid = Unit::insertGetId([
-                    'name' => $u,
-                    'shortname' => strtoupper($letters),
-                    'parent_id' => $khacid,
-                ]);
 
-                $su .= "u|" . $newuid . ",";
             }
-
         }
 
         if ($id > 0) {

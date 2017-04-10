@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Utils.php" afterPath="$PROJECT_DIR$/app/Utils.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" afterPath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" afterPath="$PROJECT_DIR$/storage/framework/views/832990e5ee35b5f9375db794b23bfae173ef8112.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,21 +32,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1848">
-              <caret line="68" column="44" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="daumoi.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1584">
-              <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
+            <state relative-caret-position="402">
+              <caret line="397" column="20" selection-start-line="397" selection-start-column="16" selection-end-line="397" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -72,22 +52,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="phoihop.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/xulycv/phoihop.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="30" column="65" selection-start-line="30" selection-start-column="65" selection-end-line="30" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="layout1.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="7392">
               <caret line="224" column="13" selection-start-line="224" selection-start-column="13" selection-end-line="224" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/user/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-330">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/user/add.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="50" />
+              <folding>
+                <marker date="1491551295374" expanded="true" signature="577:741" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="589:739" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="627:738" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="868:1033" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="884:1031" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="914:1030" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1170:1346" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1182:1344" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1220:1343" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1453:1563" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1467:1561" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1666:1774" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1680:1772" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1842:1917" ph="..." />
+                <marker date="1491551295374" expanded="true" signature="1856:1915" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,8 +142,8 @@
       <file leaf-file-name="SteeringcontentController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="233" column="60" selection-start-line="233" selection-start-column="60" selection-end-line="233" selection-end-column="60" />
+            <state relative-caret-position="115">
+              <caret line="182" column="33" selection-start-line="182" selection-start-column="33" selection-end-line="182" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -250,8 +256,8 @@
         <option value="$PROJECT_DIR$/resources/views/layout1.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/report/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Unit.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
         <option value="$PROJECT_DIR$/app/Utils.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
       </list>
     </option>
   </component>
@@ -312,6 +318,82 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="steeringcontent" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theodoichidao" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -529,7 +611,7 @@
       <workItem from="1491551047203" duration="7115000" />
       <workItem from="1491572736258" duration="4007000" />
       <workItem from="1491577158100" duration="225000" />
-      <workItem from="1491788930885" duration="3983000" />
+      <workItem from="1491788930885" duration="5438000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -542,7 +624,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163421000" />
+    <option name="totallyTimeSpent" value="164876000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
@@ -600,7 +682,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/tcpdf/examples/example_001.php" />
     <entry file="file://$PROJECT_DIR$/public/tcpdf/tcpdf.php" />
     <entry file="file://$PROJECT_DIR$/public/tcpdf/examples/example_005.php" />
     <entry file="file://$PROJECT_DIR$/public/tcpdf/examples/example_004.php" />
@@ -731,13 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/user/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="32" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/unit/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -849,14 +923,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/storage/framework/views/12f73cf1d7796e261e296601bd73e76162a12846.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6963">
-          <caret line="211" column="52" selection-start-line="211" selection-start-column="52" selection-end-line="211" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1584">
@@ -950,10 +1016,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/user/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/user/add.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="50" />
+          <folding>
+            <marker date="1491551295374" expanded="true" signature="577:741" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="589:739" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="627:738" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="868:1033" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="884:1031" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="914:1030" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1170:1346" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1182:1344" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1220:1343" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1453:1563" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1467:1561" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1666:1774" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1680:1772" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1842:1917" ph="..." />
+            <marker date="1491551295374" expanded="true" signature="1856:1915" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="397" column="20" selection-start-line="397" selection-start-column="16" selection-end-line="397" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="233" column="60" selection-start-line="233" selection-start-column="60" selection-end-line="233" selection-end-column="60" />
+        <state relative-caret-position="115">
+          <caret line="182" column="33" selection-start-line="182" selection-start-column="33" selection-end-line="182" selection-end-column="33" />
           <folding />
         </state>
       </provider>
