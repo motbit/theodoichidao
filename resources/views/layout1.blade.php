@@ -47,7 +47,7 @@
         ]) !!};
         $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'dd/mm/yy',
                 dateFormat: 'dd/mm/yy',
                 monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
                     'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
@@ -209,6 +209,13 @@
     var data_export = {};
     function reloadDataExport(){
         var data =  new Array();
+        $(".id-export").each(function(idx){
+            data.push($(this).html());
+        });
+        data_export = data;
+    }
+    function reloadDataExportBK(){
+        var data =  new Array();
         $(".row-export").each(function(idx){
             if (idx < 100) {
                 var td = $(this).children();
@@ -227,7 +234,9 @@
         data_export = data;
     }
 
-    function exportExcel(){
+    function exportExcel(rowsort, typesort){
+        rowsort = rowsort || "id";
+        typesort = typesort || "DESC";
         console.log(data_export);
         $.ajax({
             headers: {
@@ -236,7 +245,8 @@
             url: "{{$_ENV['ALIAS']}}/report/exportsteering",
             type: 'POST',
             dataType: 'json',
-            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_export},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'),
+                data: data_export, rowsort: rowsort, typesort: typesort},
             async: false,
             success: function (result) {
                 console.log(result);

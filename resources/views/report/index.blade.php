@@ -171,14 +171,15 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
+            <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 85px"> Người chỉ đạo<br><input type="text" id="id_conductor"></th>
-            <th style="width: 85px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
-            <th style="width: 90px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
-            <th style="width: 145px"> Đơn vị/Cá nhân đầu mối<input id="id_funit" type="text"></th>
-            <th style="width: 155px"> Đơn vị/Cá nhân phối hợp<br><input id="id_sunit" type="text"></th>
-            <th style="width: 75px"> Thời hạn HT<br><input id="id_complete_time" type="text" class="datepicker">
+            <th style="min-width: 100px"> Người chỉ đạo<br><input type="text" id="id_conductor"></th>
+            <th style="min-width: 100px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
+            <th style="min-width: 100px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
+            <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
+            <th style="min-width: 100px"> Đv/Cn phối hợp<br><input id="id_sunit" type="text"></th>
+            <th style="min-width: 50px">Hạn HT<br><input id="id_complete_time" type="text" class="datepicker">
             </th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
@@ -218,10 +219,11 @@
             ?>
 
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
+                <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td> {{$row->conductor}} </td>
-                <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }} </td>
+                <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
                     @foreach(explode('|', $row->source) as $s)
                         <ul class="unit-list">
@@ -294,7 +296,7 @@
                         @endif
                     </ul>
                 </td>
-                <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
+                <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
             </tr>
@@ -304,7 +306,7 @@
     </table>
     <div>
         <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
-                 href="javascript:exportReportExcel()"><span>Xuất ra Excel</span></a></span>
+                 href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
         <span class="panel-button"></span>
     </div>
     <div id="modal-source" class="modal fade" role="dialog">
@@ -459,7 +461,7 @@
     <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
     <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
     <script>
-        var current_date = "{{date('d/m/Y')}}";
+        var current_date = "{{date('d/m/y')}}";
         var sources = [
             @foreach($sourcesteering as $s)
                     '{{$s->code}}',
@@ -556,7 +558,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
@@ -613,6 +615,8 @@
                         that.search(this.value).draw();
                         if (this.id != "filter-status") {
                             reCount();
+                        }else{
+                            reloadDataExport();
                         }
                     }
                 });
@@ -816,7 +820,7 @@
             var v4 = $('.row-st-3').length;
             var v5 = $('.row-st-6').length;
             $("#btn-export").attr('href', '{{$_ENV['ALIAS']}}/report/export?v1=' + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4 + "&v5=" + v5 + "&f=" + getFilterString() + "");
-            reloadDataReport();
+            reloadDataExport();
         }
         function getFilterString() {
             var filter = "";

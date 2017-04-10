@@ -64,7 +64,7 @@
                         @endif
                     @endforeach
                 </td>
-                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/y') }}</td>
             </tr>
         @endforeach
         </tbody>

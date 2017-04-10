@@ -82,7 +82,7 @@
                         <a href="<?php echo e($_ENV['ALIAS']); ?>/file/<?php echo e($row->file_attach); ?>" download>Tải về</a>
                     <?php endif; ?>
                 </td>
-                <td><?php echo e(date("d/m/Y", strtotime($row->time))); ?></td>
+                <td><?php echo e(date("d/m/y", strtotime($row->time))); ?></td>
                 <?php if(\App\Roles::accessAction(Request::path(), 'edit')): ?>
                     <td>
                         <a href="<?php echo e($_ENV['ALIAS']); ?>/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
@@ -101,7 +101,7 @@
         </tbody>
     </table>
     <script>
-        var current_date = "<?php echo e(date('d/m/Y')); ?>";
+        var current_date = "<?php echo e(date('d/m/y')); ?>";
 
         $(document).ready(function () {
             // DataTable

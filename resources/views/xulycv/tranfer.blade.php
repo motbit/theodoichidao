@@ -29,7 +29,7 @@
                     <td>{{$row->steering_name}}</td>
                     <td>{{(array_key_exists($row->receiver, $user))?$user[$row->receiver]:""}}</td>
                     <td>{{$row->note}}</td>
-                    <td>{{date("d/m/Y", strtotime($row->time_log))}}</td>
+                    <td>{{date("d/m/y", strtotime($row->time_log))}}</td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -53,7 +53,7 @@
                         <td>{{$row->steering_name}}</td>
                         <td>{{(array_key_exists($row->sender, $user))?$user[$row->sender]:""}}</td>
                         <td>{{$row->note}}</td>
-                        <td>{{date("d/m/Y", strtotime($row->time_log))}}</td>
+                        <td>{{date("d/m/y", strtotime($row->time_log))}}</td>
                     </tr>
                 @endforeach
                 </tbody>

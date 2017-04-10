@@ -45,7 +45,7 @@
                         @endif
                     @endforeach
                 </td>
-                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
+                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/y') }}</td>
                 <td> {{$row->note}} </td>
                 <td>
                     @if($row->status === 1)

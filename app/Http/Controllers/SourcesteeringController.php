@@ -22,6 +22,7 @@ class SourcesteeringController extends Controller
             ->orderBy('time','desc')
             ->get();
         $type = DB::table('type')
+            ->orderBy('_order', 'ASC')
             ->select('name')
             ->get();
 
@@ -34,7 +35,7 @@ class SourcesteeringController extends Controller
         if (!Auth::check()){
             return redirect("login");
         }
-        $type = DB::table('type')->get();
+        $type = DB::table('type')->orderBy('_order', 'ASC')->get();
         $conductor = DB::table('viphuman')->get();
         $id = intval($request->input('id'));
         if ($id > 0) {
@@ -107,7 +108,7 @@ class SourcesteeringController extends Controller
                 'code' => $request->input('code'),
                 'sign_by' => $request->input('sign_by'),
                 'status' => $status,
-                'time' => \DateTime::createFromFormat('d/m/Y', $request->input('time'))
+                'time' => \DateTime::createFromFormat('d/m/y', $request->input('time'))
             ];
             if (isset($file)){
                 $update['file_attach'] = $file_attach;
@@ -121,7 +122,7 @@ class SourcesteeringController extends Controller
                 'sign_by' => $request->input('sign_by'),
                 'file_attach' => $file_attach,
                 'status' => $status,
-                'time' => \DateTime::createFromFormat('d/m/Y', $request->input('time')),
+                'time' => \DateTime::createFromFormat('d/m/y', $request->input('time')),
                 'created_by'=> Auth::user()->id
             ]);
         }
