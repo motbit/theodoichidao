@@ -47,7 +47,7 @@
         ]); ?>;
         $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'dd/mm/yy',
                 dateFormat: 'dd/mm/yy',
                 monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
                     'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
@@ -211,22 +211,34 @@
     var data_export = {};
     function reloadDataExport(){
         var data =  new Array();
-        $(".row-export").each(function(){
-            var td = $(this).children();
-            data.push({
-                "idx" : formatExport(td.get(0).innerHTML),
-                "content" : formatExport(td.get(1).innerHTML),
-                "source" : formatExport(td.get(2).innerHTML),
-                "unit" : formatExport(td.get(3).innerHTML),
-                "follow" : formatExport(td.get(4).innerHTML),
-                "deadline" : formatExport(td.get(5).innerHTML),
-                "status" : formatExport(td.get(6).innerHTML),
-            });
+        $(".id-export").each(function(idx){
+            data.push($(this).html());
+        });
+        data_export = data;
+    }
+    function reloadDataExportBK(){
+        var data =  new Array();
+        $(".row-export").each(function(idx){
+            if (idx < 100) {
+                var td = $(this).children();
+                data.push({
+                    "idx": formatExport(td.get(0).innerHTML),
+                    "content": formatExport(td.get(1).innerHTML),
+                    "source": formatExport(td.get(5).innerHTML),
+                    "unit": formatExport(td.get(2).innerHTML),
+                    "follow": formatExport(td.get(4).innerHTML),
+                    "deadline": formatExport(td.get(6).innerHTML),
+                    "status": formatExport(td.get(7).innerHTML),
+                    "progress": formatExport(td.get(3).innerHTML),
+                });
+            }
         });
         data_export = data;
     }
 
-    function exportExcel(){
+    function exportExcel(rowsort, typesort){
+        rowsort = rowsort || "id";
+        typesort = typesort || "DESC";
         console.log(data_export);
         $.ajax({
             headers: {
@@ -235,7 +247,8 @@
             url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportsteering",
             type: 'POST',
             dataType: 'json',
-            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_export},
+            data: {_token: $('meta[name="csrf-token"]').attr('content'),
+                data: data_export, rowsort: rowsort, typesort: typesort},
             async: false,
             success: function (result) {
                 console.log(result);

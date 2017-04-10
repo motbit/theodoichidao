@@ -6,6 +6,7 @@ use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
 use App\User;
+use App\Utils;
 use App\Viphuman;
 use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
@@ -141,16 +142,68 @@ class SteeringcontentController extends Controller
         }
         $deadline = \DateTime::createFromFormat('d/m/y', $request->input('deathline'));
         if (!$deadline) $deadline = null;
+
+        // Kiem tra Don Vi Dau Moi / Don Vi Phoi Hop
+        // Neu khong co thi Them moi va set Parrent id=5
+
+        $khacid = Unit::where('shortname', "KHAC")->pluck('id')->toArray()[0];
+
+
+        $firstUnit = $request->input('firtunit');
+        $fu = "";
+        foreach ($firstUnit as $u) {
+            if(preg_match('/[uh]\|\d+/',$u)) {
+                $fu .= $u . ",";
+            } else {
+
+                $words = explode(" ", Utils::stripUnicode($u));
+                $letters = "";
+                foreach ($words as $value) {
+                    $letters .= substr($value, 0, 1);
+                }
+                // Them Unit moi neu khong ton tai
+                $newuid = Unit::insertGetId([
+                    'name' => $u,
+                    'shortname' => strtoupper($letters),
+                    'parent_id' => $khacid,
+                ]);
+
+                $fu .= "u|" . $newuid . ",";
+            }
+
+        }
+        $secondunit = $request->input('secondunit');
+
+        $su = "";
+        foreach ($secondunit as $u) {
+            if(preg_match('/[uh]\|\d+/',$u)) {
+                $su .= $u . ",";
+            } else {
+
+                $words = explode(" ", Utils::stripUnicode($u));
+                $letters = "";
+                foreach ($words as $value) {
+                    $letters .= substr($value, 0, 1);
+                }
+                // Them Unit moi neu khong ton tai
+                $newuid = Unit::insertGetId([
+                    'name' => $u,
+                    'shortname' => strtoupper($letters),
+                    'parent_id' => $khacid,
+                ]);
+
+                $su .= "u|" . $newuid . ",";
+            }
+
+        }
+
         if ($id > 0) {
-            $firstUnit = $request->input('firtunit');
-            if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ",";
-            $secondunit = $request->input('secondunit');
-            if ($secondunit != '') $secondunit = implode(",", $secondunit) . ",";
+
             $result = Steeringcontent::where('id', $request->input('id'))->update([
                 'content' => $request->input('content'),
                 'source' => '|' . implode('|', $request->input('msource')) . '|',
-                'unit' => $firstUnit,
-                'follow' => $secondunit,
+                'unit' => $fu,
+                'follow' => $su,
                 'steer_time' => \DateTime::createFromFormat('d/m/y', $request->input('steer_time')),
                 'deadline' => $deadline,
                 'conductor' => $request->input('viphuman')
@@ -163,15 +216,11 @@ class SteeringcontentController extends Controller
             );
 
         } else {
-            $firstUnit = $request->input('firtunit');
-            if ($firstUnit != '') $firstUnit = implode(",", $firstUnit) . ',';
-            $secondunit = $request->input('secondunit');
-            if ($secondunit != '') $secondunit = implode(",", $secondunit) . ',';
             $result = Steeringcontent::insert([
                 'content' => $request->input('content'),
                 'source' => '|' . implode('|', $request->input('msource')) . '|',
-                'unit' => $firstUnit,
-                'follow' => $secondunit,
+                'unit' => $fu,
+                'follow' => $su,
                 'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => \DateTime::createFromFormat('d/m/y', $request->input('steer_time')),

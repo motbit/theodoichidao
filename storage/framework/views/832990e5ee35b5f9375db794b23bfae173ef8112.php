@@ -22,6 +22,7 @@
         input {
             height: 23px;
         }
+
         #table_filter {
             display: none;
         }
@@ -37,7 +38,7 @@
 
     <div class="text-center title">Nguồn chỉ đạo</div>
     <?php if(\App\Roles::accessAction(Request::path(), 'add')): ?>
-    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
+        <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
     <?php endif; ?>
     <table id="table" class="table table-responsive table-bordered">
         <thead>
@@ -70,7 +71,6 @@
         </thead>
         <tbody>
         <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx=>$row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <?php if(\App\Roles::accessRow(Request::path(), $row->created_by)): ?>
             <tr>
                 <td><?php echo e($idx + 1); ?></td>
                 <td><a href="steeringcontent?source=<?php echo e(urlencode($row->code)); ?>"><?php echo e($row->name); ?></a></td>
@@ -85,18 +85,22 @@
                 <td><?php echo e(date("d/m/y", strtotime($row->time))); ?></td>
                 <?php if(\App\Roles::accessAction(Request::path(), 'edit')): ?>
                     <td>
-                        <a href="<?php echo e($_ENV['ALIAS']); ?>/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20" border="0"
-                                                                              src="<?php echo e($_ENV['ALIAS']); ?>/img/edit.png"></a>
+                        <?php if(\App\Roles::accessRow(Request::path(), $row->created_by)): ?>
+                            <a href="<?php echo e($_ENV['ALIAS']); ?>/sourcesteering/update?id=<?php echo e($row->id); ?>"><img height="20"
+                                                                                                    border="0"
+                                                                                                    src="<?php echo e($_ENV['ALIAS']); ?>/img/edit.png"></a>
+                        <?php endif; ?>
                     </td>
                 <?php endif; ?>
                 <?php if(\App\Roles::accessAction(Request::path(), 'delete')): ?>
                     <td>
-                        <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="20" border="0"
-                                                                               src="<?php echo e($_ENV['ALIAS']); ?>/img/delete.png"></a>
+                        <?php if(\App\Roles::accessRow(Request::path(), $row->created_by)): ?>
+                            <a href="javascript:xoanguoidung('<?php echo e($row->id); ?>')"><img height="20" border="0"
+                                                                                   src="<?php echo e($_ENV['ALIAS']); ?>/img/delete.png"></a>
+                        <?php endif; ?>
                     </td>
                 <?php endif; ?>
             </tr>
-            <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
     </table>
@@ -111,17 +115,17 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            columns: [0, 1, 2, 3, 4, 6],
                             modifier: {
                                 page: 'current'
                             },
                             format: {
                                 header: function (data, row, column, node) {
-                                    if(row === 2) return "Loại Nguồn";
-                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    if (row === 2) return "Loại Nguồn";
+                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 },
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 }
                             }
                         },
@@ -141,14 +145,14 @@
                             selected: true
                         },
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            columns: [0, 1, 2, 3, 4, 6],
                             format: {
                                 header: function (data, row, column, node) {
-                                    if(row === 2) return "Loại Nguồn";
-                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    if (row === 2) return "Loại Nguồn";
+                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 },
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 }
                             }
                         }
@@ -183,7 +187,7 @@
 
         });
 
-        function resetFromProgress(){
+        function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='-2']").prop('checked', true);
