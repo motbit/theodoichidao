@@ -19,7 +19,7 @@ class TypeSourceController extends Controller
         if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
             return redirect('/errpermission');
         }
-        $type = DB::table('type')->get();
+        $type = DB::table('type')->orderBy('_order', 'ASC')->get();
         return view('type.index', ['type'=>$type]);
     }
 

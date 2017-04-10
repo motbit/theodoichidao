@@ -6,6 +6,7 @@ use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
 use App\User;
+use App\Utils;
 use App\Viphuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,41 @@ class ReportController extends Controller
     }
 
     public function exportSteering(Request $request) {
+        $rowsort = "id";
+        $typesort = "DESC";
+        if (isset($request->rowsort))
+            $rowsort = $request->rowsort;
+        if (isset($request->typesort))
+            $typesort = $request->$typesort;
+        $exportdata = Utils::getDataExport($request->data, $rowsort, $typesort);
+        $fileName = base_path() . "/storage/example/template_steering.xlsx";
+        $excelobj = PHPExcel_IOFactory::load($fileName);
+        $excelobj->setActiveSheetIndex(0);
+        $excelobj->getActiveSheet()->toArray(null, true, true, true);
+        foreach($exportdata as $idx=>$data){
+            $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 2), $idx + 1)
+                ->setCellValue('B'. ($idx + 2), $data['content'])
+                ->setCellValue('C'. ($idx + 2), $data['source'])
+                ->setCellValue('D'. ($idx + 2), $data['unit'])
+                ->setCellValue('E'. ($idx + 2), $data['follow'])
+                ->setCellValue('F'. ($idx + 2), $data['deadline'])
+                ->setCellValue('G'. ($idx + 2), $data['status'])
+                ->setCellValue('H'. ($idx + 2), $data['progress'])
+                ->setCellValue('I'. ($idx + 2), $data['conductor']);
+            $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
+
+        }
+        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
+        $output_file = "/baocao/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
+        $objWriter->save(base_path() . "/public" . $output_file);
+        return response()->json(['file' => $output_file]);
+    }
+
+    public function exportSteeringBK(Request $request) {
+        $rowsort = "id";
+        $typesort = "DESC";
+        if (isset($request->rowsort))
+            $rowsort = $request->rowsort;
         $fileName = base_path() . "/storage/example/template_steering.xlsx";
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);

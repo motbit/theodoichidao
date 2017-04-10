@@ -29,7 +29,7 @@ class ApiController extends Controller
         $steering_id = $request->steering_id;
         $note = $request->note;
         $status = intval($request->status);
-        $time_log = \DateTime::createFromFormat('d/m/Y', $request->time_log);
+        $time_log = \DateTime::createFromFormat('d/m/y', $request->time_log);
         $data = array();
         $data['created_by'] = Auth::user()->id;
         $data['steeringcontent'] = $steering_id;
@@ -61,7 +61,7 @@ class ApiController extends Controller
         $steering_id = $request->steering_id;
         $note = $request->note;
         $status = intval($request->pr_status);
-        $time_log = \DateTime::createFromFormat('d/m/Y', $request->time_log);
+        $time_log = \DateTime::createFromFormat('d/m/y', $request->time_log);
         $data = array();
         $data['created_by'] = Auth::user()->id;
         $data['steeringcontent'] = $steering_id;

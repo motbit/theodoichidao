@@ -26,17 +26,16 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
+            <th class="hidden"></th>
             <th style="width: 15px"></th>
-            <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="min-width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
-            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
-            <th class="" style="min-width: 180px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
-            <th class="" style="min-width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
-            {{--<th style="width: 85px"> Người chỉ đạo<br><input type="text"></th>--}}
-            <th class="" style="min-width: 80px"> Thời hạn HT<br><input type="text" class="datepicker">
-            </th>
-            <th class=" ">Trạng thái</th>
-            <th class=" "><input type="text" id="filter-status"></th>
+            <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
+            <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
+            <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
+            <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
+            <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
+            <th class="hidden">Trạng thái</th>
+            <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
         </thead>
         <tbody>
@@ -71,6 +70,7 @@
             $name_stt[6] = "Bị hủy";
             ?>
             <tr class="row-export row-st-{{$st}}">
+                <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
                 <td onclick="showunit({{$idx}})">
@@ -145,9 +145,9 @@
                             @endif
                         </ul>
                     @endforeach  </td>
-                <td class="hidden-xs hidden-sm "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/Y') }}</td>
-                <td class=" ">{{$name_stt[$st]}}</td>
-                <td class=" ">{{$st}}</td>
+                <td class="hidden-xs hidden-sm "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/y') }}</td>
+                <td class="hidden">{{$name_stt[$st]}}</td>
+                <td class="hidden">{{$st}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -179,7 +179,7 @@
         </div>
     </div>
     <script>
-        var current_date = "{{date('d/m/Y')}}";
+        var current_date = "{{date('d/m/y')}}";
         function showDetailProgress(id) {
             $(".loader").show();
             $("#steering_id").val(id);
@@ -226,7 +226,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8],
                             modifier: {
                                 page: 'all'
                             },

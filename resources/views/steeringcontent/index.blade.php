@@ -57,16 +57,16 @@
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
+            <th class="hidden"></th>
             <th style="width: 15px"></th>
-            <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="min-width: 160px"> Đơn vị/Cá nhân đầu mối<input type="text"></th>
-            <th style="width: 120px"> Tiến độ<br><input type="text"></th>
-            <th class="" style="min-width: 180px"> Đơn vị/Cá nhân phối hợp<br><input type="text"></th>
-            <th class="" style="min-width: 120px"> Nguồn chỉ đạo<br><input type="text"></th>
-            {{--<th style="width: 85px"> Người chỉ đạo<br><input type="text"></th>--}}
-            <th class="" style="min-width: 80px"> Thời hạn HT<br><input type="text" class="datepicker">
-            </th>
+            <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
+            <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
+            <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
+            <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
+            <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
+            <th style="min-width: 80px">Người nhập<br><input type="text"></th>
             @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class=" td-action"></th>
             @endif
@@ -113,10 +113,9 @@
             ?>
 
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
+                <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-
-
                 <td onclick="javascript:showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
@@ -151,7 +150,7 @@
 
                 @if(\App\Roles::accessAction(Request::path(), 'status'))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
-                        data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/Y'):'' }}"
+                        data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }}"
                         class="progress-update"> {{$row->progress}}</td>
                 @else
                     <td id="progress-{{$row->id}}">{{$row->progress}}</td>
@@ -208,8 +207,9 @@
                 {{--<td> {{$row->conductor}} </td>--}}
 
 
-                <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/Y'):'' }}</td>
+                <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
+                <td>{{$user[$row->created_by]}}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td class="">
                         @if(\App\Roles::accessRow(Request::path(), $row->manager))
@@ -284,7 +284,7 @@
                     <div class="form-group form-inline">
                         <label>Ngày cập nhật</label>
                         <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
-                               required value="{{date('d/m/Y')}}">
+                               required value="{{date('d/m/y')}}">
                         <input class="btn btn-my pull-right" type="submit" value="Lưu">
                     </div>
                     {!! Form::close() !!}
@@ -338,7 +338,7 @@
         </div>
     </div>
     <script>
-        var current_date = "{{date('d/m/Y')}}";
+        var current_date = "{{date('d/m/y')}}";
         //        var showpr = false;
         //        $("#form-progress").hide();
         //        function showAddProgress() {
@@ -556,12 +556,13 @@
 
             // DataTable
             var table = $('#table').DataTable({
+                autoWidth: false,
                 dom: 'Bfrtip',
                 buttons: [
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6],
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8],
                             format: {
                                 body: function (data, row, column, node) {
                                     return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();

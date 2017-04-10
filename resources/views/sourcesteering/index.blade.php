@@ -22,6 +22,7 @@
         input {
             height: 23px;
         }
+
         #table_filter {
             display: none;
         }
@@ -34,7 +35,7 @@
 
     <div class="text-center title">Nguồn chỉ đạo</div>
     @if(\App\Roles::accessAction(Request::path(), 'add'))
-    <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
+        <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
     @endif
     <table id="table" class="table table-responsive table-bordered">
         <thead>
@@ -67,7 +68,6 @@
         </thead>
         <tbody>
         @foreach ($data as $idx=>$row)
-            @if(\App\Roles::accessRow(Request::path(), $row->created_by))
             <tr>
                 <td>{{$idx + 1}}</td>
                 <td><a href="steeringcontent?source={{urlencode($row->code)}}">{{$row->name}}</a></td>
@@ -79,26 +79,30 @@
                         <a href="{{$_ENV['ALIAS']}}/file/{{$row->file_attach}}" download>Tải về</a>
                     @endif
                 </td>
-                <td>{{date("d/m/Y", strtotime($row->time))}}</td>
+                <td>{{date("d/m/y", strtotime($row->time))}}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td>
-                        <a href="{{$_ENV['ALIAS']}}/sourcesteering/update?id={{$row->id}}"><img height="20" border="0"
-                                                                              src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
+                        @if(\App\Roles::accessRow(Request::path(), $row->created_by))
+                            <a href="{{$_ENV['ALIAS']}}/sourcesteering/update?id={{$row->id}}"><img height="20"
+                                                                                                    border="0"
+                                                                                                    src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
+                        @endif
                     </td>
                 @endif
                 @if(\App\Roles::accessAction(Request::path(), 'delete'))
                     <td>
-                        <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="20" border="0"
-                                                                               src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
+                        @if(\App\Roles::accessRow(Request::path(), $row->created_by))
+                            <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="20" border="0"
+                                                                                   src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
+                        @endif
                     </td>
                 @endif
             </tr>
-            @endif
         @endforeach
         </tbody>
     </table>
     <script>
-        var current_date = "{{date('d/m/Y')}}";
+        var current_date = "{{date('d/m/y')}}";
 
         $(document).ready(function () {
             // DataTable
@@ -108,17 +112,17 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            columns: [0, 1, 2, 3, 4, 6],
                             modifier: {
                                 page: 'current'
                             },
                             format: {
                                 header: function (data, row, column, node) {
-                                    if(row === 2) return "Loại Nguồn";
-                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    if (row === 2) return "Loại Nguồn";
+                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 },
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 }
                             }
                         },
@@ -138,14 +142,14 @@
                             selected: true
                         },
                         exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 6 ],
+                            columns: [0, 1, 2, 3, 4, 6],
                             format: {
                                 header: function (data, row, column, node) {
-                                    if(row === 2) return "Loại Nguồn";
-                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    if (row === 2) return "Loại Nguồn";
+                                    else return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 },
                                 body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm,"").replace(/ +(?= )/g,'').replace(/&amp;/g,' & ').replace(/&nbsp;/g,' ');
+                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ');
                                 }
                             }
                         }
@@ -180,7 +184,7 @@
 
         });
 
-        function resetFromProgress(){
+        function resetFromProgress() {
             $("#pr-note").val("");
             $("#progress_time").val(current_date);
             $("input[name=pr_status][value='-2']").prop('checked', true);
