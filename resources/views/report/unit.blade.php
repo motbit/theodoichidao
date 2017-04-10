@@ -627,7 +627,7 @@
                     function (settings, data, dataIndex) {
                         var deadline_from = $('#deadline_from').val();
                         var deadline_to = $('#deadline_to').val();
-                        var deadline = data[7]; // use data for the age column
+                        var deadline = data[8]; // use data for the age column
 
                         deadline_from = deadline_from.split('-').join('/');
                         deadline_to = deadline_to.split('-').join('/');
@@ -641,7 +641,7 @@
                         steertime_from = steertime_from.split('-').join('/');
                         var steertime_to = $('#steertime_to').val();
                         steertime_to = steertime_to.split('-').join('/');
-                        var steertime = data[3];
+                        var steertime = data[4];
 
                         var steertimeFrom = dateToTime(steertime_from);
                         var steertimeTo = dateToTime(steertime_to);

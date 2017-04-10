@@ -491,10 +491,7 @@
                 success: function (result) {
                     console.log(result);
                     $(".loader").hide();
-                    $("#modal-").modal("hide");
-                    $("#progress-" + steering_id).html(note)
-                    resetFromProgress();
-                    reStyleRow(steering_id, status, time_log);
+                    $("#modal-add-source").modal("hide");
                 },
                 error: function () {
                     $(".loader").hide();
