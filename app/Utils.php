@@ -16,7 +16,7 @@ class Utils extends Model
 {
     public static function listTypeSource()
     {
-        return DB::table('type')->get();
+        return DB::table('type')->orderBy('_order', 'ASC')->get();
     }
 
     public static function getDataExport($data, $rowsort, $typesort)
