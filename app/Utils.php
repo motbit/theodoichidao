@@ -148,4 +148,23 @@ class Utils extends Model
         return $str;
     }
 
+    public static function dateformat($date) {
+
+        if(preg_match("/^[0-9]{2}-[0-9]{2}-[0-9]{2}$/",$date)) {
+            $date = DateTime::createFromFormat('d-m-y', $date);
+            return $date;
+        } else if(preg_match("/^[0-9]{2}-[0-9]{2}-[0-9]{4}$/",$date)) {
+            $date = DateTime::createFromFormat('d-m-Y', $date);
+            return $date;
+        } else if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{2}$/",$date)) {
+            $date = DateTime::createFromFormat('d/m/y', $date);
+            return $date;
+        } else if(preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/",$date)) {
+            $date = DateTime::createFromFormat('d/m/Y', $date);
+            return $date;
+        } else {
+            return null;
+        }
+    }
+
 }

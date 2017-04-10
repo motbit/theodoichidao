@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Roles;
 use App\Sourcesteering;
+use App\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -101,7 +102,7 @@ class SourcesteeringController extends Controller
                 'code' => $request->input('code'),
                 'sign_by' => $request->input('sign_by'),
                 'status' => $status,
-                'time' => \DateTime::createFromFormat('d/m/y', $request->input('time'))
+                'time' => Utils::dateformat($request->input('time'))
             ];
             if (isset($file)) {
                 $update['file_attach'] = $file_attach;
@@ -115,7 +116,7 @@ class SourcesteeringController extends Controller
                 'sign_by' => $request->input('sign_by'),
                 'file_attach' => $file_attach,
                 'status' => $status,
-                'time' => \DateTime::createFromFormat('d/m/y', $request->input('time')),
+                'time' => Utils::dateformat($request->input('time')),
                 'created_by' => Auth::user()->id
             ]);
         }
@@ -175,7 +176,7 @@ class SourcesteeringController extends Controller
             'sign_by' => $request->input('sign_by'),
             'file_attach' => $file_attach,
             'status' => $status,
-            'time' => \DateTime::createFromFormat('d/m/y', $request->input('time')),
+            'time' => Utils::dateformat($request->input('time')),
             'created_by' => Auth::user()->id
         ]);
         if (isset($file)) {
