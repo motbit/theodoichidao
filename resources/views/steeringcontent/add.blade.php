@@ -482,7 +482,6 @@
             $ (".loader").show();
             var url = $(this).attr("action");
             console.log(url);
-            return;
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -491,7 +490,13 @@
                 success: function (result) {
                     console.log(result);
                     $(".loader").hide();
-                    $("#modal-add-source").modal("hide");
+                    if (result.result) {
+                        $("#modal-add-source").modal("hide");
+                        $('#msource')
+                            .append("<option value='" + code + "' selected>" + code + "</option>");
+                    }else{
+                        alert(result.mess);
+                    }
                 },
                 error: function () {
                     $(".loader").hide();

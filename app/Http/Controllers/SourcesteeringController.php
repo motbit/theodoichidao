@@ -19,7 +19,7 @@ class SourcesteeringController extends Controller
         $data = DB::table('sourcesteering')
             ->join('type', 'sourcesteering.type', '=', 'type.id')
             ->select('sourcesteering.*', 'type.name as typename')
-            ->orderBy('time', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
         $type = DB::table('type')
             ->orderBy('_order', 'ASC')
