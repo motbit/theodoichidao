@@ -35,6 +35,7 @@
             @endforeach
         </select>
         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
+        <div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>
     </div>
 
     <div class="form-group form-inline">
@@ -146,6 +147,52 @@
                             </tr>
                         @endforeach
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-add-source" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm nguồn chỉ đạo:</h4>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(array('route' => 'sourcesteering-addsource', 'class' => 'form', 'files'=>'true', 'id'=>'form-add-source')) !!}
+                    <div class="form-group form-inline">
+                        <label>Loại nguồn:</label>
+                        <select name="type" class="form-control">
+                            @foreach($type as $t)
+                                <option value="{{$t->id}}">{{$t->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Số kí hiệu: <span class="required">(*)</span></label>
+                        <input id="new-source-code" type="text" required name="code" class="form-control" value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Trích yếu: <span class="required">(*)</span></label>
+                        <textarea name="name" style="width: 100%;" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày ban hành: <span class="required">(*)</span></label>
+                        <input id="my-time" name="time" type="text" class="form-control datepicker" required value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Người ký:</label>
+                        <input type="text" name="sign_by" class="form-control" value="">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label style="float: left">File đính kèm:</label>
+                        {!! Form::file('docs', array('class'=>'')) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::submit('Hoàn tất',
+                          array('class'=>'btn btn-my')) !!}
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -436,5 +483,39 @@
             tags: true
         });
         $(".select-single").select2();
+
+        $("#form-add-source").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+            var code = $("#new-source-code").val();
+
+            $ (".loader").show();
+            var url = $(this).attr("action");
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                async: false,
+                success: function (result) {
+                    console.log(result);
+                    $(".loader").hide();
+                    if (result.result) {
+                        $("#modal-add-source").modal("hide");
+                        $('#msource')
+                            .append("<option value='" + code + "' selected>" + code + "</option>");
+                    }else{
+                        alert(result.mess);
+                    }
+                },
+                error: function () {
+                    $(".loader").hide();
+                    alert("Xảy ra lỗi nội bộ");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
     </script>
 @stop
