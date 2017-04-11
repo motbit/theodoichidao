@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('updateprogress', 'ApiController@updateProgress');
         Route::post( 'updateprogress','ApiController@addProgress' )->name('add-progress');
         Route::post( 'tranfer','ApiController@tranfer' )->name('steering-tranfer');
+        Route::post( 'updatePosition','ApiController@updatePosition' )->name('type-updatePosition');
     });
 
     Route::group(['prefix' => 'type'], function () {

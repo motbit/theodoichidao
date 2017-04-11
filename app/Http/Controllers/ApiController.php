@@ -137,4 +137,15 @@ class ApiController extends Controller
         ]);
     }
     #end api
+
+    public function updatePosition(Request $request){
+        $listId = $request->listId;
+        $ids = explode('-', $listId);
+        foreach ($ids as $index => $id){
+            DB::table('type')->where('id', '=', $id)->update(['_order'=>$index+1]);
+        }
+        return response()->json(['result'=>true,
+            'mess'=>'Đổi vị trí thành công'
+        ]);
+    }
 }
