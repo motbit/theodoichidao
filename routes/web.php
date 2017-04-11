@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'delete','GroupController@delete' )->name('group-delete');
         Route::get( 'update','GroupController@edit' )->name('group-update');
         Route::post( 'update','GroupController@update' )->name('group-update');
+        Route::get( 'permission','GroupController@editPermission' )->name('group-permission');
+        Route::post('permission','GroupController@updatePermission' )->name('group-permission');
     });
 
     Route::group(['prefix' => 'partner'], function () {

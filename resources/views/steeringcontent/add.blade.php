@@ -35,12 +35,10 @@
     </div>
     <div class="form-group form-inline">
         <label>Người chỉ đạo:<span class="required">(*)</span></label>
-        {!! Form::text('viphuman', "",
-                array('required',
-                'placeholder'=>'Người chỉ đạo',
-                'class'=>'form-control ipw', 'id'=>'viphuman')
-        ) !!}
-        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-viphuman"></div>
+        @foreach($viphuman as $v)
+            {!! Form::radio('viphuman', $v->id, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        @endforeach
     </div>
     <div class="form-group form-inline">
         <label>Phân loại:</label>

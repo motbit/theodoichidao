@@ -1,0 +1,7 @@
+
+    Route::group(['prefix' => 'group'], function () {
+        Route::get( '/','GroupController@index' )->name('group-index');
+        Route::post( 'delete','GroupController@delete' )->name('group-delete');
+        Route::get( 'update','GroupController@edit' )->name('group-update');
+        Route::post( 'update','GroupController@update' )->name('group-update');
+    });
