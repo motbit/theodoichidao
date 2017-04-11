@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
     public function index()
     {
-        return view("group/index");
+        $group = DB::table('group')->get();
+        return view("group/index", ['group'=>$group]);
 
     }
 
