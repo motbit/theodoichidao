@@ -73,6 +73,7 @@ class Roles extends Model
                     ['views.parent', 'like', $parent],
                     ['group_permission.group', '=', Auth::user()->group]
                 ])
+                ->orderBy('_order', 'ASC')
                 ->select('views.*')
                 ->distinct()
                 ->get();
