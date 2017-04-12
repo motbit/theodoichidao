@@ -117,7 +117,13 @@ class Utils extends Model
             $name_stt[6] = "Bị hủy";
 
             $temp['status'] = $name_stt[$st];
-            $temp['progress'] = $row->progress;
+//            $temp['progress'] = $row->progress;
+            $dataprogress = DB::table('progress_log')->where('steeringcontent', '=', $row->id)->get();
+            $progress = "";
+            foreach ($dataprogress as $p){
+                $progress .= '- ' . $p->note . PHP_EOL;
+            }
+            $temp['progress'] = $progress;
             $temp['conductor'] = $row->conductor;
 
             $exportData[] = $temp;

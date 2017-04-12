@@ -128,7 +128,7 @@ class UserController extends Controller
         ];
         if($id > 0) {
             $validator = Validator::make($request->all(), [
-                'password' => 'required|nullable|min:6',
+                'password' => 'nullable|min:6',
             ], $messages);
 
             if ($validator->fails()) {
