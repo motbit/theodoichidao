@@ -22,18 +22,44 @@ class SteeringcontentController extends Controller
         if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
             return redirect('/errpermission');
         }
+        $type = $request->input('type');
         $source = $request->input('source');
+        $conductor = $request->input('conductor');
 
-        if ($source) {
-            $steering = DB::table('sourcesteering')
-                ->where('code', '=', $source)
-                ->get()->first();
-//            $data = Steeringcontent::where('source', 'like',  '%|'. $source . "|%")->orderBy('id', 'DESC')->get();
-            $data = DB::table('steeringcontent')
-                ->where('source', 'like', '%|'. $source . "|%")
-                ->orderBy('id', 'DESC')->get();
+        if ($source || $type || $conductor) {
+
+            if($source) {
+                $sourceinfo = false;
+                $steering = DB::table('sourcesteering')
+                    ->where('code', '=', $source)
+                    ->get()->first();
+                $data = DB::table('steeringcontent')
+                    ->where('source', 'like', '%|'. $source . "|%")
+                    ->orderBy('id', 'DESC')->get();
+            } else if($conductor) {
+                $sourceinfo = false;
+                $steering = false;
+                $data = DB::table('steeringcontent')
+                    ->where('conductor', '=', $conductor)
+                    ->orderBy('id', 'DESC')->get();
+            } else if ($type) {
+                $steering = false;
+                $sourceinfo = DB::table('type')
+                    ->where('id', '=', $type)
+                    ->get()->first();
+                $data = DB::table('steeringcontent')
+                    ->join('steering_source', 'steeringcontent.id', '=', 'steering_source.steering')
+                    ->join('type', 'steering_source.source', '=', 'type.id')
+                    ->select('steeringcontent.*')
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+            }
+
+
         } else {
             $steering = false;
+            $sourceinfo = false;
             $data = Steeringcontent::orderBy('id', 'DESC')->get();
         }
 
@@ -71,7 +97,7 @@ class SteeringcontentController extends Controller
             $sourcetype[$row->code] = "" . $row->type . "";
         }
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $sources,
-            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user, 'sourcetype' => $sourcetype, "datauser" => $datauser]);
+            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user, 'conductor' => $conductor, 'sourcetype' => $sourcetype, 'sourceinfo' => $sourceinfo, "datauser" => $datauser]);
     }
 
     public function edit(Request $request)

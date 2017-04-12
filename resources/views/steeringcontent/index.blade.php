@@ -7,6 +7,19 @@
 @section('content')
 
     <div class="text-center title">Danh mục nhiệm vụ<span id="title-filter"></span></div>
+    @if ($sourceinfo != false)
+        <div class="text-center">
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
+            <div style="color: red">{{$sourceinfo->id}} - {{$sourceinfo->name}}</div>
+        </div>
+    @endif
+    @if ($conductor != false && array_key_exists($conductor,$user))
+        <div class="text-center">
+            <div>Danh sách các nhiệm vụ theo người chỉ đạo</div>
+            <div style="color: #87ff52">{{$user[$conductor]}}</div>
+        </div>
+    @endif
+
     @if ($steering != false)
         <div class="text-center">
             <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>

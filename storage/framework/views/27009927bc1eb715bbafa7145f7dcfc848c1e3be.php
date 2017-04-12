@@ -128,18 +128,22 @@
             <?php endif; ?>
                 <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
                 <?php if(count($menu_xlnv) > 0): ?>
-                    <div class="left-head">XỬ LÝ NHIỆM VỤ</div>
+                    <div class="left-head">NHIỆM VỤ CỦA ĐƠN VỊ</div>
                     <ul>
                         <?php $__currentLoopData = $menu_xlnv; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $xl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="<?php echo e((strpos(\Request::path(), $xl->path)  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/<?php echo e($xl->path); ?>"><?php echo e($xl->name); ?></a></li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 <?php endif; ?>
-            <div class="left-head">THỐNG KÊ BÁO CÁO</div>
-            <ul>
-                <li class="<?php echo e((\Request::path() == 'report')? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report">Báo cáo thống kê chi tiết</a></li>
-                <li class="<?php echo e((strpos(\Request::path(), 'report/unit')  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/report/unit">Báo cáo thống kê đơn vị</a></li>
-            </ul>
+                <?php $menu_bc = \App\Roles::getMenu('BC'); ?>
+                <?php if(count($menu_bc) > 0): ?>
+                <div class="left-head">THỐNG KÊ BÁO CÁO</div>
+                <ul>
+                    <?php $__currentLoopData = $menu_bc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $xl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="<?php echo e((strpos(\Request::path(), $xl->path)  !== false )? 'active' : ''); ?>"><a href="<?php echo e($_ENV['ALIAS']); ?>/<?php echo e($xl->path); ?>"><?php echo e($xl->name); ?></a></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+                <?php endif; ?>
             <div class="left-head">THÔNG TIN HỖ TRỢ</div>
             <ul class="mnu-hotro">
                 <li>Mr. Hà:     <strong>0904.069.966</strong> (đầu mối)</li>
