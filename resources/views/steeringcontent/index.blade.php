@@ -7,23 +7,21 @@
 @section('content')
 
     <div class="text-center title">Danh mục nhiệm vụ<span id="title-filter"></span></div>
-    @if ($sourceinfo != false)
+    @if ($sourceinfo != false && !empty($sourceinfo))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
-            <div style="color: red">{{$sourceinfo->id}} - {{$sourceinfo->name}}</div>
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$sourceinfo->id}} - {{$sourceinfo->name}}</span></div>
+
         </div>
     @endif
-    @if ($conductor != false && array_key_exists($conductor,$user))
+    @if ($conductor != false && !empty($conductor))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo người chỉ đạo</div>
-            <div style="color: #87ff52">{{$user[$conductor]}}</div>
+            <div>Danh sách các nhiệm vụ theo người chỉ đạo: <span style="color: #ff0000">{{$conductor->name}}</span></div>
         </div>
     @endif
 
-    @if ($steering != false)
+    @if ($steering != false && !empty($steering))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo</div>
-            <div style="color: red">{{$steering->code}} - {{$steering->name}}</div>
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$steering->code}} - {{$steering->name}}</span></div>
         </div>
     @elseif(\App\Roles::accessAction(Request::path(), 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
