@@ -51,25 +51,29 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+$app->configureMonologUsing(function ($monolog) {
 
+    if (phpversion('mongodb')) {
+        $mongoClass = 'MongoDB\Client';
+    } else {
+        $mongoClass = version_compare(phpversion('mongo'), '1.3.0', '<') ? 'Mongo' : 'MongoClient';
+    }
 
-//$app->configureMonologUsing(function ($monolog) {
-//
-//    $mongoHandler = new Monolog\Handler\MongoDBHandler(
-//        new MongoClient(Config::get('mongolog.server')),
-//        Config::get('mongolog.database'),
-//        Config::get('mongolog.collection')
-//    );
-//
-//    Session::put('request_id', uniqid());
-//
-//    $monolog->pushHandler($mongoHandler);
-//    $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
-//    $monolog->pushProcessor(function ($record) {
-//        $record['extra']['session_id'] = Cookie::get(Config::get('session.cookie'));
-//        $record['extra']['request_id'] = Session::get('request_id');
-//        return $record;
-//    });
-//});
+    $mongoHandler = new Monolog\Handler\MongoDBHandler(
+        new $mongoClass(Config::get('mongolog.server')),
+        Config::get('mongolog.database'),
+        Config::get('mongolog.collection')
+    );
+
+    Session::put('request_id', uniqid());
+
+    $monolog->pushHandler($mongoHandler);
+    $monolog->pushProcessor(new Monolog\Processor\WebProcessor($_SERVER));
+    $monolog->pushProcessor(function ($record) {
+        $record['extra']['session_id'] = Cookie::get(Config::get('session.cookie'));
+        $record['extra']['request_id'] = Session::get('request_id');
+        return $record;
+    });
+});
 
 return $app;

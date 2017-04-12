@@ -68,8 +68,8 @@
         </td>
         @if(\App\Roles::checkPermission())
             <td>
-                <a href="{{$_ENV['ALIAS']}}/user/update?id={{$row->id}}"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
-                <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
+                <a href="{{ $app['url']->to('/') }}/user/update?id={{$row->id}}"><img height="16" border="0" src="{{ $app['url']->to('/img/edit.png') }}"></a>
+                <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="16" border="0" src="{{ $app['url']->to('/img/delete.png') }}"></a>
             </td>
         @endif
     </tr>
