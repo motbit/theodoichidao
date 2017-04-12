@@ -9,7 +9,7 @@
     <div class="text-center title">Danh mục nhiệm vụ<span id="title-filter"></span></div>
     @if ($sourceinfo != false && !empty($sourceinfo))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$sourceinfo->id}} - {{$sourceinfo->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$sourceinfo->name}}</span></div>
 
         </div>
     @endif
