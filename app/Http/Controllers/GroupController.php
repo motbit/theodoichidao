@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\group;
+use App\Group;
 use App\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

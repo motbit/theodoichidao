@@ -36,7 +36,7 @@
     <div class="form-group form-inline">
         <label>Người chỉ đạo:<span class="required">(*)</span></label>
         @foreach($viphuman as $v)
-            {!! Form::radio('viphuman', $v->id, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
+            {!! Form::radio('viphuman', $v->name, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         @endforeach
     </div>

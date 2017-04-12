@@ -133,11 +133,15 @@
                         @endforeach
                     </ul>
                 @endif
-            <div class="left-head">THỐNG KÊ BÁO CÁO</div>
-            <ul>
-                <li class="{{ (\Request::path() == 'report')? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report">Báo cáo thống kê chi tiết</a></li>
-                <li class="{{ (strpos(\Request::path(), 'report/unit')  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/report/unit">Báo cáo thống kê đơn vị</a></li>
-            </ul>
+                <?php $menu_bc = \App\Roles::getMenu('BC'); ?>
+                @if(count($menu_bc) > 0)
+                <div class="left-head">THỐNG KÊ BÁO CÁO</div>
+                <ul>
+                    @foreach($menu_bc as $xl)
+                        <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
+                    @endforeach
+                </ul>
+                @endif
             <div class="left-head">THÔNG TIN HỖ TRỢ</div>
             <ul class="mnu-hotro">
                 <li>Mr. Hà:     <strong>0904.069.966</strong> (đầu mối)</li>
