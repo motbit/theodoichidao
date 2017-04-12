@@ -224,6 +224,11 @@ class ReportController extends Controller
         $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
+        }
+
         $tree_unit = array();
         foreach ($unit as $row) {
             if ($row->parent_id == 0){
@@ -266,7 +271,7 @@ class ReportController extends Controller
 
         return view('report.index',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unit'=>$unit, 'user'=>$user, 'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
-            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users]);
+            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users, 'conductor' => $conductor]);
     }
 
     public function unit(Request $request)
@@ -276,6 +281,11 @@ class ReportController extends Controller
         $users = User::orderBy('fullname', 'ASC')->get();
         $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
+        }
 
         $tree_unit = array();
         foreach ($unit as $row) {
@@ -318,7 +328,7 @@ class ReportController extends Controller
 
         return view('report.unit',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unitall'=>$unitall, 'user'=>$user,'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
-            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users]);
+            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users, 'conductor' => $conductor]);
     }
 
 }
