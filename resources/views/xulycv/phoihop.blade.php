@@ -31,6 +31,7 @@
             <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
+            <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
             <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
             <th style="width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
@@ -105,6 +106,8 @@
                     </ul>
                 </td>
                 <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                    class="unit-update"> {{$row->unitnote}}</td>
                 <td class="hidden-xs hidden-sm " onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
@@ -178,6 +181,41 @@
             </div>
         </div>
     </div>
+    <div id="modal-unit-note" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ý kiến của đơn vị</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
+                    <input id="steering_id_note" type="hidden" name="steering_id">
+                    <div class="form-group from-inline">
+                        <label>Ý kiến</label>
+                        <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày cập nhật</label>
+                        <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
+                               required value="{{date('d/m/y')}}">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                    </div>
+                    {!! Form::close() !!}
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Nội dung</th>
+                            <th>Người cập nhật</th>
+                            <th>Thời gian</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-unit-note"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         var current_date = "{{date('d/m/y')}}";
         function showDetailProgress(id) {
@@ -210,11 +248,46 @@
             });
         }
 
+        function showDetailUnitNote(id) {
+            resetFromUnitNote();
+            $(".loader").show();
+            $("#steering_id_note").val(id);
+            $.ajax({
+                url: "{{$_ENV['ALIAS']}}/api/unitnote?s=" + id,
+                success: function (result) {
+                    $(".loader").hide();
+                    var html_table = "";
+                    for (var i = 0; i < result.length; i++) {
+                        var r = result[i];
+                        html_table += "<tr>";
+                        html_table += "<td>" + r.note
+                        if (r.file_attach != null) {
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/unit_note_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
+                        }
+                        html_table += "</td>"
+                        html_table += "<td>" + r.created + "</td>"
+                        html_table += "<td>" + r.time_log + "</td>"
+                        html_table += "</tr>"
+                    }
+                    $("#table-unit-note").html(html_table);
+                    $("#modal-unit-note").modal("show");
+                },
+                error: function () {
+                    alert("Xảy ra lỗi nội bộ");
+                    $(".loader").hide();
+                }
+            });
+        }
+
         $(document).ready(function () {
 
             $( ".progress-view" ).on( "click", function() {
                 showDetailProgress($( this ).attr("data-id"))
                 console.log( "#ID: " + $( this ).attr("data-id") );
+            });
+
+            $(".unit-update").on("click", function () {
+                showDetailUnitNote($(this).attr("data-id"))
             });
 
 
@@ -334,6 +407,46 @@
             $("#a" + status).css('font-weight', 'bold');
             $("#filter-status").val(status);
             $("#filter-status").trigger("change");
+        }
+
+        $("#form-unit-note").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+            var note = $("#unit-note").val();
+            var steering_id = $("#steering_id_note").val();
+            var status = $('input[name="pr_status"]:checked').val()
+            var time_log = $("#unit_time").val();
+            $(".loader").show();
+            var url = $(this).attr("action");
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                async: false,
+                success: function (result) {
+                    console.log(result);
+                    $(".loader").hide();
+                    $("#modal-unit-note").modal("hide");
+                    console.log(steering_id + " : " + note);
+                    $("#unit-note-" + steering_id).html(note)
+                    resetFromUnitNote();
+                    reStyleRow(steering_id, status, time_log);
+                },
+                error: function () {
+                    alert("Xảy ra lỗi nội bộ");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+        function resetFromUnitNote() {
+            $("#unit-note").val("");
+            $("#unit_time").val(current_date);
+            $("input[name=pr_status][value='0']").prop('checked', true);
+            $("#input-file-note").hide();
+            $('input[name=file]').val("");
         }
     </script>
     <style>

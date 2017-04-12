@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 class ApiController extends Controller
 {
 
+    //progress
     public function getProgress(Request $request)
     {
         $steering_id = intval($request->s);
@@ -94,6 +95,42 @@ class ApiController extends Controller
         return response()->json($content);
     }
 
+    //unit note
+    public function getUnitNote(Request $request)
+    {
+        $steering_id = intval($request->s);
+        $progress = DB::table('unit_note')
+            ->join('user', 'user.id', '=', 'unit_note.created_by')
+            ->where('steeringcontent', '=', $steering_id)
+            ->select('unit_note.*', 'user.fullname as created')
+            ->orderBy('unit_note.id', 'desc')
+            ->get();
+        return response()->json($progress);
+    }
+
+
+    public function addUnitNote(Request $request)
+    {
+        $steering_id = $request->steering_id;
+        $note = $request->note;
+        $status = intval($request->pr_status);
+        $time_log = Utils::dateformat($request->time_log);
+        $data = array();
+        $data['created_by'] = Auth::user()->id;
+        $data['steeringcontent'] = $steering_id;
+        $data['note'] = $note;
+        $data['time_log'] = $time_log;
+        $content = array();
+        $content['unitnote'] = $note;
+        try {
+            $result1 = DB::table('unit_note')->insertGetId($data);
+            $result2 = Steeringcontent::where('id', $steering_id)->update($content);
+        } catch (Exception $e) {
+            return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
+        }
+        return response()->json($content);
+    }
+
     #api tranfer
     public function tranfer(Request $request)
     {
@@ -105,16 +142,16 @@ class ApiController extends Controller
 
         $users = array();
         $select_user = DB::table('user')->get();
-        foreach ($select_user as $row){
+        foreach ($select_user as $row) {
             $users[$row->id] = $row->fullname;
         }
         $progress_note = 'Anh/chị ' . $users[$sender] . ' chuyển nhiệm vụ cho anh/chị ' . $users[$receiver];
         #update nhiem vu
         $update = DB::table('steeringcontent')->where('id', '=', $steering)
             ->update(['manager' => $receiver, 'progress' => $progress_note]);
-        if (! $update){
-            return response()->json(['result'=>false,
-                'mess'=>'Nhiệm vụ không tồn tại hoặc không do tài khoản anh/chị quản lý'
+        if (!$update) {
+            return response()->json(['result' => false,
+                'mess' => 'Nhiệm vụ không tồn tại hoặc không do tài khoản anh/chị quản lý'
             ]);
         }
         #ghi log tranfer
@@ -132,8 +169,8 @@ class ApiController extends Controller
             'steeringcontent' => $steering,
             'note' => $progress_note
         ]);
-        return response()->json(['result'=>true,
-            'mess'=>'Nhiệm vụ chuyển thành công'
+        return response()->json(['result' => true,
+            'mess' => 'Nhiệm vụ chuyển thành công'
         ]);
     }
     #end api

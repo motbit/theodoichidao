@@ -108,8 +108,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::group(['prefix' => 'api'], function () {
         Route::get('progress', 'ApiController@getProgress');
-        Route::get('updateprogress', 'ApiController@updateProgress');
         Route::post( 'updateprogress','ApiController@addProgress' )->name('add-progress');
+        Route::get('unitnote', 'ApiController@getUnitNote');
+        Route::post( 'updateunitnote','ApiController@addUnitNote' )->name('add-unit-note');
         Route::post( 'tranfer','ApiController@tranfer' )->name('steering-tranfer');
     });
 
