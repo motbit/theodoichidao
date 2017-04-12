@@ -126,7 +126,7 @@
             @endif
                 <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
                 @if(count($menu_xlnv) > 0)
-                    <div class="left-head">Nhiệm vụ của đơn vị</div>
+                    <div class="left-head">NHIỆM VỤ CỦA ĐƠN VỊ</div>
                     <ul>
                         @foreach($menu_xlnv as $xl)
                             <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>

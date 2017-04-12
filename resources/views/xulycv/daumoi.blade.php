@@ -118,10 +118,10 @@
                     </ul>
                 </td>
                 {{--@if(\App\Roles::accessAction(Request::path(), 'status'))--}}
-                    {{--<td id="progress-{{$row->id}}" data-id="{{$row->id}}"--}}
-                        {{--class="progress-update"> {{$row->progress}}</td>--}}
+                {{--<td id="progress-{{$row->id}}" data-id="{{$row->id}}"--}}
+                {{--class="progress-update"> {{$row->progress}}</td>--}}
                 {{--@else--}}
-                    {{--<td></td>--}}
+                {{--<td></td>--}}
                 {{--@endif--}}
                 <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
                 <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
@@ -189,24 +189,24 @@
                     {{--{!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}--}}
                     {{--<input id="steering_id" type="hidden" name="steering_id">--}}
                     {{--<div class="form-group from-inline">--}}
-                        {{--<label>Ghi chú tiến độ</label>--}}
-                        {{--<textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>--}}
+                    {{--<label>Ghi chú tiến độ</label>--}}
+                    {{--<textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>--}}
                     {{--</div>--}}
                     {{--<div class="form-group  from-inline">--}}
-                        {{--<label>Tình trạng</label>--}}
-                        {{--<input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                        {{--<input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                        {{--<input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy--}}
+                    {{--<label>Tình trạng</label>--}}
+                    {{--<input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                    {{--<input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                    {{--<input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy--}}
                     {{--</div>--}}
                     {{--<div class="form-group form-inline" id="input-file" style="display: none">--}}
-                        {{--<label style="float: left">File đính kèm:</label>--}}
-                        {{--<input type="file" name="file">--}}
+                    {{--<label style="float: left">File đính kèm:</label>--}}
+                    {{--<input type="file" name="file">--}}
                     {{--</div>--}}
                     {{--<div class="form-group form-inline">--}}
-                        {{--<label>Ngày cập nhật</label>--}}
-                        {{--<input name="time_log" type="text" class="datepicker form-control" id="progress_time"--}}
-                               {{--required value="{{date('d/m/y')}}">--}}
-                        {{--<input class="btn btn-my pull-right" type="submit" value="Lưu">--}}
+                    {{--<label>Ngày cập nhật</label>--}}
+                    {{--<input name="time_log" type="text" class="datepicker form-control" id="progress_time"--}}
+                    {{--required value="{{date('d/m/y')}}">--}}
+                    {{--<input class="btn btn-my pull-right" type="submit" value="Lưu">--}}
                     {{--</div>--}}
                     {{--{!! Form::close() !!}--}}
                     <table class="table table-bordered">
@@ -228,19 +228,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ý kiến của đơn vị</h4>
+                    <h4 class="modal-title">Ý kiến của đơn vị chủ trì/phối hợp</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
                     {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
                     <input id="steering_id_note" type="hidden" name="steering_id">
                     <div class="form-group from-inline">
-                        <label>Ý kiến</label>
+                        <label>Nội dung ý kiến</label>
                         <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
                     </div>
-                    <div class="form-group form-inline">
+                    <div class="form-group form-inline hidden">
                         <label>Ngày cập nhật</label>
                         <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
                                required value="{{date('d/m/y')}}">
+                    </div>
+                    <div class="form-group form-inline">
                         <input class="btn btn-my pull-right" type="submit" value="Lưu">
                     </div>
                     {!! Form::close() !!}
@@ -374,11 +376,9 @@
 
         $(document).ready(function () {
 
-            @if(\App\Roles::accessAction(Request::path(), 'status'))
             $(".progress-view").on("click", function () {
                 showDetailProgress($(this).attr("data-id"))
             });
-            @endif
             $(".unit-update").on("click", function () {
                 showDetailUnitNote($(this).attr("data-id"))
             });
@@ -497,10 +497,10 @@
                         table.draw();
                         if (this.id != "filter-status") {
                             reCount();
-                        }else{
+                        } else {
                             reloadDataExport();
                         }
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
@@ -510,7 +510,7 @@
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
                         reCount();
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
