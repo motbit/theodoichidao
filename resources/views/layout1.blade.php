@@ -13,19 +13,28 @@
     <link href="{{$_ENV['ALIAS']}}/css/slide.css" rel="stylesheet" type="text/css">
     {{--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">--}}
 
-    <link rel="stylesheet" type="text/css" href="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css"/>
 
     <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/pdfmake-0.1.18/build/pdfmake.min.js"></script>
     <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/pdfmake-0.1.18/build/vfs_fonts.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.flash.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript"
+            src="{{$_ENV['ALIAS']}}/js/datatables/Buttons-1.2.4/js/buttons.print.min.js"></script>
 
     {{--<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>--}}
     <script src="{{$_ENV['ALIAS']}}/js/bootstrap-datepicker.js"></script>
@@ -35,12 +44,12 @@
     <link href="{{$_ENV['ALIAS']}}/css/select2.css" rel="stylesheet"/>
     <script src="{{$_ENV['ALIAS']}}/js/select2.js"></script>
 
-    {{--<script type="text/javascript">--}}
-    {{--bkLib.onDomLoaded(function () {--}}
-    {{--nicEditors.allTextAreas()--}}
-    {{--});--}}
-    {{--</script>--}}
-            <!-- Scripts -->
+{{--<script type="text/javascript">--}}
+{{--bkLib.onDomLoaded(function () {--}}
+{{--nicEditors.allTextAreas()--}}
+{{--});--}}
+{{--</script>--}}
+<!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -104,51 +113,62 @@
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
                     @foreach($menu_nd as $nd)
-                        <li class="{{ (strpos(\Request::path(), $nd->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$nd->path}}">{{$nd->name}}</a></li>
+                        <li class="{{ (strpos(\Request::path(), $nd->path)  !== false )? 'active' : '' }}"><a
+                                    href="{{$_ENV['ALIAS']}}/{{$nd->path}}">{{$nd->name}}</a></li>
                     @endforeach
                 </ul>
             @endif
-            <?php $menu_ykcd = \App\Roles::getMenu('YKCD'); ?>
-            @if(count($menu_ykcd) > 0)
-                <div class="left-head">Ý KIẾN CHỈ ĐẠO</div>
+            @if(\App\Roles::accessView('steeringcontent'))
+                <div class="left-head"><a href="/" style="color: #43aa76 !important;">NHIỆM VỤ CỦA BỘ</a></div>
                 <ul>
-                    @foreach($menu_ykcd as $yk)
-                        <li class="{{ (strpos(\Request::path(), $yk->path)  !== false || (Request::path() == '/' && $yk->path == 'steeringcontent'))? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$yk->path}}">{{$yk->name}}</a></li>
-                        @if($yk->path == 'steeringcontent' && (\Request::path() == $yk->path || (Request::path() == '/' && $yk->path == 'steeringcontent')))
-                            <ul style="padding-left: 20px">
-                            @foreach(\App\Utils::listTypeSource() as $type)
-                                <li class="s-type" id="s-type-{{$type->id}}"><a href="javascript:filterTypeSource('{{$type->id}}','{{$type->name}}')">{{$type->name}}</a></li>
-                            @endforeach
-                            </ul>
-                        @endif
-                    @endforeach
-                </ul>
-            @endif
-                <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
-                @if(count($menu_xlnv) > 0)
-                    <div class="left-head">NHIỆM VỤ CỦA ĐƠN VỊ</div>
-                    <ul>
-                        @foreach($menu_xlnv as $xl)
-                            <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
+                    <li><a href="#">Phân loại theo nguồn</a></li>
+                    <ul style="padding-left: 20px">
+                        @foreach(\App\Utils::listTypeSource() as $type)
+                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''}}"
+                                id="s-type-{{$type->id}}"><a
+                                        href="{{$_ENV['ALIAS']}}/steeringcontent?type={{$type->id}}">{{$type->name}}</a>
+                            </li>
                         @endforeach
                     </ul>
-                @endif
-                <?php $menu_bc = \App\Roles::getMenu('BC'); ?>
-                @if(count($menu_bc) > 0)
+                    <li><a href="#">Người chỉ đạo</a></li>
+                    <ul style="padding-left: 20px">
+                        @foreach(\App\Utils::listConductor() as $conductor)
+                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''}}">
+                                <a
+                                        href="{{$_ENV['ALIAS']}}/steeringcontent?conductor={{$conductor->id}}">{{$conductor->name}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </ul>
+            @endif
+            <?php $menu_xlnv = \App\Roles::getMenu('XLNV'); ?>
+            @if(count($menu_xlnv) > 0)
+                <div class="left-head">NHIỆM VỤ CỦA ĐƠN VỊ</div>
+                <ul>
+                    @foreach($menu_xlnv as $xl)
+                        <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a
+                                    href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
+                    @endforeach
+                </ul>
+            @endif
+            <?php $menu_bc = \App\Roles::getMenu('BC'); ?>
+            @if(count($menu_bc) > 0)
                 <div class="left-head">THỐNG KÊ BÁO CÁO</div>
                 <ul>
                     @foreach($menu_bc as $xl)
-                        <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
+                        <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a
+                                    href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
                     @endforeach
                 </ul>
-                @endif
+            @endif
             <div class="left-head">THÔNG TIN HỖ TRỢ</div>
             <ul class="mnu-hotro">
-                <li>Mr. Hà:     <strong>0904.069.966</strong> (đầu mối)</li>
-                <li>Mr. Tiến:   <strong>0989.268.118</strong> </li>
-                <li>Mr. Tú:     <strong>0972.541.665</strong></li>
-                <li>Email:      <strong>theodoichidao@moet.gov.vn</strong></li>
-                <li><a style="color: #337ab7 !important; font-weight: bold" href="{{$_ENV['ALIAS']}}/file/hdsd.pdf" download>Tải về hướng dẫn sử dụng</a></li>
+                <li>Mr. Hà: <strong>0904.069.966</strong> (đầu mối)</li>
+                <li>Mr. Tiến: <strong>0989.268.118</strong></li>
+                <li>Mr. Tú: <strong>0972.541.665</strong></li>
+                <li>Email: <strong>theodoichidao@moet.gov.vn</strong></li>
+                <li><a style="color: #337ab7 !important; font-weight: bold" href="{{$_ENV['ALIAS']}}/file/hdsd.pdf"
+                       download>Tải về hướng dẫn sử dụng</a></li>
             </ul>
         </div>
     </div>
@@ -201,26 +221,26 @@
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
-    function highlightSourceType(id){
+    function highlightSourceType(id) {
         $(".s-type").removeClass('active');
         $("#s-type-" + id).addClass('active');
     }
 
     /*
-    Danh mục nhiệm vụ
+     Danh mục nhiệm vụ
      */
 
     var data_export = {};
-    function reloadDataExport(){
-        var data =  new Array();
-        $(".id-export").each(function(idx){
+    function reloadDataExport() {
+        var data = new Array();
+        $(".id-export").each(function (idx) {
             data.push($(this).html());
         });
         data_export = data;
     }
-    function reloadDataExportBK(){
-        var data =  new Array();
-        $(".row-export").each(function(idx){
+    function reloadDataExportBK() {
+        var data = new Array();
+        $(".row-export").each(function (idx) {
             if (idx < 100) {
                 var td = $(this).children();
                 data.push({
@@ -238,7 +258,7 @@
         data_export = data;
     }
 
-    function exportExcel(rowsort, typesort){
+    function exportExcel(rowsort, typesort) {
         rowsort = rowsort || "id";
         typesort = typesort || "DESC";
         console.log(data_export);
@@ -249,8 +269,10 @@
             url: "{{$_ENV['ALIAS']}}/report/exportsteering",
             type: 'POST',
             dataType: 'json',
-            data: {_token: $('meta[name="csrf-token"]').attr('content'),
-                data: data_export, rowsort: rowsort, typesort: typesort},
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                data: data_export, rowsort: rowsort, typesort: typesort
+            },
             async: false,
             success: function (result) {
                 console.log(result);
@@ -263,30 +285,30 @@
     }
 
     /*
-    Danh mục chi tiết báo cáo
+     Danh mục chi tiết báo cáo
      */
 
     var data_report = {};
-    function reloadDataReport(){
-        var data =  new Array();
-        $(".row-export").each(function(){
+    function reloadDataReport() {
+        var data = new Array();
+        $(".row-export").each(function () {
             var td = $(this).children();
             data.push({
-                "idx" : formatExport(td.get(0).innerHTML),
-                "content" : formatExport(td.get(1).innerHTML),
-                "conductor" : formatExport(td.get(2).innerHTML),
-                "time" : formatExport(td.get(3).innerHTML),
-                "source" : formatExport(td.get(4).innerHTML),
-                "unit" : formatExport(td.get(5).innerHTML),
-                "follow" : formatExport(td.get(6).innerHTML),
-                "deadline" : formatExport(td.get(7).innerHTML),
-                "status" : formatExport(td.get(8).innerHTML),
+                "idx": formatExport(td.get(0).innerHTML),
+                "content": formatExport(td.get(1).innerHTML),
+                "conductor": formatExport(td.get(2).innerHTML),
+                "time": formatExport(td.get(3).innerHTML),
+                "source": formatExport(td.get(4).innerHTML),
+                "unit": formatExport(td.get(5).innerHTML),
+                "follow": formatExport(td.get(6).innerHTML),
+                "deadline": formatExport(td.get(7).innerHTML),
+                "status": formatExport(td.get(8).innerHTML),
             });
         });
         data_report = data;
     }
 
-    function exportReportExcel(){
+    function exportReportExcel() {
         console.log(data_report);
         $.ajax({
             headers: {
@@ -307,7 +329,7 @@
         });
     }
 
-    function formatExport(data){
+    function formatExport(data) {
         return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
     }
 </script>

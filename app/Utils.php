@@ -19,6 +19,11 @@ class Utils extends Model
         return DB::table('type')->orderBy('_order', 'ASC')->get();
     }
 
+    public static function listConductor()
+    {
+        return DB::table('viphuman')->orderBy('id', 'ASC')->get();
+    }
+
     public static function getDataExport($data, $rowsort, $typesort)
     {
         $steering = DB::table('steeringcontent')->whereIn('id', $data)

@@ -37,12 +37,16 @@ li a:hover {
 
 .left-head {
     background-color: #e6f3ff;
-    color: #43aa76;
+    color: #43aa76 !important;
     text-align: left;
     font-weight: bold;
     padding: 5px 15px;
     font-size: 1.2em;
     border-bottom: 1px solid #ccc;
+}
+
+.left-head>a{
+    color: #43aa76 !important;
 }
 
 .list-menu {
