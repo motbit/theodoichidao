@@ -51,6 +51,7 @@ class SteeringcontentController extends Controller
                     ->join('steering_source', 'steeringcontent.id', '=', 'steering_source.steering')
                     ->join('type', 'steering_source.source', '=', 'type.id')
                     ->select('steeringcontent.*')
+                    ->where('type.id', '=', $type)
                     ->orderBy('id', 'desc')
                     ->get();
 
