@@ -209,7 +209,13 @@
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> {{$row->conductor}} </td>
+                <td>
+                    @if(isset($conductor[$row->conductor]))
+                        {{$conductor[$row->conductor]}}
+                    @else
+                        {{$row->conductor}}
+                    @endif
+                </td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
                     @foreach(explode('|', $row->source) as $s)

@@ -12,7 +12,8 @@
             <div class="text-center ">Báo cáo thống kê chi tiết</div>
         </div>
         <div class="col-xs-2">
-            <a class="btn btn-sm btn-my pull-right hidden-xs hidden-sm" style="margin: 0" href="javascript:clearFilter()">Xóa
+            <a class="btn btn-sm btn-my pull-right hidden-xs hidden-sm" style="margin: 0"
+               href="javascript:clearFilter()">Xóa
                 tìm kiếm</a>
             <a class="btn btn-xs btn-my pull-right visible-xs visible-sm" style="margin: 0"
                href="javascript:clearFilter()">Xóa</a>
@@ -23,122 +24,125 @@
 
     <div class="row" style="min-width: 350px">
         <div class="col-xs-12">
-    @if ( $errors->count() > 0 )
-        @foreach( $errors->all() as $message )
-            <p class="alert alert-danger">{{ $message }}</p>
-        @endforeach
-    @endif
+            @if ( $errors->count() > 0 )
+                @foreach( $errors->all() as $message )
+                    <p class="alert alert-danger">{{ $message }}</p>
+                @endforeach
+            @endif
         </div>
     </div>
 
     <div class="row" style="min-width: 350px">
         <div class="col-xs-12">
-        {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
+            {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
 
-        <div class="row search-box">
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group form-inline ">
-                    <label>Nguồn chỉ đạo:</label>
-                    <div class="input-contain form-group form-inline">
-                        {!! Form::text('source', "",
-                                array('no-required',
-                                'placeholder'=>'Nguồn chỉ đạo',
-                                'class'=>'form-control ipw mi fl', 'id'=>'source')
-                        ) !!}
-                        <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                             data-target="#modal-source"></div>
+            <div class="row search-box">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group form-inline ">
+                        <label>Nguồn chỉ đạo:</label>
+                        <div class="input-contain form-group form-inline">
+                            {!! Form::text('source', "",
+                                    array('no-required',
+                                    'placeholder'=>'Nguồn chỉ đạo',
+                                    'class'=>'form-control ipw mi fl', 'id'=>'source')
+                            ) !!}
+                            <div class="btn btn-default ico ico-search fl" data-toggle="modal"
+                                 data-target="#modal-source"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-inline">
-                    <label>Người chỉ đạo:</label>
-                    <div class="input-contain">
-                        {!! Form::text('conductor', "",
-                                array('no-required',
-                                'placeholder'=>'Người chỉ đạo',
-                                'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
-                        ) !!}
-                        <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                             data-target="#modal-viphuman"></div>
+                    <div class="form-group form-inline">
+                        <label>Người chỉ đạo:</label>
+                        <div class="input-contain">
+                            {!! Form::text('conductor', "",
+                                    array('no-required',
+                                    'placeholder'=>'Người chỉ đạo',
+                                    'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
+                            ) !!}
+                            <div class="btn btn-default ico ico-search fl" data-toggle="modal"
+                                 data-target="#modal-viphuman"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-inline">
-                    <label>Đơn vị/Cá nhân đầu mối:</label>
-                    <select id="fList" name="firtunit[]" class="form-control select-single ipw" style="max-width:80%;">
-                        <option value="">...</option>
-                        @foreach($treeunit as $item)
-                            @foreach($item->children as $c)
-                                <option value="{{$c->name}}">{{$c->name}}</option>
+                    <div class="form-group form-inline">
+                        <label>Đơn vị/Cá nhân đầu mối:</label>
+                        <select id="fList" name="firtunit[]" class="form-control select-single ipw"
+                                style="max-width:80%;">
+                            <option value="">...</option>
+                            @foreach($treeunit as $item)
+                                @foreach($item->children as $c)
+                                    <option value="{{$c->name}}">{{$c->name}}</option>
+                                @endforeach
                             @endforeach
-                        @endforeach
-                        @foreach($users as $u)
-                            <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                        @endforeach
-                    </select>
-                    <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
-                </div>
-                <div class="form-group form-inline">
-                    <label>Đơn vị/Cá nhân phối hợp:</label>
-                    <select id="sList" name="secondunit[]" class="form-control select-single ipw" style="max-width:80%;">
-                        <option value="">...</option>
-                        @foreach($treeunit as $item)
-                            @foreach($item->children as $c)
-                                <option value="{{$c->name}}">{{$c->name}}</option>
+                            @foreach($users as $u)
+                                <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                             @endforeach
-                        @endforeach
-                        @foreach($users as $u)
-                            <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                        @endforeach
-                    </select>
-                    <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
-                </div>
+                        </select>
+                        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Đơn vị/Cá nhân phối hợp:</label>
+                        <select id="sList" name="secondunit[]" class="form-control select-single ipw"
+                                style="max-width:80%;">
+                            <option value="">...</option>
+                            @foreach($treeunit as $item)
+                                @foreach($item->children as $c)
+                                    <option value="{{$c->name}}">{{$c->name}}</option>
+                                @endforeach
+                            @endforeach
+                            @foreach($users as $u)
+                                <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                            @endforeach
+                        </select>
+                        <div class="btn btn-default ico ico-search" data-toggle="modal"
+                             data-target="#second-unit"></div>
+                    </div>
 
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group form-inline">
-                    <label>Ngày chỉ đạo:</label>
-                    <div class="input-contain">
-                        {!! Form::text('steertime_from', "",
-                            array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
-                                  'placeholder'=>'Từ ngày')) !!}
-                        {!! Form::text('steertime_to', "",
-                            array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
-                                  'placeholder'=>'Đến ngày')) !!}
-                    </div>
                 </div>
-                <div class="form-group  form-inline">
-                    <label>Thời hạn hoàn thành:</label>
-                    <div class="input-contain">
-                        {!! Form::text('deadline_from', "",
-                                array('class'=>'form-control datepicker fl',
-                                      'placeholder'=>'Từ ngày','id'=>'deadline_from'
-                                      )) !!}
-                        {!! Form::text('deadline_to', "",
-                                array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group form-inline">
+                        <label>Ngày chỉ đạo:</label>
+                        <div class="input-contain">
+                            {!! Form::text('steertime_from', "",
+                                array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
+                                      'placeholder'=>'Từ ngày')) !!}
+                            {!! Form::text('steertime_to', "",
+                                array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
                                       'placeholder'=>'Đến ngày')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group  form-inline">
+                        <label>Thời hạn hoàn thành:</label>
+                        <div class="input-contain">
+                            {!! Form::text('deadline_from', "",
+                                    array('class'=>'form-control datepicker fl',
+                                          'placeholder'=>'Từ ngày','id'=>'deadline_from'
+                                          )) !!}
+                            {!! Form::text('deadline_to', "",
+                                    array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
+                                          'placeholder'=>'Đến ngày')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Tiến độ:</label>
+                        <select id="progress" name="progress" class="form-control mi ipw">
+                            <option value="">Toàn bộ</option>
+                            <option value="2">Đã hoàn thành(Đúng hạn)</option>
+                            <option value="3">Đã hoàn thành(Quá hạn)</option>
+                            <option value="1">Đang thực hiện(Trong hạn)</option>
+                            <option value="4">Đang thực hiện(Quá hạn)</option>
+                            <option value="5">Nhiệm vụ sắp hết hạn</option>
+                            <option value="6">Nhiệm vụ đã bị hủy</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-inline pull-right">
+                        {!! Form::submit('Tìm kiếm',
+                          array('class'=>'btn btn-my', 'id'=>'search')) !!}
+                        <a id="btn-export" class="btn btn-my" href="#" download>Xuất báo cáo</a>
                     </div>
                 </div>
-                <div class="form-group form-inline">
-                    <label>Tiến độ:</label>
-                    <select id="progress" name="progress" class="form-control mi ipw">
-                        <option value="">Toàn bộ</option>
-                        <option value="2">Đã hoàn thành(Đúng hạn)</option>
-                        <option value="3">Đã hoàn thành(Quá hạn)</option>
-                        <option value="1">Đang thực hiện(Trong hạn)</option>
-                        <option value="4">Đang thực hiện(Quá hạn)</option>
-                        <option value="5">Nhiệm vụ sắp hết hạn</option>
-                        <option value="6">Nhiệm vụ đã bị hủy</option>
-                    </select>
-                </div>
-                <div class="form-group form-inline pull-right">
-                    {!! Form::submit('Tìm kiếm',
-                      array('class'=>'btn btn-my', 'id'=>'search')) !!}
-                    <a id="btn-export" class="btn btn-my" href="#" download>Xuất báo cáo</a>
-                </div>
+
             </div>
 
-        </div>
-
-        {!! Form::close() !!}
+            {!! Form::close() !!}
 
         </div>
     </div>
@@ -222,7 +226,13 @@
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td> {{$row->content}} </td>
-                <td> {{$row->conductor}} </td>
+                <td>
+                    @if(isset($conductor[$row->conductor]))
+                        {{$conductor[$row->conductor]}}
+                    @else
+                        {{$row->conductor}}
+                    @endif
+                </td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
                     @foreach(explode('|', $row->source) as $s)
@@ -464,12 +474,12 @@
         var current_date = "{{date('d/m/y')}}";
         var sources = [
             @foreach($sourcesteering as $s)
-                    '{{$s->code}}',
+                '{{$s->code}}',
             @endforeach
         ];
         var viphumans = [
             @foreach($viphuman as $v)
-                    '{{$v->name}}',
+                '{{$v->name}}',
             @endforeach
         ];
         function showunit(unit) {
@@ -599,10 +609,10 @@
                         table.draw();
                         if (this.id != "filter-status") {
                             reCount();
-                        }else{
+                        } else {
                             reloadDataExport();
                         }
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
@@ -612,111 +622,111 @@
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
                         reCount();
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
             });
 
             $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var deadline_from = $('#deadline_from').val();
-                        var deadline_to = $('#deadline_to').val();
-                        var deadline = data[8]; // use data for the age column
+                function (settings, data, dataIndex) {
+                    var deadline_from = $('#deadline_from').val();
+                    var deadline_to = $('#deadline_to').val();
+                    var deadline = data[8]; // use data for the age column
 
 //                        deadline_from = deadline_from.split('-').join('/');
 //                        deadline_to = deadline_to.split('-').join('/');
 
-                        var timeFrom = dateToTime(deadline_from);
-                        var timeTo = dateToTime(deadline_to);
-                        var time = dateToTime(deadline);
+                    var timeFrom = dateToTime(deadline_from);
+                    var timeTo = dateToTime(deadline_to);
+                    var time = dateToTime(deadline);
 
 
-                        var steertime_from = $('#steertime_from').val();
+                    var steertime_from = $('#steertime_from').val();
 //                        steertime_from = steertime_from.split('-').join('/');
-                        var steertime_to = $('#steertime_to').val();
+                    var steertime_to = $('#steertime_to').val();
 //                        steertime_to = steertime_to.split('-').join('/');
-                        var steertime = data[4];
+                    var steertime = data[4];
 
-                        var steertimeFrom = dateToTime(steertime_from);
-                        var steertimeTo = dateToTime(steertime_to);
-                        var steertime = dateToTime(steertime);
+                    var steertimeFrom = dateToTime(steertime_from);
+                    var steertimeTo = dateToTime(steertime_to);
+                    var steertime = dateToTime(steertime);
 
-                        if (deadline_from == '' && deadline_to == '' && steertime_from == '' && steertime_to == '') {
+                    if (deadline_from == '' && deadline_to == '' && steertime_from == '' && steertime_to == '') {
+                        return true;
+                    }
+
+
+                    if (steertime_from == '' && steertime_to == '') {
+                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
                             return true;
                         }
+                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
 
-
-                        if (steertime_from == '' && steertime_to == '') {
-                            if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                                return true;
-                            }
-                            else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                            else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
-
-                        }
-                        if (steertime_from == '' && steertime_to != '' && steertime < steertimeTo) {
-                            if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                                return true;
-                            }
-                            else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                            else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
-                        }
-                        if (steertime_from != '' && steertime_to == '' && steertime > steertimeFrom) {
-                            if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                                return true;
-                            }
-                            else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                            else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
-                                return true;
-                            }
-                        }
-                        if (steertime_from != '' && steertime_to != '' && steertime < steertimeTo && steertime > steertimeFrom) {
-                            if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                                return true;
-                            }
-                            else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                            else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
-                                return true;
-                            }
-                        }
-                        if (deadline_from == '' && deadline_to == '') {
-                            if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                                return true;
-                            }
-                            else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                            else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-
-                        }
-                        if (deadline_from != '' && deadline_to == '' & time > timeFrom) {
-                            if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                                return true;
-                            }
-                            else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                            else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-                        }
-                        if (deadline_from == '' && deadline_to != '' && time < timeTo) {
-                            if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                                return true;
-                            }
-                            else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                            else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-                        }
-                        if (deadline_from != '' && deadline_to != '' && time > timeFrom && time < timeTo) {
-                            if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                                return true;
-                            }
-                            else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                            else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-                        }
-
-                        if (deadline_from != '' && deadline_to != '' && steertime_from != '' && steertime_to != '') {
-                            if ((timeFrom <= time && timeTo >= time) && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                                return true;
-                            }
-                        }
-                        return false;
                     }
+                    if (steertime_from == '' && steertime_to != '' && steertime < steertimeTo) {
+                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
+                            return true;
+                        }
+                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
+                    }
+                    if (steertime_from != '' && steertime_to == '' && steertime > steertimeFrom) {
+                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
+                            return true;
+                        }
+                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
+                            return true;
+                        }
+                    }
+                    if (steertime_from != '' && steertime_to != '' && steertime < steertimeTo && steertime > steertimeFrom) {
+                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
+                            return true;
+                        }
+                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
+                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
+                            return true;
+                        }
+                    }
+                    if (deadline_from == '' && deadline_to == '') {
+                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                            return true;
+                        }
+                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+
+                    }
+                    if (deadline_from != '' && deadline_to == '' & time > timeFrom) {
+                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                            return true;
+                        }
+                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                    }
+                    if (deadline_from == '' && deadline_to != '' && time < timeTo) {
+                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                            return true;
+                        }
+                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                    }
+                    if (deadline_from != '' && deadline_to != '' && time > timeFrom && time < timeTo) {
+                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                            return true;
+                        }
+                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
+                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                    }
+
+                    if (deadline_from != '' && deadline_to != '' && steertime_from != '' && steertime_to != '') {
+                        if ((timeFrom <= time && timeTo >= time) && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
             );
 
             $("#form").submit(function (event) {
@@ -743,7 +753,7 @@
                 oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                 table.draw();
                 reCount();
-                oSettings[0]._iDisplayLength=20;
+                oSettings[0]._iDisplayLength = 20;
                 table.draw();
                 return false;
 
@@ -885,7 +895,7 @@
             margin-bottom: 10px;
         }
 
-        label{
+        label {
             width: 180px !important;
         }
 
