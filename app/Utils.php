@@ -89,8 +89,10 @@ class Utils extends Model
                 }
             }
             $temp['follow'] = $strfollow;
-
-            $temp['deadline'] = date("d/m/Y", strtotime($row->deadline));
+            $temp['deadline'] = "";
+            if ($row->deadline != "") {
+                $temp['deadline'] = date("d/m/Y", strtotime($row->deadline));
+            }
 
             //Lay trang thai
             $st = 1;
