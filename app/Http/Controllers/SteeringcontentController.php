@@ -28,6 +28,7 @@ class SteeringcontentController extends Controller
         $thisconductor = false;
         $steering = false;
         $sourceinfo = false;
+        $param = "";
         if ($source || $type || $conductor) {
 
             if($source) {
@@ -38,6 +39,7 @@ class SteeringcontentController extends Controller
                     ->where('source', 'like', '%|'. $source . "|%")
                     ->orderBy('id', 'DESC')->get();
             } else if($conductor) {
+                $param = "c".$conductor;
                 $data = DB::table('steeringcontent')
                     ->where('conductor', '=', $conductor)
                     ->orderBy('id', 'DESC')->get();
@@ -45,6 +47,7 @@ class SteeringcontentController extends Controller
                     ->where('id', '=', $conductor)
                     ->get()->first();
             } else if ($type) {
+                $param = "t".$type;
                 $sourceinfo = DB::table('type')
                     ->where('id', '=', $type)
                     ->get()->first();
@@ -99,7 +102,9 @@ class SteeringcontentController extends Controller
             $sourcetype[$row->code] = "" . $row->type . "";
         }
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $sources,
-            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user, 'conductor' => $thisconductor, 'sourcetype' => $sourcetype, 'sourceinfo' => $sourceinfo, "datauser" => $datauser]);
+            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user,
+            'conductor' => $thisconductor, 'sourcetype' => $sourcetype, 'sourceinfo' => $sourceinfo,
+            "datauser" => $datauser, 'parram' => $param]);
     }
 
     public function edit(Request $request)

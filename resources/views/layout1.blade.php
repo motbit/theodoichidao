@@ -124,7 +124,7 @@
                     <li><a href="#">Phân loại theo nguồn</a></li>
                     <ul style="padding-left: 20px">
                         @foreach(\App\Utils::listTypeSource() as $type)
-                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''}}"
+                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false && isset($parram) && $parram == 't'.$type->id)? 'active' : ''}}"
                                 id="s-type-{{$type->id}}"><a
                                         href="{{$_ENV['ALIAS']}}/steeringcontent?type={{$type->id}}">{{$type->name}}</a>
                             </li>
@@ -133,7 +133,7 @@
                     <li><a href="#">Người chỉ đạo</a></li>
                     <ul style="padding-left: 20px">
                         @foreach(\App\Utils::listConductor() as $conductor)
-                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''}}">
+                            <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''}}">
                                 <a
                                         href="{{$_ENV['ALIAS']}}/steeringcontent?conductor={{$conductor->id}}">{{$conductor->name}}</a>
                             </li>
