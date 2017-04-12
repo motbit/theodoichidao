@@ -15,7 +15,7 @@
         @endforeach
     @endif
     @foreach ($data as $row)
-    {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
+    {!! Form::open(array('id' => 'steeringcontent-update', 'route' => 'steeringcontent-update', 'class' => 'form')) !!}
     {{ Form::hidden('id', $row->id, array('id' => 'id')) }}
 
     <div class="form-group ">
@@ -27,21 +27,41 @@
                   'rows'=>'2')) !!}
     </div>
 
+    {{--<div class="form-group form-inline">--}}
+        {{--<label>Nguồn chỉ đạo: <span class="required">(*)</span></label>--}}
+        {{--<select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>--}}
+            {{--@foreach($sourcesteering as $sr)--}}
+                {{--<option value="{{$sr->code}}" {{in_array($sr->code, explode('|', $row->source))?'selected':''}}>{{$sr->code}}</option>--}}
+            {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>--}}
+        {{--<div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>--}}
+    {{--</div>--}}
+
     <div class="form-group form-inline">
         <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
-        <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
-            @foreach($sourcesteering as $sr)
-                <option value="{{$sr->code}}" {{in_array($sr->code, explode('|', $row->source))?'selected':''}}>{{$sr->code}}</option>
+        <ul class="list-group">
+            @foreach($type as $key => $s)
+                <li class="list-group-item noboder">
+                    <div class="row">
+                        <div class="col-md-2 col-xs-6">
+                            <input type="checkbox" name="mtype[]" class="pick-source " value=" {{$key . '|' .$s->id}}" {{ in_array($s->id, $steeringSourceIds) ? "checked" : "" }}>
+                            {{$s->name}}
+                        </div>
+                        <div class="col-md-10 col-xs-6">
+                            {!! Form::text('note[]', in_array($s->id, $steeringSourceIds) ? $steeringSourceNotes[$s->id] : "",
+                            array('class'=>'form-control', 'placeholder'=>'Ký hiệu')) !!}
+                        </div>
+                    </div>
+                </li>
             @endforeach
-        </select>
-        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
-        <div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>
+        </ul>
     </div>
 
     <div class="form-group form-inline">
         <label>Người chỉ đạo:<span class="required">(*)</span></label>
         @foreach($viphuman as $v)
-            {!! Form::radio('viphuman', $v->name, ($v->name == $row->conductor) ? true : false) !!} {!! $v->name !!}
+            {!! Form::radio('viphuman', $v->id, ($v->name == $row->conductor) ? true : false) !!} {!! $v->name !!}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         @endforeach
     </div>
@@ -340,6 +360,26 @@
             @endforeach
         ];
 
+        function valCheckbox()
+        {
+            var checkboxs = document.getElementsByName("mtype[]");
+            var okay = false;
+            for(var i=0, l=checkboxs.length; i<l;i++)
+            {
+                if(checkboxs[i].checked)
+                {
+                    okay=true;
+                    break;
+                }
+            }
+            if(okay){
+                return true;
+            }
+            else{
+                alert("Phải chọn ít nhất một nguồn chỉ đạo");
+                return false;
+            }
+        }
 
         $( document ).ready(function() {
             // Handler for .ready() called.
@@ -482,6 +522,12 @@
         });
         $(".select-single").select2();
 
+        $("#steeringcontent-update").submit(function (e) {
+            var check = valCheckbox();
+            if(check == false ){
+                return false;
+            }
+        })
         $("#form-add-source").submit(function (e) {
             e.preventDefault();
             var formData = new FormData($(this)[0]);

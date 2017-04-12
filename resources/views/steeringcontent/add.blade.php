@@ -13,7 +13,7 @@
             <p class="alert alert-danger">{{ $message }}</p>
         @endforeach
     @endif
-    {!! Form::open(array('route' => 'steeringcontent-update', 'class' => 'form')) !!}
+    {!! Form::open(array('id' => 'steeringcontent-update', 'route' => 'steeringcontent-update', 'class' => 'form')) !!}
 
     <div class="form-group ">
         <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
@@ -23,20 +23,41 @@
                   'placeholder'=>'Nội dung chỉ đạo',
                   'rows'=>'2')) !!}
     </div>
+    {{--<div class="form-group form-inline">--}}
+        {{--<label>Nguồn chỉ đạo: <span class="required">(*)</span></label>--}}
+        {{--<select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>--}}
+            {{--@foreach($sourcesteering as $sr)--}}
+                {{--<option value="{{$sr->code}}">{{$sr->code}}</option>--}}
+            {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>--}}
+        {{--<div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>--}}
+    {{--</div>--}}
+
     <div class="form-group form-inline">
         <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
-        <select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>
-            @foreach($sourcesteering as $sr)
-                <option value="{{$sr->code}}">{{$sr->code}}</option>
-            @endforeach
-        </select>
-        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>
-        <div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>
+        <ul class="list-group">
+        @foreach($type as $key => $s)
+                <li class="list-group-item noboder">
+                    <div class="row">
+                        <div class="col-md-2 col-xs-6">
+                            <input type="checkbox" name="mtype[]" class="pick-source " value="{{$key . '|' .$s->id}}">
+                            {{$s->name}}
+                        </div>
+                        <div class="col-md-10 col-xs-6">
+                            {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu')) !!}
+                        </div>
+                    </div>
+                </li>
+        @endforeach
+        </ul>
     </div>
+
+
     <div class="form-group form-inline">
         <label>Người chỉ đạo:<span class="required">(*)</span></label>
         @foreach($viphuman as $v)
-            {!! Form::radio('viphuman', $v->name, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
+            {!! Form::radio('viphuman', $v->id, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         @endforeach
     </div>
@@ -336,8 +357,30 @@
             var today = dd + '/' + mm + '/' + yyyy;
             return today;
         }
+        function valCheckbox()
+        {
+            var checkboxs = document.getElementsByName("mtype[]");
+            var okay = false;
+            for(var i=0, l=checkboxs.length; i<l;i++)
+            {
+                if(checkboxs[i].checked)
+                {
+                    okay=true;
+                    break;
+                }
+            }
+            if(okay){
+                return true;
+            }
+            else{
+                alert("Phải chọn ít nhất một nguồn chỉ đạo");
+                return false;
+            }
+        }
+
         $(document).ready(function () {
 //                $('input[name="steer_time"]').val(getCurrentDate());
+
             $("#source").autocomplete({
                 source: sources
             });
@@ -471,6 +514,13 @@
             tags: true
         });
         $(".select-single").select2();
+
+        $("#steeringcontent-update").submit(function (e) {
+            var check = valCheckbox();
+            if(check == false ){
+                return false;
+            }
+        })
 
         $("#form-add-source").submit(function (e) {
             e.preventDefault();

@@ -8,6 +8,8 @@ use App\Sourcesteering;
 use App\User;
 use App\Utils;
 use App\Viphuman;
+use App\Steering_source;
+
 use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -147,9 +149,18 @@ class SteeringcontentController extends Controller
             $dtfollowArr = explode(",", $data[0]['follow']);
             $dtUnitArr = explode(",", $data[0]['unit']);
 
+            //get list source id
+            $steeringSources = DB::table('steering_source')->select('source', 'note')->where('steering', $id)->get();
+            $steeringSourceIds = array();
+            $steeringSourceNotes = array();
+            foreach ($steeringSources as $key => $sc){
+                $steeringSourceIds[$key] = $sc->source;
+                $steeringSourceNotes[$sc->source] = $sc->note;
+            }
+
             return view('steeringcontent.update', ['dictunit' => $dictunit, 'source' => $source,
                 'data' => $data, 'dtfollowArr' => $dtfollowArr, 'dtUnitArr' => $dtUnitArr, 'sourcesteering' => $sourcesteering, 'treeunit' => $tree_unit, 'unit' => $unit,
-                'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user, 'type' => $type]);
+                'priority' => $priority, 'viphuman' => $viphuman, 'user' => $user, 'type' => $type, 'steeringSourceIds' => $steeringSourceIds, 'steeringSourceNotes' => $steeringSourceNotes]);
         } else {
 
             return view('steeringcontent.add', ['sourcesteering' => $sourcesteering, 'dictunit' => $dictunit,
@@ -239,10 +250,13 @@ class SteeringcontentController extends Controller
         }
 
         if ($id > 0) {
+            $noteArr = $request->input('note');
+            $typeArr = $request->input('mtype');
 
+            DB::beginTransaction();
             $result = Steeringcontent::where('id', $request->input('id'))->update([
                 'content' => $request->input('content'),
-                'source' => '|' . implode('|', $request->input('msource')) . '|',
+//                'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $fu,
                 'follow' => $su,
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
@@ -250,16 +264,52 @@ class SteeringcontentController extends Controller
                 'conductor' => $request->input('viphuman')
             ]);
 
-            $data = Steeringcontent::where('id', $request->input('id'))->get();
+            DB::table('steering_source')->where('steering', $request->input('id'))->delete();
 
-            return redirect()->action(
-                'SteeringcontentController@index', ['update' => $result]
-            );
+            foreach ($typeArr as $key => $type){
+                $arr = explode('|', $type);
+                $t = $arr[1];
+                $k = $arr[0];
+                $note = $noteArr[$k];
+
+                $sc = Steering_source::insert([
+                    'steering' => $request->input('id'),
+                    'source' => $t,
+                    'note' => $note,
+                ]);
+            }
+
+            if( !$result || !$sc )
+            {
+                DB::rollback();
+                return redirect()->action(
+                    'SteeringcontentController@index', ['update' => $result]
+                );
+            } else {
+                // Else commit the queries
+                DB::commit();
+                return redirect()->action(
+                    'SteeringcontentController@index', ['update' => $result]
+                );
+            }
+
+//            $data = Steeringcontent::where('id', $request->input('id'))->get();
+
+//            return redirect()->action(
+//                'SteeringcontentController@index', ['update' => $result]
+//            );
 
         } else {
-            $result = Steeringcontent::insert([
+            $noteArr = $request->input('note');
+            $typeArr = $request->input('mtype');
+
+
+            DB::beginTransaction();
+
+            $scid = DB::table('steeringcontent')->insertGetId(
+                array(
                 'content' => $request->input('content'),
-                'source' => '|' . implode('|', $request->input('msource')) . '|',
+//                'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $fu,
                 'follow' => $su,
                 'priority' => $request->input('priority'),
@@ -267,18 +317,36 @@ class SteeringcontentController extends Controller
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
                 'deadline' => $deadline,
                 'created_by' => Auth::user()->id,
-                'manager' => Auth::user()->id,
-            ]);
+                'manager' => Auth::user()->id)
+            );
 
-            if ($result) {
-                return redirect()->action(
-                    'SteeringcontentController@index', ['add' => 1]
-                );
-            } else {
+            foreach ($typeArr as $key => $type){
+                $arr = explode('|', $type);
+                $t = $arr[1];
+                $k = $arr[0];
+                $note = $noteArr[$k];
+
+                $sc = Steering_source::insert([
+                    'steering' => $scid,
+                    'source' => $t,
+                    'note' => $note,
+                ]);
+            }
+
+            if( !$scid || !$sc )
+            {
+                DB::rollback();
                 return redirect()->action(
                     'SteeringcontentController@index', ['error' => 1]
                 );
+            } else {
+                // Else commit the queries
+                DB::commit();
+                return redirect()->action(
+                    'SteeringcontentController@index', ['add' => 1]
+                );
             }
+
         }
     }
 

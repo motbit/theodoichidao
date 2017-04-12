@@ -536,3 +536,6 @@ th>input{
 th{
     text-align: center !important;
 }
+.noboder{
+    border: none;
+}
