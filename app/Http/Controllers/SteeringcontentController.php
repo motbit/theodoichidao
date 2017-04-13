@@ -273,12 +273,14 @@ class SteeringcontentController extends Controller
             if( !$result || !$sc )
             {
                 DB::rollback();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
             } else {
                 // Else commit the queries
                 DB::commit();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -327,12 +329,14 @@ class SteeringcontentController extends Controller
             if( !$scid || !$sc )
             {
                 DB::rollback();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['error' => 1]
                 );
             } else {
                 // Else commit the queries
                 DB::commit();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['add' => 1]
                 );
