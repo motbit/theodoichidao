@@ -130,7 +130,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <li><a href="#">Người chỉ đạo</a></li>
+                    <li><a href="#">Lãnh đạo Bộ phụ trách</a></li>
                     <ul style="padding-left: 20px">
                         @foreach(\App\Utils::listConductor() as $conductor)
                             <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''}}">
