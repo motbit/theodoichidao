@@ -484,6 +484,11 @@ label {
 
 .list-group {
     /*padding-left: 10px;*/
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.list-group-item{
+    background: #eee !important;
 }
 
 @media screen and (max-width: 600px) {
@@ -562,4 +567,10 @@ ul.unit3col {
     column-count: 3;
     column-gap: 20px;
     padding: 5px 15px;
+}
+
+.divider{
+    height: 1px;
+    width: 100%;
+    background: #ccc;
 }

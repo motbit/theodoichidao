@@ -15,7 +15,7 @@
     @endif
     @if ($conductor != false && !empty($conductor))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo người chỉ đạo: <span style="color: #ff0000">{{$conductor->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo LĐ Bộ pt: <span style="color: #ff0000">{{$conductor->name}}</span></div>
         </div>
     @endif
 
@@ -65,6 +65,11 @@
                         class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
+    <div style="min-width: 300px"><span class="total-nv">(Tổng số: {{count($lst)}} nhiệm vụ)</span>
+        {{--<span class="pull-right"><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"--}}
+                                    {{--href="javascript:exportExcel()"><span></span></a></span>--}}
+        {{--<span class="panel-button pull-right"></span>--}}
+    </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
@@ -75,7 +80,7 @@
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
-            <th style="min-width: 90px">Người chỉ đạo<br><input type="text"></th>
+            <th style="min-width: 90px">LĐB phụ trách<br><input type="text"></th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
             <th style="min-width: 100px">Người theo dõi<br><input type="text"></th>
@@ -773,6 +778,11 @@
     <style>
         #table_filter {
             display: none;
+        }
+
+        .total-nv{
+            color: red;
+            font-style: italic;
         }
     </style>
 @stop

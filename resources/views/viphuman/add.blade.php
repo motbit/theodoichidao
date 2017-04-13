@@ -1,13 +1,13 @@
 @extends('layout1')
 
 @section('page-title')
-    Thêm người chủ trì
+    Thêm Lãnh đạo Bộ phụ trách
 @stop
 @section('page-toolbar')
 @stop
 
 @section('content')
-    <div class="text-center title">Thêm người chủ trì</div>
+    <div class="text-center title">Thêm Lãnh đạo Bộ phụ trách</div>
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
             <p  class="alert alert-danger">{{ $message }}</p>

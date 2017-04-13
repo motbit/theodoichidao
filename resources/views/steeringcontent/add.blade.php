@@ -14,109 +14,130 @@
         @endforeach
     @endif
     {!! Form::open(array('id' => 'steeringcontent-update', 'route' => 'steeringcontent-update', 'class' => 'form')) !!}
-
-    <div class="form-group ">
-        <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
-        {!! Form::textarea('content', "",
-            array('required',
-                  'class'=>'form-control',
-                  'placeholder'=>'Nội dung chỉ đạo',
-                  'rows'=>'2')) !!}
-    </div>
-    {{--<div class="form-group form-inline">--}}
-        {{--<label>Nguồn chỉ đạo: <span class="required">(*)</span></label>--}}
-        {{--<select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>--}}
+    <div>
+        <div class="col-xs-12 col-md-6 bd">
+            <div class="form-group ">
+                <label>Tên nhiệm vụ: <span class="required">(*)</span></label>
+                {!! Form::textarea('content', "",
+                    array('required',
+                          'class'=>'form-control',
+                          'placeholder'=>'Nội dung chỉ đạo',
+                          'rows'=>'5')) !!}
+            </div>
+            {{--<div class="form-group form-inline">--}}
+            {{--<label>Nguồn chỉ đạo: <span class="required">(*)</span></label>--}}
+            {{--<select id="msource" name="msource[]" class="form-control select-multiple ipw" multiple="multiple" required>--}}
             {{--@foreach($sourcesteering as $sr)--}}
-                {{--<option value="{{$sr->code}}">{{$sr->code}}</option>--}}
+            {{--<option value="{{$sr->code}}">{{$sr->code}}</option>--}}
             {{--@endforeach--}}
-        {{--</select>--}}
-        {{--<div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>--}}
-        {{--<div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>--}}
-    {{--</div>--}}
+            {{--</select>--}}
+            {{--<div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#modal-source"></div>--}}
+            {{--<div class="btn btn-default ico ico-add" data-toggle="modal" data-target="#modal-add-source"></div>--}}
+            {{--</div>--}}
 
-    <div class="form-group form-inline">
-        <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
-        <ul class="list-group">
-        @foreach($type as $key => $s)
-                <li class="list-group-item list-item">
-                    <div class="row">
-                        <div class="col-md-4 col-xs-6">
-                            <input type="checkbox" name="mtype[]" class="pick-source " value="{{$key . '|' .$s->id}}">
-                            {{$s->name}}
+
+            <div class="form-group form-inline">
+                <label>LĐ Bộ phụ trách:</label>
+                <div class="row">
+                    @foreach($viphuman as $v)
+                        <div class="col-xs-12 col-md-3">
+                            {!! Form::radio('viphuman', $v->id, ($v->name == "") ? true : false) !!} {!! $v->name !!}
+                            &nbsp;
                         </div>
-                        <div class="col-md-8 col-xs-6">
-                            {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu')) !!}
-                        </div>
-                    </div>
-                </li>
-        @endforeach
-        </ul>
-    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label>Mức độ:</label>
+                <div class="row">
+                    @foreach($priority as $idx=>$p)
+                        @if($p->id != 1)
+                            <div class="col-xs-12 col-md-4">
+                                <input type="radio" name="priority" class="{{($p->id == 1)?'hidden':''}}"
+                                       value="{{$p->id}}" {{($idx == 0)?'checked':''}}>
+                                {{$p->name}} &nbsp;
+                                &nbsp;&nbsp;&nbsp;
+                            </div>
+                        @endif
 
+                    @endforeach
+                </div>
+            </div>
 
-    <div class="form-group form-inline">
-        <label>Người chỉ đạo:<span class="required">(*)</span></label>
-        @foreach($viphuman as $v)
-            {!! Form::radio('viphuman', $v->id, ($v->name == "BT") ? true : false) !!} {!! $v->name !!}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        @endforeach
-    </div>
-    <div class="form-group form-inline">
-        <label>Phân loại:</label>
-        @foreach($priority as $idx=>$p)
-            <input type="radio" name="priority" value="{{$p->id}}" {{($idx == 0)?'checked':''}}> {{$p->name}} &nbsp;
-            &nbsp;&nbsp;&nbsp;
-        @endforeach
-    </div>
+            <div class="form-group form-inline">
+                <label>Đv/Cn chủ trì: <span class="required">(*)</span></label>
+                <select id="fList" name="firtunit[]" class="form-control select-multiple ipw"
+                        multiple="multiple"
+                        required="required">
+                    @foreach($treeunit as $item)
+                        @foreach($item->children as $c)
+                            <option value="u|{{$c->id}}">{{$c->name}}</option>
+                        @endforeach
+                    @endforeach
+                    @foreach($user as $u)
+                        <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                    @endforeach
+                </select>
+                <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
+            </div>
 
-    <div class="form-group form-inline">
-        <label>Đơn vị/Cá nhân chủ trì: <span class="required">(*)</span></label>
-        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple"
-                required="required">
-            @foreach($treeunit as $item)
-                @foreach($item->children as $c)
-                    <option value="u|{{$c->id}}">{{$c->name}}</option>
-                @endforeach
-            @endforeach
-            @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-            @endforeach
-        </select>
-        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
-    </div>
+            <div class="form-group form-inline">
+                <label>Đv/Cn phối hợp:</label>
+                <select id="sList" name="secondunit[]" class="form-control select-multiple ipw"
+                        multiple="multiple">
+                    @foreach($treeunit as $item)
+                        @foreach($item->children as $c)
+                            <option value="u|{{$c->id}}">{{$c->name}}</option>
+                        @endforeach
+                    @endforeach
+                    @foreach($user as $u)
+                        <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                    @endforeach
+                </select>
+                <div class="btn btn-default ico ico-search" data-toggle="modal"
+                     data-target="#second-unit"></div>
+            </div>
 
-    <div class="form-group form-inline">
-        <label>Đơn vị/Cá nhân phối hợp:</label>
-        <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
-            @foreach($treeunit as $item)
-                @foreach($item->children as $c)
-                    <option value="u|{{$c->id}}">{{$c->name}}</option>
-                @endforeach
-            @endforeach
-            @foreach($user as $u)
-                <option value="h|{{$u->id}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-            @endforeach
-        </select>
-        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>
-    </div>
+            <div class="form-group  form-inline">
+                <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
+                {!! Form::text('steer_time', "",
+                    array('required', 'class'=>'form-control datepicker',
+                          'placeholder'=>'Ngày chỉ đạo')) !!}
+            </div>
 
-    <div class="form-group  form-inline">
-        <label>Ngày chỉ đạo: <span class="required">(*)</span></label>
-        {!! Form::text('steer_time', "",
-            array('required', 'class'=>'form-control datepicker',
-                  'placeholder'=>'Ngày chỉ đạo')) !!}
-    </div>
+            <div class="form-group  form-inline">
+                <label>Hạn hoàn thành:</label>
+                {!! Form::text('deathline', "",
+                    array('class'=>'form-control datepicker',
+                          'placeholder'=>'Thời gian hoàn thành')) !!}
+            </div>
+        </div>
 
-    <div class="form-group  form-inline">
-        <label>Thời hạn hoàn thành:</label>
-        {!! Form::text('deathline', "",
-            array('class'=>'form-control datepicker',
-                  'placeholder'=>'Thời gian hoàn thành')) !!}
+        <div class="col-xs-12  col-md-6 bd">
+            <div class="form-group form-inline">
+                <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
+                <ul class="list-group">
+                    @foreach($type as $key => $s)
+                        <li class="list-group-item list-item">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="checkbox" name="mtype[]" class="pick-source "
+                                           value="{{$key . '|' .$s->id}}">
+                                    {{$s->name}}
+                                </div>
+                                <div class="col-md-6 col-xs-6">
+                                    {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu/Ghi chú')) !!}
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        {!! Form::submit('Hoàn tất',
-          array('class'=>'btn btn-my')) !!}
+    <div class="form-group pull-right">
+        {!! Form::submit('Lưu lại',
+          array('class'=>'btn btn-my pull-middle')) !!}
     </div>
     {!! Form::close() !!}
 
@@ -193,7 +214,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách người chỉ đạo</h4>
+                    <h4 class="modal-title">Danh sách LĐ Bộ pt</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -357,22 +378,19 @@
             var today = dd + '/' + mm + '/' + yyyy;
             return today;
         }
-        function valCheckbox()
-        {
+        function valCheckbox() {
             var checkboxs = document.getElementsByName("mtype[]");
             var okay = false;
-            for(var i=0, l=checkboxs.length; i<l;i++)
-            {
-                if(checkboxs[i].checked)
-                {
-                    okay=true;
+            for (var i = 0, l = checkboxs.length; i < l; i++) {
+                if (checkboxs[i].checked) {
+                    okay = true;
                     break;
                 }
             }
-            if(okay){
+            if (okay) {
                 return true;
             }
-            else{
+            else {
                 alert("Phải chọn ít nhất một nguồn chỉ đạo");
                 return false;
             }
@@ -517,7 +535,7 @@
 
         $("#steeringcontent-update").submit(function (e) {
             var check = valCheckbox();
-            if(check == false ){
+            if (check == false) {
                 return false;
             }
         })
@@ -527,7 +545,7 @@
             var formData = new FormData($(this)[0]);
             var code = $("#new-source-code").val();
 
-            $ (".loader").show();
+            $(".loader").show();
             var url = $(this).attr("action");
             console.log(url);
             $.ajax({
@@ -542,7 +560,7 @@
                         $("#modal-add-source").modal("hide");
                         $('#msource')
                             .append("<option value='" + code + "' selected>" + code + "</option>");
-                    }else{
+                    } else {
                         alert(result.mess);
                     }
                 },
@@ -562,7 +580,14 @@
         }
 
         .select2 {
-            width: 300px !important;
+            width: 290px !important;
+        }
+        .bd{
+        }
+        @media screen and (max-width: 600px) {
+            .select2 {
+                width: 270px !important;
+            }
         }
     </style>
 @stop

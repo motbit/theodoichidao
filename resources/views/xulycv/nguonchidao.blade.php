@@ -8,7 +8,7 @@
             <th>Nguồn chỉ đạo</th>
             <th>Loại</th>
             <th>Kí hiệu</th>
-            <th>Người chủ trì</th>
+            <th>LĐ Bộ pt</th>
             <th>File đính kèm</th>
             <th>Hoàn thành</th>
             <th>Ngày ban hành</th>

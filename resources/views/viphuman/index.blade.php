@@ -1,7 +1,7 @@
 @extends('layout1')
 
 @section('page-title')
-    Người Dùng
+    Lãnh đạo Bộ phụ trách
 @stop
 
 @section('content')
@@ -15,8 +15,8 @@
             }
         }
     </script>
-    <div class="text-center title">Người chủ trì</div>
-    {{ Html::linkAction('ViphumanController@edit', 'Thêm người chủ trì', array('id'=>0), array('class' => 'btn btn-my')) }}
+    <div class="text-center title">Lãnh đạo Bộ phụ trách</div>
+    {{ Html::linkAction('ViphumanController@edit', 'Thêm mới', array('id'=>0), array('class' => 'btn btn-my')) }}
 
     {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
         {{ Form::hidden('id', 0, array('id' => 'nguoidung_id')) }}
