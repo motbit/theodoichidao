@@ -786,6 +786,11 @@
             $('input[name="deadline_from"]').val("");
             $('input[name="deadline_to"]').val("");
 
+            $('input:radio[name=psource]').prop('checked', false);
+            $('input:radio[name=pviphuman]').prop('checked', false);
+            $('input:radio[name=pfunit]').prop('checked', false);
+            $('input:radio[name=psunit]').prop('checked', false);
+
             $("#form").submit();
         }
 
