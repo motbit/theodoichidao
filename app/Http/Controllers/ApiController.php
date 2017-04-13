@@ -70,8 +70,6 @@ class ApiController extends Controller
 
         $unit = Unit::orderBy('created_at', 'DESC')->get();
         $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
-        $priority = $type = DB::table('priority')->get();
-        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
         $user = User::orderBy('unit', 'ASC')->get();
 
         $tree_unit = array();
@@ -175,18 +173,21 @@ class ApiController extends Controller
             }
         }
 
+        $priority = $type = DB::table('priority')->where('id','=',$data->priority)->get()->first();
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->where('id','=',$data->conductor)->get()->first();
 
         $datajson = [
+            'content' => $data->content,
             'source' => $data->source,
             'unit' => $firstunit,
             'deadline' => $data->deadline,
             'follow' => $secondunit,
             'note' => $data->note,
             'status' => $data->status,
-            'priority' => $data->priority,
+            'priority' => isset($priority) ? [$data->priority,$priority->name] : [$data->priority],
             'steer_time' => $data->steer_time,
             'progress' => $data->progress,
-            'conductor' => $data->conductor,
+            'conductor' => isset($viphuman) ? [$data->conductor,$viphuman->name] : [$data->conductor],
             'created_by' => $data->created_by,
             'created_at' => $data->created_at,
             'updated_at' => $data->updated_at,
