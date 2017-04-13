@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layout1.blade.php" afterPath="$PROJECT_DIR$/resources/views/layout1.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" afterPath="$PROJECT_DIR$/storage/framework/views/27009927bc1eb715bbafa7145f7dcfc848c1e3be.php" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,8 +35,8 @@
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1009">
-              <caret line="736" column="79" selection-start-line="736" selection-start-column="36" selection-end-line="736" selection-end-column="79" />
+            <state relative-caret-position="481">
+              <caret line="739" column="32" selection-start-line="739" selection-start-column="32" selection-end-line="739" selection-end-column="32" />
               <folding>
                 <element signature="e#3358#3377#0#HTML" expanded="true" />
                 <element signature="e#3400#3424#0#HTML" expanded="true" />
@@ -70,7 +66,7 @@
                 <element signature="e#17726#17748#0#HTML" expanded="true" />
                 <element signature="e#17910#17917#0#HTML" expanded="true" />
                 <element signature="e#18074#18110#0#HTML" expanded="true" />
-                <element signature="e#30285#31857#0#HTML" expanded="false" />
+                <element signature="e#30305#31877#0#HTML" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -768,7 +764,7 @@
       <workItem from="1491577158100" duration="225000" />
       <workItem from="1491788930885" duration="5438000" />
       <workItem from="1491983072789" duration="5764000" />
-      <workItem from="1492051683374" duration="18508000" />
+      <workItem from="1492051683374" duration="19855000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -781,7 +777,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189148000" />
+    <option name="totallyTimeSpent" value="190495000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
@@ -1255,8 +1251,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1009">
-          <caret line="736" column="79" selection-start-line="736" selection-start-column="36" selection-end-line="736" selection-end-column="79" />
+        <state relative-caret-position="481">
+          <caret line="739" column="32" selection-start-line="739" selection-start-column="32" selection-end-line="739" selection-end-column="32" />
           <folding>
             <element signature="e#3358#3377#0#HTML" expanded="true" />
             <element signature="e#3400#3424#0#HTML" expanded="true" />
@@ -1286,7 +1282,7 @@
             <element signature="e#17726#17748#0#HTML" expanded="true" />
             <element signature="e#17910#17917#0#HTML" expanded="true" />
             <element signature="e#18074#18110#0#HTML" expanded="true" />
-            <element signature="e#30285#31857#0#HTML" expanded="false" />
+            <element signature="e#30305#31877#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
