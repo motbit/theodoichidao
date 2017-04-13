@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post( 'updateunitnote','ApiController@addUnitNote' )->name('add-unit-note');
         Route::post( 'tranfer','ApiController@tranfer' )->name('steering-tranfer');
         Route::post( 'updatePosition','ApiController@updatePosition' )->name('type-updatePosition');
+        Route::get( 'formatunit','ApiController@formatUnit' )->name('format-unit');
     });
 
     Route::group(['prefix' => 'type'], function () {

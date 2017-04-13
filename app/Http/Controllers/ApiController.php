@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Progress;
 use App\Steeringcontent;
+use App\Unit;
 use App\Sourcesteering;
 use App\Viphuman;
 use App\User;
 use App\Utils;
-use App\Unit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -317,16 +317,82 @@ class ApiController extends Controller
             'mess' => 'Nhiệm vụ chuyển thành công'
         ]);
     }
+
     #end api
 
-    public function updatePosition(Request $request){
+    public function updatePosition(Request $request)
+    {
         $listId = $request->listId;
         $ids = explode('-', $listId);
-        foreach ($ids as $index => $id){
-            DB::table('type')->where('id', '=', $id)->update(['_order'=>$index+1]);
+        foreach ($ids as $index => $id) {
+            DB::table('type')->where('id', '=', $id)->update(['_order' => $index + 1]);
         }
-        return response()->json(['result'=>true,
-            'mess'=>'Đổi vị trí thành công'
+        return response()->json(['result' => true,
+            'mess' => 'Đổi vị trí thành công'
         ]);
+    }
+
+    public function formatUnit(Request $request)
+    {
+        $khacid = Unit::where('shortname', "KHAC")->pluck('id')->toArray()[0];
+        $allsteering = DB::table('steeringcontent')->get();
+        $tempdata = array();
+        foreach ($allsteering as $steering) {
+            $arrunit = explode(',', $steering->unit);
+            $unit = "";
+            foreach ($arrunit as $idx => $u) {
+                if ($u != "") {
+                    if (!strpos($u, "|")) {
+                        if (! isset($tempdata[$u])){
+                            $words = explode(" ", Utils::stripUnicode($u));
+                            $letters = "";
+                            foreach ($words as $value) {
+                                $letters .= substr($value, 0, 1);
+                            }
+                            $newuid = Unit::insertGetId([
+                                'name' => $u,
+                                'shortname' => strtoupper($letters),
+                                'parent_id' => $khacid,
+                            ]);
+                            $unit .= "u|" . $newuid . ",";
+                            $tempdata[$u] = "u|" . $newuid;
+                        }else{
+                            $unit .= $tempdata[$u] . ',';
+                        }
+                    }else{
+                        $unit .= $u . ',';
+                    }
+                }
+            }
+
+            $arrfollow = explode(',', $steering->follow);
+            $follow = "";
+            foreach ($arrfollow as $idx => $u) {
+                if ($u != "") {
+                    if (!strpos($u, "|")) {
+                        if (! isset($tempdata[$u])){
+                            $words = explode(" ", Utils::stripUnicode($u));
+                            $letters = "";
+                            foreach ($words as $value) {
+                                $letters .= substr($value, 0, 1);
+                            }
+                            $newuid = Unit::insertGetId([
+                                'name' => $u,
+                                'shortname' => strtoupper($letters),
+                                'parent_id' => $khacid,
+                            ]);
+                            $follow .= "u|" . $newuid . ",";
+                            $tempdata[$u] = "u|" . $newuid;
+                        }else{
+                            $follow .= $tempdata[$u] . ',';
+                        }
+                    }else{
+                        $follow .= $u . ',';
+                    }
+                }
+            }
+
+            DB::table('steeringcontent')->where('id', '=', $steering->id)->update(['unit' => $unit, 'follow' => $follow]);
+        }
     }
 }

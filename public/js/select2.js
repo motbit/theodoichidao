@@ -1357,7 +1357,8 @@ S2.define('select2/selection/base',[
     });
 
     this.$selection.on('blur', function (evt) {
-      self._handleBlur(evt);
+      // self._handleBlur(evt);
+        self.trigger('results:select', {});
     });
 
     this.$selection.on('keydown', function (evt) {
