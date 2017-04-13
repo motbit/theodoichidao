@@ -338,12 +338,23 @@
                     html_table += "<dt>Phân loại</dt><dd>" + result["priority"][1] + "</dd>";
 
                     html_table += "<dt>Ngày chỉ đạo</dt><dd>" + result["steer_time"] + "</dd>";
+                    html_table += "<dt>Tình hình thực hiện</dt><dd>" + result["progress"] + "</dd>";
 
+                    if(Object.keys(result["steeringSourceNotes"]).length > 0) {
+                        html_table += "<dt>Nguồn chỉ đạo</dt><dd>";
+                        html_table += "<ul class='unit3col'>";
+
+                        $.each( result["steeringSourceNotes"], function( key, value ) {
+                            html_table += "<li>"+ value + "</li>";
+                        });
+
+                        html_table += "</ul>";
+                        html_table += "<dd>";
+                    }
 
                     html_table += "<dt>Đơn vị đầu mối</dt><dd>";
                     html_table += "<ul class='unit3col'>";
-                    $(result["unit"]).each(function( index, element ) {
-                        console.log(element);
+                    $.each(result["unit"],function( index, element ) {
                         html_table += "<li>"+ element.name + "</li>";
                     });
                     html_table += "</ul>";
@@ -352,8 +363,7 @@
                     if(result["follow"].length > 0) {
                         html_table += "<dt>Đơn vị phối hợp</dt><dd>";
                         html_table += "<ul class='unit3col'>";
-                        $(result["follow"]).each(function( index, element ) {
-                            console.log(element);
+                        $.each(result["follow"],function( index, element ) {
                             html_table += "<li>"+ element.name + "</li>";
                         });
                         html_table += "</ul>";
