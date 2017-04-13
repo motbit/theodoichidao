@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Steering_source;
 use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
@@ -221,7 +222,7 @@ class ReportController extends Controller
 
         $unit=Unit::orderBy('created_at', 'DESC')->get();
         $users = User::orderBy('fullname', 'ASC')->get();
-        $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
+//        $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
         $conductor = array();
@@ -259,7 +260,16 @@ class ReportController extends Controller
             $user[$row->id] = $row->fullname;
         }
 
-        $data=Steeringcontent::orderBy('created_at', 'DESC')->get();
+        $data = Steeringcontent::orderBy('created_at', 'DESC')->get();
+        $scData = DB::table('steering_source')->get();
+        $typeData = DB::table('type')->get();
+        foreach ($typeData as $row){
+            $typeArr[$row->id] = $row->name;
+        }
+        $steeringSourceArr = array();
+        foreach ($scData as $item){
+            $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note'=>$item->note);
+        }
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');
 
@@ -270,8 +280,9 @@ class ReportController extends Controller
 
 
         return view('report.index',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
-            'unit'=>$unit, 'user'=>$user, 'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
-            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users, 'conductor' => $conductor]);
+            'unit'=>$unit, 'user'=>$user, 'users'=>$users, 'viphuman'=>$viphuman,
+            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users,
+            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr]);
     }
 
     public function unit(Request $request)
@@ -279,7 +290,7 @@ class ReportController extends Controller
         $unit=Unit::orderBy('created_at', 'DESC')->get();
         $unitall=DB::table('unit')->where('parent_id', '!=', '0')->get();
         $users = User::orderBy('fullname', 'ASC')->get();
-        $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
+//        $sourcesteering=Sourcesteering::orderBy('id', 'DESC')->get();
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
         $conductor = array();
@@ -318,6 +329,15 @@ class ReportController extends Controller
         }
 
         $data=Steeringcontent::orderBy('unit', 'DESC')->get();
+        $scData = DB::table('steering_source')->get();
+        $typeData = DB::table('type')->get();
+        foreach ($typeData as $row){
+            $typeArr[$row->id] = $row->name;
+        }
+        $steeringSourceArr = array();
+        foreach ($scData as $item){
+            $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note'=>$item->note);
+        }
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');
 
@@ -327,8 +347,9 @@ class ReportController extends Controller
         }
 
         return view('report.unit',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
-            'unitall'=>$unitall, 'user'=>$user,'users'=>$users, 'sourcesteering'=>$sourcesteering, 'viphuman'=>$viphuman,
-            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users, 'conductor' => $conductor]);
+            'unitall'=>$unitall, 'user'=>$user,'users'=>$users, 'viphuman'=>$viphuman,
+            'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users,
+            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr]);
     }
 
 }

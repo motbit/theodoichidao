@@ -536,6 +536,7 @@ th>input{
 th{
     text-align: center !important;
 }
-.noboder{
+.list-item{
     border: none;
+    padding: 5px 15px;
 }
