@@ -77,7 +77,7 @@
             <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
-            <th style="min-width: 80px">Người nhập<br><input type="text"></th>
+            <th style="min-width: 100px">Người theo dõi<br><input type="text"></th>
             @if(\App\Roles::accessAction(Request::path(), 'edit'))
                 <th class=" td-action"></th>
             @endif
@@ -220,7 +220,7 @@
 
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
-                <td>{{$user[$row->created_by]}}</td>
+                <td>{{$user[$row->manager]}}</td>
                 @if(\App\Roles::accessAction(Request::path(), 'edit'))
                     <td class="">
                         @if(\App\Roles::accessRow(Request::path(), $row->manager))
