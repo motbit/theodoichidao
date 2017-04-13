@@ -73,8 +73,9 @@
             <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
-            <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
-            {{--<th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>--}}
+            <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
+            <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
+            <th style="min-width: 90px">Người chỉ đạo<br><input type="text"></th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
             <th style="min-width: 100px">Người theo dõi<br><input type="text"></th>
@@ -163,10 +164,17 @@
                         data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }}"
                         class="progress-update"> {{$row->progress}}</td>
                 @else
-                    <td id="progress-{{$row->id}}">{{$row->progress}}</td>
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
                 @endif
 
-                <td class="" onclick="javascript:showfollow({{$idx}})">
+                @if(\App\Roles::accessAction($role, 'note'))
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-update"> {{$row->unitnote}}</td>
+                @else
+                <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                    class="unit-view"> {{$row->unitnote}}</td>
+                @endif
+                <td class="hidden" onclick="javascript:showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
                         @foreach($units = explode(',', $row->follow) as $i)
@@ -199,7 +207,13 @@
                         @endif
                     </ul>
                 </td>
-
+                <td class="text-center">
+                    @if(isset($dtconductor[intval($row->conductor)]))
+                        {{$dtconductor[intval($row->conductor)]}}
+                    @else
+                        {{$row->conductor}}
+                    @endif
+                </td>
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td>{{$user[$row->manager]}}</td>
@@ -250,6 +264,7 @@
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
+                    @if(\App\Roles::accessAction($role, 'status'))
                     {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
                     <input id="steering_id" type="hidden" name="steering_id">
                     <input id="process-deadline" type="hidden" name="process-deadline">
@@ -274,6 +289,7 @@
                         <input class="btn btn-my pull-right" type="submit" value="Lưu">
                     </div>
                     {!! Form::close() !!}
+                    @endif
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -319,6 +335,45 @@
                     </div>
                     <input class="btn btn-my pull-right" type="submit" value="Xác nhận chuyển">
                     {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-unit-note" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ý kiến của đơn vị chủ trì/phối hợp</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    @if(\App\Roles::accessAction($role, 'note'))
+                    {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
+                    <input id="steering_id_note" type="hidden" name="steering_id">
+                    <div class="form-group from-inline">
+                        <label>Nội dung ý kiến</label>
+                        <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group form-inline hidden">
+                        <label>Ngày cập nhật</label>
+                        <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
+                               required value="{{date('d/m/y')}}">
+                    </div>
+                    <div class="form-group form-inline">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                    </div>
+                    {!! Form::close() !!}
+                    @endif
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Nội dung</th>
+                            <th>Người cập nhật</th>
+                            <th>Thời gian</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-unit-note"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -453,10 +508,15 @@
             @if(\App\Roles::accessAction($role, 'status'))
             $(".progress-update").on("click", function () {
                 showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
-                console.log("#ID: " + $(this).attr("data-id"));
+            });
+            @else
+            $(".progress-view").on("click", function () {
+                showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
             });
             @endif
-
+            $(".unit-view").on("click", function () {
+                showDetailUnitNote($(this).attr("data-id"))
+            });
             $(".js-example-basic-single").select2({
                 placeholder: "Chọn người tiếp nhận"
             });
@@ -504,6 +564,39 @@
                 });
             });
             //End cap nhat trang thai
+
+            $("#form-unit-note").submit(function (e) {
+                e.preventDefault();
+                var formData = new FormData($(this)[0]);
+                var note = $("#unit-note").val();
+                var steering_id = $("#steering_id_note").val();
+                var status = $('input[name="pr_status"]:checked').val()
+                var time_log = $("#unit_time").val();
+                $(".loader").show();
+                var url = $(this).attr("action");
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    success: function (result) {
+                        console.log(result);
+                        $(".loader").hide();
+                        $("#modal-unit-note").modal("hide");
+                        console.log(steering_id + " : " + note);
+                        $("#unit-note-" + steering_id).html(note)
+                        resetFromUnitNote();
+                        reStyleRow(steering_id, status, time_log);
+                    },
+                    error: function () {
+                        alert("Xảy ra lỗi nội bộ");
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
 
             //Chuyen nhiem vu
             $("#form-tranfer").submit(function (e) {
@@ -635,6 +728,45 @@
             $("#filter-type").val(type + "|");
             $("#filter-type").trigger("change");
             $("#title-filter").html(" (theo " + name + ")")
+        }
+
+        function resetFromUnitNote() {
+            $("#unit-note").val("");
+            $("#unit_time").val(current_date);
+            $("input[name=pr_status][value='0']").prop('checked', true);
+            $("#input-file-note").hide();
+            $('input[name=file]').val("");
+        }
+
+        function showDetailUnitNote(id) {
+            resetFromUnitNote();
+            $(".loader").show();
+            $("#steering_id_note").val(id);
+            $.ajax({
+                url: "{{$_ENV['ALIAS']}}/api/unitnote?s=" + id,
+                success: function (result) {
+                    $(".loader").hide();
+                    var html_table = "";
+                    for (var i = 0; i < result.length; i++) {
+                        var r = result[i];
+                        html_table += "<tr>";
+                        html_table += "<td>" + r.note
+                        if (r.file_attach != null) {
+                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/unit_note_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
+                        }
+                        html_table += "</td>"
+                        html_table += "<td>" + r.created + "</td>"
+                        html_table += "<td>" + r.time_log + "</td>"
+                        html_table += "</tr>"
+                    }
+                    $("#table-unit-note").html(html_table);
+                    $("#modal-unit-note").modal("show");
+                },
+                error: function () {
+                    alert("Xảy ra lỗi nội bộ");
+                    $(".loader").hide();
+                }
+            });
         }
 
     </script>

@@ -91,6 +91,7 @@ class GroupController extends Controller
         $dictionary['status'] = "Cập nhật tiến độ";
         $dictionary['trans'] = "Chuyển";
         $dictionary['role'] = "Phân quyền";
+        $dictionary['note'] = "Ý kiến đơn vị";
 
         return view("group.permission", ['id' => $id, 'permission' => $permission, 'views' => $views,
             'group' => $group, 'dataview' => $dataview, 'dictionary' => $dictionary]);

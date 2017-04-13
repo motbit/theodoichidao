@@ -69,7 +69,6 @@ class SteeringcontentController extends Controller
             $steering = false;
             $sourceinfo = false;
             $data = Steeringcontent::orderBy('id', 'DESC')
-                ->select('id', 'content', 'source', 'unit', 'deadline', 'follow', 'status', 'complete_time', 'progress', 'manager')
                 ->get();
         }
 
@@ -87,8 +86,15 @@ class SteeringcontentController extends Controller
         foreach ($datauser as $row) {
             $user[$row->id] = $row->fullname;
         }
+
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
+        }
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit,
-            'steering' => $steering, 'user' => $user,
+            'steering' => $steering, 'user' => $user, 'dtconductor' => $conductor,
             'conductor' => $thisconductor, 'sourceinfo' => $sourceinfo,
             "datauser" => $datauser, 'parram' => $param, 'role' => $role]);
     }
