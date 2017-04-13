@@ -40,11 +40,11 @@
         @foreach($type as $key => $s)
                 <li class="list-group-item noboder">
                     <div class="row">
-                        <div class="col-md-2 col-xs-6">
+                        <div class="col-md-4 col-xs-6">
                             <input type="checkbox" name="mtype[]" class="pick-source " value="{{$key . '|' .$s->id}}">
                             {{$s->name}}
                         </div>
-                        <div class="col-md-10 col-xs-6">
+                        <div class="col-md-8 col-xs-6">
                             {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu')) !!}
                         </div>
                     </div>
