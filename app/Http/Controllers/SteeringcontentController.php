@@ -238,6 +238,10 @@ class SteeringcontentController extends Controller
 
             }
         }
+        $priority = $request->input('priority');
+        if (! isset($priority)){
+            $priority = 1;
+        }
 
         if ($id > 0) {
             $noteArr = $request->input('note');
@@ -302,7 +306,7 @@ class SteeringcontentController extends Controller
 //                'source' => '|' . implode('|', $request->input('msource')) . '|',
                 'unit' => $fu,
                 'follow' => $su,
-                'priority' => $request->input('priority'),
+                'priority' => $priority,
                 'conductor' => $request->input('viphuman'),
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
                 'deadline' => $deadline,

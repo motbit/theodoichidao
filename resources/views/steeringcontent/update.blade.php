@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="form-group form-inline">
-                    <label>Đơn vị/Cá nhân chủ trì: <span class="required">(*)</span></label>
+                    <label>Đv/Cn chủ trì: <span class="required">(*)</span></label>
                     <select id="fList" name="firtunit[]" class="form-control select-multiple ipw" multiple="multiple"
                             required="required">
                         @foreach($treeunit as $item)
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="form-group form-inline">
-                    <label>Đơn vị/Cá nhân phối hợp:</label>
+                    <label>Đv/Cn phối hợp:</label>
                     <select id="sList" name="secondunit[]" class="form-control select-multiple ipw" multiple="multiple">
                         @foreach($treeunit as $item)
                             @foreach($item->children as $c)
