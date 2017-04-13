@@ -16,11 +16,12 @@ class TypeSourceController extends Controller
 {
     public function index()
     {
-        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $type = DB::table('type')->orderBy('_order', 'ASC')->get();
-        return view('type.index', ['type'=>$type]);
+        return view('type.index', ['type'=>$type, 'role' => $role]);
     }
 
     public function edit(Request $request)

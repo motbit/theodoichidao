@@ -23,7 +23,7 @@
         <div class="text-center">
             <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$steering->code}} - {{$steering->name}}</span></div>
         </div>
-    @elseif(\App\Roles::accessAction(Request::path(), 'add'))
+    @elseif(\App\Roles::accessAction($role, 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
     <script language="javascript">
@@ -74,21 +74,20 @@
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
-            <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
+            {{--<th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>--}}
             <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
             <th style="min-width: 100px">Người theo dõi<br><input type="text"></th>
-            @if(\App\Roles::accessAction(Request::path(), 'edit'))
+            @if(\App\Roles::accessAction($role, 'edit'))
                 <th class=" td-action"></th>
             @endif
-            @if(\App\Roles::accessAction(Request::path(), 'trans'))
+            @if(\App\Roles::accessAction($role, 'trans'))
                 <th class=" td-action"></th>
             @endif
-            @if(\App\Roles::accessAction(Request::path(), 'delete'))
+            @if(\App\Roles::accessAction($role, 'delete'))
                 <th class=" td-action"></th>
             @endif
             <th class=" hidden"><input type="text" id="filter-status"></th>
-            <td class=" hidden"><input type="text" id="filter-type"></td>
         </tr>
         </thead>
         <tbody>
@@ -159,7 +158,7 @@
                     </ul>
                 </td>
 
-                @if(\App\Roles::accessAction(Request::path(), 'status'))
+                @if(\App\Roles::accessAction($role, 'status'))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
                         data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }}"
                         class="progress-update"> {{$row->progress}}</td>
@@ -201,29 +200,12 @@
                     </ul>
                 </td>
 
-                <td class="">
-                    @foreach(explode('|', $row->source) as $s)
-                        <ul class="unit-list">
-                            @if($s != '')
-                                @if ( !in_array($s, $allsteeringcode) )
-                                    <li> {{ $s }} </li>
-                                @else
-                                    <li><a href="steeringcontent?source={{urlencode($s)}}"> {{ $s }} </a></li>
-                                @endif
-                            @endif
-                        </ul>
-                    @endforeach
-                </td>
-
-                {{--<td> {{$row->conductor}} </td>--}}
-
-
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td>{{$user[$row->manager]}}</td>
-                @if(\App\Roles::accessAction(Request::path(), 'edit'))
+                @if(\App\Roles::accessAction($role, 'edit'))
                     <td class="">
-                        @if(\App\Roles::accessRow(Request::path(), $row->manager))
+                        @if(\App\Roles::accessRow($role, $row->manager))
                             <a href="{{$_ENV['ALIAS']}}/steeringcontent/update?id={{$row->id}}"><img height="20"
                                                                                                      border="0"
                                                                                                      src="{{$_ENV['ALIAS']}}/img/edit.png"
@@ -231,9 +213,9 @@
                         @endif
                     </td>
                 @endif
-                @if(\App\Roles::accessAction(Request::path(), 'trans'))
+                @if(\App\Roles::accessAction($role, 'trans'))
                     <td class="">
-                        @if(\App\Roles::accessRow(Request::path(), $row->manager))
+                        @if(\App\Roles::accessRow($role, $row->manager))
                             <a href="javascript:showTranfer('{{$row->id}}', '{{$row->content}}')"><img
                                         title="Chuyển nhiệm vụ"
                                         height="20" border="0"
@@ -241,9 +223,9 @@
                         @endif
                     </td>
                 @endif
-                @if(\App\Roles::accessAction(Request::path(), 'delete'))
+                @if(\App\Roles::accessAction($role, 'delete'))
                     <td class="">
-                        @if(\App\Roles::accessRow(Request::path(), $row->manager))
+                        @if(\App\Roles::accessRow($role, $row->manager))
                             <a href="javascript:removebyid('{{$row->id}}')"><img height="20" border="0"
                                                                                  src="{{$_ENV['ALIAS']}}/img/delete.png"
                                                                                  title="Xóa nhiệm vụ"></a>
@@ -251,13 +233,6 @@
                     </td>
                 @endif
                 <td class=" hidden">{{$st}}</td>
-                <td class=" hidden">
-                    @foreach(explode('|', $row->source) as $s)
-                        @if($s != '' && array_key_exists($s, $sourcetype))
-                            {{$sourcetype[$s]}}|
-                        @endif
-                    @endforeach
-                </td>
             </tr>
         @endforeach
         </tbody>
@@ -475,7 +450,7 @@
         }
 
         $(document).ready(function () {
-            @if(\App\Roles::accessAction(Request::path(), 'status'))
+            @if(\App\Roles::accessAction($role, 'status'))
             $(".progress-update").on("click", function () {
                 showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
                 console.log("#ID: " + $(this).attr("data-id"));
