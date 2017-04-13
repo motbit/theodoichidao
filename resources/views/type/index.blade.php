@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="text-center title">Loại nguồn chỉ đạo</div>
-    @if(\App\Roles::accessAction(Request::path(), 'add'))
+    @if(\App\Roles::accessAction($role, 'add'))
         {{ Html::linkAction('TypeSourceController@edit', 'Thêm loại nguồn chỉ đạo', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
 

@@ -11,11 +11,12 @@ class GroupController extends Controller
 {
     public function index()
     {
-        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $group = Group::orderBy('created_at', 'DESC')->get();
-        return view('group.index', ['group' => $group]);
+        return view('group.index', ['group' => $group, 'role' => $role]);
     }
 
     public function edit(Request $request)

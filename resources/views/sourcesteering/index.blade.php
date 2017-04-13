@@ -34,7 +34,7 @@
     {!! Form::close() !!}
 
     <div class="text-center title">Nguồn chỉ đạo</div>
-    @if(\App\Roles::accessAction(Request::path(), 'add'))
+    @if(\App\Roles::accessAction($role, 'add'))
         <a class="btn btn-my" href="sourcesteering/update?id=0">Thêm nguồn</a>
     @endif
     <table id="table" class="table table-responsive table-bordered">
@@ -58,10 +58,10 @@
             <th class="td-date">Ngày ban hành
                 <input type="text" class="datepicker" style="max-width: 100px">
             </th>
-            @if(\App\Roles::accessAction(Request::path(), 'edit'))
+            @if(\App\Roles::accessAction($role, 'edit'))
                 <th class="td-action"></th>
             @endif
-            @if(\App\Roles::accessAction(Request::path(), 'delete'))
+            @if(\App\Roles::accessAction($role, 'delete'))
                 <th class="td-action"></th>
             @endif
         </tr>
@@ -80,18 +80,18 @@
                     @endif
                 </td>
                 <td>{{date("d/m/y", strtotime($row->time))}}</td>
-                @if(\App\Roles::accessAction(Request::path(), 'edit'))
+                @if(\App\Roles::accessAction($role, 'edit'))
                     <td>
-                        @if(\App\Roles::accessRow(Request::path(), $row->created_by))
+                        @if(\App\Roles::accessRow($role, $row->created_by))
                             <a href="{{$_ENV['ALIAS']}}/sourcesteering/update?id={{$row->id}}"><img height="20"
                                                                                                     border="0"
                                                                                                     src="{{$_ENV['ALIAS']}}/img/edit.png"></a>
                         @endif
                     </td>
                 @endif
-                @if(\App\Roles::accessAction(Request::path(), 'delete'))
+                @if(\App\Roles::accessAction($role, 'delete'))
                     <td>
-                        @if(\App\Roles::accessRow(Request::path(), $row->created_by))
+                        @if(\App\Roles::accessRow($role, $row->created_by))
                             <a href="javascript:xoanguoidung('{{$row->id}}')"><img height="20" border="0"
                                                                                    src="{{$_ENV['ALIAS']}}/img/delete.png"></a>
                         @endif

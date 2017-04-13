@@ -14,7 +14,8 @@ class SourcesteeringController extends Controller
 {
     public function index()
     {
-        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $data = DB::table('sourcesteering')
@@ -27,7 +28,7 @@ class SourcesteeringController extends Controller
             ->select('name')
             ->get();
 
-        return view("sourcesteering/index", ['data' => $data, 'type' => $type]);
+        return view("sourcesteering/index", ['data' => $data, 'type' => $type, 'role' => $role]);
 
     }
 

@@ -21,7 +21,8 @@ class XuLyCVController extends Controller
 {
     public function daumoi(Request $request)
     {
-        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $user = Auth::user();
@@ -45,7 +46,8 @@ class XuLyCVController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('xulycv.daumoi', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $source]);
+        return view('xulycv.daumoi', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit,
+            'source' => $source, 'role' => $role]);
     }
 
     public function duocgiao(Request $request)

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="text-center title">Nhóm Người sử dụng</div>
-    @if(\App\Roles::accessAction(Request::path(), 'add'))
+    @if(\App\Roles::accessAction($role, 'add'))
         {{ Html::linkAction('GroupController@edit', 'Thêm nhóm Người sử dụng', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
 
