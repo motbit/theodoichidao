@@ -15,7 +15,7 @@
     @endif
     @if ($conductor != false && !empty($conductor))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo người chỉ đạo: <span style="color: #ff0000">{{$conductor->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo LĐ Bộ pt: <span style="color: #ff0000">{{$conductor->name}}</span></div>
         </div>
     @endif
 
@@ -64,6 +64,11 @@
             <a id="a6" class="a-status" href="javascript:filterStatus(6)"><span
                         class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
+    </div>
+    <div style="min-width: 300px"><span class="total-nv">(Tổng số: {{count($lst)}} nhiệm vụ)</span>
+        {{--<span class="pull-right"><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"--}}
+                                    {{--href="javascript:exportExcel()"><span></span></a></span>--}}
+        {{--<span class="panel-button pull-right"></span>--}}
     </div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
@@ -800,6 +805,11 @@
     <style>
         #table_filter {
             display: none;
+        }
+
+        .total-nv{
+            color: red;
+            font-style: italic;
         }
     </style>
 @stop

@@ -44,3 +44,9 @@ footer {
     margin-right: 0px !important;
     margin-left: 0px !important;
 }
+
+@media screen and (max-width: 600px) {
+    .footer-text {
+        font-size: 10px;
+    }
+}

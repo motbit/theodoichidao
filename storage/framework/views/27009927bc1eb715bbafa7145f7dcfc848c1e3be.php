@@ -132,7 +132,7 @@
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                    <li><a href="#">Người chỉ đạo</a></li>
+                    <li><a href="#">LĐ Bộ pt</a></li>
                     <ul style="padding-left: 20px">
                         <?php $__currentLoopData = \App\Utils::listConductor(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conductor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''); ?>">

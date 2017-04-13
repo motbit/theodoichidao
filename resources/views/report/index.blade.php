@@ -50,11 +50,11 @@
                         </div>
                     </div>
                     <div class="form-group form-inline">
-                        <label>Người chỉ đạo:</label>
+                        <label>LĐ Bộ pt:</label>
                         <div class="input-contain">
                             {!! Form::text('conductor', "",
                                     array('no-required',
-                                    'placeholder'=>'Người chỉ đạo',
+                                    'placeholder'=>'LĐ Bộ pt',
                                     'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
                             ) !!}
                             <div class="btn btn-default ico ico-search fl" data-toggle="modal"
@@ -177,7 +177,7 @@
             <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="min-width: 100px"> Người chỉ đạo<br><input type="text" id="id_conductor"></th>
+            <th style="min-width: 100px"> LĐ Bộ pt<br><input type="text" id="id_conductor"></th>
             <th style="min-width: 100px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
             <th style="min-width: 100px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
@@ -358,7 +358,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách người chỉ đạo</h4>
+                    <h4 class="modal-title">Danh sách LĐ Bộ pt</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -844,7 +844,7 @@
                 filter += "Nguồn chỉ đạo: " + $("#source").val() + "; "
             }
             if ($("#viphuman").val() != "") {
-                filter += "Người chỉ đạo: " + $("#viphuman").val() + "; "
+                filter += "LĐ Bộ pt: " + $("#viphuman").val() + "; "
             }
             if ($("#fList").val() != "") {
                 filter += "Đơn vị đầu mối: " + $("#fList").val() + "; "
