@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php" afterPath="$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/custom.css" afterPath="$PROJECT_DIR$/public/css/custom.css" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="daumoi.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="daumoi.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="357" column="0" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
+            <state relative-caret-position="600">
+              <caret line="127" column="57" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="57" />
               <folding>
                 <element signature="e#8696#11369#0#HTML" expanded="false" />
                 <element signature="e#11374#13319#0#HTML" expanded="false" />
@@ -101,11 +101,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="custom.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/css/custom.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="869">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="968">
-              <caret line="542" column="11" selection-start-line="542" selection-start-column="3" selection-end-line="542" selection-end-column="11" />
+            <state relative-caret-position="399">
+              <caret line="489" column="0" selection-start-line="489" selection-start-column="0" selection-end-line="493" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -133,16 +143,6 @@
                 <marker date="1492051668372" expanded="true" signature="10338:10420" ph="..." />
                 <marker date="1492051668372" expanded="true" signature="10352:10418" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/web.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="110" column="28" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="28" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -204,7 +204,6 @@
         <option value="$PROJECT_DIR$/app/Sourcesteering.php" />
         <option value="$PROJECT_DIR$/resources/views/user/add.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/user/update.blade.php" />
-        <option value="$PROJECT_DIR$/public/css/custom.css" />
         <option value="$PROJECT_DIR$/resources/views/steeringcontent/add.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/viphuman/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/xulycv/duocgiao.blade.php" />
@@ -246,6 +245,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
         <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php" />
+        <option value="$PROJECT_DIR$/public/css/custom.css" />
       </list>
     </option>
   </component>
@@ -675,7 +675,7 @@
       <workItem from="1491577158100" duration="225000" />
       <workItem from="1491788930885" duration="5438000" />
       <workItem from="1491983072789" duration="5764000" />
-      <workItem from="1492051683374" duration="10029000" />
+      <workItem from="1492051683374" duration="11330000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -688,7 +688,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180669000" />
+    <option name="totallyTimeSpent" value="181970000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2906" height="1566" extended-state="6" />
@@ -746,13 +746,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/xulycv/nguonchidao.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env.example">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1112,14 +1105,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="542" column="11" selection-start-line="542" selection-start-column="3" selection-end-line="542" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SteeringcontentController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-891">
@@ -1140,12 +1125,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/xulycv/daumoi.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="357" column="0" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
+        <state relative-caret-position="600">
+          <caret line="127" column="57" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="57" />
           <folding>
             <element signature="e#8696#11369#0#HTML" expanded="false" />
             <element signature="e#11374#13319#0#HTML" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="489" column="0" selection-start-line="489" selection-start-column="0" selection-end-line="493" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="869">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
