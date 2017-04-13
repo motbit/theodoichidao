@@ -43,7 +43,7 @@
                     <div class="row">
                         @foreach($viphuman as $v)
                             <div class="col-xs-12 col-md-3">
-                                {!! Form::radio('viphuman', $v->id, ($v->name == $row->conductor) ? true : false) !!} {!! $v->name !!}
+                                {!! Form::radio('viphuman', $v->id, ($v->id == $row->conductor) ? true : false) !!} {!! $v->name !!}
                             </div>
                         @endforeach
                     </div>
@@ -56,7 +56,7 @@
                             @if($p->id != 1)
                                 <div class="col-xs-12 col-md-4">
                                     <input type="radio" name="priority"
-                                           value="{{$p->id}}" {{($idx == $row->priority)?'checked':''}}> {{$p->name}}
+                                           value="{{$p->id}}" {{($p->id == $row->priority)?'checked':''}}> {{$p->name}}
                                     &nbsp;&nbsp;
                                 </div>
                             @endif
@@ -116,13 +116,13 @@
                             <li class="list-group-item list-item">
                                 <div class="row">
                                     <div class="col-md-6 col-xs-6">
-                                        <input type="checkbox" name="mtype[]" class="pick-source "
+                                        <input type="checkbox" name="mtype[]" class="pick-source " id="type{{$key}}"
                                                value=" {{$key . '|' .$s->id}}" {{ in_array($s->id, $steeringSourceIds) ? "checked" : "" }}>
                                         {{$s->name}}
                                     </div>
                                     <div class="col-md-6 col-xs-6">
                                         {!! Form::text('note[]', in_array($s->id, $steeringSourceIds) ? $steeringSourceNotes[$s->id] : "",
-                                        array('class'=>'form-control', 'placeholder'=>'Ký hiệu/Ghi chú')) !!}
+                                        array('class'=>'form-control', 'placeholder'=>'Ký hiệu/Ghi chú', 'date-id'=>"$key")) !!}
                                     </div>
                                 </div>
                             </li>
@@ -388,6 +388,16 @@
             {{--var dtunit = [{{$data[0]['unit']}}]--}}
             {{--$("#sList").val(dtfollow).trigger('change');--}}
             {{--$("#fList").val(dtunit).trigger('change');--}}
+        });
+
+        $('input[name="note[]"]').change(function(e){
+            var val = $(this).val();
+            var id = $(this).attr('date-id');
+            if(val != ''){
+                $('input:checkbox[id=type'+id+']').attr('checked', true);
+            }else{
+                $('input:checkbox[id=type'+id+']').attr('checked', false);
+            }
         });
 
         $('input:checkbox[name=psource]').change(function () {

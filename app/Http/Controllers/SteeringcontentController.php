@@ -251,6 +251,7 @@ class SteeringcontentController extends Controller
                 'follow' => $su,
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
                 'deadline' => $deadline,
+                'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman')
             ]);
 
