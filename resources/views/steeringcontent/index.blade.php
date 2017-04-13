@@ -384,6 +384,7 @@
         </div>
     </div>
     <script>
+        var table = "";
         var current_date = "{{date('d/m/y')}}";
         //        var showpr = false;
         //        $("#form-progress").hide();
@@ -646,7 +647,7 @@
             //End Chuyen nhiem vu
 
             // DataTable
-            var table = $('#table').DataTable({
+            table = $('#table').DataTable({
                 autoWidth: false,
                 dom: 'Bfrtip',
                 buttons: [
@@ -720,7 +721,7 @@
                     }
                 });
             });
-            console.log($(".buttons-excel").html);
+
 
             $('input:radio[name=pr_status]').change(function () {
                 var stt = $('input:radio[name=pr_status]:checked').val();
@@ -738,8 +739,12 @@
                             $(element).val(readCookie("filter:" + $(element).attr("name"))).trigger('change');
                     })
 
-                    if(readCookie("filter:current_page"))
-                        table.page( parseInt(readCookie("filter:current_page")) ).draw( 'page' );
+                    if(readCookie("filter:current_page")) {
+                            setTimeout(function(){
+                                table.page( parseInt(readCookie("filter:current_page")) ).draw ('page');
+                            }, 2000);
+                    }
+
             @else
                 resetcookiefiter();
             @endif
