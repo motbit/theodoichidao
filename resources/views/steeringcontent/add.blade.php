@@ -121,12 +121,12 @@
                         <li class="list-group-item list-item">
                             <div class="row">
                                 <div class="col-md-6 col-xs-6">
-                                    <input type="checkbox" name="mtype[]" class="pick-source "
+                                    <input type="checkbox" name="mtype[]" class="pick-source " id="type{{$key}}"
                                            value="{{$key . '|' .$s->id}}">
                                     {{$s->name}}
                                 </div>
                                 <div class="col-md-6 col-xs-6">
-                                    {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu/Ghi chú')) !!}
+                                    {!! Form::text('note[]', "", array('class'=>'form-control', 'placeholder'=>'Ký hiệu/Ghi chú', 'date-id'=>"$key")) !!}
                                 </div>
                             </div>
                         </li>
@@ -406,6 +406,16 @@
                 source: viphumans
             });
         });
+        $('input[name="note[]"]').change(function(e){
+            var val = $(this).val();
+            var id = $(this).attr('date-id');
+            if(val != ''){
+                $('input:checkbox[id=type'+id+']').attr('checked', true);
+            }else{
+                $('input:checkbox[id=type'+id+']').attr('checked', false);
+            }
+        });
+
         $('input:checkbox[name=psource]').change(function () {
 //            $('input[name="source"]').val($('input[name="psource"]:checked').val())
 //            var time = $('input[name="psource"]:checked').attr('data-time');

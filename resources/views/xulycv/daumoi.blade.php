@@ -85,7 +85,7 @@
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
-                <td> {{$row->content}} </td>
+                <td onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
                 <td onclick="showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
@@ -261,6 +261,21 @@
             </div>
         </div>
     </div>
+
+    <div id="modal-show-detail" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thông tin Nhiệm vụ</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    <div id="table-steering-detail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var current_date = "{{date('d/m/y')}}";
         //        var showpr = false;
@@ -297,6 +312,69 @@
                     }
                     $("#table-progress").html(html_table);
                     $("#modal-progress").modal("show");
+                },
+                error: function () {
+                    alert("Xảy ra lỗi nội bộ");
+                    $(".loader").hide();
+                }
+            });
+        }
+
+
+
+        function showDetail(id) {
+            $(".loader").show();
+            $.ajax({
+                url: "{{$_ENV['ALIAS']}}/api/steering?id=" + id,
+                success: function (result) {
+                    $(".loader").hide();
+                    var html_table = "";
+                    console.log(result);
+                    html_table += "<div class='alert alert-info'>" + result["content"] + "</div>";
+                    html_table += "<dl class=\"dl-horizontal\">";
+                    if(result["conductor"][1] !== "undefined ") {
+                        html_table += "<dt>Người chủ trì</dt><dd>" + result["conductor"][1] + "</dd>";
+                    }
+
+                    html_table += "<dt>Phân loại</dt><dd>" + result["priority"][1] + "</dd>";
+
+                    html_table += "<dt>Ngày chỉ đạo</dt><dd>" + result["steer_time"] + "</dd>";
+                    html_table += "<dt>Tình hình thực hiện</dt><dd>" + result["progress"] + "</dd>";
+
+                    if(Object.keys(result["steeringSourceNotes"]).length > 0) {
+                        html_table += "<dt>Nguồn chỉ đạo</dt><dd>";
+                        html_table += "<ul class='unit3col'>";
+
+                        $.each( result["steeringSourceNotes"], function( key, value ) {
+                            html_table += "<li>"+ value + "</li>";
+                        });
+
+                        html_table += "</ul>";
+                        html_table += "<dd>";
+                    }
+
+                    html_table += "<dt>Đơn vị đầu mối</dt><dd>";
+                    html_table += "<ul class='unit3col'>";
+                    $.each(result["unit"],function( index, element ) {
+                        html_table += "<li>"+ element.name + "</li>";
+                    });
+                    html_table += "</ul>";
+                    html_table += "<dd>";
+
+                    if(result["follow"].length > 0) {
+                        html_table += "<dt>Đơn vị phối hợp</dt><dd>";
+                        html_table += "<ul class='unit3col'>";
+                        $.each(result["follow"],function( index, element ) {
+                            html_table += "<li>"+ element.name + "</li>";
+                        });
+                        html_table += "</ul>";
+                        html_table += "<dd>";
+                    }
+
+
+                    //html_table += "<dt>Theo dõi</dt><dd>" + result["unitnote"] + "</dd>";
+                    $("#table-steering-detail").html(html_table);
+                    $("#modal-show-detail").modal("show");
                 },
                 error: function () {
                     alert("Xảy ra lỗi nội bộ");

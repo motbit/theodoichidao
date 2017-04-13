@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Progress;
 use App\Steeringcontent;
 use App\Unit;
+use App\Sourcesteering;
+use App\Viphuman;
+use App\User;
 use App\Utils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -59,6 +62,146 @@ class ApiController extends Controller
         return response()->json($content);
     }
 
+
+    public function getSteering(Request $request)
+    {
+        // Lay ra id
+        $id = intval($request->input('id'));
+
+        $unit = Unit::orderBy('created_at', 'DESC')->get();
+        $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
+        $user = User::orderBy('unit', 'ASC')->get();
+
+        $tree_unit = array();
+        foreach ($unit as $row) {
+            if ($row->parent_id == 0) {
+                $children = array();
+                foreach ($unit as $c) {
+                    if ($c->parent_id == $row->id) {
+                        $children[$c->id] = $c;
+                    }
+                }
+                $row->children = $children;
+                $tree_unit[] = $row;
+            }
+        }
+
+        $dictunit = array();
+        foreach ($unit as $row) {
+            $dictunit[$row->id] = $row->name;
+        }
+
+
+        $dictuser = array();
+        foreach ($user as $row) {
+            $dictuser[$row->id] = $row->fullname;
+        }
+
+        $source = array();
+        foreach ($sourcesteering as $row) {
+            $source[$row->id] = $row->code;
+        }
+        $type = DB::table('type')->orderBy('_order', 'ASC')->get();
+
+        $data = Steeringcontent::where('id', $id)->get()->first();
+
+        $dtfollowArr = explode(",", $data[0]['follow']);
+        $dtUnitArr = explode(",", $data[0]['unit']);
+
+        //get list source id
+        $steeringSources = DB::table('steering_source')->select('source', 'note')->where('steering', $id)->get();
+        $steeringSourceIds = array();
+        $steeringSourceNotes = array();
+        foreach ($steeringSources as $key => $sc) {
+            $steeringSourceIds[$key] = $sc->source;
+            $steeringSourceNotes[$sc->source] = $sc->note;
+        }
+
+
+        // Unit
+
+        $n = 0;
+        $firstunit = [];
+        foreach($units = explode(',', $data->unit) as $k=>$i) {
+            $spl = explode('|', $i);
+            $validate = ($i != "");
+            $val = [
+                "id" => isset($spl[1]) ? $spl[1] : 0,
+            ];
+            if ($spl[0] == 'u' && isset($dictunit[$spl[1]])) {
+                $val["type"] = "u";
+                $val["name"] = $dictunit[$spl[1]];
+                $n++;
+            } else if ($spl[0] == 'h' && isset($dictuser[$spl[1]])) {
+                $val["type"] = "h";
+                $val["name"] = $dictuser[$spl[1]];
+                $n++;
+            } else {
+                $val["type"] = "-";
+                $val = $i;
+            }
+
+            if ($validate) {
+                $firstunit[$k] = $val;
+        }
+        }
+
+        $n = 0;
+        $secondunit = [];
+        foreach($units = explode(',', $data->follow) as $k=>$i) {
+
+            $spl = explode('|', $i);
+            $validate = ($i != "");
+            $val = [
+                "id" => isset($spl[1]) ? $spl[1] : 0,
+            ];
+            if ($spl[0] == 'u' && isset($dictunit[$spl[1]])) {
+                $val["type"] = "u";
+                $val["name"] = $dictunit[$spl[1]];
+                $n++;
+            } else if ($spl[0] == 'h' && isset($dictuser[$spl[1]])) {
+                $val["type"] = "h";
+                $val["name"] = $dictuser[$spl[1]];
+                $n++;
+            } else {
+                $val["type"] = "-";
+                $val = $i;
+            }
+
+            if ($validate) {
+                $secondunit[$k] = $val;
+            }
+        }
+
+        $priority = $type = DB::table('priority')->where('id','=',$data->priority)->get()->first();
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->where('id','=',$data->conductor)->get()->first();
+
+        $datajson = [
+            'content' => $data->content,
+            'source' => $data->source,
+            'unit' => $firstunit,
+            'deadline' => $data->deadline,
+            'follow' => $secondunit,
+            'note' => $data->note,
+            'status' => $data->status,
+            'priority' => isset($priority) ? [$data->priority,$priority->name] : [$data->priority],
+            'steer_time' => $data->steer_time,
+            'progress' => $data->progress,
+            'conductor' => isset($viphuman) ? [$data->conductor,$viphuman->name] : [$data->conductor],
+            'created_by' => $data->created_by,
+            'created_at' => $data->created_at,
+            'updated_at' => $data->updated_at,
+            'complete_time' => $data->complete_time,
+            'manager' => $data->manager,
+            'unitnote' => $data->unitnote,
+            'steeringSourceIds' => $steeringSourceIds,
+            'steeringSourceNotes' => $steeringSourceNotes,
+        ];
+
+
+        return response()->json($datajson);
+
+    }
 
     public function addProgress(Request $request)
     {

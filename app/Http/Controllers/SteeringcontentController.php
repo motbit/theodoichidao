@@ -255,6 +255,7 @@ class SteeringcontentController extends Controller
                 'follow' => $su,
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
                 'deadline' => $deadline,
+                'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman')
             ]);
 
@@ -276,12 +277,14 @@ class SteeringcontentController extends Controller
             if( !$result || !$sc )
             {
                 DB::rollback();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
             } else {
                 // Else commit the queries
                 DB::commit();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -330,12 +333,14 @@ class SteeringcontentController extends Controller
             if( !$scid || !$sc )
             {
                 DB::rollback();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['error' => 1]
                 );
             } else {
                 // Else commit the queries
                 DB::commit();
+                $request->session()->flash('revertfilter', 1);
                 return redirect()->action(
                     'SteeringcontentController@index', ['add' => 1]
                 );
