@@ -117,13 +117,12 @@
                         @endif
                     </ul>
                 </td>
-                {{--@if(\App\Roles::accessAction(Request::path(), 'status'))--}}
-                {{--<td id="progress-{{$row->id}}" data-id="{{$row->id}}"--}}
-                {{--class="progress-update"> {{$row->progress}}</td>--}}
-                {{--@else--}}
-                {{--<td></td>--}}
-                {{--@endif--}}
-                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                @if(\App\Roles::accessAction($role, 'status'))
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                        class="progress-update"> {{$row->progress}}</td>
+                @else
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                @endif
                 <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
                     class="unit-update"> {{$row->unitnote}}</td>
                 <td class="" onclick="showfollow({{$idx}})">
@@ -186,29 +185,31 @@
                     <h4 class="modal-title">Theo dõi tiến độ</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
-                    {{--{!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}--}}
-                    {{--<input id="steering_id" type="hidden" name="steering_id">--}}
-                    {{--<div class="form-group from-inline">--}}
-                    {{--<label>Ghi chú tiến độ</label>--}}
-                    {{--<textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group  from-inline">--}}
-                    {{--<label>Tình trạng</label>--}}
-                    {{--<input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                    {{--<input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                    {{--<input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group form-inline" id="input-file" style="display: none">--}}
-                    {{--<label style="float: left">File đính kèm:</label>--}}
-                    {{--<input type="file" name="file">--}}
-                    {{--</div>--}}
-                    {{--<div class="form-group form-inline">--}}
-                    {{--<label>Ngày cập nhật</label>--}}
-                    {{--<input name="time_log" type="text" class="datepicker form-control" id="progress_time"--}}
-                    {{--required value="{{date('d/m/y')}}">--}}
-                    {{--<input class="btn btn-my pull-right" type="submit" value="Lưu">--}}
-                    {{--</div>--}}
-                    {{--{!! Form::close() !!}--}}
+                    @if(\App\Roles::accessAction($role, 'status'))
+                    {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
+                    <input id="steering_id" type="hidden" name="steering_id">
+                    <div class="form-group from-inline">
+                        <label>Ghi chú tiến độ</label>
+                        <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group  from-inline">
+                        <label>Tình trạng</label>
+                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
+                    </div>
+                    <div class="form-group form-inline" id="input-file" style="display: none">
+                        <label style="float: left">File đính kèm:</label>
+                        <input type="file" name="file">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày cập nhật</label>
+                        <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
+                               required value="{{date('d/m/y')}}">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                    </div>
+                    {!! Form::close() !!}
+                    @endif
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -453,10 +454,16 @@
         }
 
         $(document).ready(function () {
-
+            @if(\App\Roles::accessAction($role, 'status'))
+            $(".progress-update").on("click", function () {
+                showDetailProgress($(this).attr("data-id"))
+            });
+            @else
             $(".progress-view").on("click", function () {
                 showDetailProgress($(this).attr("data-id"))
             });
+            @endif
+
             $(".unit-update").on("click", function () {
                 showDetailUnitNote($(this).attr("data-id"))
             });

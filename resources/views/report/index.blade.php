@@ -21,7 +21,6 @@
 
     </div>
 
-
     <div class="row" style="min-width: 350px">
         <div class="col-xs-12">
             @if ( $errors->count() > 0 )
@@ -235,13 +234,20 @@
                 </td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
-                    @foreach(explode('|', $row->source) as $s)
-                        <ul class="unit-list">
-                            @if($s != '')
-                                <li> {{ $s }} </li>
-                            @endif
-                        </ul>
+                        {{--@foreach(explode('|', $row->source) as $s)--}}
+                            {{--<ul class="unit-list">--}}
+                                {{--@if($s != '')--}}
+                                    {{--<li> {{ $s }} </li>--}}
+                                {{--@endif--}}
+                            {{--</ul>--}}
+                        {{--@endforeach--}}
+                    @if( !empty($steeringSourceArr[$row->id]))
+                    @foreach($steeringSourceArr[$row->id] as $item)
+                                <ul class="unit-list">
+                                    <li> {{$item['source']}}</li>
+                                </ul>
                     @endforeach
+                    @endif
                 </td>
 
                 <td onclick="javascript:showunit({{$idx}})">
@@ -328,14 +334,20 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
-                        @foreach($sourcesteering as $s)
+                        @foreach($typeArr as $type)
                             <tr>
-                                <td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}"
-                                           data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>
-                                <td>{{$s->code}}</td>
-                                <td>{{$s->name}}</td>
+                                <td><input type="radio" name="psource" class="pick-source" value="{{$type}}"></td>
+                                <td>{{$type}}</td>
                             </tr>
                         @endforeach
+                        {{--@foreach($sourcesteering as $s)--}}
+                            {{--<tr>--}}
+                                {{--<td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}"--}}
+                                           {{--data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>--}}
+                                {{--<td>{{$s->code}}</td>--}}
+                                {{--<td>{{$s->name}}</td>--}}
+                            {{--</tr>--}}
+                        {{--@endforeach--}}
                     </table>
                 </div>
             </div>
@@ -473,8 +485,8 @@
     <script>
         var current_date = "{{date('d/m/y')}}";
         var sources = [
-            @foreach($sourcesteering as $s)
-                '{{$s->code}}',
+            @foreach($typeArr as $type)
+                '{{$type}}',
             @endforeach
         ];
         var viphumans = [

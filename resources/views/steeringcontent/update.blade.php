@@ -42,7 +42,7 @@
         <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
         <ul class="list-group">
             @foreach($type as $key => $s)
-                <li class="list-group-item noboder">
+                <li class="list-group-item list-item">
                     <div class="row">
                         <div class="col-md-4 col-xs-6">
                             <input type="checkbox" name="mtype[]" class="pick-source " value=" {{$key . '|' .$s->id}}" {{ in_array($s->id, $steeringSourceIds) ? "checked" : "" }}>

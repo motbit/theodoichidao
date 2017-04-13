@@ -11,11 +11,12 @@ class GroupController extends Controller
 {
     public function index()
     {
-        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $group = Group::orderBy('created_at', 'DESC')->get();
-        return view('group.index', ['group' => $group]);
+        return view('group.index', ['group' => $group, 'role' => $role]);
     }
 
     public function edit(Request $request)
@@ -90,6 +91,7 @@ class GroupController extends Controller
         $dictionary['status'] = "Cập nhật tiến độ";
         $dictionary['trans'] = "Chuyển";
         $dictionary['role'] = "Phân quyền";
+        $dictionary['note'] = "Ý kiến đơn vị";
 
         return view("group.permission", ['id' => $id, 'permission' => $permission, 'views' => $views,
             'group' => $group, 'dataview' => $dataview, 'dictionary' => $dictionary]);

@@ -21,7 +21,8 @@ class SteeringcontentController extends Controller
 {
     public function index(Request $request)
     {
-        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $type = $request->input('type');
@@ -67,46 +68,35 @@ class SteeringcontentController extends Controller
         } else {
             $steering = false;
             $sourceinfo = false;
-            $data = Steeringcontent::orderBy('id', 'DESC')->get();
+            $data = Steeringcontent::orderBy('id', 'DESC')
+                ->get();
         }
-
-        $allsteeringcode = DB::table('sourcesteering')->pluck('code');
 
 
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
         $datauser = User::orderBy('fullname', 'ASC')->get();
 
         $firstunit = array();
-        $secondunit = array();
         $user = array();
-        $user4tranfer = array();
 
         foreach ($dataunit as $row) {
             $firstunit[$row->id] = $row->name;
-            $secondunit[$row->id] = $row->name;
         }
 
         foreach ($datauser as $row) {
             $user[$row->id] = $row->fullname;
         }
 
-        $sourcesteering = Sourcesteering::orderBy('created_at', 'DESC')->get();
-        $sources = array();
-        foreach ($sourcesteering as $row) {
-            if (trim($row->code) != '') {
-                $sources[$row->id] = "" . $row->name . "";
-            } else {
-                $sources[$row->id] = "" . $row->code . "";
-            }
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
         }
-        $sourcetype = array();
-        foreach ($sourcesteering as $row) {
-            $sourcetype[$row->code] = "" . $row->type . "";
-        }
-        return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $sources,
-            'steering' => $steering, 'allsteeringcode' => $allsteeringcode->all(), 'user' => $user,
-            'conductor' => $thisconductor, 'sourcetype' => $sourcetype, 'sourceinfo' => $sourceinfo,
-            "datauser" => $datauser, 'parram' => $param]);
+        return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit,
+            'steering' => $steering, 'user' => $user, 'dtconductor' => $conductor,
+            'conductor' => $thisconductor, 'sourceinfo' => $sourceinfo,
+            "datauser" => $datauser, 'parram' => $param, 'role' => $role]);
     }
 
     public function edit(Request $request)

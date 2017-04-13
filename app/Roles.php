@@ -15,24 +15,27 @@ use Illuminate\Support\Facades\DB;
 
 class Roles extends Model
 {
-    public static function checkPermission(){
+    public static function checkPermission()
+    {
         $user = Auth::user();
-        if ($user->group == 1){
+        if ($user->group == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public static function makePath($path){
-        if ($path == '' || $path == 'home' || $path == '/'){
+    public static function makePath($path)
+    {
+        if ($path == '' || $path == 'home' || $path == '/') {
 //            $path = 'sourcesteering';
             $path = 'steeringcontent';
         }
         return $path;
     }
 
-    public static function accessView($path){
+    public static function accessView($path)
+    {
         $path = self::makePath($path);
         $check = DB::table('views')
             ->join('group_permission', 'group_permission.view', '=', 'views.id')
@@ -41,32 +44,30 @@ class Roles extends Model
                 ['group_permission.group', '=', Auth::user()->group]
             ])
             ->get();
-
-        return count($check) > 0;
+        if (count($check) == 0) {
+            return false;
+        } else {
+            return $check[0];
+        }
     }
 
-    public static function accessAction($path, $action){
-        $path = self::makePath($path);
-        $check = DB::table('views')
-            ->join('group_permission', 'group_permission.view', '=', 'views.id')
-            ->where([
-                ['views.path', 'like', $path],
-                ['group_permission.group', '=', Auth::user()->group],
-                ['group_permission.action', 'like', '%(' . $action . ')%']
-            ])
-            ->get();
-        return count($check) > 0;
+    public static function accessAction($role, $action)
+    {
+        return (strpos($role->action, '(' . $action . ')') !== false);
     }
 
-    public static function requireAuthen(){
-        if (!Auth::check()){
+    public static function requireAuthen()
+    {
+        if (!Auth::check()) {
             return redirect("login");
         }
     }
-    public static function getMenu($parent){
-        if (!Auth::check()){
+
+    public static function getMenu($parent)
+    {
+        if (!Auth::check()) {
             return redirect("login");
-        }else{
+        } else {
             $menu = DB::table('views')
                 ->join('group_permission', 'group_permission.view', '=', 'views.id')
                 ->where([
@@ -81,21 +82,10 @@ class Roles extends Model
         }
     }
 
-    public static function accessRow($path, $created_by){
+    public static function accessRow($role, $created_by)
+    {
         $user = Auth::user();
-        $path = self::makePath($path);
-        $checkpath = DB::table('views')
-            ->join('group_permission', 'group_permission.view', '=', 'views.id')
-            ->where([
-                ['views.path', 'like', $path],
-                ['group_permission.group', '=', Auth::user()->group]
-            ])
-            ->select('group_permission.only_auth')
-            ->get();
-        if (count($checkpath) == 0){
-            return false;
-        }
-        return ($checkpath->first()->only_auth == 0 || $created_by == $user->id);
+        return ($role->only_auth == 0 || $created_by == $user->id);
     }
 
 }
