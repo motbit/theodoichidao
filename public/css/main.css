@@ -430,6 +430,19 @@ label {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
 }
 
+.unit-view {
+    background: url('../img/bullet-view.png') no-repeat bottom 5px right 5px;
+    cursor: pointer;
+}
+
+.unit-view:hover {
+    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #faf2cc;
+}
+
+.unit-view:visited, .unit-view:focus, .unit-view:active {
+    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #fff2cc;
+}
+
 .list-menu ul li.active a {
     color: #9f224e !important;
     font-weight: bold;
