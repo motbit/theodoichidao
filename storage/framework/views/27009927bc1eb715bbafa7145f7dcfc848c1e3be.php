@@ -126,7 +126,7 @@
                     <li><a href="#">Phân loại theo nguồn</a></li>
                     <ul style="padding-left: 20px">
                         <?php $__currentLoopData = \App\Utils::listTypeSource(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''); ?>"
+                            <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false && isset($parram) && $parram == 't'.$type->id)? 'active' : ''); ?>"
                                 id="s-type-<?php echo e($type->id); ?>"><a
                                         href="<?php echo e($_ENV['ALIAS']); ?>/steeringcontent?type=<?php echo e($type->id); ?>"><?php echo e($type->name); ?></a>
                             </li>
@@ -135,7 +135,7 @@
                     <li><a href="#">Người chỉ đạo</a></li>
                     <ul style="padding-left: 20px">
                         <?php $__currentLoopData = \App\Utils::listConductor(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conductor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false )? 'active' : ''); ?>">
+                            <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''); ?>">
                                 <a
                                         href="<?php echo e($_ENV['ALIAS']); ?>/steeringcontent?conductor=<?php echo e($conductor->id); ?>"><?php echo e($conductor->name); ?></a>
                             </li>
@@ -226,6 +226,49 @@
     function highlightSourceType(id) {
         $(".s-type").removeClass('active');
         $("#s-type-" + id).addClass('active');
+    }
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+
+    function resetcookiefiter() {
+        // Get an array of cookies
+        var arrSplit = document.cookie.split(";");
+
+        for(var i = 0; i < arrSplit.length; i++)
+        {
+            var cookie = arrSplit[i].trim();
+            var cookieName = cookie.split("=")[0];
+
+            // If the prefix of the cookie's name matches the one specified, remove it
+            if(cookieName.indexOf("filter:") === 0) {
+
+                // Remove the cookie
+                document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
     }
 
     /*

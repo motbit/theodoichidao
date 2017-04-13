@@ -70,15 +70,15 @@
         <tr>
             <th class="hidden"></th>
             <th style="width: 15px"></th>
-            <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
-            <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
-            <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
-            <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
-            <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
-            <th style="min-width: 90px">Người chỉ đạo<br><input type="text"></th>
-            <th style="min-width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
+            <th style="min-width: 150px">Tên nhiệm vụ<br><input name="tennhiemvu" type="text"></th>
+            <th style="min-width: 100px">Đv/cn đầu mối<input name="daumoi" type="text"></th>
+            <th style="min-width: 130px">Tình hình thực hiện<br><input name="tinhhinhthuchien" type="text"></th>
+            <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input name="phoihop" type="text"></th>
+            <th style="min-width: 130px">Ý kiến của đơn vị<br><input name="ykien" type="text"></th>
+            <th style="min-width: 90px">Người chỉ đạo<br><input name="chidao" type="text"></th>
+            <th style="min-width: 50px">Hạn HT<br><input type="text" name="thoihan" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
-            <th style="min-width: 100px">Người theo dõi<br><input type="text"></th>
+            <th style="min-width: 100px">Người theo dõi<br><input name="nguoitheodoi" type="text"></th>
             @if(\App\Roles::accessAction($role, 'edit'))
                 <th class=" td-action"></th>
             @endif
@@ -398,6 +398,7 @@
             $("#sid").val(id);
         }
 
+
         function getDateDiff(time1, time2) {
             var str1 = time1.split('/');
             var str2 = time2.split('/');
@@ -505,6 +506,8 @@
         }
 
         $(document).ready(function () {
+
+
             @if(\App\Roles::accessAction($role, 'status'))
             $(".progress-update").on("click", function () {
                 showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
@@ -674,12 +677,21 @@
                 }
             });
 
+            $('#table').on( 'page.dt', function () {
+                var info = table.page.info();
+                createCookie("filter:current_page",info.page);
+            } );
+
             var oSettings = table.settings();
 
             table.columns().every(function () {
+
                 var that = this;
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
+
+                        createCookie("filter:" + this.name,this.value);
+
                         that.search(this.value).draw();
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
@@ -713,6 +725,21 @@
                     $("#input-file").hide();
                 }
             });
+
+
+            @if (Session::has('revertfilter') && Session::get('revertfilter') == 1)
+                     $("#table thead input").each(function(index, element) {
+                        if($(element).attr("id") != "filter-status")
+                            $(element).val(readCookie("filter:" + $(element).attr("name"))).trigger('change');
+                    })
+
+                    if(readCookie("filter:current_page"))
+                        table.page( parseInt(readCookie("filter:current_page")) ).draw( 'page' );
+            @else
+                resetcookiefiter();
+            @endif
+
+
         });
 
         //loc theo trang thai
