@@ -16,6 +16,7 @@ use Validator;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use PHPExcel_Style_Border;
+use PHPExcel_Settings;
 
 class ReportController extends Controller
 {
@@ -28,6 +29,7 @@ class ReportController extends Controller
         $total = $chuahoanthanh_dunghan + $chuahoanthanh_quahan + $hoanthanh_dunghan + $hoanthanh_quahan + $bi_huy;
 
         $filter = $request->input('f');
+        $filetype = $request->input('filetype');
 
         $fileName = base_path() . "/storage/example/format-baocao.xlsx";
         $footer = "*) Dữ liệu được trích suất từ hệ thống theodoichidao.moet.gov.vn" . $_ENV["ALIAS"] . " (" . date('H:i d/m/Y') .")";
@@ -47,12 +49,29 @@ class ReportController extends Controller
             ->setCellValue('G5', $filter)
             ->setCellValue('A6', $footer);
 
-        $output_file = "/public/baocao/export-data-" . date("dmYHis") . ".xlsx";
-        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $objWriter->save(base_path() . $output_file);
-        header('Content-type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename=baocaotonghop" . date('Ymd') . ".xlsx");
-        readfile(base_path() . $output_file);
+        if($filetype == "pdf") {
+            $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+            $rendererLibrary = 'mpdf';
+            $rendererLibraryPath = ini_get('include_path') . $rendererLibrary;
+            PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+
+
+            $output_file = "/public/baocao/export-data-" . date("dmYHis") . ".pdf";
+            $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "PDF");
+            $objWriter->save(base_path() . $output_file);
+            header('Content-type: application/pdf');
+            header("Content-Disposition: attachment; filename=baocaotonghop" . date('Ymd') . ".pdf");
+            readfile(base_path() . $output_file);
+        } else {
+            $output_file = "/public/baocao/export-data-" . date("dmYHis") . ".xlsx";
+            $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
+            $objWriter->save(base_path() . $output_file);
+            header('Content-type: application/vnd.ms-excel');
+            header("Content-Disposition: attachment; filename=baocaotonghop" . date('Ymd') . ".xlsx");
+            readfile(base_path() . $output_file);
+        }
+
+
     }
 
     public function exportSteering(Request $request) {
