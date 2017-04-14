@@ -183,9 +183,9 @@
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
             <th style="min-width: 100px"> Đv/Cn phối hợp<br><input id="id_sunit" type="text"></th>
             <th style="min-width: 50px">Hạn HT<br><input id="id_complete_time" type="text" class="datepicker"></th>
-            <th>subs</th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
+            <th class="hidden"></th>
         </tr>
         </thead>
         <tbody>
@@ -313,9 +313,9 @@
                     </ul>
                 </td>
                 <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
-                <td> </td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
+                <td class="hidden"> {{\App\Utils::minusDate($row->deadline, $row->steer_time)}}</td>
             </tr>
             {{--@endif--}}
         @endforeach

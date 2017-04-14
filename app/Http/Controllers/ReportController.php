@@ -93,14 +93,13 @@ class ReportController extends Controller
         foreach($exportdata as $idx=>$data){
             $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 2), $idx + 1)
                 ->setCellValue('B'. ($idx + 2), $data['content'])
-                ->setCellValue('C'. ($idx + 2), $data['source'])
-                ->setCellValue('D'. ($idx + 2), $data['unit'])
-                ->setCellValue('E'. ($idx + 2), $data['follow'])
-                ->setCellValue('F'. ($idx + 2), $data['deadline'])
-                ->setCellValue('G'. ($idx + 2), $data['status'])
-                ->setCellValue('H'. ($idx + 2), $data['progress'])
-                ->setCellValue('I'. ($idx + 2), $data['unitnote'])
-                ->setCellValue('J'. ($idx + 2), $data['conductor']);
+                ->setCellValue('C'. ($idx + 2), $data['unit'])
+                ->setCellValue('D'. ($idx + 2), $data['deadline'])
+                ->setCellValue('E'. ($idx + 2), $data['progress'])
+                ->setCellValue('F'. ($idx + 2), $data['conductor'])
+                ->setCellValue('G'. ($idx + 2), $data['follow'])
+                ->setCellValue('H'. ($idx + 2), $data['unitnote'])
+                ->setCellValue('I'. ($idx + 2), $data['status']);
             $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
 
         }
