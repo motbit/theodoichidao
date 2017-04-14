@@ -259,6 +259,8 @@
     <div>
         <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
+        <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
         <span class="panel-button"></span>
     </div>
     <div id="modal-progress" class="modal fade" role="dialog">
