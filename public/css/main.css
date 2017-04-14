@@ -583,3 +583,7 @@ ul.unit3col {
 .click-detail {
     cursor: pointer;
 }
+
+#table-steering-detail{
+    padding-top: 10px;
+}
