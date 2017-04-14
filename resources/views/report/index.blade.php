@@ -13,8 +13,7 @@
         </div>
         <div class="col-xs-2">
             <a class="btn btn-sm btn-my pull-right hidden-xs hidden-sm" style="margin: 0"
-               href="javascript:clearFilter()">Xóa
-                tìm kiếm</a>
+               href="javascript:clearFilter()">Xóa tìm kiếm</a>
             <a class="btn btn-xs btn-my pull-right visible-xs visible-sm" style="margin: 0"
                href="javascript:clearFilter()">Xóa</a>
         </div>
@@ -131,6 +130,10 @@
                             <option value="5">Nhiệm vụ sắp hết hạn</option>
                             <option value="6">Nhiệm vụ đã bị hủy</option>
                         </select>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Thống kê theo thời gian:</label>
+                        <input type="number" id="filter-range" style="max-width: 120px" class="form-control mi ipw"> ngày
                     </div>
                     <div class="form-group form-inline pull-right">
                         {!! Form::submit('Tìm kiếm',
