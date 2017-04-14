@@ -208,7 +208,7 @@
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
-                <td> {{$row->content}} </td>
+                <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail" onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
                 <td>
                     @if(isset($conductor[$row->conductor]))
                         {{$conductor[$row->conductor]}}
