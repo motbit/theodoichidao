@@ -48,7 +48,7 @@ class ReportController extends Controller
             ->setCellValue('A6', $footer);
 
         $output_file = "/public/baocao/export-data-" . date("dmYHis") . ".xlsx";
-        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2010");
+        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
         $objWriter->save(base_path() . $output_file);
         header('Content-type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=baocaotonghop" . date('Ymd') . ".xlsx");
