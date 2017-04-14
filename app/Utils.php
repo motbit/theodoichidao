@@ -222,4 +222,11 @@ class Utils extends Model
         }
     }
 
+    public static function minusDate($date1, $date2) {
+        if ($date1 == "" || $date2 == ""){
+            return 0;
+        }
+        return round(abs((strtotime($date1) - (strtotime($date2))) / (60*60*24)),0);
+    }
+
 }
