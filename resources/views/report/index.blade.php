@@ -182,8 +182,8 @@
             <th style="min-width: 100px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
             <th style="min-width: 100px"> Đv/Cn phối hợp<br><input id="id_sunit" type="text"></th>
-            <th style="min-width: 50px">Hạn HT<br><input id="id_complete_time" type="text" class="datepicker">
-            </th>
+            <th style="min-width: 50px">Hạn HT<br><input id="id_complete_time" type="text" class="datepicker"></th>
+            <th>subs</th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
         </tr>
@@ -225,7 +225,7 @@
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail" onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
-                <td>
+                <td class="text-center">
                     @if(isset($conductor[$row->conductor]))
                         {{$conductor[$row->conductor]}}
                     @else
@@ -313,6 +313,7 @@
                     </ul>
                 </td>
                 <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
+                <td> </td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
             </tr>

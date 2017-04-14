@@ -42,6 +42,32 @@ class Utils extends Model
         foreach ($datauser as $row) {
             $user[$row->id] = $row->fullname;
         }
+        //Lay danh sach cap nhat tien do
+        $dataprogress = DB::table('progress_log')->whereIn('steeringcontent', $data)->get();
+        $progress = array();
+        foreach ($dataprogress as $row){
+            if (isset($progress[$row->steeringcontent])){
+                $progress[$row->steeringcontent] .= "- " . $row->note . PHP_EOL;
+            }else{
+                $progress[$row->steeringcontent] = $row->note . PHP_EOL;
+            }
+        }
+        //Lay danh sach y kien don vị
+        $dataunitnote = DB::table('unit_note')->whereIn('steeringcontent', $data)->get();
+        $unitnote = array();
+        foreach ($dataunitnote as $row){
+            if (isset($unitnote[$row->steeringcontent])){
+                $unitnote[$row->steeringcontent] .= "- " . $row->note . PHP_EOL;
+            }else{
+                $unitnote[$row->steeringcontent] = $row->note . PHP_EOL;
+            }
+        }
+        //Lấy danh sách Lanh dao Bo
+        $dataconductor = DB::table('viphuman')->get();
+        $conductor = array();
+        foreach ($dataconductor as $row){
+            $conductor[$row->id] = $row->name;
+        }
 
         $exportData = array();
 
@@ -124,14 +150,18 @@ class Utils extends Model
             $name_stt[6] = "Bị hủy";
 
             $temp['status'] = $name_stt[$st];
-//            $temp['progress'] = $row->progress;
-            $dataprogress = DB::table('progress_log')->where('steeringcontent', '=', $row->id)->get();
-            $progress = "";
-            foreach ($dataprogress as $p){
-                $progress .= '- ' . $p->note . PHP_EOL;
+            $temp['progress'] = "";
+            if (isset($progress[$row->id])) {
+                $temp['progress'] = $progress[$row->id];
             }
-            $temp['progress'] = $progress;
+            $temp['unitnote'] = "";
+            if (isset($unitnote[$row->id])){
+                $temp['unitnote'] = $unitnote[$row->id];
+            }
             $temp['conductor'] = $row->conductor;
+            if (isset($conductor[$row->conductor])){
+                $temp['conductor'] = $conductor[$row->conductor];
+            }
 
             $exportData[] = $temp;
         }

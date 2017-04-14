@@ -76,7 +76,8 @@ class ReportController extends Controller
                 ->setCellValue('F'. ($idx + 2), $data['deadline'])
                 ->setCellValue('G'. ($idx + 2), $data['status'])
                 ->setCellValue('H'. ($idx + 2), $data['progress'])
-                ->setCellValue('I'. ($idx + 2), $data['conductor']);
+                ->setCellValue('I'. ($idx + 2), $data['unitnote'])
+                ->setCellValue('J'. ($idx + 2), $data['conductor']);
             $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
 
         }
