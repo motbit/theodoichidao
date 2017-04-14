@@ -45,7 +45,7 @@ li a:hover {
     border-bottom: 1px solid #ccc;
 }
 
-.left-head>a{
+.left-head > a {
     color: #43aa76 !important;
 }
 
@@ -487,7 +487,8 @@ label {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-.list-group-item{
+
+.list-group-item {
     background: #eee !important;
 }
 
@@ -531,30 +532,34 @@ ul > ul > li > a {
     color: #818181;
     font-size: 1em
 }
+
 .mnu-hotro li {
     list-style: none;
     padding: 3px 0 2px;
 }
 
-.mnu-hotro li a{
+.mnu-hotro li a {
     list-style: none;
     padding: 0;
 }
 
-th.action{
+th.action {
     width: 30px;
 }
-.required{
+
+.required {
     color: red;
 }
 
-th>input{
+th > input {
     width: 100%;
 }
-th{
+
+th {
     text-align: center !important;
 }
-.list-item{
+
+.list-item {
     border: none;
 
 }
@@ -569,8 +574,12 @@ ul.unit3col {
     padding: 5px 15px;
 }
 
-.divider{
+.divider {
     height: 1px;
     width: 100%;
     background: #ccc;
+}
+
+.click-detail {
+    cursor: pointer;
 }
