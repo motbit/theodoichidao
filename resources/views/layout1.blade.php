@@ -176,7 +176,7 @@
         @yield('content')
     </div>
     <div id="modal-show-detail" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
+        <div class="modal-dialog" style="min-width: 60%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -334,47 +334,49 @@
                 console.log(result);
                 html_table += "<div class='alert alert-info'>" + result["content"] + "</div>";
                 html_table += "<dl class=\"dl-horizontal\">";
+                html_table += "<dt>Người tạo:</dt><dd>" + result['created_by'] + "</dd>";
+                html_table += "<dt>Ngày tạo:</dt><dd>" + result['created_at'] + "</dd>";
+                html_table += "<dt>Người theo dõi:</dt><dd>" + result['manager'] + "</dd>";
                 if(result["conductor"][1] !== "undefined ") {
-                    html_table += "<dt>Người chủ trì</dt><dd>" + result["conductor"][1] + "</dd>";
+                    html_table += "<dt>LĐ Bộ phụ trách:</dt><dd>" + result["conductor"][1] + "</dd>";
                 }
 
-                html_table += "<dt>Phân loại</dt><dd>" + result["priority"][1] + "</dd>";
-
-                html_table += "<dt>Ngày chỉ đạo</dt><dd>" + result["steer_time"] + "</dd>";
-                html_table += "<dt>Tình hình thực hiện</dt><dd>" + result["progress"] + "</dd>";
+                html_table += "<dt>Ngày chỉ đạo:</dt><dd>" + result["steer_time"] + "</dd>";
 
                 if(Object.keys(result["steeringSourceNotes"]).length > 0) {
-                    html_table += "<dt>Nguồn chỉ đạo</dt><dd>";
-                    html_table += "<ul class='unit3col'>";
-
+                    html_table += "<dt>Nguồn chỉ đạo:</dt><dd>";
                     $.each( result["steeringSourceNotes"], function( key, value ) {
-                        html_table += "<li>"+ value + "</li>";
+                        html_table += value;
+                        if (key < result["steeringSourceNotes"].length - 1){
+                            html_table += ", ";
+                        }
                     });
-
-                    html_table += "</ul>";
                     html_table += "<dd>";
                 }
 
-                html_table += "<dt>Đơn vị đầu mối</dt><dd>";
-                html_table += "<ul class='unit3col'>";
+                html_table += "<dt>Đơn vị đầu mối:</dt><dd>";
                 $.each(result["unit"],function( index, element ) {
-                    html_table += "<li>"+ element.name + "</li>";
+                    html_table += element.name;
+                    if (index < result["unit"].length - 1){
+                        html_table += ", ";
+                    }
                 });
-                html_table += "</ul>";
                 html_table += "<dd>";
 
                 if(result["follow"].length > 0) {
-                    html_table += "<dt>Đơn vị phối hợp</dt><dd>";
-                    html_table += "<ul class='unit3col'>";
+                    html_table += "<dt>Đơn vị phối hợp:</dt><dd>";
                     $.each(result["follow"],function( index, element ) {
-                        html_table += "<li>"+ element.name + "</li>";
+                        html_table += element.name;
+                        if (index < result["follow"].length - 1){
+                            html_table += ", ";
+                        }
                     });
-                    html_table += "</ul>";
                     html_table += "<dd>";
+                }else{
+                    html_table += "<dt>Đơn vị phối hợp:</dt><dd>Không có</dd>";
                 }
 
-
-                //html_table += "<dt>Theo dõi</dt><dd>" + result["unitnote"] + "</dd>";
+                html_table += "<dt>Phân loại:</dt><dd>" + result["priority"][1] + "</dd>";
                 $("#table-steering-detail").html(html_table);
                 $("#modal-show-detail").modal("show");
             },
