@@ -81,6 +81,10 @@ class ReportController extends Controller
             $rowsort = $request->rowsort;
         if (isset($request->typesort))
             $typesort = $request->$typesort;
+
+
+        $filetype = $request->input('filetype');
+
         $exportdata = Utils::getDataExport($request->data, $rowsort, $typesort);
         $fileName = base_path() . "/storage/example/template_steering.xlsx";
         $excelobj = PHPExcel_IOFactory::load($fileName);
@@ -100,9 +104,23 @@ class ReportController extends Controller
             $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
 
         }
-        $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
-        $output_file = "/baocao/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
-        $objWriter->save(base_path() . "/public" . $output_file);
+
+        if($filetype == "pdf") {
+            $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+            $rendererLibrary = 'mpdf';
+            $rendererLibraryPath = ini_get('include_path') . $rendererLibrary;
+            PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+
+
+            $output_file = "/baocao/export-data-" . date("dmYHis") . ".pdf";
+            $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "PDF");
+            $objWriter->save(base_path() . "/public" . $output_file);
+        } else {
+            $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "Excel2007");
+            $output_file = "/baocao/Danhmucnhiemvu" . date("dmyhis") . ".xlsx";
+            $objWriter->save(base_path() . "/public" . $output_file);
+        }
+
         return response()->json(['file' => $output_file]);
     }
 

@@ -295,10 +295,14 @@
         data_export = data;
     }
 
-    function exportExcel(rowsort, typesort) {
+    function exportExcel(rowsort, typesort, filetype) {
         $(".loader").show();
         rowsort = rowsort || "id";
         typesort = typesort || "DESC";
+        filetype = filetype || 'xlsx';
+
+        if(filetype != 'pdf') filetype = 'xlsx';
+
         console.log(data_export);
         $.ajax({
             headers: {
@@ -309,6 +313,7 @@
             dataType: 'json',
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
+                'filetype': filetype,
                 data: data_export, rowsort: rowsort, typesort: typesort
             },
             async: false,

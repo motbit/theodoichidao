@@ -132,7 +132,7 @@
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                    <li><a href="#">LĐ Bộ pt</a></li>
+                    <li><a href="#">Lãnh đạo Bộ phụ trách</a></li>
                     <ul style="padding-left: 20px">
                         <?php $__currentLoopData = \App\Utils::listConductor(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conductor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="s-type <?php echo e((strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''); ?>">
@@ -176,6 +176,19 @@
     </div>
     <div id="content">
         <?php echo $__env->yieldContent('content'); ?>
+    </div>
+    <div id="modal-show-detail" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thông tin Nhiệm vụ</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    <div id="table-steering-detail"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="loader"></div>
 </div>
@@ -283,29 +296,15 @@
         });
         data_export = data;
     }
-    function reloadDataExportBK() {
-        var data = new Array();
-        $(".row-export").each(function (idx) {
-            if (idx < 100) {
-                var td = $(this).children();
-                data.push({
-                    "idx": formatExport(td.get(0).innerHTML),
-                    "content": formatExport(td.get(1).innerHTML),
-                    "source": formatExport(td.get(5).innerHTML),
-                    "unit": formatExport(td.get(2).innerHTML),
-                    "follow": formatExport(td.get(4).innerHTML),
-                    "deadline": formatExport(td.get(6).innerHTML),
-                    "status": formatExport(td.get(7).innerHTML),
-                    "progress": formatExport(td.get(3).innerHTML),
-                });
-            }
-        });
-        data_export = data;
-    }
 
-    function exportExcel(rowsort, typesort) {
+    function exportExcel(rowsort, typesort, filetype) {
+        $(".loader").show();
         rowsort = rowsort || "id";
         typesort = typesort || "DESC";
+        filetype = filetype || 'xlsx';
+
+        if(filetype != 'pdf') filetype = 'xlsx';
+
         console.log(data_export);
         $.ajax({
             headers: {
@@ -316,64 +315,84 @@
             dataType: 'json',
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
+                'filetype': filetype,
                 data: data_export, rowsort: rowsort, typesort: typesort
             },
             async: false,
             success: function (result) {
+                $(".loader").hide();
                 console.log(result);
                 window.location.href = "<?php echo e($_ENV['ALIAS']); ?>" + result.file;
             },
             error: function () {
+                $(".loader").hide();
                 alert("Xảy ra lỗi nội bộ");
             },
         });
     }
 
-    /*
-     Danh mục chi tiết báo cáo
-     */
-
-    var data_report = {};
-    function reloadDataReport() {
-        var data = new Array();
-        $(".row-export").each(function () {
-            var td = $(this).children();
-            data.push({
-                "idx": formatExport(td.get(0).innerHTML),
-                "content": formatExport(td.get(1).innerHTML),
-                "conductor": formatExport(td.get(2).innerHTML),
-                "time": formatExport(td.get(3).innerHTML),
-                "source": formatExport(td.get(4).innerHTML),
-                "unit": formatExport(td.get(5).innerHTML),
-                "follow": formatExport(td.get(6).innerHTML),
-                "deadline": formatExport(td.get(7).innerHTML),
-                "status": formatExport(td.get(8).innerHTML),
-            });
-        });
-        data_report = data;
-    }
-
-    function exportReportExcel() {
-        console.log(data_report);
+    function showDetail(id) {
+        $(".loader").show();
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: "<?php echo e($_ENV['ALIAS']); ?>/report/exportreport",
-            type: 'POST',
-            dataType: 'json',
-            data: {_token: $('meta[name="csrf-token"]').attr('content'), data: data_report},
-            async: false,
+            url: "<?php echo e($_ENV['ALIAS']); ?>/api/steering?id=" + id,
             success: function (result) {
+                $(".loader").hide();
+                var html_table = "";
                 console.log(result);
-                window.location.href = "<?php echo e($_ENV['ALIAS']); ?>" + result.file;
+                html_table += "<div class='alert alert-info'>" + result["content"] + "</div>";
+                html_table += "<dl class=\"dl-horizontal\">";
+                html_table += "<dt>Người tạo:</dt><dd>" + result['created_by'] + "</dd>";
+                html_table += "<dt>Ngày tạo:</dt><dd>" + result['created_at'] + "</dd>";
+                html_table += "<dt>Người theo dõi:</dt><dd>" + result['manager'] + "</dd>";
+                if(result["conductor"][1] !== "undefined ") {
+                    html_table += "<dt>LĐ Bộ phụ trách:</dt><dd>" + result["conductor"][1] + "</dd>";
+                }
+
+                html_table += "<dt>Ngày chỉ đạo:</dt><dd>" + result["steer_time"] + "</dd>";
+
+                if(Object.keys(result["steeringSourceNotes"]).length > 0) {
+                    html_table += "<dt>Nguồn chỉ đạo:</dt><dd>";
+                    $.each( result["steeringSourceNotes"], function( key, value ) {
+                        html_table += value;
+                        if (key < result["steeringSourceNotes"].length - 1){
+                            html_table += ", ";
+                        }
+                    });
+                    html_table += "<dd>";
+                }
+
+                html_table += "<dt>Đơn vị đầu mối:</dt><dd>";
+                $.each(result["unit"],function( index, element ) {
+                    html_table += element.name;
+                    if (index < result["unit"].length - 1){
+                        html_table += ", ";
+                    }
+                });
+                html_table += "<dd>";
+
+                if(result["follow"].length > 0) {
+                    html_table += "<dt>Đơn vị phối hợp:</dt><dd>";
+                    $.each(result["follow"],function( index, element ) {
+                        html_table += element.name;
+                        if (index < result["follow"].length - 1){
+                            html_table += ", ";
+                        }
+                    });
+                    html_table += "<dd>";
+                }else{
+                    html_table += "<dt>Đơn vị phối hợp:</dt><dd>Không có</dd>";
+                }
+
+                html_table += "<dt>Phân loại:</dt><dd>" + result["priority"][1] + "</dd>";
+                $("#table-steering-detail").html(html_table);
+                $("#modal-show-detail").modal("show");
             },
             error: function () {
                 alert("Xảy ra lỗi nội bộ");
-            },
+                $(".loader").hide();
+            }
         });
     }
-
     function formatExport(data) {
         return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
     }
