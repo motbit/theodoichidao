@@ -327,7 +327,8 @@
     <div>
         <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
-        <span class="panel-button"></span>
+        <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
     </div>
     <div id="modal-source" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -580,28 +581,7 @@
             // DataTable
             var table = $('#table').DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'pdfHtml5',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                            format: {
-                                body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
-                                }
-                            },
-                            modifier: {
-                                page: 'all'
-                            },
-                        },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        orientation: 'landscape',
-                        customize: function (doc) {
-                            doc.defaultStyle.fontSize = 10;
-                        },
-                        text: 'Xuất ra PDF',
-                    },
-                ],
+                buttons: [],
                 bSort: false,
                 bLengthChange: false,
 //                "responsive": true,
@@ -646,6 +626,12 @@
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
+                    var drange = $("#filter-range").val()
+                    if (drange != ""){
+                        if (drange > data[11]){
+                            return false;
+                        }
+                    }
                     var deadline_from = $('#deadline_from').val();
                     var deadline_to = $('#deadline_to').val();
                     var deadline = data[8]; // use data for the age column

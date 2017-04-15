@@ -261,7 +261,6 @@
                  href="javascript:exportExcel()"><span>Xuất ra Excel</span></a></span>
         <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
-        <span class="panel-button"></span>
     </div>
     <div id="modal-progress" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
@@ -652,28 +651,7 @@
             table = $('#table').DataTable({
                 autoWidth: false,
                 dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'pdfHtml5',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8],
-                            format: {
-                                body: function (data, row, column, node) {
-                                    return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
-                                }
-                            },
-                            modifier: {
-                                page: 'all'
-                            },
-                        },
-                        title: 'Danh mục nhiệm vụ (Ngày ' + current_date + ")",
-                        orientation: 'landscape',
-                        customize: function (doc) {
-                            doc.defaultStyle.fontSize = 10;
-                        },
-                        text: 'Xuất ra PDF',
-                    },
-                ],
+                buttons: [],
                 bSort: false,
                 bLengthChange: false,
                 "pageLength": 20,
