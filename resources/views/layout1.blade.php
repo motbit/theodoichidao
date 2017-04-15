@@ -156,7 +156,7 @@
                 <div class="left-head">THỐNG KÊ BÁO CÁO</div>
                 <ul>
                     @foreach($menu_bc as $xl)
-                        <li class="{{ (strpos(\Request::path(), $xl->path)  !== false )? 'active' : '' }}"><a
+                        <li class="{{ (\Request::path() == $xl->path) ? 'active' : '' }}"><a
                                     href="{{$_ENV['ALIAS']}}/{{$xl->path}}">{{$xl->name}}</a></li>
                     @endforeach
                 </ul>

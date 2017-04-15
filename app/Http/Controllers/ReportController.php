@@ -110,7 +110,6 @@ class ReportController extends Controller
             $rendererLibraryPath = ini_get('include_path') . $rendererLibrary;
             PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
 
-
             $output_file = "/baocao/export-data-" . date("dmYHis") . ".pdf";
             $objWriter = PHPExcel_IOFactory::createWriter($excelobj, "PDF");
             $objWriter->save(base_path() . "/public" . $output_file);
