@@ -135,7 +135,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group pull-right">
+    <div class="form-group">
         {!! Form::submit('Lưu lại',
           array('class'=>'btn btn-my pull-middle')) !!}
     </div>
