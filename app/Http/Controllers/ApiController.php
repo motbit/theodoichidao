@@ -289,7 +289,7 @@ class ApiController extends Controller
         foreach ($select_user as $row) {
             $users[$row->id] = $row->fullname;
         }
-        $progress_note = 'Anh/chị ' . $users[$sender] . ' chuyển nhiệm vụ cho anh/chị ' . $users[$receiver];
+        $progress_note = 'Anh/chị ' . $users[$sender] . ' đã chuyển nhiệm vụ.';
         #update nhiem vu
         $update = DB::table('steeringcontent')->where('id', '=', $steering)
             ->update(['manager' => $receiver, 'progress' => $progress_note]);

@@ -87,12 +87,12 @@
             <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input name="phoihop" type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input name="ykien" type="text"></th>
             <th style="width: 55px">LĐ Bộ pt<br>
-            <select style="width: 55px">
-                <option value=""></option>
-                @foreach($viphuman as $row)
-                    <option value="{{$row->name}}">{{$row->name}}</option>
-                @endforeach
-            </select>
+                <select style="width: 55px">
+                    <option value=""></option>
+                    @foreach($viphuman as $row)
+                        <option value="{{$row->name}}">{{$row->name}}</option>
+                    @endforeach
+                </select>
             </th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" name="thoihan" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
@@ -226,7 +226,7 @@
                         @endif
                     </ul>
                 </td>
-                <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
+                <td class="text-center">{{isset($dtconductor[intval($row->conductor)])?$dtconductor[intval($row->conductor)]:$row->conductor}}</td>
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td>{{$user[$row->manager]}}</td>
@@ -395,17 +395,6 @@
     <script>
         var table = "";
         var current_date = "{{date('d/m/y')}}";
-        //        var showpr = false;
-        //        $("#form-progress").hide();
-        //        function showAddProgress() {
-        //            if (showpr) {
-        //                showpr = false;
-        //                $("#form-progress").hide();
-        //            } else {
-        //                showpr = true;
-        //                $("#form-progress").show();
-        //            }
-        //        }
 
         function showTranfer(id, content) {
             $("#content-tranfer").html("\"" + content + "\"")
@@ -725,11 +714,15 @@
                 if ($(element).attr("id") != "filter-status")
                     $(element).val(readCookie("filter:" + $(element).attr("name"))).trigger('change');
             })
-
+            if (readCookie("scroll")) {
+                $(document).scrollTop(readCookie("scroll"));
+            }
             if (readCookie("filter:current_page")) {
+                $(".loader").show();
                 setTimeout(function () {
                     table.page(parseInt(readCookie("filter:current_page"))).draw('page');
-                }, 2000);
+                    $(".loader").hide();
+                }, 500);
             }
 
             @else
@@ -792,6 +785,10 @@
                 }
             });
         }
+        window.onscroll = function () {
+//            console.log($(document).scrollTop());
+            createCookie('scroll', $(document).scrollTop());
+        };
 
     </script>
     <style>
