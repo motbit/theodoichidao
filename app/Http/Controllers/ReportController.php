@@ -86,7 +86,11 @@ class ReportController extends Controller
         $filetype = $request->input('filetype');
 
         $exportdata = Utils::getDataExport($request->data, $rowsort, $typesort);
-        $fileName = base_path() . "/storage/example/template_steering.xlsx";
+        if($filetype == "pdf") {
+            $fileName = base_path() . "/storage/example/template_steering_pdf.xlsx";
+        }else {
+            $fileName = base_path() . "/storage/example/template_steering.xlsx";
+        }
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);

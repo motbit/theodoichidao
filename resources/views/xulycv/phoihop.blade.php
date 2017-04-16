@@ -104,6 +104,7 @@
                                 $val = $user[$spl[1]];
                                 $n++;
                             } else {
+                                $validate = false;
                                 $val = $i;
                             }
                             ?>
@@ -145,6 +146,7 @@
                                 $val = $user[$spl[1]];
                                 $n++;
                             } else {
+                                $validate = false;
                                 $val = $i;
                             }
                             ?>
