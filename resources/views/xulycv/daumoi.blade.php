@@ -35,6 +35,15 @@
                         class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
+    <div>
+        <div class="pull-right">
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel()"><span class="hidden-xs hidden-sm">Xuất ra </span>Excel</a></span>
+            <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
+                     href="javascript:exportExcel(null,null,'pdf')"><span class="hidden-xs hidden-sm">Xuất ra </span>PDF</a></span>
+        </div>
+    </div>
+    <div class="total-nv">(<span class="hidden-xs hidden-sm">Tổng số: </span>{{count($data)}} nhiệm vụ)</div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
@@ -45,7 +54,13 @@
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
-            <th style="width: 55px">LĐ Bộ pt<br><input type="text"></th>
+            <th style="width: 55px">LĐ Bộ pt<br>
+                <select style="width: 55px">
+                    <option value=""></option>
+                    @foreach($viphuman as $row)
+                        <option value="{{$row->name}}">{{$row->name}}</option>
+                    @endforeach
+                </select></th>
             <th style="width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
             <th class=" hidden"><input type="text" id="filter-status"></th>
@@ -470,8 +485,6 @@
 
             // DataTable
             var table = $('#table').DataTable({
-                dom: 'Bfrtip',
-                buttons: [],
                 bSort: false,
                 bLengthChange: false,
                 "pageLength": 20,

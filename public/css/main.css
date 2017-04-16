@@ -179,8 +179,7 @@ label {
 }
 
 .buttons-pdf {
-    margin-bottom: 10px;
-    padding-right: 50px;
+    padding-right: 35px;
     background: url('../img/pdf.png') no-repeat center right 10px;
 
 }
@@ -191,8 +190,7 @@ label {
 }
 
 .buttons-excel {
-    margin-bottom: 10px;
-    padding-right: 50px;
+    padding-right: 35px;
     background: url('../img/excel.gif') no-repeat center right 10px;
 
 }
@@ -586,4 +584,14 @@ ul.unit3col {
 
 #table-steering-detail{
     padding-top: 10px;
+}
+
+.total-nv{
+    color: red;
+    font-style: italic;
+    margin-top: 12px;
+}
+
+th>select{
+    height: 23px;
 }

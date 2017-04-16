@@ -53,7 +53,7 @@ class XuLyCVController extends Controller
             $conductor[$row->id] = $row->name;
         }
         return view('xulycv.daumoi', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit,
-            'source' => $source, 'role' => $role, 'conductor' => $conductor]);
+            'source' => $source, 'role' => $role, 'conductor' => $conductor, 'viphuman' => $viphuman]);
     }
 
     public function duocgiao(Request $request)
@@ -161,7 +161,7 @@ class XuLyCVController extends Controller
             $conductor[$row->id] = $row->name;
         }
         return view('xulycv.phoihop', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit,
-            'source' => $source, 'role' => $role, 'conductor' => $conductor]);
+            'source' => $source, 'role' => $role, 'conductor' => $conductor, 'viphuman' => $viphuman]);
     }
 
     public function updatecv(Request $request)
