@@ -33,7 +33,7 @@
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
-            <th style="min-width: 100px">Nguồn chỉ đạo<br><input type="text"></th>
+            <th style="width: 55px">LĐ Bộ pt<br><input type="text"></th>
             <th style="width: 50px">Hạn HT<br><input type="text" class="datepicker"></th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
@@ -106,9 +106,14 @@
                     </ul>
                 </td>
                 <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
-                <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                    class="unit-update"> {{$row->unitnote}}</td>
-                <td class="hidden-xs hidden-sm " onclick="showfollow({{$idx}})">
+                @if(\App\Roles::accessAction($role, 'note'))
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-update"> {{$row->unitnote}}</td>
+                @else
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-view"> {{$row->unitnote}}</td>
+                @endif
+                <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
                         @php ($n = 0)
                         @foreach($units = explode(',', $row->follow) as $i)
@@ -141,14 +146,8 @@
                         @endif
                     </ul>
                 </td>
-                <td class="hidden-xs hidden-sm "> @foreach(explode('|', $row->source) as $s)
-                        <ul class="unit-list">
-                            @if($s != '')
-                                <li> {{ $s }} </li>
-                            @endif
-                        </ul>
-                    @endforeach  </td>
-                <td class="hidden-xs hidden-sm "> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/y') }}</td>
+                <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
+                <td> {{ Carbon\Carbon::parse($row->deadline)->format('d/m/y') }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
             </tr>
@@ -187,22 +186,26 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ý kiến của đơn vị</h4>
+                    <h4 class="modal-title">Ý kiến của đơn vị chủ trì/phối hợp</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
-                    {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
-                    <input id="steering_id_note" type="hidden" name="steering_id">
-                    <div class="form-group from-inline">
-                        <label>Ý kiến</label>
-                        <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group form-inline">
-                        <label>Ngày cập nhật</label>
-                        <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
-                               required value="{{date('d/m/y')}}">
-                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                    </div>
-                    {!! Form::close() !!}
+                    @if(\App\Roles::accessAction($role, 'note'))
+                        {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
+                        <input id="steering_id_note" type="hidden" name="steering_id">
+                        <div class="form-group from-inline">
+                            <label>Nội dung ý kiến</label>
+                            <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group form-inline hidden">
+                            <label>Ngày cập nhật</label>
+                            <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
+                                   required value="{{date('d/m/y')}}">
+                        </div>
+                        <div class="form-group form-inline">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                        </div>
+                        {!! Form::close() !!}
+                    @endif
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -286,10 +289,15 @@
                 showDetailProgress($( this ).attr("data-id"))
                 console.log( "#ID: " + $( this ).attr("data-id") );
             });
-
+            @if(\App\Roles::accessAction($role, 'note'))
             $(".unit-update").on("click", function () {
                 showDetailUnitNote($(this).attr("data-id"))
             });
+            @else
+            $(".unit-update").on("click", function () {
+                showDetailUnitNote($(this).attr("data-id"))
+            });
+            @endif
 
 
             reCount();

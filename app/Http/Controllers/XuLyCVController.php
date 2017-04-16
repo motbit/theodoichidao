@@ -13,6 +13,7 @@ use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
 use App\Congviecdaumoi;
+use App\Viphuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -46,8 +47,13 @@ class XuLyCVController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
+        }
         return view('xulycv.daumoi', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit,
-            'source' => $source, 'role' => $role]);
+            'source' => $source, 'role' => $role, 'conductor' => $conductor]);
     }
 
     public function duocgiao(Request $request)
@@ -125,7 +131,8 @@ class XuLyCVController extends Controller
 
     public function phoihop(Request $request)
     {
-        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+        $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
+        if (! $role) {
             return redirect('/errpermission');
         }
         $user = Auth::user();
@@ -147,7 +154,14 @@ class XuLyCVController extends Controller
         foreach ($sourcesteering as $row) {
             $source[$row->id] = "" . $row->code . "";
         }
-        return view('xulycv.phoihop', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit, 'source' => $source]);
+
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
+        $conductor = array();
+        foreach ($viphuman as $row){
+            $conductor[$row->id] = $row->name;
+        }
+        return view('xulycv.phoihop', ['data' => $data, 'unit' => $firstunit, 'unit2' => $secondunit,
+            'source' => $source, 'role' => $role, 'conductor' => $conductor]);
     }
 
     public function updatecv(Request $request)
