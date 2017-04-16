@@ -318,7 +318,7 @@ class ReportController extends Controller
         return view('report.index',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unit'=>$unit, 'user'=>$user, 'users'=>$users, 'viphuman'=>$viphuman,
             'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users,
-            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr]);
+            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr, 'viphuman' => $viphuman]);
     }
 
     public function unit(Request $request)
@@ -385,7 +385,7 @@ class ReportController extends Controller
         return view('report.unit',['lst'=>$data, 'dictunit'=>$dictunit, 'treeunit'=>$tree_unit,
             'unitall'=>$unitall, 'user'=>$user,'users'=>$users, 'viphuman'=>$viphuman,
             'allsteeringcode'=>$allsteeringcode->all(), 'unit'=>$firstunit,'unit2'=>$secondunit, 'users'=>$users,
-            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr]);
+            'conductor' => $conductor, 'steeringSourceArr' => $steeringSourceArr, 'typeArr' => $typeArr, 'viphuman' => $viphuman]);
     }
 
 }

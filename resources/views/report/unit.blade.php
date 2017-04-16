@@ -118,7 +118,7 @@
                     <option value="6">Nhiệm vụ đã bị hủy</option>
                 </select>
             </div>
-            <div class="form-group form-inline pull-right">
+            <div class="form-group form-inline pull-right" style="margin-bottom: 0px">
                 {!! Form::submit('Tìm kiếm',
                   array('class'=>'btn btn-my', 'id'=>'search')) !!}
                 <a class="btn btn-my" href="javascript:exportUnit()">Xuất báo cáo</a>
@@ -155,13 +155,29 @@
                         class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
+    <div>
+        <div class="pull-right">
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel()"><span class="hidden-xs hidden-sm">Xuất ra </span>Excel</a></span>
+            <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
+                     href="javascript:exportExcel(null,null,'pdf')"><span class="hidden-xs hidden-sm">Xuất ra </span>PDF</a></span>
+        </div>
+    </div>
+    <div class="total-nv">(<span class="hidden-xs hidden-sm">Tổng số: </span>{{count($lst)}} nhiệm vụ)</div>
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
             <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="min-width: 100px"> LĐ Bộ pt<br><input type="text" id="id_conductor"></th>
+            <th style="width: 55px">LĐ Bộ pt<br>
+                <select style="width: 55px">
+                    <option value=""></option>
+                    @foreach($viphuman as $row)
+                        <option value="{{$row->name}}">{{$row->name}}</option>
+                    @endforeach
+                </select>
+            </th>
             <th style="min-width: 100px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
             <th style="min-width: 100px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
@@ -209,13 +225,7 @@
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail" onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
-                <td>
-                    @if(isset($conductor[$row->conductor]))
-                        {{$conductor[$row->conductor]}}
-                    @else
-                        {{$row->conductor}}
-                    @endif
-                </td>
+                <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
                     {{--@foreach(explode('|', $row->source) as $s)--}}
@@ -559,8 +569,6 @@
 
             // DataTable
             var table = $('#table').DataTable({
-                dom: 'Bfrtip',
-                buttons: [],
                 bSort: false,
                 bLengthChange: false,
 //                "responsive": true,

@@ -21,7 +21,8 @@
 
     @if ($steering != false && !empty($steering))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$steering->code}} - {{$steering->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo nguồn chỉ dạo: <span style="color: red">{{$steering->code}}
+                    - {{$steering->name}}</span></div>
         </div>
     @elseif(\App\Roles::accessAction($role, 'add'))
         {{ Html::linkAction('SteeringcontentController@edit', 'Thêm nhiệm vụ', array('id'=>0), array('class' => 'btn btn-my')) }}
@@ -65,11 +66,16 @@
                         class="note-tx">Nhiệm vụ đã bị hủy</span> (<span class="count-st" id="row-st-6"></span>)</a>
         </div>
     </div>
-    <div style="min-width: 300px"><span class="total-nv">(Tổng số: {{count($lst)}} nhiệm vụ)</span>
-        {{--<span class="pull-right"><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"--}}
-                                    {{--href="javascript:exportExcel()"><span></span></a></span>--}}
-        {{--<span class="panel-button pull-right"></span>--}}
+    <div>
+        <div class="pull-right">
+        <span><a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="table"
+                 href="javascript:exportExcel()"><span class="hidden-xs hidden-sm">Xuất ra </span>Excel</a></span>
+            <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
+                     href="javascript:exportExcel(null,null,'pdf')"><span class="hidden-xs hidden-sm">Xuất ra </span>PDF</a></span>
+        </div>
     </div>
+    <div class="total-nv">(<span class="hidden-xs hidden-sm">Tổng số: </span>{{count($lst)}} nhiệm vụ)</div>
+
     <table id="table" class="table table-bordered table-hover row-border hover order-column">
         <thead>
         <tr>
@@ -80,7 +86,14 @@
             <th style="min-width: 130px">Tình hình thực hiện<br><input name="tinhhinhthuchien" type="text"></th>
             <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input name="phoihop" type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input name="ykien" type="text"></th>
-            <th style="min-width: 90px">Người chỉ đạo<br><input name="chidao" type="text"></th>
+            <th style="width: 55px">LĐ Bộ pt<br>
+            <select style="width: 55px">
+                <option value=""></option>
+                @foreach($viphuman as $row)
+                    <option value="{{$row->name}}">{{$row->name}}</option>
+                @endforeach
+            </select>
+            </th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" name="thoihan" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
             <th style="min-width: 100px">Người theo dõi<br><input name="nguoitheodoi" type="text"></th>
@@ -131,7 +144,8 @@
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
-                <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail" onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
+                <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail"
+                    onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
                 <td onclick="javascript:showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
@@ -164,7 +178,7 @@
                     </ul>
                 </td>
 
-                @if(\App\Roles::accessAction($role, 'status'))
+                @if(\App\Roles::accessAction($role, 'status') && \App\Roles::accessRow($role, $row->manager))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
                         data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }}"
                         class="progress-update"> {{$row->progress}}</td>
@@ -172,12 +186,12 @@
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
                 @endif
 
-                @if(\App\Roles::accessAction($role, 'note'))
+                @if(\App\Roles::accessAction($role, 'note') && \App\Roles::accessRow($role, $row->manager))
                     <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
                         class="unit-update"> {{$row->unitnote}}</td>
                 @else
-                <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                    class="unit-view"> {{$row->unitnote}}</td>
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-view"> {{$row->unitnote}}</td>
                 @endif
                 <td class="hidden" onclick="javascript:showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
@@ -212,13 +226,7 @@
                         @endif
                     </ul>
                 </td>
-                <td class="text-center">
-                    @if(isset($dtconductor[intval($row->conductor)]))
-                        {{$dtconductor[intval($row->conductor)]}}
-                    @else
-                        {{$row->conductor}}
-                    @endif
-                </td>
+                <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td>{{$user[$row->manager]}}</td>
@@ -271,30 +279,30 @@
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
                     @if(\App\Roles::accessAction($role, 'status'))
-                    {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
-                    <input id="steering_id" type="hidden" name="steering_id">
-                    <input id="process-deadline" type="hidden" name="process-deadline">
-                    <div class="form-group from-inline">
-                        <label>Ghi chú tiến độ</label>
-                        <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group  from-inline">
-                        <label>Tình trạng</label>
-                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
-                    </div>
-                    <div class="form-group form-inline" id="input-file" style="display: none">
-                        <label style="float: left">File đính kèm:</label>
-                        <input type="file" name="file">
-                    </div>
-                    <div class="form-group form-inline">
-                        <label>Ngày cập nhật</label>
-                        <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
-                               required value="{{date('d/m/y')}}">
-                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                    </div>
-                    {!! Form::close() !!}
+                        {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
+                        <input id="steering_id" type="hidden" name="steering_id">
+                        <input id="process-deadline" type="hidden" name="process-deadline">
+                        <div class="form-group from-inline">
+                            <label>Ghi chú tiến độ</label>
+                            <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group  from-inline">
+                            <label>Tình trạng</label>
+                            <input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
+                        </div>
+                        <div class="form-group form-inline" id="input-file" style="display: none">
+                            <label style="float: left">File đính kèm:</label>
+                            <input type="file" name="file">
+                        </div>
+                        <div class="form-group form-inline">
+                            <label>Ngày cập nhật</label>
+                            <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
+                                   required value="{{date('d/m/y')}}">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                        </div>
+                        {!! Form::close() !!}
                     @endif
                     <table class="table table-bordered">
                         <thead>
@@ -337,7 +345,7 @@
                     </div>
                     <div class="form-group from-inline">
                         <label>Ghi chú</label>
-                        <textarea name="note" required id="tranfer-note" rows="2" class="form-control"></textarea>
+                        <textarea name="note" id="tranfer-note" rows="2" class="form-control"></textarea>
                     </div>
                     <input class="btn btn-my pull-right" type="submit" value="Xác nhận chuyển">
                     {!! Form::close() !!}
@@ -354,21 +362,21 @@
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
                     @if(\App\Roles::accessAction($role, 'note'))
-                    {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
-                    <input id="steering_id_note" type="hidden" name="steering_id">
-                    <div class="form-group from-inline">
-                        <label>Nội dung ý kiến</label>
-                        <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group form-inline hidden">
-                        <label>Ngày cập nhật</label>
-                        <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
-                               required value="{{date('d/m/y')}}">
-                    </div>
-                    <div class="form-group form-inline">
-                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                    </div>
-                    {!! Form::close() !!}
+                        {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
+                        <input id="steering_id_note" type="hidden" name="steering_id">
+                        <div class="form-group from-inline">
+                            <label>Nội dung ý kiến</label>
+                            <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group form-inline hidden">
+                            <label>Ngày cập nhật</label>
+                            <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
+                                   required value="{{date('d/m/y')}}">
+                        </div>
+                        <div class="form-group form-inline">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
+                        </div>
+                        {!! Form::close() !!}
                     @endif
                     <table class="table table-bordered">
                         <thead>
@@ -515,15 +523,16 @@
         $(document).ready(function () {
 
 
-            @if(\App\Roles::accessAction($role, 'status'))
             $(".progress-update").on("click", function () {
+                $("#form-progress").show();
                 showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
             });
-            @else
             $(".progress-view").on("click", function () {
+                $("#form-progress").hide();
                 showDetailProgress($(this).attr("data-id"), $(this).attr("data-deadline"))
             });
-            @endif
+
+
             $(".unit-view").on("click", function () {
                 showDetailUnitNote($(this).attr("data-id"))
             });
@@ -634,7 +643,7 @@
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
                         reCount();
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     },
                     error: function () {
@@ -650,8 +659,6 @@
             // DataTable
             table = $('#table').DataTable({
                 autoWidth: false,
-                dom: 'Bfrtip',
-                buttons: [],
                 bSort: false,
                 bLengthChange: false,
                 "pageLength": 20,
@@ -663,10 +670,10 @@
                 }
             });
 
-            $('#table').on( 'page.dt', function () {
+            $('#table').on('page.dt', function () {
                 var info = table.page.info();
-                createCookie("filter:current_page",info.page);
-            } );
+                createCookie("filter:current_page", info.page);
+            });
 
             var oSettings = table.settings();
 
@@ -676,17 +683,17 @@
                 $('input', this.header()).on('keyup change changeDate', function () {
                     if (that.search() !== this.value) {
 
-                        createCookie("filter:" + this.name,this.value);
+                        createCookie("filter:" + this.name, this.value);
 
                         that.search(this.value).draw();
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
                         if (this.id != "filter-status") {
                             reCount();
-                        }else{
+                        } else {
                             reloadDataExport();
                         }
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
@@ -696,7 +703,7 @@
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
                         reCount();
-                        oSettings[0]._iDisplayLength=20;
+                        oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
                 });
@@ -714,16 +721,16 @@
 
 
             @if (Session::has('revertfilter') && Session::get('revertfilter') == 1)
-                     $("#table thead input").each(function(index, element) {
-                        if($(element).attr("id") != "filter-status")
-                            $(element).val(readCookie("filter:" + $(element).attr("name"))).trigger('change');
-                    })
+                     $("#table thead input").each(function (index, element) {
+                if ($(element).attr("id") != "filter-status")
+                    $(element).val(readCookie("filter:" + $(element).attr("name"))).trigger('change');
+            })
 
-                    if(readCookie("filter:current_page")) {
-                            setTimeout(function(){
-                                table.page( parseInt(readCookie("filter:current_page")) ).draw ('page');
-                            }, 2000);
-                    }
+            if (readCookie("filter:current_page")) {
+                setTimeout(function () {
+                    table.page(parseInt(readCookie("filter:current_page"))).draw('page');
+                }, 2000);
+            }
 
             @else
                 resetcookiefiter();
@@ -792,9 +799,5 @@
             display: none;
         }
 
-        .total-nv{
-            color: red;
-            font-style: italic;
-        }
     </style>
 @stop

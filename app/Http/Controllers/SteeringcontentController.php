@@ -96,7 +96,7 @@ class SteeringcontentController extends Controller
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit,
             'steering' => $steering, 'user' => $user, 'dtconductor' => $conductor,
             'conductor' => $thisconductor, 'sourceinfo' => $sourceinfo,
-            "datauser" => $datauser, 'parram' => $param, 'role' => $role]);
+            "datauser" => $datauser, 'parram' => $param, 'role' => $role, 'viphuman' => $viphuman]);
     }
 
     public function edit(Request $request)
