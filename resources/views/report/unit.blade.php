@@ -850,11 +850,12 @@
                 filter += "; "
             }
             if ($("#progress").val() != "") {
-                filter += "Tiến độ: " + $("#progress").val();
+                filter += "Tiến độ: " + $( "#progress option:selected" ).text();
             }
             return filter;
         }
         function filterStatus(status) {
+            $("#progress").val(status);
             $(".a-status").css('font-weight', 'normal');
             $("#a" + status).css('font-weight', 'bold');
             $("#filter-status").val(status);

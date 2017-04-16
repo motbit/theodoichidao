@@ -113,7 +113,7 @@
                 <div class="left-head">NGƯỜI DÙNG</div>
                 <ul>
                     @foreach($menu_nd as $nd)
-                        <li class="{{ (strpos(\Request::path(), $nd->path)  !== false )? 'active' : '' }}"><a
+                        <li class="{{ substr(\Request::path(), 0, strlen($nd->path)) === $nd->path? 'active' : '' }}"><a
                                     href="{{$_ENV['ALIAS']}}/{{$nd->path}}">{{$nd->name}}</a></li>
                     @endforeach
                 </ul>

@@ -611,11 +611,12 @@
                         that.search(this.value).draw();
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
-                        if (this.id != "filter-status") {
-                            reCount();
-                        } else {
-                            reloadDataExport();
-                        }
+                        reCount(this.id == "filter-status");
+//                        if (this.id != "filter-status") {
+//                            reCount();
+//                        } else {
+//                            reloadDataExport();
+//                        }
                         oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
@@ -828,11 +829,14 @@
     </script>
     <script>
         //loc theo trang thai
-        function reCount() {
-            $(".count-st").each(function () {
-//                console.log($(this).attr('id'));
-                $(this).html($('.' + $(this).attr('id')).length);
-            });
+        function reCount(showstatus) {
+            console.log(showstatus);
+            showstatus = showstatus || false;
+            if (!showstatus) {
+                $(".count-st").each(function () {
+                    $(this).html($('.' + $(this).attr('id')).length);
+                });
+            }
             var v1 = $('.row-st-1').length + $('.row-st-5').length;
             var v2 = $('.row-st-4').length;
             var v3 = $('.row-st-2').length;
@@ -875,12 +879,15 @@
                 }
                 filter += "; "
             }
+            console.log("status: " + $("#progress").val());
             if ($("#progress").val() != "") {
-                filter += "Tiến độ: " + $("#progress").val();
+//                filter += "Tiến độ: " + $("#progress").val();
+                filter += "Tiến độ: " + $( "#progress option:selected" ).text();
             }
             return filter;
         }
         function filterStatus(status) {
+            $("#progress").val(status);
             $(".a-status").css('font-weight', 'normal');
             $("#a" + status).css('font-weight', 'bold');
             $("#filter-status").val(status);
