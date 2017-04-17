@@ -5,7 +5,11 @@
 @stop
 
 @section('content')
-
+    <style>
+        #table{
+            display: none;
+        }
+    </style>
     <div class="text-center title">Danh mục nhiệm vụ<span id="title-filter"></span></div>
     @if ($sourceinfo != false && !empty($sourceinfo))
         <div class="text-center">
@@ -231,7 +235,7 @@
                 <td class="text-center">{{isset($dtconductor[intval($row->conductor)])?$dtconductor[intval($row->conductor)]:$row->conductor}}</td>
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
-                <td>{{$user[$row->manager]}}</td>
+                <td>{{isset($user[$row->manager])?$user[$row->manager]:''}}</td>
                 @if(\App\Roles::accessAction($role, 'edit'))
                     <td class="">
                         @if(\App\Roles::accessRow($role, $row->manager))
@@ -512,7 +516,7 @@
         }
 
         $(document).ready(function () {
-
+            console.log("ready");
 
             $(".progress-update").on("click", function () {
                 $("#form-progress").show();
@@ -646,7 +650,6 @@
                 });
             });
             //End Chuyen nhiem vu
-
             // DataTable
             table = $('#table').DataTable({
                 autoWidth: false,
@@ -656,16 +659,15 @@
                 "language": {
                     "url": "{{$_ENV['ALIAS']}}/js/datatables/Vietnamese.json"
                 },
-                "initComplete": function () {
-                    $("#table_wrapper > .dt-buttons").appendTo("span.panel-button");
-                }
             });
 
             $('#table').on('page.dt', function () {
                 var info = table.page.info();
                 createCookie("filter:current_page", info.page);
             });
-
+            console.log("Datatables");
+            $(".loader").hide();
+            $("#table").show();
             var oSettings = table.settings();
 
             table.columns().every(function () {
@@ -700,15 +702,6 @@
                 });
             });
 
-
-            $('input:radio[name=pr_status]').change(function () {
-                var stt = $('input:radio[name=pr_status]:checked').val();
-                if (stt == "1") {
-                    $("#input-file").show();
-                } else {
-                    $("#input-file").hide();
-                }
-            });
 
 
             @if (Session::has('revertfilter') && Session::get('revertfilter') == 1)
@@ -788,7 +781,6 @@
             });
         }
         window.onscroll = function () {
-//            console.log($(document).scrollTop());
             createCookie('scroll', $(document).scrollTop());
         };
 

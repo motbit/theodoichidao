@@ -51,13 +51,12 @@
                     <div class="form-group form-inline">
                         <label>LĐ Bộ pt:</label>
                         <div class="input-contain">
-                            {!! Form::text('conductor', "",
-                                    array('no-required',
-                                    'placeholder'=>'LĐ Bộ pt',
-                                    'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
-                            ) !!}
-                            <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                                 data-target="#modal-viphuman"></div>
+                            <select name="conductor" class="form-control ipw" id="conductor">
+                                <option value=""></option>
+                                @foreach($viphuman as $row)
+                                    <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group form-inline">
@@ -133,7 +132,8 @@
                     </div>
                     <div class="form-group form-inline hidden">
                         <label>Thống kê theo thời gian:</label>
-                        <input type="number" id="filter-range" style="max-width: 120px" class="form-control mi ipw"> ngày
+                        <input type="number" id="filter-range" style="max-width: 120px" class="form-control mi ipw">
+                        ngày
                     </div>
                     <div class="form-group form-inline pull-right" style="margin-bottom: 0px">
                         {!! Form::submit('Tìm kiếm',
@@ -190,7 +190,7 @@
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
             <th style="width: 55px">LĐ Bộ pt<br>
-                <select style="width: 55px">
+                <select style="width: 55px" id="filter-conductor">
                     <option value=""></option>
                     @foreach($viphuman as $row)
                         <option value="{{$row->name}}">{{$row->name}}</option>
@@ -243,23 +243,24 @@
             <tr class="row-export row-st-{{$st}}" id="row-{{$row->id}}" deadline="{{$row->deadline}}">
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
-                <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail" onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
+                <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail"
+                    onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
                 <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
-                        {{--@foreach(explode('|', $row->source) as $s)--}}
-                            {{--<ul class="unit-list">--}}
-                                {{--@if($s != '')--}}
-                                    {{--<li> {{ $s }} </li>--}}
-                                {{--@endif--}}
-                            {{--</ul>--}}
-                        {{--@endforeach--}}
+                    {{--@foreach(explode('|', $row->source) as $s)--}}
+                    {{--<ul class="unit-list">--}}
+                    {{--@if($s != '')--}}
+                    {{--<li> {{ $s }} </li>--}}
+                    {{--@endif--}}
+                    {{--</ul>--}}
+                    {{--@endforeach--}}
                     @if( !empty($steeringSourceArr[$row->id]))
-                    @foreach($steeringSourceArr[$row->id] as $item)
-                                <ul class="unit-list">
-                                    <li> {{$item['source']}}</li>
-                                </ul>
-                    @endforeach
+                        @foreach($steeringSourceArr[$row->id] as $item)
+                            <ul class="unit-list">
+                                <li> {{$item['source']}}</li>
+                            </ul>
+                        @endforeach
                     @endif
                 </td>
 
@@ -356,12 +357,12 @@
                             </tr>
                         @endforeach
                         {{--@foreach($sourcesteering as $s)--}}
-                            {{--<tr>--}}
-                                {{--<td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}"--}}
-                                           {{--data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>--}}
-                                {{--<td>{{$s->code}}</td>--}}
-                                {{--<td>{{$s->name}}</td>--}}
-                            {{--</tr>--}}
+                        {{--<tr>--}}
+                        {{--<td><input type="radio" name="psource" class="pick-source" value="{{$s->code}}"--}}
+                        {{--data-time="{{date("d-m-Y", strtotime($s->time))}}"></td>--}}
+                        {{--<td>{{$s->code}}</td>--}}
+                        {{--<td>{{$s->name}}</td>--}}
+                        {{--</tr>--}}
                         {{--@endforeach--}}
                     </table>
                 </div>
@@ -636,8 +637,8 @@
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var drange = $("#filter-range").val()
-                    if (drange != ""){
-                        if (drange > data[11]){
+                    if (drange != "") {
+                        if (drange > data[11]) {
                             return false;
                         }
                     }
@@ -746,9 +747,9 @@
                 $("#id_source").val(val);
                 $("#id_source").trigger("change");
 
-                var val = $('input[name="conductor"]').val();
-                $("#id_conductor").val(val);
-                $("#id_conductor").trigger("change");
+                var val = $('#conductor').val();
+                $("#filter-conductor").val(val);
+                $("#filter-conductor").trigger("change");
 
                 var val = $("#fList").val();
                 $("#id_funit").val(val);
@@ -882,7 +883,7 @@
             console.log("status: " + $("#progress").val());
             if ($("#progress").val() != "") {
 //                filter += "Tiến độ: " + $("#progress").val();
-                filter += "Tiến độ: " + $( "#progress option:selected" ).text();
+                filter += "Tiến độ: " + $("#progress option:selected").text();
             }
             return filter;
         }

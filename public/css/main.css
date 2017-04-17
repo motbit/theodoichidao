@@ -2,9 +2,6 @@ body {
     overflow-x: hidden;
 }
 
-.main {
-    overflow-x: scroll;
-}
 
 .navbar-my {
     background-color: #9f224e;
@@ -299,7 +296,6 @@ label {
     z-index: 100;
     left: 47%;
     top: 47%;
-    display: none;
 }
 
 @-webkit-keyframes spin {
@@ -501,6 +497,10 @@ label {
 
     .note-contain {
         min-width: 300px;
+    }
+
+    .main {
+        overflow-x: scroll;
     }
 }
 

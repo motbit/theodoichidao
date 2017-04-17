@@ -395,4 +395,21 @@
         return data.replace(/<(?:.|\n)*?>/gm, '').replace(/(\r\n|\n|\r)/gm, "").replace(/ +(?= )/g, '').replace(/&amp;/g, ' & ').replace(/&nbsp;/g, ' ').replace(/•/g, "\r\n•").replace(/[+] Xem thêm/g, "").trim();
     }
 </script>
+<script>
+    $(document).ready(function () {
+       $(".loader").hide();
+    });
+    $('input:radio[name=pr_status]').change(function () {
+        var stt = $('input:radio[name=pr_status]:checked').val();
+        var nt = $("#pr-note").val();
+        if (stt == "1") {
+            $("#input-file").show();
+            if (nt == ""){
+                $("#pr-note").val("Đã hoàn thành");
+            }
+        } else {
+            $("#input-file").hide();
+        }
+    });
+</script>
 </html>

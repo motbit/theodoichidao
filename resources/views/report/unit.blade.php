@@ -41,13 +41,14 @@
             <div class="form-group form-inline">
                 <label>LĐ Bộ pt:</label>
                 <div class="input-contain">
-                    {!! Form::text('conductor', "",
-                            array('no-required',
-                            'placeholder'=>'LĐ Bộ pt',
-                            'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
-                    ) !!}
-                    <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                         data-target="#modal-viphuman"></div>
+                    <div class="input-contain">
+                        <select name="conductor" class="form-control ipw" id="conductor">
+                            <option value=""></option>
+                            @foreach($viphuman as $row)
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group form-inline">
@@ -171,7 +172,7 @@
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
             <th style="width: 55px">LĐ Bộ pt<br>
-                <select style="width: 55px">
+                <select style="width: 55px" id="filter-conductor">
                     <option value=""></option>
                     @foreach($viphuman as $row)
                         <option value="{{$row->name}}">{{$row->name}}</option>
@@ -718,9 +719,9 @@
                 $("#id_source").val(val);
                 $("#id_source").trigger("change");
 
-                var val = $('input[name="conductor"]').val();
-                $("#id_conductor").val(val);
-                $("#id_conductor").trigger("change");
+                var val = $('#conductor').val();
+                $("#filter-conductor").val(val);
+                $("#filter-conductor").trigger("change");
 
                 var val = $("#fList").val();
                 $("#id_funit").val(val);
