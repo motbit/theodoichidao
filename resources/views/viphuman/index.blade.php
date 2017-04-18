@@ -1,7 +1,7 @@
 @extends('layout1')
 
 @section('page-title')
-    Lãnh đạo Bộ phụ trách
+    {{env('LD_FULL')}}
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
             }
         }
     </script>
-    <div class="text-center title">Lãnh đạo Bộ phụ trách</div>
+    <div class="text-center title">{{env('LD_FULL')}}</div>
     {{ Html::linkAction('ViphumanController@edit', 'Thêm mới', array('id'=>0), array('class' => 'btn btn-my')) }}
 
     {!! Form::open(array('route' => 'viphuman-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}

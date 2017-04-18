@@ -292,7 +292,7 @@ class ApiController extends Controller
         $progress_note = 'Anh/chị ' . $users[$sender] . ' đã chuyển nhiệm vụ.';
         #update nhiem vu
         $update = DB::table('steeringcontent')->where('id', '=', $steering)
-            ->update(['manager' => $receiver, 'progress' => $progress_note]);
+            ->update(['manager' => $receiver]);
         if (!$update) {
             return response()->json(['result' => false,
                 'mess' => 'Nhiệm vụ không tồn tại hoặc không do tài khoản anh/chị quản lý'

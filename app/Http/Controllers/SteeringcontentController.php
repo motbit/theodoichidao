@@ -14,6 +14,7 @@ use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
 use Validator;
 
@@ -25,6 +26,7 @@ class SteeringcontentController extends Controller
         if (! $role) {
             return redirect('/errpermission');
         }
+        $request->session()->put('steering_url', $request->getRequestUri());
         $type = $request->input('type');
         $source = $request->input('source');
         $conductor = $request->input('conductor');
@@ -278,6 +280,9 @@ class SteeringcontentController extends Controller
             {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
+                if ($request->session()->has('steering_url')){
+                    return redirect($request->session()->get('steering_url'));
+                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -285,6 +290,9 @@ class SteeringcontentController extends Controller
                 // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
+                if ($request->session()->has('steering_url')){
+                    return redirect($request->session()->get('steering_url'));
+                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -334,6 +342,9 @@ class SteeringcontentController extends Controller
             {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
+                if ($request->session()->has('steering_url')){
+                    return redirect($request->session()->get('steering_url'));
+                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['error' => 1]
                 );
@@ -341,6 +352,9 @@ class SteeringcontentController extends Controller
                 // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
+                if ($request->session()->has('steering_url')){
+                    return redirect($request->session()->get('steering_url'));
+                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['add' => 1]
                 );

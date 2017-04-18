@@ -39,15 +39,16 @@
                 </div>
             </div>
             <div class="form-group form-inline">
-                <label>LĐ Bộ pt:</label>
+                <label>{{env('LD_SHORT')}}:</label>
                 <div class="input-contain">
-                    {!! Form::text('conductor', "",
-                            array('no-required',
-                            'placeholder'=>'LĐ Bộ pt',
-                            'class'=>'form-control ipw mi fl', 'id'=>'viphuman')
-                    ) !!}
-                    <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                         data-target="#modal-viphuman"></div>
+                    <div class="input-contain">
+                        <select name="conductor" class="form-control ipw" id="conductor">
+                            <option value=""></option>
+                            @foreach($viphuman as $row)
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group form-inline">
@@ -170,8 +171,8 @@
             <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 55px">LĐ Bộ pt<br>
-                <select style="width: 55px">
+            <th style="width: 55px">{{env('LD_SHORT')}}<br>
+                <select style="width: 55px" id="filter-conductor">
                     <option value=""></option>
                     @foreach($viphuman as $row)
                         <option value="{{$row->name}}">{{$row->name}}</option>
@@ -352,7 +353,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách LĐ Bộ pt</h4>
+                    <h4 class="modal-title">Danh sách {{env('LD_SHORT')}}</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -718,9 +719,9 @@
                 $("#id_source").val(val);
                 $("#id_source").trigger("change");
 
-                var val = $('input[name="conductor"]').val();
-                $("#id_conductor").val(val);
-                $("#id_conductor").trigger("change");
+                var val = $('#conductor').val();
+                $("#filter-conductor").val(val);
+                $("#filter-conductor").trigger("change");
 
                 var val = $("#fList").val();
                 $("#id_funit").val(val);
@@ -739,7 +740,6 @@
                 oSettings[0]._iDisplayLength=20;
                 table.draw();
                 return false;
-
             });
 
         });
@@ -821,7 +821,7 @@
                 filter += "Nguồn chỉ đạo: " + $("#source").val() + "; "
             }
             if ($("#viphuman").val() != "") {
-                filter += "LĐ Bộ pt: " + $("#viphuman").val() + "; "
+                filter += "{{env('LD_SHORT')}}: " + $("#conductor").val() + "; "
             }
             if ($("#fList").val() != "") {
                 filter += "Đơn vị đầu mối: " + $("#fList").val() + "; "
