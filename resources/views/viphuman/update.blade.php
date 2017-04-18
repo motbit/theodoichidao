@@ -1,11 +1,11 @@
 @extends('layout1')
 
 @section('page-title')
-    Sửa thông tin Lãnh đạo Bộ phụ trách
+    Sửa thông tin {{env('LD_FULL')}}
 @stop
 
 @section('content')
-    <div class="text-center title">Sửa thông tin Lãnh đạo Bộ phụ trách</div>
+    <div class="text-center title">Sửa thông tin {{env('LD_FULL')}}</div>
     @if ( $errors->count() > 0 )
         @foreach( $errors->all() as $message )
             <p  class="alert alert-danger">{{ $message }}</p>

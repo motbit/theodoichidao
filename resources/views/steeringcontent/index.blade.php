@@ -19,7 +19,7 @@
     @endif
     @if ($conductor != false && !empty($conductor))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo LĐ Bộ pt: <span style="color: #ff0000">{{$conductor->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo {{env('LD_FULL')}}: <span style="color: #ff0000">{{$conductor->name}}</span></div>
         </div>
     @endif
 
@@ -90,7 +90,7 @@
             <th style="min-width: 130px">Tình hình thực hiện<br><input name="tinhhinhthuchien" type="text"></th>
             <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input name="phoihop" type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input name="ykien" type="text"></th>
-            <th style="width: 55px">LĐ Bộ pt<br>
+            <th style="width: 55px">{{env('LD_SHORT')}}<br>
                 <select style="width: 55px">
                     <option value=""></option>
                     @foreach($viphuman as $row)

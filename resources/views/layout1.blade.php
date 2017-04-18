@@ -119,7 +119,7 @@
                 </ul>
             @endif
             @if(\App\Roles::accessView('steeringcontent'))
-                <div class="left-head"><a href="/" style="color: #43aa76 !important;">NHIỆM VỤ CỦA BỘ</a></div>
+                <div class="left-head"><a href="/" style="color: #43aa76 !important;">{{env('MENU_NV')}}</a></div>
                 <ul>
                     <li><a href="#">Phân loại theo nguồn</a></li>
                     <ul style="padding-left: 20px">
@@ -130,7 +130,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <li><a href="#">Lãnh đạo Bộ phụ trách</a></li>
+                    <li><a href="#">{{env('LD_FULL')}}</a></li>
                     <ul style="padding-left: 20px">
                         @foreach(\App\Utils::listConductor() as $conductor)
                             <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false  && isset($parram) && $parram == 'c'.$conductor->id)? 'active' : ''}}">
@@ -343,7 +343,7 @@
                 html_table += "<dt>Ngày tạo:</dt><dd>" + result['created_at'] + "</dd>";
                 html_table += "<dt>Người theo dõi:</dt><dd>" + result['manager'] + "</dd>";
                 if(result["conductor"][1] !== "undefined ") {
-                    html_table += "<dt>LĐ Bộ phụ trách:</dt><dd>" + result["conductor"][1] + "</dd>";
+                    html_table += "<dt>{{env('LD_MEDIUM')}}:</dt><dd>" + result["conductor"][1] + "</dd>";
                 }
 
                 html_table += "<dt>Ngày chỉ đạo:</dt><dd>" + result["steer_time"] + "</dd>";

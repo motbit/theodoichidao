@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="form-group form-inline">
-                        <label>LĐ Bộ pt:</label>
+                        <label>{{env('LD_SHORT')}}:</label>
                         <div class="input-contain">
                             <select name="conductor" class="form-control ipw" id="conductor">
                                 <option value=""></option>
@@ -189,7 +189,7 @@
             <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 55px">LĐ Bộ pt<br>
+            <th style="width: 55px">{{env('LD_SHORT')}}<br>
                 <select style="width: 55px" id="filter-conductor">
                     <option value=""></option>
                     @foreach($viphuman as $row)
@@ -374,7 +374,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách LĐ Bộ pt</h4>
+                    <h4 class="modal-title">Danh sách {{env('LD_SHORT')}}</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -852,7 +852,7 @@
                 filter += "Nguồn chỉ đạo: " + $("#source").val() + "; "
             }
             if ($("#viphuman").val() != "") {
-                filter += "LĐ Bộ pt: " + $("#viphuman").val() + "; "
+                filter += "{{env('LD_SHORT')}}: " + $("#conductor").val() + "; "
             }
             if ($("#fList").val() != "") {
                 filter += "Đơn vị đầu mối: " + $("#fList").val() + "; "

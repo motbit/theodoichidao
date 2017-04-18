@@ -39,7 +39,7 @@
                 {{--</div>--}}
 
                 <div class="form-group form-inline">
-                    <label>LĐ Bộ pt:<span class="required">(*)</span></label>
+                    <label>{{env('LD_SHORT')}}:<span class="required">(*)</span></label>
                     <div class="row">
                         @foreach($viphuman as $v)
                             <div class="col-xs-12 col-md-3">
@@ -212,7 +212,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách LĐ Bộ pt</h4>
+                    <h4 class="modal-title">Danh sách {{env('LD_SHORT')}}</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
