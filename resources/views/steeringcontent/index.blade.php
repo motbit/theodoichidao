@@ -422,6 +422,7 @@
 
             return diffDays;
         }
+
         function showDetailProgress(id, deadline) {
             resetFromProgress();
             $(".loader").show();
@@ -435,6 +436,11 @@
                     var html_table = "";
                     for (var i = 0; i < result.length; i++) {
                         var r = result[i];
+
+                        var time = current_date;
+                        if (r.time_log != null) {
+                            var time = formatToDMY(r.time_log);
+                        }
                         html_table += "<tr>";
                         html_table += "<td>" + r.note
                         if (r.file_attach != null) {
@@ -445,7 +451,7 @@
                         html_table += "<td>" + r.time_log + "</td>"
                         html_table += "<td>" + "<a type='button' data-toggle='modal' data-steering-id='" + id + "' " +
                             "data-progress-id='" + r.id + "' " +
-                            "data-deadline='" + deadline + "' data-note='" + r.note + "' data-time='" + r.time_log + "'  " +
+                            "data-deadline='" + deadline + "' data-note='" + r.note + "' data-time='" + time + "'  " +
                             "onclick='editDetailProgress(this)' " +
                             "href='#modal-edit-progress' class='edit-progress'>" +
                             "<img height='20' border='0' src='/img/edit.png' title='Chỉnh sửa nhiệm vụ'/></a>" + "</td>"
