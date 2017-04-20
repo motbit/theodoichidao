@@ -175,6 +175,46 @@
     <div id="content">
         @yield('content')
     </div>
+    <div id="modal-edit-progress" tabindex="-1" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chỉnh sửa tiến độ</h4>
+                </div>
+                <div class="modal-body" style="padding-top: 0px !important;">
+                    @if(\App\Roles::accessAction($role, 'status'))
+                        {!! Form::open(array('route' => 'edit-progress', 'id' => 'form-edit-progress', 'files'=>'true')) !!}
+                        <input id="edit_steering_id" type="hidden" name="edit_steering_id">
+                        <input id="edit_progress_id" type="hidden" name="edit_progress_id">
+                        <input id="edit_process_deadline" type="hidden" name="edit_process_deadline">
+                        <div class="form-group from-inline">
+                            <label>Ghi chú tiến độ</label>
+                            <textarea name="edit_pr_note" required id="edit_pr_note" rows="2" class="form-control"></textarea>
+                        </div>
+                        {{--<div class="form-group  from-inline">--}}
+                        {{--<label>Tình trạng</label>--}}
+                        {{--<input type="radio" name="edit_pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                        {{--<input type="radio" name="edit_pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                        {{--<input type="radio" name="edit_pr_status" value="-1"> Nhiệm vụ bị hủy--}}
+                        {{--</div>--}}
+                        {{--<div class="form-group form-inline" id="input-file" style="display: none">--}}
+                        {{--<label style="float: left">File đính kèm:</label>--}}
+                        {{--<input type="file" name="edit_file" id="st-file">--}}
+                        {{--</div>--}}
+                        <div class="form-group form-inline">
+                            <label>Ngày cập nhật</label>
+                            <input name="edit_time_log" type="text" class="datepicker form-control" id="edit_progress_time"
+                                   required value="">
+                            <input class="btn btn-my pull-right" type="submit" value="Lưu">&nbsp;
+                            <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Hủy</button>
+                        </div>
+                        {!! Form::close() !!}
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="modal-show-detail" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 60%">
             <div class="modal-content">
@@ -233,6 +273,77 @@
         }
     }
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
+
+    /*
+    * Chỉnh sửa tiến độ
+    */
+    function editDetailProgress(obj) {
+//            $("#modal-progress").modal("hide");
+        resetFormEdit();
+        $("#edit_steering_id").val(parseInt($(obj).data("steering-id")));
+        $("#edit_progress_id").val(parseInt($(obj).data("progress-id")));
+        $("#edit_process_deadline").val($.trim($(obj).data("deadline")));
+        $("#edit_pr_note").val($.trim($(obj).data("note")));
+        $("#edit_progress_time").val($.trim($(obj).data("time")));
+    }
+
+    function resetFormEdit() {
+        $("#edit_steering_id").val("");
+        $("#edit_progress_id").val("");
+        $("#edit_process_deadline").val("");
+        $("#edit_pr_note").val("");
+        $("#edit_progress_time").val("");
+    }
+
+    $("#form-edit-progress").submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData($(this)[0]);
+        var note = $("#edit_pr_note").val();
+        var steering_id = $("#edit_steering_id").val();
+        var progress_id = $("#edit_progress_id").val();
+//                var status = $('input[name="pr_status"]:checked').val()
+        var time_log = $("#edit_progress_time").val();
+        var time_deadline = $("#edit_process_deadline").val();
+
+        datediff = getDateDiff(time_log, time_deadline);
+        console.log("#date: " + time_log + "-" + time_deadline + "=" + datediff);
+
+        if (datediff < 0) {
+            alert("Ngày cập nhật không hợp lệ!");
+            return false;
+        }
+
+        $(".loader").show();
+        var url = $(this).attr("action");
+
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            async: false,
+            success: function (result) {
+                console.log(result);
+                $(".loader").hide();
+                $("#modal-edit-progress").modal("hide");
+                resetFromProgress();
+                resetFormEdit();
+
+
+                $("#form-progress").show();
+                showDetailProgress(steering_id, time_deadline)
+            },
+            error: function () {
+                alert("Xảy ra lỗi nội bộ");
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+    /*
+     * Kết thúc Chỉnh sửa tiến độ
+     */
 
     function highlightSourceType(id) {
         $(".s-type").removeClass('active');

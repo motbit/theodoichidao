@@ -122,7 +122,7 @@ class ApiController extends Controller
 
         $n = 0;
         $firstunit = [];
-        foreach($units = explode(',', $data->unit) as $k=>$i) {
+        foreach ($units = explode(',', $data->unit) as $k => $i) {
             $spl = explode('|', $i);
             $validate = ($i != "");
             $val = [
@@ -143,12 +143,12 @@ class ApiController extends Controller
 
             if ($validate) {
                 $firstunit[$k] = $val;
-        }
+            }
         }
 
         $n = 0;
         $secondunit = [];
-        foreach($units = explode(',', $data->follow) as $k=>$i) {
+        foreach ($units = explode(',', $data->follow) as $k => $i) {
 
             $spl = explode('|', $i);
             $validate = ($i != "");
@@ -173,8 +173,8 @@ class ApiController extends Controller
             }
         }
 
-        $priority = $type = DB::table('priority')->where('id','=',$data->priority)->get()->first();
-        $viphuman = Viphuman::orderBy('created_at', 'DESC')->where('id','=',$data->conductor)->get()->first();
+        $priority = $type = DB::table('priority')->where('id', '=', $data->priority)->get()->first();
+        $viphuman = Viphuman::orderBy('created_at', 'DESC')->where('id', '=', $data->conductor)->get()->first();
 
         $datajson = [
             'content' => $data->content,
@@ -184,15 +184,15 @@ class ApiController extends Controller
             'follow' => $secondunit,
             'note' => $data->note,
             'status' => $data->status,
-            'priority' => isset($priority) ? [$data->priority,$priority->name] : [$data->priority],
+            'priority' => isset($priority) ? [$data->priority, $priority->name] : [$data->priority],
             'steer_time' => date("d/m/Y", strtotime($data->steer_time)),
             'progress' => $data->progress,
-            'conductor' => isset($viphuman) ? [$data->conductor,$viphuman->name] : [$data->conductor],
-            'created_by' => isset($dictuser[$data->created_by])? $dictuser[$data->created_by] : '',
+            'conductor' => isset($viphuman) ? [$data->conductor, $viphuman->name] : [$data->conductor],
+            'created_by' => isset($dictuser[$data->created_by]) ? $dictuser[$data->created_by] : '',
             'created_at' => date_format($data->created_at, 'd/m/Y'),
             'updated_at' => $data->updated_at,
             'complete_time' => $data->complete_time,
-            'manager' => isset($dictuser[$data->manager])? $dictuser[$data->manager] : '',
+            'manager' => isset($dictuser[$data->manager]) ? $dictuser[$data->manager] : '',
             'unitnote' => $data->unitnote,
             'steeringSourceIds' => $steeringSourceIds,
             'steeringSourceNotes' => $steeringSourceNotes,
@@ -201,6 +201,34 @@ class ApiController extends Controller
 
         return response()->json($datajson);
 
+    }
+
+    public function editProgress(Request $request)
+    {
+        $steering_id = $request->edit_steering_id;
+        $progress_log_id = $request->edit_progress_id;
+        $note = $request->edit_pr_note;
+        $time_log = Utils::dateformat($request->edit_time_log);
+        $data = array();
+        $data['note'] = $note;
+        $data['time_log'] = $time_log;
+
+        $content = array();
+//        $content['progress'] = $note;
+
+        try {
+            Progress::where('id', $progress_log_id)->update($data);
+            Steeringcontent::where('id', $steering_id)->update($content);
+        } catch (Exception $e) {
+            return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
+        }
+
+        $result = [
+            'data' => $data,
+            'content' => $content
+        ];
+
+        return response()->json($result);
     }
 
     public function addProgress(Request $request)
@@ -343,7 +371,7 @@ class ApiController extends Controller
             foreach ($arrunit as $idx => $u) {
                 if ($u != "") {
                     if (!strpos($u, "|")) {
-                        if (! isset($tempdata[$u])){
+                        if (!isset($tempdata[$u])) {
                             $words = explode(" ", Utils::stripUnicode($u));
                             $letters = "";
                             foreach ($words as $value) {
@@ -356,10 +384,10 @@ class ApiController extends Controller
                             ]);
                             $unit .= "u|" . $newuid . ",";
                             $tempdata[$u] = "u|" . $newuid;
-                        }else{
+                        } else {
                             $unit .= $tempdata[$u] . ',';
                         }
-                    }else{
+                    } else {
                         $unit .= $u . ',';
                     }
                 }
@@ -370,7 +398,7 @@ class ApiController extends Controller
             foreach ($arrfollow as $idx => $u) {
                 if ($u != "") {
                     if (!strpos($u, "|")) {
-                        if (! isset($tempdata[$u])){
+                        if (!isset($tempdata[$u])) {
                             $words = explode(" ", Utils::stripUnicode($u));
                             $letters = "";
                             foreach ($words as $value) {
@@ -383,10 +411,10 @@ class ApiController extends Controller
                             ]);
                             $follow .= "u|" . $newuid . ",";
                             $tempdata[$u] = "u|" . $newuid;
-                        }else{
+                        } else {
                             $follow .= $tempdata[$u] . ',';
                         }
-                    }else{
+                    } else {
                         $follow .= $u . ',';
                     }
                 }

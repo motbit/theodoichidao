@@ -6,7 +6,7 @@
 
 @section('content')
     <style>
-        #table{
+        #table {
             display: none;
         }
     </style>
@@ -276,7 +276,7 @@
         <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
     </div>
-    <div id="modal-progress" class="modal fade" role="dialog">
+    <div id="modal-progress" tabindex="-1" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
@@ -316,6 +316,7 @@
                             <th>Nội dung</th>
                             <th>Người cập nhật</th>
                             <th>Thời gian</th>
+                            <th class="text-center" width="10px">Sửa</th>
                         </tr>
                         </thead>
                         <tbody id="table-progress"></tbody>
@@ -442,6 +443,12 @@
                         html_table += "</td>"
                         html_table += "<td>" + r.created + "</td>"
                         html_table += "<td>" + r.time_log + "</td>"
+                        html_table += "<td>" + "<a type='button' data-toggle='modal' data-steering-id='" + id + "' " +
+                            "data-progress-id='" + r.id + "' " +
+                            "data-deadline='" + deadline + "' data-note='" + r.note + "' data-time='" + r.time_log + "'  " +
+                            "onclick='editDetailProgress(this)' " +
+                            "href='#modal-edit-progress' class='edit-progress'>" +
+                            "<img height='20' border='0' src='/img/edit.png' title='Chỉnh sửa nhiệm vụ'/></a>" + "</td>"
                         html_table += "</tr>"
                     }
                     $("#table-progress").html(html_table);
@@ -701,7 +708,6 @@
                     }
                 });
             });
-
 
 
             @if (Session::has('revertfilter') && Session::get('revertfilter') == 1)
