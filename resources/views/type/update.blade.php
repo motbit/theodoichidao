@@ -1,9 +1,9 @@
 @extends('layout1')
 @section('page-title')
-    {{($id == 0)?"Thêm":"Chỉnh sửa"}} Loại nguồn chỉ đạo
+    {{($id == 0)?"Thêm":"Chỉnh sửa"}} {{env('SRC_UC')}}
 @stop
 @section('content')
-    <div class="text-center title">Thêm loại nguồn chỉ đạo</div>
+    <div class="text-center title">Thêm {{env('SRC_LC')}}</div>
     {!! Form::open(array('route' => 'type-update', 'class' => 'form', 'files'=>'true')) !!}
     <input type="hidden" value="{{$id}}" name="id">
     <div class="form-group form-inline">

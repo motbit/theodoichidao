@@ -119,9 +119,9 @@
                 </ul>
             @endif
             @if(\App\Roles::accessView('steeringcontent'))
-                <div class="left-head"><a href="/" style="color: #43aa76 !important;">{{env('MENU_NV')}}</a></div>
+                <div class="left-head"><a href="{{env('ALIAS') == '' ? '/':env('ALIAS')}}" style="color: #43aa76 !important;">{{env('MENU_NV')}}</a></div>
                 <ul>
-                    <li><a href="#">Phân loại theo nguồn</a></li>
+                    <li><a href="#">{{env('SRC_FILTER')}}</a></li>
                     <ul style="padding-left: 20px">
                         @foreach(\App\Utils::listTypeSource() as $type)
                             <li class="s-type {{(strpos(\Request::path(), "steeringcontent")  !== false && isset($parram) && $parram == 't'.$type->id)? 'active' : ''}}"
@@ -349,7 +349,7 @@
                 html_table += "<dt>Ngày chỉ đạo:</dt><dd>" + result["steer_time"] + "</dd>";
 
                 if(Object.keys(result["steeringSourceNotes"]).length > 0) {
-                    html_table += "<dt>Nguồn chỉ đạo:</dt><dd>";
+                    html_table += "<dt>{{env('SRC_UC')}}:</dt><dd>";
                     $.each( result["steeringSourceNotes"], function( key, value ) {
                         html_table += value;
                         if (key < result["steeringSourceNotes"].length - 1){
@@ -404,11 +404,13 @@
         var nt = $("#pr-note").val();
         if (stt == "1") {
             $("#input-file").show();
+            $("#st-file").prop("required", true);
             if (nt == ""){
                 $("#pr-note").val("Đã hoàn thành");
             }
         } else {
             $("#input-file").hide();
+            $("#st-file").prop("required", false);
         }
     });
 </script>

@@ -1,11 +1,11 @@
 @extends('layout1')
 
 @section('page-title')
-    Loại nguồn chỉ đạo
+    {{env('SRC_UC')}}
 @stop
 
 @section('content')
-    <div class="text-center title">Loại nguồn chỉ đạo</div>
+    <div class="text-center title">{{env('SRC_UC')}}</div>
     @if(\App\Roles::accessAction($role, 'add'))
         {{ Html::linkAction('TypeSourceController@edit', 'Thêm loại nguồn chỉ đạo', array('id'=>0), array('class' => 'btn btn-my')) }}
     @endif
