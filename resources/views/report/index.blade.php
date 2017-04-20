@@ -60,10 +60,10 @@
                         </div>
                     </div>
                     <div class="form-group form-inline">
-                        <label>Đơn vị/Cá nhân đầu mối:</label>
-                        <select id="fList" name="firtunit[]" class="form-control select-single ipw"
+                        <label>ĐV/CN đầu mối:</label>
+                        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw"
+                                multiple="multiple"
                                 style="max-width:80%;">
-                            <option value="">...</option>
                             @foreach($treeunit as $item)
                                 @foreach($item->children as $c)
                                     <option value="{{$c->name}}">{{$c->name}}</option>
@@ -76,10 +76,10 @@
                         <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
                     </div>
                     <div class="form-group form-inline">
-                        <label>Đơn vị/Cá nhân phối hợp:</label>
-                        <select id="sList" name="secondunit[]" class="form-control select-single ipw"
+                        <label>ĐV/CN phối hợp:</label>
+                        <select id="sList" name="secondunit[]" class="form-control select-multiple ipw"
+                                multiple="multiple"
                                 style="max-width:80%;">
-                            <option value="">...</option>
                             @foreach($treeunit as $item)
                                 @foreach($item->children as $c)
                                     <option value="{{$c->name}}">{{$c->name}}</option>
@@ -408,6 +408,8 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
+                                            <input type="checkbox" name="pfunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
                                             <a data-toggle="collapse" href="#collapse{{$u->id}}"> {{$u->name}}</a>
                                         </h4>
                                     </div>
@@ -416,7 +418,7 @@
                                             @foreach($u->children as $c)
                                                 <li class="list-group-item">
                                                     {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                                    <input type="radio" name="pfunit" class="pick-firt-unit"
+                                                    <input type="checkbox" name="pfunit" class="pick-firt-unit"
                                                            value="{{$c->name}}" parent-id="{{$u->id}}">
                                                     {{$c->name}}
                                                 </li>
@@ -431,7 +433,7 @@
                                 @foreach($users as $u)
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                        <input type="radio" name="pfunit" class="pick-firt-unit"
+                                        <input type="checkbox" name="pfunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
                                         {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
@@ -461,6 +463,8 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
+                                            <input type="checkbox" name="psunit-parent" class="pick-firt-unit"
+                                                   value="{{$u->id}}">
                                             <a data-toggle="collapse" href="#collapse2{{$u->id}}"> {{$u->name}}</a>
                                         </h4>
                                     </div>
@@ -469,7 +473,7 @@
                                         <ul class="list-group">
                                             @foreach($u->children as $c)
                                                 <li class="list-group-item">
-                                                    <input type="radio" name="psunit" class="pick-firt-unit"
+                                                    <input type="checkbox" name="psunit" class="pick-firt-unit"
                                                            value="{{$c->name}}" parent-id="{{$u->id}}">
                                                     {{$c->name}}
                                                 </li>
@@ -484,7 +488,7 @@
                                 @foreach($users as $u)
                                     <li class="list-group-item">
                                         {{--<input type="radio" name="pfunit" class="pick-firt-unit" value="{{$c->id}}">--}}
-                                        <input type="radio" name="psunit" class="pick-firt-unit"
+                                        <input type="checkbox" name="psunit" class="pick-firt-unit"
                                                value="{{$u->fullname}}">
                                         {{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}
                                     </li>
@@ -569,24 +573,87 @@
                 $('input:radio[name=pviphuman][data-name="' + val + '"]').attr('checked', true);
             });
             //
-            $('input:radio[name=pfunit]').change(function () {
-                console.log("change");
-                var name = $('input:radio[name=pfunit]:checked').val();
-                $('#fList').val(name).change();
+            $('input:checkbox[name=pfunit]').change(function () {
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=pfunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#fList").val(arr).trigger('change');
             });
-            $('#fList').change(function () {
-                var val = $('#fList').val();
-                $('input:radio[name=pfunit][value="' + val + '"]').attr('checked', true);
+            $('input:checkbox[name=pfunit-parent]').change(function () {
+                var id = $(this).val();
+                if (!$(this).is(":checked")) {
+                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', false);
+                } else {
+                    $("input:checkbox[name=pfunit][parent-id=" + id + "]").prop('checked', true);
+                }
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=pfunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#fList").val(arr).trigger('change');
             });
 
-            $('input:radio[name=psunit]').change(function () {
-                console.log("change");
-                var name = $('input:radio[name=psunit]:checked').val();
-                $('#sList').val(name).change();
+
+            $('input:checkbox[name=psunit]').change(function () {
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=psunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#sList").val(arr).trigger('change');
             });
-            $('#sList').change(function () {
-                var val = $('#sList').val();
-                $('input:radio[name=psunit][value="' + val + '"]').attr('checked', true);
+
+            $('input:checkbox[name=psunit-parent]').change(function () {
+                var id = $(this).val();
+                if (!$(this).is(":checked")) {
+                    alert('t');
+                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', false);
+                } else {
+                    $("input:checkbox[name=psunit][parent-id=" + id + "]").prop('checked', true);
+                }
+                var arr = [];
+                var vl = '';
+                $('input:checkbox[name=psunit]:checked').each(function () {
+                    vl = $(this).val();
+                    arr.push(vl);
+                });
+                $("#sList").val(arr).trigger('change');
+            });
+
+            $('#fList').on("select2:select", function (event) {
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=pfunit][value="' + i + '"]').attr('checked', true);
+                });
+            });
+            $("#fList").on("select2:unselect", function (event) {
+                $('input:checkbox[name=pfunit]').prop('checked', false);
+
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=pfunit][value="' + i + '"]').prop('checked', true);
+                });
+            });
+
+            $('#sList').on("select2:select", function (event) {
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=psunit][value="' + i + '"]').attr('checked', true);
+                });
+            });
+
+            $("#sList").on("select2:unselect", function (event) {
+                $('input:checkbox[name=psunit]').prop('checked', false);
+                $(event.currentTarget).find("option:selected").each(function (i, selected) {
+                    i = $(selected).val();
+                    $('input:checkbox[name=psunit][value="' + i + '"]').prop('checked', true);
+                });
             });
 
             // DataTable
@@ -636,108 +703,66 @@
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
+                    //Kiểm tra date range
                     var drange = $("#filter-range").val()
                     if (drange != "") {
                         if (drange > data[11]) {
                             return false;
                         }
                     }
+                    //kiểm tra hạn
                     var deadline_from = $('#deadline_from').val();
                     var deadline_to = $('#deadline_to').val();
                     var deadline = data[8]; // use data for the age column
 
-//                        deadline_from = deadline_from.split('-').join('/');
-//                        deadline_to = deadline_to.split('-').join('/');
-
                     var timeFrom = dateToTime(deadline_from);
                     var timeTo = dateToTime(deadline_to);
                     var time = dateToTime(deadline);
-
-
+                    if (deadline_from != "" && time < timeFrom) {
+                        return false;
+                    }
+                    if (deadline_to != "" && time > timeTo) {
+                        return false;
+                    }
+                    //kiểm tra ngày chỉ đạo
                     var steertime_from = $('#steertime_from').val();
-//                        steertime_from = steertime_from.split('-').join('/');
                     var steertime_to = $('#steertime_to').val();
-//                        steertime_to = steertime_to.split('-').join('/');
                     var steertime = data[4];
 
                     var steertimeFrom = dateToTime(steertime_from);
                     var steertimeTo = dateToTime(steertime_to);
                     var steertime = dateToTime(steertime);
-
-                    if (deadline_from == '' && deadline_to == '' && steertime_from == '' && steertime_to == '') {
-                        return true;
+                    if (steertime_from != "" && steertime < steertimeFrom) {
+                        return false;
+                    }
+                    if (steertime_to != "" && steertime > steertimeTo) {
+                        return false;
                     }
 
-
-                    if (steertime_from == '' && steertime_to == '') {
-                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                            return true;
+                    //Đơn vị chủ trì
+                    var select_unit = $("#fList").val();
+                    if (select_unit.length > 0) {
+                        var r_unit = false;
+                        var data_unit = data[6];
+                        for (var i = 0; i < select_unit.length; i++) {
+                            var unit = select_unit[i];
+                            r_unit = data_unit.indexOf(unit) != -1;
                         }
-                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
-
-                    }
-                    if (steertime_from == '' && steertime_to != '' && steertime < steertimeTo) {
-                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                            return true;
-                        }
-                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) return true;
-                    }
-                    if (steertime_from != '' && steertime_to == '' && steertime > steertimeFrom) {
-                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                            return true;
-                        }
-                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
-                            return true;
-                        }
-                    }
-                    if (steertime_from != '' && steertime_to != '' && steertime < steertimeTo && steertime > steertimeFrom) {
-                        if (deadline_from != '' && deadline_to != '' && (timeFrom <= time && timeTo >= time)) {
-                            return true;
-                        }
-                        else if (deadline_from != '' && deadline_to == '' && (time >= timeFrom)) return true;
-                        else if (deadline_from == '' && deadline_to != '' && (time <= timeTo)) {
-                            return true;
-                        }
-                    }
-                    if (deadline_from == '' && deadline_to == '') {
-                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                            return true;
-                        }
-                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-
-                    }
-                    if (deadline_from != '' && deadline_to == '' & time > timeFrom) {
-                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                            return true;
-                        }
-                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-                    }
-                    if (deadline_from == '' && deadline_to != '' && time < timeTo) {
-                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                            return true;
-                        }
-                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
-                    }
-                    if (deadline_from != '' && deadline_to != '' && time > timeFrom && time < timeTo) {
-                        if (steertime_from != '' && steertime_to != '' && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                            return true;
-                        }
-                        else if (steertime_from != '' && steertime_to == '' && (steertime >= steertimeFrom)) return true;
-                        else if (steertime_from == '' && steertime_to != '' && (steertime <= steertimeTo)) return true;
+                        if (!r_unit) return false;
                     }
 
-                    if (deadline_from != '' && deadline_to != '' && steertime_from != '' && steertime_to != '') {
-                        if ((timeFrom <= time && timeTo >= time) && (steertimeFrom <= steertime && steertimeTo >= steertime)) {
-                            return true;
+                    //Đơn vị phối hợp
+                    var select_follow = $("#sList").val();
+                    if (select_follow.length > 0) {
+                        var r_follow = false;
+                        var data_follow = data[7];
+                        for (var i = 0; i < select_follow.length; i++) {
+                            var follow = select_follow[i];
+                            r_follow = data_follow.indexOf(follow) != -1;
                         }
+                        if (!r_follow) return false;
                     }
-                    return false;
+                    return true;
                 }
             );
 
@@ -751,13 +776,13 @@
                 $("#filter-conductor").val(val);
                 $("#filter-conductor").trigger("change");
 
-                var val = $("#fList").val();
-                $("#id_funit").val(val);
-                $("#id_funit").trigger("change");
-
-                var val = $("#sList").val();
-                $("#id_sunit").val(val);
-                $("#id_sunit").trigger("change");
+//                var val = $("#fList").val();
+//                $("#id_funit").val(val);
+//                $("#id_funit").trigger("change");
+//
+//                var val = $("#sList").val();
+//                $("#id_sunit").val(val);
+//                $("#id_sunit").trigger("change");
 
                 var val = $("#progress").val();
                 $("#filter-status").val(val);
@@ -792,40 +817,8 @@
             $("#form").submit();
         }
 
-        //            $('input[name="source"]').change(function () {
-        //                var val = $('input[name="source"]').val();
-        //                $("#id_source").val(val);
-        //                $("#id_source").trigger("change");
-        //            });
-        //            $('input[name="conductor"]').change(function () {
-        //                var val = $('input[name="conductor"]').val();
-        //                $("#id_conductor").val(val);
-        //                $("#id_conductor").trigger("change");
-        //            })
-        //
-        //            $('#fList').on("select2:select", function (event) {
-        //                var val = $("#fList").val();
-        //                $("#id_funit").val(val);
-        //                $("#id_funit").trigger("change");
-        //            });
-        //            $('#sList').on("select2:select", function (event) {
-        //                var val = $("#sList").val();
-        //                $("#id_sunit").val(val);
-        //                $("#id_sunit").trigger("change");
-        //            });
-        //
-        //            $('#progress').change(function() {
-        //                var val = $("#progress").val();
-        //                $("#filter-status").val(val);
-        //                $("#filter-status").trigger("change");
-        //            });
-
-        //                $('#deadline_to').change(function() {
-        //                    table.draw();
-        //                });
-        // select2 - multiple select
         $(".select-multiple").select2();
-        $(".select-single").select2();
+        //        $(".select-single").select2();
         $(".select2-container").css("width", "auto");
     </script>
     <script>
@@ -851,7 +844,7 @@
             if ($("#source").val() != "") {
                 filter += "Nguồn chỉ đạo: " + $("#source").val() + "; "
             }
-            if ($("#viphuman").val() != "") {
+            if ($("#conductor").val() != "") {
                 filter += "{{env('LD_SHORT')}}: " + $("#conductor").val() + "; "
             }
             if ($("#fList").val() != "") {
