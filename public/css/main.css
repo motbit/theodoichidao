@@ -595,3 +595,7 @@ ul.unit3col {
 th>select{
     height: 23px;
 }
+
+.fuc::first-letter{
+    text-transform: uppercase;
+}

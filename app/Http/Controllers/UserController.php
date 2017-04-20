@@ -70,7 +70,7 @@ class UserController extends Controller
                 if (! \App\Roles::accessView("user")){
                     return redirect('/steeringcontent');
                 }else {
-                    Log::alert('User ID #' . $id . ' Change Password!');
+//                    Log::alert('User ID #' . $id . ' Change Password!');
                     return redirect()->action(
                         'UserController@index', ['add' => 1]
                     );
@@ -213,14 +213,15 @@ class UserController extends Controller
     {
 
         $id = $request->input('id');
-        $st_count1 = Steeringcontent::where([['unit', 'like', '%h|' . $id . ",%"]])
-            ->orWhere([['follow', 'like', '%h|' . $id . ",%"]])
-            ->orWhere([['created_by', '=', $id]])
-            ->count();
-        $st_count2 = Sourcesteering::Where([['created_by', '=', $id]])->count();
+//        $st_count1 = Steeringcontent::where([['unit', 'like', '%h|' . $id . ",%"]])
+//            ->orWhere([['follow', 'like', '%h|' . $id . ",%"]])
+//            ->orWhere([['created_by', '=', $id]])
+//            ->count();
+        $st_count2 = Steeringcontent::Where([['manager', '=', $id]])->count();
 
-        if($st_count1 > 0 || $st_count2 > 0) {
-            $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Vui bỏ <u>Người sử dụng</u> này khỏi <u>Đơn vị/Cá nhân chủ trì</u> và <u>Đơn vị/Cá nhân phối hợp</u> trong mục <b>Nhiệm vụ</b> trước khi xóa <u>Người sử dụng</u>.");
+        if($st_count2 > 0) {
+//            $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Vui bỏ <u>Người sử dụng</u> này khỏi <u>Đơn vị/Cá nhân chủ trì</u> và <u>Đơn vị/Cá nhân phối hợp</u> trong mục <b>Nhiệm vụ</b> trước khi xóa <u>Người sử dụng</u>.");
+            $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Nguời này đang theo dõi 1 hoặc nhiều nhiệm vụ. Vui lòng chuyển nhiệm vụ cho người khác trước khi xóa");
         } else {
             $request->session()->flash('message', "<strong>Xóa Người sử dụng thành công. #ID Người Sử Dụng: " . $id . "</strong>");
             $result=User::where('id',$id)->delete();

@@ -280,9 +280,9 @@ class SteeringcontentController extends Controller
             {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
-                if ($request->session()->has('steering_url')){
-                    return redirect($request->session()->get('steering_url'));
-                }
+//                if ($request->session()->has('steering_url')){
+//                    return redirect($request->session()->get('steering_url'));
+//                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -290,9 +290,9 @@ class SteeringcontentController extends Controller
                 // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
-                if ($request->session()->has('steering_url')){
-                    return redirect($request->session()->get('steering_url'));
-                }
+//                if ($request->session()->has('steering_url')){
+//                    return redirect($request->session()->get('steering_url'));
+//                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['update' => $result]
                 );
@@ -342,9 +342,9 @@ class SteeringcontentController extends Controller
             {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
-                if ($request->session()->has('steering_url')){
-                    return redirect($request->session()->get('steering_url'));
-                }
+//                if ($request->session()->has('steering_url')){
+//                    return redirect($request->session()->get('steering_url'));
+//                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['error' => 1]
                 );
@@ -352,9 +352,9 @@ class SteeringcontentController extends Controller
                 // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
-                if ($request->session()->has('steering_url')){
-                    return redirect($request->session()->get('steering_url'));
-                }
+//                if ($request->session()->has('steering_url')){
+//                    return redirect($request->session()->get('steering_url'));
+//                }
                 return redirect()->action(
                     'SteeringcontentController@index', ['add' => 1]
                 );

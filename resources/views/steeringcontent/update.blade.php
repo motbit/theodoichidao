@@ -110,7 +110,7 @@
             </div>
             <div class="col-xs-12 col-md-6 bd">
                 <div class="form-group form-inline">
-                    <label>Nguồn chỉ đạo: <span class="required">(*)</span></label>
+                    <label>{{env('SRC_UC')}}: <span class="required">(*)</span></label>
                     <ul class="list-group">
                         @foreach($type as $key => $s)
                             <li class="list-group-item list-item">
@@ -143,7 +143,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách nguồn chỉ đạo:</h4>
+                    <h4 class="modal-title">Danh sách {{env('SRC_LC')}}:</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -166,7 +166,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Thêm nguồn chỉ đạo:</h4>
+                    <h4 class="modal-title">Thêm {{env('SRC_LC')}}:</h4>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(array('route' => 'sourcesteering-addsource', 'class' => 'form', 'files'=>'true', 'id'=>'form-add-source')) !!}

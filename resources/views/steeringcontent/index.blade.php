@@ -300,7 +300,7 @@
                         </div>
                         <div class="form-group form-inline" id="input-file" style="display: none">
                             <label style="float: left">File đính kèm:</label>
-                            <input type="file" name="file">
+                            <input type="file" name="file" id="st-file">
                         </div>
                         <div class="form-group form-inline">
                             <label>Ngày cập nhật</label>

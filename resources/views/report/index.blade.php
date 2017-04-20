@@ -37,7 +37,7 @@
             <div class="row search-box">
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group form-inline ">
-                        <label>Nguồn chỉ đạo:</label>
+                        <label>{{env('SRC_UC')}}:</label>
                         <div class="input-contain form-group form-inline">
                             {!! Form::text('source', "",
                                     array('no-required',
@@ -198,7 +198,7 @@
                 </select>
             </th>
             <th style="min-width: 100px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
-            <th style="min-width: 100px"> Nguồn chỉ đạo<br><input id="id_source" type="text"></th>
+            <th style="min-width: 100px"> {{env('SRC_UC')}}<br><input id="id_source" type="text"></th>
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
             <th style="min-width: 100px"> Đv/Cn phối hợp<br><input id="id_sunit" type="text"></th>
             <th style="min-width: 50px">Hạn HT<br><input id="id_complete_time" type="text" class="datepicker"></th>
@@ -346,7 +346,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Danh sách nguồn chỉ đạo:</h4>
+                    <h4 class="modal-title">Danh sách {{env('SRC_LC')}}:</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
