@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1307ef3e-5aba-40cf-a51f-dc1e3477f727" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/theodoichidao.iml" afterPath="$PROJECT_DIR$/.idea/theodoichidao.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layout1.blade.php" afterPath="$PROJECT_DIR$/resources/views/layout1.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
     </list>
     <ignored path="theodoichidao.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,28 +47,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layout1.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="layout1.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="344" column="16" lean-forward="false" selection-start-line="344" selection-start-column="16" selection-end-line="344" selection-end-column="16" />
+            <state relative-caret-position="187">
+              <caret line="279" column="24" lean-forward="false" selection-start-line="279" selection-start-column="13" selection-end-line="279" selection-end-column="24" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#11849#11855#0#HTML" expanded="true" />
-                <marker date="1492680424608" expanded="true" signature="2983:3050" ph="..." />
-                <marker date="1492680424608" expanded="true" signature="2996:3048" ph="..." />
-                <marker date="1492680424608" expanded="true" signature="2997:3047" ph="..." />
+                <marker date="1492682360297" expanded="true" signature="2983:3050" ph="..." />
+                <marker date="1492682360297" expanded="true" signature="2996:3048" ph="..." />
+                <marker date="1492682360297" expanded="true" signature="2997:3047" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="544" column="22" lean-forward="false" selection-start-line="544" selection-start-column="22" selection-end-line="544" selection-end-column="22" />
+            <state relative-caret-position="68">
+              <caret line="439" column="48" lean-forward="false" selection-start-line="439" selection-start-column="48" selection-end-line="439" selection-end-column="48" />
               <folding>
                 <element signature="e#4460#4484#0#HTML" expanded="true" />
                 <element signature="e#4559#4583#0#HTML" expanded="true" />
@@ -87,16 +83,14 @@
                 <element signature="e#15724#15730#0#HTML" expanded="true" />
                 <element signature="e#17203#19175#0#HTML" expanded="false" />
                 <element signature="e#19180#21277#0#HTML" expanded="false" />
-                <element signature="e#24744#25284#0#HTML" expanded="false" />
-                <element signature="e#25319#25874#0#HTML" expanded="false" />
-                <element signature="e#29046#30389#0#HTML" expanded="false" />
-                <element signature="e#30474#31985#0#HTML" expanded="false" />
-                <element signature="e#32421#32546#0#HTML" expanded="false" />
-                <element signature="e#32746#34058#0#HTML" expanded="false" />
-                <element signature="e#34223#34403#0#HTML" expanded="false" />
-                <element signature="e#34978#35199#0#HTML" expanded="false" />
-                <element signature="e#35277#35483#0#HTML" expanded="false" />
-                <element signature="e#35522#35775#0#HTML" expanded="false" />
+                <element signature="e#24929#25469#0#HTML" expanded="false" />
+                <element signature="e#25504#26059#0#HTML" expanded="false" />
+                <element signature="e#29231#30574#0#HTML" expanded="false" />
+                <element signature="e#30659#32170#0#HTML" expanded="false" />
+                <element signature="e#32606#32731#0#HTML" expanded="false" />
+                <element signature="e#32931#34243#0#HTML" expanded="false" />
+                <element signature="e#34408#34588#0#HTML" expanded="false" />
+                <element signature="e#35707#35960#0#HTML" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -105,8 +99,8 @@
       <file leaf-file-name="ApiController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="499">
-              <caret line="228" column="10" lean-forward="true" selection-start-line="228" selection-start-column="10" selection-end-line="228" selection-end-column="10" />
+            <state relative-caret-position="323">
+              <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
               <folding>
                 <element signature="e#40#57#0#PHP" expanded="true" />
               </folding>
@@ -135,8 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Chưa hoàn t</find>
-      <find>Chưa hoàn thành</find>
       <find>recount</find>
       <find>reCount</find>
       <find>hidden-xs hidden-sm</find>
@@ -163,8 +155,10 @@
       <find>progress_time</find>
       <find>loader</find>
       <find>edit_steering_id</find>
-      <find>addProgress</find>
       <find>.html</find>
+      <find>addProgress</find>
+      <find>current</find>
+      <find>edit</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -229,8 +223,8 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
-        <option value="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layout1.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php" />
       </list>
     </option>
   </component>
@@ -692,7 +686,7 @@
       <workItem from="1492051683374" duration="19855000" />
       <workItem from="1492152971747" duration="830000" />
       <workItem from="1492156709904" duration="1845000" />
-      <workItem from="1492651357553" duration="18133000" />
+      <workItem from="1492651357553" duration="20372000" />
     </task>
     <task id="LOCAL-00001" summary="Update Nguoi chu tri">
       <created>1489640528533</created>
@@ -705,7 +699,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211303000" />
+    <option name="totallyTimeSpent" value="213542000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="192" y="12" width="1587" height="1021" extended-state="0" />
@@ -763,13 +757,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/unit/update.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-495">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ViphumanController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1118,16 +1105,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="228" column="10" lean-forward="true" selection-start-line="228" selection-start-column="10" selection-end-line="228" selection-end-column="10" />
-          <folding>
-            <element signature="e#40#57#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-173">
@@ -1144,10 +1121,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+          <folding>
+            <element signature="e#40#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/framework/views/85b9af243b862d8ffae8d060758684b36e7e57bd.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="283" column="13" lean-forward="false" selection-start-line="283" selection-start-column="13" selection-end-line="283" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="279" column="24" lean-forward="false" selection-start-line="279" selection-start-column="13" selection-end-line="279" selection-end-column="24" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#11849#11855#0#HTML" expanded="true" />
+            <marker date="1492682360297" expanded="true" signature="2983:3050" ph="..." />
+            <marker date="1492682360297" expanded="true" signature="2996:3048" ph="..." />
+            <marker date="1492682360297" expanded="true" signature="2997:3047" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/steeringcontent/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="544" column="22" lean-forward="false" selection-start-line="544" selection-start-column="22" selection-end-line="544" selection-end-column="22" />
+        <state relative-caret-position="68">
+          <caret line="439" column="48" lean-forward="false" selection-start-line="439" selection-start-column="48" selection-end-line="439" selection-end-column="48" />
           <folding>
             <element signature="e#4460#4484#0#HTML" expanded="true" />
             <element signature="e#4559#4583#0#HTML" expanded="true" />
@@ -1162,31 +1172,14 @@
             <element signature="e#15724#15730#0#HTML" expanded="true" />
             <element signature="e#17203#19175#0#HTML" expanded="false" />
             <element signature="e#19180#21277#0#HTML" expanded="false" />
-            <element signature="e#24744#25284#0#HTML" expanded="false" />
-            <element signature="e#25319#25874#0#HTML" expanded="false" />
-            <element signature="e#29046#30389#0#HTML" expanded="false" />
-            <element signature="e#30474#31985#0#HTML" expanded="false" />
-            <element signature="e#32421#32546#0#HTML" expanded="false" />
-            <element signature="e#32746#34058#0#HTML" expanded="false" />
-            <element signature="e#34223#34403#0#HTML" expanded="false" />
-            <element signature="e#34978#35199#0#HTML" expanded="false" />
-            <element signature="e#35277#35483#0#HTML" expanded="false" />
-            <element signature="e#35522#35775#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layout1.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="344" column="16" lean-forward="false" selection-start-line="344" selection-start-column="16" selection-end-line="344" selection-end-column="16" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#11849#11855#0#HTML" expanded="true" />
-            <marker date="1492680424608" expanded="true" signature="2983:3050" ph="..." />
-            <marker date="1492680424608" expanded="true" signature="2996:3048" ph="..." />
-            <marker date="1492680424608" expanded="true" signature="2997:3047" ph="..." />
+            <element signature="e#24929#25469#0#HTML" expanded="false" />
+            <element signature="e#25504#26059#0#HTML" expanded="false" />
+            <element signature="e#29231#30574#0#HTML" expanded="false" />
+            <element signature="e#30659#32170#0#HTML" expanded="false" />
+            <element signature="e#32606#32731#0#HTML" expanded="false" />
+            <element signature="e#32931#34243#0#HTML" expanded="false" />
+            <element signature="e#34408#34588#0#HTML" expanded="false" />
+            <element signature="e#35707#35960#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>

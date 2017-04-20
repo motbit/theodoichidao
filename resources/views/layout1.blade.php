@@ -277,6 +277,11 @@
     /*
     * Chỉnh sửa tiến độ
     */
+    function formatToDMY(date) {
+        var tmp = date.split("-");
+        return tmp[2] + "/" + tmp[1] + "/" + tmp[0].substr(2, 2);
+    }
+
     function editDetailProgress(obj) {
 //            $("#modal-progress").modal("hide");
         resetFormEdit();
@@ -350,11 +355,11 @@
         $("#s-type-" + id).addClass('active');
     }
 
-    function createCookie(name,value,days) {
+    function createCookie(name, value, days) {
         var expires = "";
         if (days) {
             var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + value + expires + "; path=/";
@@ -363,29 +368,28 @@
     function readCookie(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
     }
 
     function eraseCookie(name) {
-        createCookie(name,"",-1);
+        createCookie(name, "", -1);
     }
 
     function resetcookiefiter() {
         // Get an array of cookies
         var arrSplit = document.cookie.split(";");
 
-        for(var i = 0; i < arrSplit.length; i++)
-        {
+        for (var i = 0; i < arrSplit.length; i++) {
             var cookie = arrSplit[i].trim();
             var cookieName = cookie.split("=")[0];
 
             // If the prefix of the cookie's name matches the one specified, remove it
-            if(cookieName.indexOf("filter:") === 0) {
+            if (cookieName.indexOf("filter:") === 0) {
 
                 // Remove the cookie
                 document.cookie = cookieName + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -412,7 +416,7 @@
         typesort = typesort || "DESC";
         filetype = filetype || 'xlsx';
 
-        if(filetype != 'pdf') filetype = 'xlsx';
+        if (filetype != 'pdf') filetype = 'xlsx';
 
         console.log(data_export);
         $.ajax({
@@ -453,17 +457,17 @@
                 html_table += "<dt>Người tạo:</dt><dd>" + result['created_by'] + "</dd>";
                 html_table += "<dt>Ngày tạo:</dt><dd>" + result['created_at'] + "</dd>";
                 html_table += "<dt>Người theo dõi:</dt><dd>" + result['manager'] + "</dd>";
-                if(result["conductor"][1] !== "undefined ") {
+                if (result["conductor"][1] !== "undefined ") {
                     html_table += "<dt>{{env('LD_MEDIUM')}}:</dt><dd>" + result["conductor"][1] + "</dd>";
                 }
 
                 html_table += "<dt>Ngày chỉ đạo:</dt><dd>" + result["steer_time"] + "</dd>";
 
-                if(Object.keys(result["steeringSourceNotes"]).length > 0) {
+                if (Object.keys(result["steeringSourceNotes"]).length > 0) {
                     html_table += "<dt>{{env('SRC_UC')}}:</dt><dd>";
-                    $.each( result["steeringSourceNotes"], function( key, value ) {
+                    $.each(result["steeringSourceNotes"], function (key, value) {
                         html_table += value;
-                        if (key < result["steeringSourceNotes"].length - 1){
+                        if (key < result["steeringSourceNotes"].length - 1) {
                             html_table += ", ";
                         }
                     });
@@ -471,24 +475,24 @@
                 }
 
                 html_table += "<dt>Đơn vị đầu mối:</dt><dd>";
-                $.each(result["unit"],function( index, element ) {
+                $.each(result["unit"], function (index, element) {
                     html_table += element.name;
-                    if (index < result["unit"].length - 1){
+                    if (index < result["unit"].length - 1) {
                         html_table += ", ";
                     }
                 });
                 html_table += "<dd>";
 
-                if(result["follow"].length > 0) {
+                if (result["follow"].length > 0) {
                     html_table += "<dt>Đơn vị phối hợp:</dt><dd>";
-                    $.each(result["follow"],function( index, element ) {
+                    $.each(result["follow"], function (index, element) {
                         html_table += element.name;
-                        if (index < result["follow"].length - 1){
+                        if (index < result["follow"].length - 1) {
                             html_table += ", ";
                         }
                     });
                     html_table += "<dd>";
-                }else{
+                } else {
                     html_table += "<dt>Đơn vị phối hợp:</dt><dd>Không có</dd>";
                 }
 
@@ -508,7 +512,7 @@
 </script>
 <script>
     $(document).ready(function () {
-       $(".loader").hide();
+        $(".loader").hide();
     });
     $('input:radio[name=pr_status]').change(function () {
         var stt = $('input:radio[name=pr_status]:checked').val();
@@ -516,7 +520,7 @@
         if (stt == "1") {
             $("#input-file").show();
             $("#st-file").prop("required", true);
-            if (nt == ""){
+            if (nt == "") {
                 $("#pr-note").val("Đã hoàn thành");
             }
         } else {
