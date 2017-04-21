@@ -14,7 +14,7 @@
         @endforeach
     @endif
     {!! Form::open(array('id' => 'steeringcontent-update', 'route' => 'steeringcontent-update', 'class' => 'form')) !!}
-    <div>
+    <div class="row">
         <div class="col-xs-12 col-md-6 bd">
             <div class="form-group ">
                 <label>Tên nhiệm vụ: <span class="required">(*)</span></label>

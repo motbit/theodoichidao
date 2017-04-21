@@ -21,118 +21,129 @@
             <p class="alert alert-danger">{{ $message }}</p>
         @endforeach
     @endif
-    {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
+    <div id="filter-container" class="row" style="min-width: 350px; display: none">
+        <div class="col-xs-12">
+            {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
 
-
-    <div class="row search-box">
-        <div class="col-md-6 col-sm-12">
-            <div class="form-group form-inline ">
-                <label>{{env('SRC_UC')}}:</label>
-                <div class="input-contain form-group form-inline">
-                    {!! Form::text('source', "",
-                            array('no-required',
-                            'placeholder'=>'Nguồn chỉ đạo',
-                            'class'=>'form-control ipw mi fl', 'id'=>'source')
-                    ) !!}
-                    <div class="btn btn-default ico ico-search fl" data-toggle="modal"
-                         data-target="#modal-source"></div>
-                </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>{{env('LD_SHORT')}}:</label>
-                <div class="input-contain">
-                    <div class="input-contain">
-                        <select name="conductor" class="form-control ipw" id="conductor">
-                            <option value=""></option>
-                            @foreach($viphuman as $row)
-                                <option value="{{$row->name}}">{{$row->name}}</option>
+            <div class="row search-box">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group form-inline ">
+                        <label>{{env('SRC_UC')}}:</label>
+                        <div class="input-contain form-group form-inline">
+                            <select name="source" id="source" class="form-control ipw mi fl" style="width: 200px">
+                                <option value=""></option>
+                                @foreach($typeArr as $type)
+                                    <option value="{{$type}}">{{$type}}</option>
+                                @endforeach
+                            </select>
+                            <div class="btn btn-default ico ico-search fl hidden" data-toggle="modal"
+                                 data-target="#modal-source"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Kí hiệu nguồn:</label>
+                        <input type="text" id="source-note" class="form-control mi ipw" style="width: 200px">
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>ĐV/CN đầu mối:</label>
+                        <select id="fList" name="firtunit[]" class="form-control select-multiple ipw"
+                                multiple="multiple"
+                                style="max-width:80%;">
+                            @foreach($treeunit as $item)
+                                @foreach($item->children as $c)
+                                    <option value="{{$c->name}}">{{$c->name}}</option>
+                                @endforeach
+                            @endforeach
+                            @foreach($users as $u)
+                                <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                             @endforeach
                         </select>
+                        <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>ĐV/CN phối hợp:</label>
+                        <select id="sList" name="secondunit[]" class="form-control select-multiple ipw"
+                                multiple="multiple"
+                                style="max-width:80%;">
+                            @foreach($treeunit as $item)
+                                @foreach($item->children as $c)
+                                    <option value="{{$c->name}}">{{$c->name}}</option>
+                                @endforeach
+                            @endforeach
+                            @foreach($users as $u)
+                                <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                            @endforeach
+                        </select>
+                        <div class="btn btn-default ico ico-search" data-toggle="modal"
+                             data-target="#second-unit"></div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group form-inline">
+                        <label>{{env('LD_SHORT')}}:</label>
+                        <div class="input-contain">
+                            <select name="conductor" class="form-control ipw" id="conductor">
+                                <option value=""></option>
+                                @foreach($viphuman as $row)
+                                    <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Ngày chỉ đạo:</label>
+                        <div class="input-contain">
+                            {!! Form::text('steertime_from', "",
+                                array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
+                                      'placeholder'=>'Từ ngày')) !!}
+                            {!! Form::text('steertime_to', "",
+                                array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
+                                      'placeholder'=>'Đến ngày')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group  form-inline">
+                        <label>Thời hạn hoàn thành:</label>
+                        <div class="input-contain">
+                            {!! Form::text('deadline_from', "",
+                                    array('class'=>'form-control datepicker fl',
+                                          'placeholder'=>'Từ ngày','id'=>'deadline_from'
+                                          )) !!}
+                            {!! Form::text('deadline_to', "",
+                                    array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
+                                          'placeholder'=>'Đến ngày')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label>Tiến độ:</label>
+                        <select id="progress" name="progress" class="form-control mi ipw">
+                            <option value="">Toàn bộ</option>
+                            <option value="2">Đã hoàn thành(Đúng hạn)</option>
+                            <option value="3">Đã hoàn thành(Quá hạn)</option>
+                            <option value="1">Đang thực hiện(Trong hạn)</option>
+                            <option value="4">Đang thực hiện(Quá hạn)</option>
+                            <option value="5">Nhiệm vụ sắp hết hạn</option>
+                            <option value="6">Nhiệm vụ đã bị hủy</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-inline hidden">
+                        <label>Thống kê theo thời gian:</label>
+                        <input type="number" id="filter-range" style="max-width: 120px" class="form-control mi ipw">
+                        ngày
+                    </div>
+                    <div class="form-group form-inline pull-right" style="margin-bottom: 0px">
+                        {!! Form::submit('Tìm kiếm',
+                          array('class'=>'btn btn-my', 'id'=>'search')) !!}
+                        <a id="btn-export" class="btn btn-my" href="#" download>Xuất báo cáo</a>
                     </div>
                 </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>ĐV/CN đầu mối:</label>
-                <select id="fList" name="firtunit[]" class="form-control select-multiple ipw"
-                        multiple="multiple"
-                        style="max-width:80%;">
-                    @foreach($treeunit as $item)
-                        @foreach($item->children as $c)
-                            <option value="{{$c->name}}">{{$c->name}}</option>
-                        @endforeach
-                    @endforeach
-                    @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                    @endforeach
-                </select>
-                <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#firt-unit"></div>
-            </div>
-            <div class="form-group form-inline">
-                <label>ĐV/CN phối hợp:</label>
-                <select id="sList" name="secondunit[]" class="form-control select-multiple ipw"
-                        multiple="multiple"
-                        style="max-width:80%;">
-                    @foreach($treeunit as $item)
-                        @foreach($item->children as $c)
-                            <option value="{{$c->name}}">{{$c->name}}</option>
-                        @endforeach
-                    @endforeach
-                    @foreach($users as $u)
-                        <option value="{{$u->fullname}}">{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
-                    @endforeach
-                </select>
-                <div class="btn btn-default ico ico-search" data-toggle="modal"
-                     data-target="#second-unit"></div>
+
             </div>
 
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="form-group form-inline">
-                <label>Ngày chỉ đạo:</label>
-                <div class="input-contain">
-                    {!! Form::text('steertime_from', "",
-                        array('class'=>'form-control datepicker fl', 'id'=>'steertime_from',
-                              'placeholder'=>'Từ ngày')) !!}
-                    {!! Form::text('steertime_to', "",
-                        array('class'=>'form-control datepicker fl ml10','id'=>'steertime_to',
-                              'placeholder'=>'Đến ngày')) !!}
-                </div>
-            </div>
-            <div class="form-group  form-inline">
-                <label>Thời hạn hoàn thành:</label>
-                <div class="input-contain">
-                    {!! Form::text('deadline_from', "",
-                            array('class'=>'form-control datepicker fl',
-                                  'placeholder'=>'Từ ngày','id'=>'deadline_from'
-                                  )) !!}
-                    {!! Form::text('deadline_to', "",
-                            array('class'=>'form-control datepicker fl ml10','id'=>'deadline_to',
-                                  'placeholder'=>'Đến ngày')) !!}
-                </div>
-            </div>
-            <div class="form-group form-inline">
-                <label>Tiến độ:</label>
-                <select id="progress" name="progress" class="form-control mi ipw">
-                    <option value="">Toàn bộ</option>
-                    <option value="2">Đã hoàn thành(Đúng hạn)</option>
-                    <option value="3">Đã hoàn thành(Quá hạn)</option>
-                    <option value="1">Đang thực hiện(Trong hạn)</option>
-                    <option value="4">Đang thực hiện(Quá hạn)</option>
-                    <option value="5">Nhiệm vụ sắp hết hạn</option>
-                    <option value="6">Nhiệm vụ đã bị hủy</option>
-                </select>
-            </div>
-            <div class="form-group form-inline pull-right" style="margin-bottom: 0px">
-                {!! Form::submit('Tìm kiếm',
-                  array('class'=>'btn btn-my', 'id'=>'search')) !!}
-                <a class="btn btn-my" href="javascript:exportUnit()">Xuất báo cáo</a>
-            </div>
-        </div>
+            {!! Form::close() !!}
 
+        </div>
     </div>
-
-
-    {!! Form::close() !!}
     <div class="row note-contain">
         <div class="col-xs-12 col-md-4">
             <div class="note-cl cl2"></div>
@@ -190,6 +201,7 @@
             </th>
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
+            <th class="hidden"><input type="text" id="filter-source"></th>
         </tr>
         </thead>
         <tbody>
@@ -198,7 +210,7 @@
             <?php
             $st = 1;
             if ($row->status == 1) {
-                if ($row->deadline == "" || $row->complete_time < $row->deadline) {
+                if ($row->deadline == "" || $row->complete_time <= $row->deadline) {
                     $st = 2;
                 } else {
                     $st = 3;
@@ -314,6 +326,15 @@
                 <td> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
+                <td class="hidden">
+                    @if( !empty($steeringSourceArr[$row->id]))
+                        @foreach($steeringSourceArr[$row->id] as $item)
+                            <ul>
+                                <li>{{$item['note']}}</li>
+                            </ul>
+                        @endforeach
+                    @endif
+                </td>
             </tr>
             {{--@endif--}}
         @endforeach
@@ -540,11 +561,11 @@
 
             $('input:radio[name=psource]').change(function () {
                 var name = $('input[name="psource"]:checked').val()
-                $('input[name="source"]').val(name);
+                $('select[name="source"]').val(name);
             });
 
-            $('input[name="source"]').change(function () {
-                var val = $('input[name="source"]').val();
+            $('select[name="source"]').change(function () {
+                var val = $('select[name="source"]').val();
                 $('input:radio[name=psource][value="' + val + '"]').attr('checked', true);
             });
 
@@ -663,11 +684,12 @@
                         that.search(this.value).draw();
                         oSettings[0]._iDisplayLength = oSettings[0].fnRecordsTotal();
                         table.draw();
-                        if (this.id != "filter-status") {
-                            reCount();
-                        } else {
-                            reloadDataExport();
-                        }
+                        reCount(this.id == "filter-status");
+//                        if (this.id != "filter-status") {
+//                            reCount();
+//                        } else {
+//                            reloadDataExport();
+//                        }
                         oSettings[0]._iDisplayLength = 20;
                         table.draw();
                     }
@@ -683,6 +705,8 @@
                     }
                 });
             });
+            console.log("datatable");
+            $("#table").show();
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
@@ -751,9 +775,12 @@
 
             $("#form").submit(function (event) {
                 table.draw();
-                var val = $('input[name="source"]').val();
+                var val = $('#source').val();
                 $("#id_source").val(val);
                 $("#id_source").trigger("change");
+
+                $("#filter-source").val($("#source-note").val());
+                $("#filter-source").trigger("change");
 
                 var val = $('#conductor').val();
                 $("#filter-conductor").val(val);
@@ -776,6 +803,7 @@
                 oSettings[0]._iDisplayLength = 20;
                 table.draw();
                 return false;
+
             });
 
         });
@@ -799,41 +827,9 @@
             $("#form").submit();
         }
 
-        //            $('input[name="source"]').change(function () {
-        //                var val = $('input[name="source"]').val();
-        //                $("#id_source").val(val);
-        //                $("#id_source").trigger("change");
-        //            });
-        //            $('input[name="conductor"]').change(function () {
-        //                var val = $('input[name="conductor"]').val();
-        //                $("#id_conductor").val(val);
-        //                $("#id_conductor").trigger("change");
-        //            })
-        //
-        //            $('#fList').on("select2:select", function (event) {
-        //                var val = $("#fList").val();
-        //                $("#id_funit").val(val);
-        //                $("#id_funit").trigger("change");
-        //            });
-        //            $('#sList').on("select2:select", function (event) {
-        //                var val = $("#sList").val();
-        //                $("#id_sunit").val(val);
-        //                $("#id_sunit").trigger("change");
-        //            });
-        //
-        //            $('#progress').change(function() {
-        //                var val = $("#progress").val();
-        //                $("#filter-status").val(val);
-        //                $("#filter-status").trigger("change");
-        //            });
-
-        //                $('#deadline_to').change(function() {
-        //                    table.draw();
-        //                });
-        // select2 - multiple select
         $(".select-multiple").select2();
-        $(".select-single").select2();
         $(".select2-container").css("width", "auto");
+        $("#filter-container").show();
     </script>
     <script>
         //loc theo trang thai

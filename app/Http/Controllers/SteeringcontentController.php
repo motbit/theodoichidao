@@ -23,7 +23,7 @@ class SteeringcontentController extends Controller
     public function index(Request $request)
     {
         $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
-        if (! $role) {
+        if (!$role) {
             return redirect('/errpermission');
         }
         $request->session()->put('steering_url', $request->getRequestUri());
@@ -36,15 +36,15 @@ class SteeringcontentController extends Controller
         $param = "";
         if ($source || $type || $conductor) {
 
-            if($source) {
+            if ($source) {
                 $steering = DB::table('sourcesteering')
                     ->where('code', '=', $source)
                     ->get()->first();
                 $data = DB::table('steeringcontent')
-                    ->where('source', 'like', '%|'. $source . "|%")
+                    ->where('source', 'like', '%|' . $source . "|%")
                     ->orderBy('id', 'DESC')->get();
-            } else if($conductor) {
-                $param = "c".$conductor;
+            } else if ($conductor) {
+                $param = "c" . $conductor;
                 $data = DB::table('steeringcontent')
                     ->where('conductor', '=', $conductor)
                     ->orderBy('id', 'DESC')->get();
@@ -52,7 +52,7 @@ class SteeringcontentController extends Controller
                     ->where('id', '=', $conductor)
                     ->get()->first();
             } else if ($type) {
-                $param = "t".$type;
+                $param = "t" . $type;
                 $sourceinfo = DB::table('type')
                     ->where('id', '=', $type)
                     ->get()->first();
@@ -92,7 +92,7 @@ class SteeringcontentController extends Controller
         $viphuman = Viphuman::orderBy('created_at', 'DESC')->get();
 
         $conductor = array();
-        foreach ($viphuman as $row){
+        foreach ($viphuman as $row) {
             $conductor[$row->id] = $row->name;
         }
         return view('steeringcontent.index', ['lst' => $data, 'unit' => $firstunit,
@@ -145,7 +145,7 @@ class SteeringcontentController extends Controller
             $steeringSources = DB::table('steering_source')->select('source', 'note')->where('steering', $id)->get();
             $steeringSourceIds = array();
             $steeringSourceNotes = array();
-            foreach ($steeringSources as $key => $sc){
+            foreach ($steeringSources as $key => $sc) {
                 $steeringSourceIds[$key] = $sc->source;
                 $steeringSourceNotes[$sc->source] = $sc->note;
             }
@@ -189,9 +189,9 @@ class SteeringcontentController extends Controller
         $firstUnit = $request->input('firtunit');
         $fu = "";
 
-        if(!empty($firstUnit)) {
+        if (!empty($firstUnit)) {
             foreach ($firstUnit as $u) {
-                if(preg_match('/[uh]\|\d+/',$u)) {
+                if (preg_match('/[uh]\|\d+/', $u)) {
                     $fu .= $u . ",";
                 } else {
 
@@ -217,9 +217,9 @@ class SteeringcontentController extends Controller
 
         $su = "";
 
-        if(!empty($secondunit)) {
+        if (!empty($secondunit)) {
             foreach ($secondunit as $u) {
-                if(preg_match('/[uh]\|\d+/',$u)) {
+                if (preg_match('/[uh]\|\d+/', $u)) {
                     $su .= $u . ",";
                 } else {
 
@@ -241,7 +241,7 @@ class SteeringcontentController extends Controller
             }
         }
         $priority = $request->input('priority');
-        if (! isset($priority)){
+        if (!isset($priority)) {
             $priority = 1;
         }
 
@@ -263,7 +263,7 @@ class SteeringcontentController extends Controller
 
             DB::table('steering_source')->where('steering', $request->input('id'))->delete();
 
-            foreach ($typeArr as $key => $type){
+            foreach ($typeArr as $key => $type) {
                 $arr = explode('|', $type);
                 $t = $arr[1];
                 $k = $arr[0];
@@ -276,33 +276,20 @@ class SteeringcontentController extends Controller
                 ]);
             }
 
-            if( !$result || !$sc )
-            {
+            if (!$result || !$sc) {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
-//                if ($request->session()->has('steering_url')){
-//                    return redirect($request->session()->get('steering_url'));
-//                }
-                return redirect()->action(
-                    'SteeringcontentController@index', ['update' => $result]
-                );
             } else {
-                // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
-//                if ($request->session()->has('steering_url')){
-//                    return redirect($request->session()->get('steering_url'));
-//                }
-                return redirect()->action(
-                    'SteeringcontentController@index', ['update' => $result]
-                );
             }
 
-//            $data = Steeringcontent::where('id', $request->input('id'))->get();
-
-//            return redirect()->action(
-//                'SteeringcontentController@index', ['update' => $result]
-//            );
+            if ($request->session()->has('steering_url')) {
+                return redirect(Utils::formatAlias($request->session()->get('steering_url')));
+            }
+            return redirect()->action(
+                'SteeringcontentController@index', ['update' => $result]
+            );
 
         } else {
             $noteArr = $request->input('note');
@@ -313,19 +300,19 @@ class SteeringcontentController extends Controller
 
             $scid = DB::table('steeringcontent')->insertGetId(
                 array(
-                'content' => $request->input('content'),
+                    'content' => $request->input('content'),
 //                'source' => '|' . implode('|', $request->input('msource')) . '|',
-                'unit' => $fu,
-                'follow' => $su,
-                'priority' => $priority,
-                'conductor' => $request->input('viphuman'),
-                'steer_time' => Utils::dateformat($request->input('steer_time')),
-                'deadline' => $deadline,
-                'created_by' => Auth::user()->id,
-                'manager' => Auth::user()->id)
+                    'unit' => $fu,
+                    'follow' => $su,
+                    'priority' => $priority,
+                    'conductor' => $request->input('viphuman'),
+                    'steer_time' => Utils::dateformat($request->input('steer_time')),
+                    'deadline' => $deadline,
+                    'created_by' => Auth::user()->id,
+                    'manager' => Auth::user()->id)
             );
 
-            foreach ($typeArr as $key => $type){
+            foreach ($typeArr as $key => $type) {
                 $arr = explode('|', $type);
                 $t = $arr[1];
                 $k = $arr[0];
@@ -338,27 +325,20 @@ class SteeringcontentController extends Controller
                 ]);
             }
 
-            if( !$scid || !$sc )
-            {
+            if (!$scid || !$sc) {
                 DB::rollback();
                 $request->session()->flash('revertfilter', 1);
-//                if ($request->session()->has('steering_url')){
-//                    return redirect($request->session()->get('steering_url'));
-//                }
-                return redirect()->action(
-                    'SteeringcontentController@index', ['error' => 1]
-                );
             } else {
                 // Else commit the queries
                 DB::commit();
                 $request->session()->flash('revertfilter', 1);
-//                if ($request->session()->has('steering_url')){
-//                    return redirect($request->session()->get('steering_url'));
-//                }
-                return redirect()->action(
-                    'SteeringcontentController@index', ['add' => 1]
-                );
             }
+            if ($request->session()->has('steering_url')) {
+                return redirect(Utils::formatAlias($request->session()->get('steering_url')));
+            }
+            return redirect()->action(
+                'SteeringcontentController@index'
+            );
 
         }
     }

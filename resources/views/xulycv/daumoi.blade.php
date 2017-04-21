@@ -71,7 +71,7 @@
             <?php
             $st = 1;
             if ($row->status == 1) {
-                if ($row->deadline == "" || $row->complete_time < $row->deadline) {
+                if ($row->deadline == "" || $row->complete_time <= $row->deadline) {
                     $st = 2;
                 } else {
                     $st = 3;

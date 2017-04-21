@@ -119,7 +119,8 @@
                 </ul>
             @endif
             @if(\App\Roles::accessView('steeringcontent'))
-                <div class="left-head"><a href="{{env('ALIAS') == '' ? '/':env('ALIAS')}}" style="color: #43aa76 !important;">{{env('MENU_NV')}}</a></div>
+                <div class="left-head"><a href="{{env('ALIAS') == '' ? '/':env('ALIAS')}}"
+                                          style="color: #43aa76 !important;">{{env('MENU_NV')}}</a></div>
                 <ul>
                     <li><a href="#">{{env('SRC_FILTER')}}</a></li>
                     <ul style="padding-left: 20px">
@@ -183,34 +184,33 @@
                     <h4 class="modal-title">Chỉnh sửa tiến độ</h4>
                 </div>
                 <div class="modal-body" style="padding-top: 0px !important;">
-                    @if(\App\Roles::accessAction($role, 'status'))
-                        {!! Form::open(array('route' => 'edit-progress', 'id' => 'form-edit-progress', 'files'=>'true')) !!}
-                        <input id="edit_steering_id" type="hidden" name="edit_steering_id">
-                        <input id="edit_progress_id" type="hidden" name="edit_progress_id">
-                        <input id="edit_process_deadline" type="hidden" name="edit_process_deadline">
-                        <div class="form-group from-inline">
-                            <label>Ghi chú tiến độ</label>
-                            <textarea name="edit_pr_note" required id="edit_pr_note" rows="2" class="form-control"></textarea>
-                        </div>
-                        {{--<div class="form-group  from-inline">--}}
-                        {{--<label>Tình trạng</label>--}}
-                        {{--<input type="radio" name="edit_pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                        {{--<input type="radio" name="edit_pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                        {{--<input type="radio" name="edit_pr_status" value="-1"> Nhiệm vụ bị hủy--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group form-inline" id="input-file" style="display: none">--}}
-                        {{--<label style="float: left">File đính kèm:</label>--}}
-                        {{--<input type="file" name="edit_file" id="st-file">--}}
-                        {{--</div>--}}
-                        <div class="form-group form-inline">
-                            <label>Ngày cập nhật</label>
-                            <input name="edit_time_log" type="text" class="datepicker form-control" id="edit_progress_time"
-                                   required value="">
-                            <input class="btn btn-my pull-right" type="submit" value="Lưu">&nbsp;
-                            <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Hủy</button>
-                        </div>
-                        {!! Form::close() !!}
-                    @endif
+                    {!! Form::open(array('route' => 'edit-progress', 'id' => 'form-edit-progress', 'files'=>'true')) !!}
+                    <input id="edit_steering_id" type="hidden" name="edit_steering_id">
+                    <input id="edit_progress_id" type="hidden" name="edit_progress_id">
+                    <input id="edit_process_deadline" type="hidden" name="edit_process_deadline">
+                    <div class="form-group from-inline">
+                        <label>Ghi chú tiến độ</label>
+                        <textarea name="edit_pr_note" required id="edit_pr_note" rows="2"
+                                  class="form-control"></textarea>
+                    </div>
+                    {{--<div class="form-group  from-inline">--}}
+                    {{--<label>Tình trạng</label>--}}
+                    {{--<input type="radio" name="edit_pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                    {{--<input type="radio" name="edit_pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;--}}
+                    {{--<input type="radio" name="edit_pr_status" value="-1"> Nhiệm vụ bị hủy--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group form-inline" id="input-file" style="display: none">--}}
+                    {{--<label style="float: left">File đính kèm:</label>--}}
+                    {{--<input type="file" name="edit_file" id="st-file">--}}
+                    {{--</div>--}}
+                    <div class="form-group form-inline">
+                        <label>Ngày cập nhật</label>
+                        <input name="edit_time_log" type="text" class="datepicker form-control" id="edit_progress_time"
+                               required value="">
+                        <input class="btn btn-my pull-right" type="submit" value="Lưu">&nbsp;
+                        <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Hủy</button>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -275,8 +275,8 @@
     $(".main").css('min-height', $("#mySidenav").height() + 20 + "px");
 
     /*
-    * Chỉnh sửa tiến độ
-    */
+     * Chỉnh sửa tiến độ
+     */
     function formatToDMY(date) {
         var tmp = date.split("-");
         return tmp[2] + "/" + tmp[1] + "/" + tmp[0].substr(2, 2);
@@ -519,13 +519,13 @@
         var nt = $("#pr-note").val();
         if (stt == "1") {
             $("#input-file").show();
-            $("#st-file").prop("required", true);
+//            $("#st-file").prop("required", true);
             if (nt == "") {
                 $("#pr-note").val("Đã hoàn thành");
             }
         } else {
             $("#input-file").hide();
-            $("#st-file").prop("required", false);
+//            $("#st-file").prop("required", false);
         }
     });
 </script>
