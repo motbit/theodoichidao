@@ -6,32 +6,32 @@
 
 @section('content')
     <div class="text-center title">Ban / Đơn vị</div>
-@if(\App\Roles::checkPermission())
-{{ Html::linkAction('UnitController@edit', 'Thêm đơn vị', array('id'=>0), array('class' => 'btn btn-my')) }}
+    @if(\App\Roles::checkPermission())
+        {{ Html::linkAction('UnitController@edit', 'Thêm đơn vị', array('id'=>0), array('class' => 'btn btn-my')) }}
 
-{!! Form::open(array('route' => 'unit-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
-{{ Form::hidden('id', 0, array('id' => 'id')) }}
-{!! Form::close() !!}
-<script language="javascript">
-    function removebyid(id) {
+        {!! Form::open(array('route' => 'unit-delete', 'class' => 'form', 'id' => 'frmdelete')) !!}
+        {{ Form::hidden('id', 0, array('id' => 'id')) }}
+        {!! Form::close() !!}
+        <script language="javascript">
+            function removebyid(id) {
 
-        if(confirm("Bạn có muốn xóa?")) {
-            document.getElementById("id").value = id;
-            frmdelete.submit();
-        }
+                if (confirm("Bạn có muốn xóa?")) {
+                    document.getElementById("id").value = id;
+                    frmdelete.submit();
+                }
 
 
-    }
-</script>
+            }
+        </script>
     @endif
 
     @if (Session::has('message'))
         <div class="alert alert-info">{!!  Session::get('message') !!}</div>
     @endif
-
+    <div id="tabs">
         <ul class="nav nav-tabs">
             @foreach($treeunit as $idx=>$u)
-                <li class="{{($idx == 0)?'active':''}}"><a data-toggle="tab" href="#first-{{$u->id}}">{{$u->name}}</a>
+                <li class="{{($idx == 0)?'active':''}}"><a id="unit-{{$u->id}}" data-toggle="tab" href="#first-{{$u->id}}">{{$u->name}}</a>
                 </li>
             @endforeach
         </ul>
@@ -62,4 +62,23 @@
                 </div>
             @endforeach
         </div>
+    </div>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script>
+        $('.nav-tabs > li > a').on("click",function(e){
+            e.preventDefault();
+            createCookie('parrent-unit', $(this).attr('id'));
+        });
+        window.onscroll = function () {
+            createCookie('scroll-unit', $(document).scrollTop());
+        };
+        $(document).ready(function () {
+            if (readCookie("parrent-unit")) {
+                $("#" + readCookie("parrent-unit")).trigger('click');
+            }
+            if (readCookie("scroll-unit")) {
+                $(document).scrollTop(readCookie("scroll-unit"));
+            }
+        });
+    </script>
 @stop
