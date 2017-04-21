@@ -118,7 +118,7 @@
             <?php
             $st = 1;
             if ($row->status == 1) {
-                if ($row->deadline == "" || $row->complete_time < $row->deadline) {
+                if ($row->deadline == "" || $row->complete_time <= $row->deadline) {
                     $st = 2;
                 } else {
                     $st = 3;
@@ -678,7 +678,6 @@
                 var info = table.page.info();
                 createCookie("filter:current_page", info.page);
             });
-            console.log("Datatables");
             $(".loader").hide();
             $("#table").show();
             var oSettings = table.settings();

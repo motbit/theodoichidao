@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="row" style="min-width: 350px">
+    <div id="filter-container" class="row" style="min-width: 350px; display: none">
         <div class="col-xs-12">
             {!! Form::open(array('route' => 'report-index', 'class' => 'form', 'id' => 'form')) !!}
 
@@ -39,25 +39,19 @@
                     <div class="form-group form-inline ">
                         <label>{{env('SRC_UC')}}:</label>
                         <div class="input-contain form-group form-inline">
-                            {!! Form::text('source', "",
-                                    array('no-required',
-                                    'placeholder'=>'Nguồn chỉ đạo',
-                                    'class'=>'form-control ipw mi fl', 'id'=>'source')
-                            ) !!}
-                            <div class="btn btn-default ico ico-search fl" data-toggle="modal"
+                            <select name="source" id="source" class="form-control ipw mi fl" style="width: 200px">
+                                <option value=""></option>
+                                @foreach($typeArr as $type)
+                                <option value="{{$type}}">{{$type}}</option>
+                                @endforeach
+                            </select>
+                            <div class="btn btn-default ico ico-search fl hidden" data-toggle="modal"
                                  data-target="#modal-source"></div>
                         </div>
                     </div>
                     <div class="form-group form-inline">
-                        <label>{{env('LD_SHORT')}}:</label>
-                        <div class="input-contain">
-                            <select name="conductor" class="form-control ipw" id="conductor">
-                                <option value=""></option>
-                                @foreach($viphuman as $row)
-                                    <option value="{{$row->name}}">{{$row->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label>Kí hiệu nguồn:</label>
+                        <input type="text" id="source-note" class="form-control mi ipw" style="width: 200px">
                     </div>
                     <div class="form-group form-inline">
                         <label>ĐV/CN đầu mối:</label>
@@ -95,6 +89,17 @@
 
                 </div>
                 <div class="col-md-6 col-sm-12">
+                    <div class="form-group form-inline">
+                        <label>{{env('LD_SHORT')}}:</label>
+                        <div class="input-contain">
+                            <select name="conductor" class="form-control ipw" id="conductor">
+                                <option value=""></option>
+                                @foreach($viphuman as $row)
+                                    <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group form-inline">
                         <label>Ngày chỉ đạo:</label>
                         <div class="input-contain">
@@ -183,7 +188,7 @@
         </div>
     </div>
     <div class="total-nv">(<span class="hidden-xs hidden-sm">Tổng số: </span>{{count($lst)}} nhiệm vụ)</div>
-    <table id="table" class="table table-bordered table-hover row-border hover order-column">
+    <table id="table" class="table table-bordered table-hover row-border hover order-column" style="display: none">
         <thead>
         <tr>
             <th class="hidden"></th>
@@ -205,6 +210,7 @@
             <th class="hidden">Trạng thái</th>
             <th class="hidden"><input type="text" id="filter-status"></th>
             <th class="hidden"></th>
+            <th class="hidden"><input type="text" id="filter-source"></th>
         </tr>
         </thead>
         <tbody>
@@ -213,7 +219,7 @@
             <?php
             $st = 1;
             if ($row->status == 1) {
-                if ($row->deadline == "" || $row->complete_time < $row->deadline) {
+                if ($row->deadline == "" || $row->complete_time <= $row->deadline) {
                     $st = 2;
                 } else {
                     $st = 3;
@@ -248,13 +254,6 @@
                 <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
-                    {{--@foreach(explode('|', $row->source) as $s)--}}
-                    {{--<ul class="unit-list">--}}
-                    {{--@if($s != '')--}}
-                    {{--<li> {{ $s }} </li>--}}
-                    {{--@endif--}}
-                    {{--</ul>--}}
-                    {{--@endforeach--}}
                     @if( !empty($steeringSourceArr[$row->id]))
                         @foreach($steeringSourceArr[$row->id] as $item)
                             <ul class="unit-list">
@@ -330,6 +329,15 @@
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td class="hidden">{{$st}}</td>
                 <td class="hidden"> {{\App\Utils::minusDate($row->deadline, $row->steer_time)}}</td>
+                <td class="hidden">
+                    @if( !empty($steeringSourceArr[$row->id]))
+                        @foreach($steeringSourceArr[$row->id] as $item)
+                            <ul>
+                                <li>{{$item['note']}}</li>
+                            </ul>
+                        @endforeach
+                    @endif
+                </td>
             </tr>
             {{--@endif--}}
         @endforeach
@@ -556,11 +564,11 @@
 
             $('input:radio[name=psource]').change(function () {
                 var name = $('input[name="psource"]:checked').val()
-                $('input[name="source"]').val(name);
+                $('select[name="source"]').val(name);
             });
 
-            $('input[name="source"]').change(function () {
-                var val = $('input[name="source"]').val();
+            $('select[name="source"]').change(function () {
+                var val = $('select[name="source"]').val();
                 $('input:radio[name=psource][value="' + val + '"]').attr('checked', true);
             });
 
@@ -700,6 +708,8 @@
                     }
                 });
             });
+            console.log("datatable");
+            $("#table").show();
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
@@ -768,9 +778,12 @@
 
             $("#form").submit(function (event) {
                 table.draw();
-                var val = $('input[name="source"]').val();
+                var val = $('#source').val();
                 $("#id_source").val(val);
                 $("#id_source").trigger("change");
+
+                $("#filter-source").val($("#source-note").val());
+                $("#filter-source").trigger("change");
 
                 var val = $('#conductor').val();
                 $("#filter-conductor").val(val);
@@ -818,8 +831,8 @@
         }
 
         $(".select-multiple").select2();
-        //        $(".select-single").select2();
         $(".select2-container").css("width", "auto");
+        $("#filter-container").show();
     </script>
     <script>
         //loc theo trang thai

@@ -229,4 +229,8 @@ class Utils extends Model
         return round(abs((strtotime($date1) - (strtotime($date2))) / (60*60*24)),0);
     }
 
+    public static function formatAlias($url){
+        return str_replace(env('ALIAS'), '', $url);
+    }
+
 }
