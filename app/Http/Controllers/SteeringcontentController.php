@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
 use App\Steeringcontent;
 use App\Unit;
 use App\Sourcesteering;
@@ -24,6 +25,9 @@ class SteeringcontentController extends Controller
     {
         $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
         if (!$role) {
+            if(Roles::accessView("xuly/daumoi")){
+                return redirect("xuly/daumoi");
+            }
             return redirect('/errpermission');
         }
         $request->session()->put('steering_url', $request->getRequestUri());

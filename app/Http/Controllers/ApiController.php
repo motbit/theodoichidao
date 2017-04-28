@@ -205,8 +205,8 @@ class ApiController extends Controller
 
     public function editProgress(Request $request)
     {
-        $steering_id = $request->edit_steering_id;
-        $progress_log_id = $request->edit_progress_id;
+        $steering_id = intval($request->edit_steering_id);
+        $progress_log_id = intval($request->edit_progress_id);
         $note = $request->edit_pr_note;
         $time_log = Utils::dateformat($request->edit_time_log);
         $data = array();
@@ -214,7 +214,16 @@ class ApiController extends Controller
         $data['time_log'] = $time_log;
 
         $content = array();
-//        $content['progress'] = $note;
+        $update_content = false;
+        $arr_log = DB::table('progress_log')->where('steeringcontent', $steering_id)->orderBy('id', 'desc')->get();
+        if ($arr_log[0]->id == $progress_log_id) {
+            $content['progress'] = $note;
+            $update_content = true;
+        }
+        $selecr_log = DB::table('progress_log')->where('id', $progress_log_id)->first();
+        if ($selecr_log->status == 1) {
+            $content['complete_time'] = $time_log;
+        }
 
         try {
             Progress::where('id', $progress_log_id)->update($data);
@@ -225,7 +234,8 @@ class ApiController extends Controller
 
         $result = [
             'data' => $data,
-            'content' => $content
+            'content' => $content,
+            'update' => $update_content
         ];
 
         return response()->json($result);

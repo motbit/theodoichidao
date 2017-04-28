@@ -331,10 +331,11 @@
                 console.log(result);
                 $(".loader").hide();
                 $("#modal-edit-progress").modal("hide");
+                if (result.update){
+                    $("#progress-" + steering_id).html(note)
+                }
                 resetFromProgress();
                 resetFormEdit();
-
-
                 $("#form-progress").show();
                 showDetailProgress(steering_id, time_deadline)
             },

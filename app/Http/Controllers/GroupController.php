@@ -106,6 +106,8 @@ class GroupController extends Controller
             if (in_array('' . $row->id, $view)) {
                 $action = "";
                 $arraction = $request->input('action-' . $row->id);
+                $only_auth = $request->input('only-auth-' . $row->id);
+                $au = isset($only_auth)?0:1;
                 if (is_array($arraction)) {
                     foreach ($arraction as $ac) {
                         $action .= "(" . $ac . ")";
@@ -115,12 +117,13 @@ class GroupController extends Controller
                     ['view', '=', $row->id]])->get();
                 if (count($exist) > 0) {
                     DB::table('group_permission')->where([['group', '=', $id],
-                        ['view', '=', $row->id]])->update(['action' => $action]);
+                        ['view', '=', $row->id]])->update(['action' => $action, 'only_auth' => $au]);
                 } else {
                     DB::table('group_permission')->insert([
                         'group' => $id,
                         'view' => $row->id,
-                        'action' => $action
+                        'action' => $action,
+                        'only_auth' => $au
                     ]);
                 }
             } else {

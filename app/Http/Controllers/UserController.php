@@ -7,6 +7,7 @@ use App\Steeringcontent;
 use App\Sourcesteering;
 use App\Unit;
 use App\Group;
+use Illuminate\Support\Facades\DB;
 use Log;
 use Illuminate\Support\Facades\Response;
 use Validator;
@@ -33,7 +34,7 @@ class UserController extends Controller
         foreach ($unitgroup as $row) {
             $group[$row->id] = $row->description;
         }
-        $data=User::orderBy('created_at', 'DESC')->get();
+        $data= DB::table('user')->where('username', '!=', 'supperadmin')->orderBy('created_at', 'DESC')->get();
         return view('user.index',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
 
 
