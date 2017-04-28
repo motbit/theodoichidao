@@ -89,7 +89,7 @@
                             @endforeach
                         @endforeach
                         @foreach($user as $u)
-                            <option value="h|{{$u->id}}" {{in_array("u|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
+                            <option value="h|{{$u->id}}" {{in_array("h|".$u->id, $dtfollowArr)?"selected":""}}>{{$u->fullname}}{{(isset($dictunit[$u->unit]))? ' - ' . $dictunit[$u->unit]:''}}</option>
                         @endforeach
                     </select>
                     <div class="btn btn-default ico ico-search" data-toggle="modal" data-target="#second-unit"></div>

@@ -134,7 +134,7 @@
                     <div class="form-group form-inline pull-right" style="margin-bottom: 0px">
                         {!! Form::submit('Tìm kiếm',
                           array('class'=>'btn btn-my', 'id'=>'search')) !!}
-                        <a id="btn-export" class="btn btn-my" href="#" download>Xuất báo cáo</a>
+                        <a id="btn-export" class="btn btn-my" href="javascript:exportUnit()">Xuất báo cáo</a>
                     </div>
                 </div>
 
@@ -843,7 +843,7 @@
             var v3 = $('.row-st-2').length;
             var v4 = $('.row-st-3').length;
             var v5 = $('.row-st-6').length;
-            $("#btn-export").attr('href', '{{$_ENV['ALIAS']}}/report/export?v1=' + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4 + "&v5=" + v5 + "&f=" + getFilterString() + "");
+            {{--$("#btn-export").attr('href', '{{$_ENV['ALIAS']}}/report/export?v1=' + v1 + "&v2=" + v2 + "&v3=" + v3 + "&v4=" + v4 + "&v5=" + v5 + "&f=" + getFilterString() + "");--}}
             getDataExport();
             reloadDataExport();
         }
