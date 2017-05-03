@@ -313,6 +313,41 @@ class ApiController extends Controller
         return response()->json($content);
     }
 
+    //conductor note
+    public function getConductorNote(Request $request)
+    {
+        $steering_id = intval($request->s);
+        $progress = DB::table('conductor_note')
+            ->join('user', 'user.id', '=', 'conductor_note.created_by')
+            ->where('steeringcontent', '=', $steering_id)
+            ->select('conductor_note.*', 'user.fullname as created')
+            ->orderBy('conductor_note.id', 'desc')
+            ->get();
+        return response()->json($progress);
+    }
+
+
+    public function addConductorNote(Request $request)
+    {
+        $steering_id = $request->steering_id;
+        $note = $request->note;
+        $time_log = Utils::dateformat($request->time_log);
+        $data = array();
+        $data['created_by'] = Auth::user()->id;
+        $data['steeringcontent'] = $steering_id;
+        $data['note'] = $note;
+        $data['time_log'] = $time_log;
+        $content = array();
+        $content['conductornote'] = $note;
+        try {
+            DB::table('conductor_note')->insertGetId($data);
+            Steeringcontent::where('id', $steering_id)->update($content);
+        } catch (Exception $e) {
+            return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
+        }
+        return response()->json($data);
+    }
+
     #api tranfer
     public function tranfer(Request $request)
     {

@@ -39,6 +39,7 @@
             <th style="width: 15px"></th>
             <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
+            <th style="min-width: 130px">{{env('LDCD')}}<br><input name="conductornote" type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
@@ -121,13 +122,25 @@
                         @endif
                     </ul>
                 </td>
-                <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                @if(\App\Roles::accessAction($role, 'conductornote') && \App\Roles::accessRow($role, $row->manager))
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-update ac-update"> {{$row->conductornote}}</td>
+                @else
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-view ac-view"> {{$row->conductornote}}</td>
+                @endif
+                @if(\App\Roles::accessAction($role, 'status'))
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                        class="progress-update ac-update"> {{$row->progress}}</td>
+                @else
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view ac-view"> {{$row->progress}}</td>
+                @endif
                 @if(\App\Roles::accessAction($role, 'note'))
                     <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="unit-update"> {{$row->unitnote}}</td>
+                        class="unit-update ac-update"> {{$row->unitnote}}</td>
                 @else
                     <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="unit-view"> {{$row->unitnote}}</td>
+                        class="unit-view ac-view"> {{$row->unitnote}}</td>
                 @endif
                 <td onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
@@ -176,146 +189,10 @@
         <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
     </div>
-    <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Theo dõi tiến độ</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Nội dung</th>
-                            <th>Người cập nhật</th>
-                            <th>Thời gian</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-progress"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-unit-note" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ý kiến của đơn vị chủ trì/phối hợp</h4>
-                </div>
-                <div class="modal-body" style="padding-top: 0px !important;">
-                    @if(\App\Roles::accessAction($role, 'note'))
-                        {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
-                        <input id="steering_id_note" type="hidden" name="steering_id">
-                        <div class="form-group from-inline">
-                            <label>Nội dung ý kiến</label>
-                            <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
-                        </div>
-                        <div class="form-group form-inline hidden">
-                            <label>Ngày cập nhật</label>
-                            <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
-                                   required value="{{date('d/m/y')}}">
-                        </div>
-                        <div class="form-group form-inline">
-                            <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                        </div>
-                        {!! Form::close() !!}
-                    @endif
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Nội dung</th>
-                            <th>Người cập nhật</th>
-                            <th>Thời gian</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-unit-note"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         var current_date = "{{date('d/m/y')}}";
-        function showDetailProgress(id) {
-            $(".loader").show();
-            $("#steering_id").val(id);
-            $.ajax({
-                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
-                success: function (result) {
-                    $(".loader").hide();
-                    var html_table = "";
-                    for (var i = 0; i < result.length; i++) {
-                        var r = result[i];
-                        html_table += "<tr>";
-                        html_table += "<td>" + r.note
-                        if (r.file_attach != null) {
-                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
-                        }
-                        html_table += "</td>"
-                        html_table += "<td>" + r.created + "</td>"
-                        html_table += "<td>" + r.time_log + "</td>"
-                        html_table += "</tr>"
-                    }
-                    $("#table-progress").html(html_table);
-                    $("#modal-progress").modal("show");
-                },
-                error: function () {
-                    alert("Xảy ra lỗi nội bộ");
-                    $(".loader").hide();
-                }
-            });
-        }
-
-        function showDetailUnitNote(id) {
-            resetFromUnitNote();
-            $(".loader").show();
-            $("#steering_id_note").val(id);
-            $.ajax({
-                url: "{{$_ENV['ALIAS']}}/api/unitnote?s=" + id,
-                success: function (result) {
-                    $(".loader").hide();
-                    var html_table = "";
-                    for (var i = 0; i < result.length; i++) {
-                        var r = result[i];
-                        html_table += "<tr>";
-                        html_table += "<td>" + r.note
-                        if (r.file_attach != null) {
-                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/unit_note_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
-                        }
-                        html_table += "</td>"
-                        html_table += "<td>" + r.created + "</td>"
-                        html_table += "<td>" + r.time_log + "</td>"
-                        html_table += "</tr>"
-                    }
-                    $("#table-unit-note").html(html_table);
-                    $("#modal-unit-note").modal("show");
-                },
-                error: function () {
-                    alert("Xảy ra lỗi nội bộ");
-                    $(".loader").hide();
-                }
-            });
-        }
 
         $(document).ready(function () {
-
-            $( ".progress-view" ).on( "click", function() {
-                showDetailProgress($( this ).attr("data-id"))
-                console.log( "#ID: " + $( this ).attr("data-id") );
-            });
-            @if(\App\Roles::accessAction($role, 'note'))
-            $(".unit-update").on("click", function () {
-                showDetailUnitNote($(this).attr("data-id"))
-            });
-            @else
-            $(".unit-update").on("click", function () {
-                showDetailUnitNote($(this).attr("data-id"))
-            });
-            @endif
-
 
             reCount();
             // DataTable
