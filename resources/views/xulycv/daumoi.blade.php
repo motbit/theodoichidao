@@ -51,9 +51,9 @@
             <th style="width: 15px"></th>
             <th style="min-width: 150px">Tên nhiệm vụ<br><input type="text"></th>
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
-            <th style="min-width: 130px">{{env('LDCD')}}<br><input name="conductornote" type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
+            <th style="min-width: 130px">{{env('LDCD')}}<br><input name="conductornote" type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
             <th style="width: 55px">{{env('LD_SHORT')}}<br>
                 <select style="width: 55px">
@@ -134,13 +134,6 @@
                         @endif
                     </ul>
                 </td>
-                @if(\App\Roles::accessAction($role, 'conductornote') && \App\Roles::accessRow($role, $row->manager))
-                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="conductor-update ac-update"> {{$row->conductornote}}</td>
-                @else
-                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="conductor-view ac-view"> {{$row->conductornote}}</td>
-                @endif
                 @if(\App\Roles::accessAction($role, 'status'))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
                         class="progress-update ac-update"> {{$row->progress}}</td>
@@ -153,6 +146,13 @@
                 @else
                     <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
                         class="unit-view ac-view"> {{$row->unitnote}}</td>
+                @endif
+                @if(\App\Roles::accessAction($role, 'conductornote') && \App\Roles::accessRow($role, $row->manager))
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-update ac-update"> {{$row->conductornote}}</td>
+                @else
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-view ac-view"> {{$row->conductornote}}</td>
                 @endif
                 <td class="" onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">

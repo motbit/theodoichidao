@@ -374,10 +374,10 @@
     }
     function openNav() {
         document.getElementById("mySidenav").style.left = "0px";
-        document.getElementById("content").style.marginLeft = "300px";
+        document.getElementById("content").style.marginLeft = "250px";
     }
     function closeNav() {
-        document.getElementById("mySidenav").style.left = "-300px";
+        document.getElementById("mySidenav").style.left = "-250px";
         document.getElementById("content").style.marginLeft = "0";
     }
 

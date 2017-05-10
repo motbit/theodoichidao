@@ -62,6 +62,16 @@ class Utils extends Model
                 $unitnote[$row->steeringcontent] = $row->note . PHP_EOL;
             }
         }
+        //Lay danh sach chi dao BT
+        $dataconductormote = DB::table('conductor_note')->whereIn('steeringcontent', $data)->get();
+        $conductornote = array();
+        foreach ($dataconductormote as $row){
+            if (isset($conductornote[$row->steeringcontent])){
+                $conductornote[$row->steeringcontent] .= "- " . $row->note . PHP_EOL;
+            }else{
+                $conductornote[$row->steeringcontent] = $row->note . PHP_EOL;
+            }
+        }
         //Lấy danh sách Lanh dao Bo
         $dataconductor = DB::table('viphuman')->get();
         $conductor = array();
@@ -91,10 +101,10 @@ class Utils extends Model
                     $val = $i;
                 }
                 if ($validate) {
-                    $strunit = $strunit . $val . PHP_EOL;
+                    $strunit = $strunit . $val . "; ";
                 }
             }
-            $temp['unit'] = $strunit;
+            $temp['unit'] = $strunit != ""?substr($strunit, 0, -2):"";
 
             $strfollow = "";
             foreach ($follows = explode(',', $row->follow) as $i) {
@@ -111,10 +121,10 @@ class Utils extends Model
                     $val = $i;
                 }
                 if ($validate) {
-                    $strfollow = $strfollow . $val . PHP_EOL;
+                    $strfollow = $strfollow . $val . "; ";
                 }
             }
-            $temp['follow'] = $strfollow;
+            $temp['follow'] = $strfollow != ""?substr($strfollow, 0, -2):"";
             $temp['deadline'] = "";
             if ($row->deadline != "") {
                 $temp['deadline'] = date("d/m/Y", strtotime($row->deadline));
@@ -158,9 +168,17 @@ class Utils extends Model
             if (isset($unitnote[$row->id])){
                 $temp['unitnote'] = $unitnote[$row->id];
             }
+            $temp['conductornote'] = "";
+            if (isset($conductornote[$row->id])){
+                $temp['conductornote'] = $conductornote[$row->id];
+            }
             $temp['conductor'] = $row->conductor;
             if (isset($conductor[$row->conductor])){
                 $temp['conductor'] = $conductor[$row->conductor];
+            }
+            $temp['manager'] = "";
+            if (isset($user[$row->manager])) {
+                $temp['manager'] = $user[$row->manager];
             }
 
             $exportData[] = $temp;

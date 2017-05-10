@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant;
+use App\MLogs;
 use App\Progress;
 use App\Steeringcontent;
 use App\Unit;
@@ -54,8 +56,9 @@ class ApiController extends Controller
             $content['complete_time'] = $time_log;
         }
         try {
-            $result1 = Progress::insert($data);
+            $result1 = Progress::insertGetId($data);
             $result2 = Steeringcontent::where('id', $steering_id)->update($content);
+            MLogs::write(Constant::$ACTION_CREATE, 'progress_log', $result1, '');
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
@@ -228,6 +231,7 @@ class ApiController extends Controller
         try {
             Progress::where('id', $progress_log_id)->update($data);
             Steeringcontent::where('id', $steering_id)->update($content);
+            MLogs::write(Constant::$ACTION_UPDATE, 'progress_log', $progress_log_id, '');
         } catch (Exception $e) {
             return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
         }
@@ -271,6 +275,7 @@ class ApiController extends Controller
                 $destinationPath = 'file';
                 $file->move($destinationPath, $file_attach);
             }
+            MLogs::write(Constant::$ACTION_CREATE, 'progress_log', $result1, '');
         } catch (Exception $e) {
             return response()->json(array("error" => 'Caught exception: ', $e->getMessage(), "\n"));
         }

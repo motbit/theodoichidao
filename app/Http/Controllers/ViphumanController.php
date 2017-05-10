@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Chucnang;
+use App\Constant;
+use App\MLogs;
 use App\Viphuman;
 use Illuminate\Http\Request;
 use App\Helper;
@@ -12,7 +14,7 @@ class ViphumanController extends Controller
 {
     public function index(Request $request)
     {
-        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
             return redirect('/errpermission');
         }
         $keyword = $request->input('k');
@@ -23,9 +25,9 @@ class ViphumanController extends Controller
 
     public function edit(Request $request)
     {
-        $id = intval( $request->input('id') );
-        if($id > 0) {
-            $data = Viphuman::where('id',$id)->get();
+        $id = intval($request->input('id'));
+        if ($id > 0) {
+            $data = Viphuman::where('id', $id)->get();
             $functions = Chucnang::findAll();
             return view("viphuman/update")->with('nguoidung', $data)->with('functions', $functions);
         } else {
@@ -36,7 +38,7 @@ class ViphumanController extends Controller
 
     public function update(Request $request)
     {
-        $id = intval( $request->input('id') );
+        $id = intval($request->input('id'));
         $messages = [
             'name.required' => 'Yêu cầu nhập tên',
             'function.required' => 'Yêu cầu chọn chức vụ.',
@@ -47,52 +49,47 @@ class ViphumanController extends Controller
         ], $messages);
 
         if ($validator->fails()) {
-            return redirect()->action('ViphumanController@update',["id"=>$id])
+            return redirect()->action('ViphumanController@update', ["id" => $id])
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        if($id > 0) {
+        if ($id > 0) {
             $result = Viphuman::where('id', $request->input('id'))->update([
-                'name'=>$request->input('name'),
-                'function'=>$request->input('function'),
+                'name' => $request->input('name'),
+                'function' => $request->input('function'),
             ]);
-
-            $data = Viphuman::where('id',$request->input('id'))->get();
+            MLogs::write(Constant::$ACTION_UPDATE, 'viphuman', $id, '');
+            $data = Viphuman::where('id', $request->input('id'))->get();
 
             return redirect()->action(
                 'ViphumanController@index', ['update' => $result]
             );
         } else {
-            $result = Viphuman::insert([
-                'name'=>$request->input('name'),
-                'function'=>$request->input('function'),
+            $result = Viphuman::insertGetId([
+                'name' => $request->input('name'),
+                'function' => $request->input('function'),
             ]);
-
-            if($result) {
-                return redirect()->action(
-                    'ViphumanController@index', ['add' => 1]
-                );
-            } else {
-                return redirect()->action(
-                    'ViphumanController@update', ['error' => 1]
-                );
-            }
+            MLogs::write(Constant::$ACTION_CREATE, 'viphuman', $result, '');
+            return redirect()->action(
+                'ViphumanController@index', ['add' => 1]
+            );
         }
     }
 
     #region Nguoidung Delete
     public function delete(Request $request)
     {
-
-        $result = Viphuman::where('id',$request->input('id'))->delete();
-        if($result) {
+        $vip = \DB::table('viphuman')->where('id', $request->input('id'))->first();
+        $result = Viphuman::where('id', $request->input('id'))->delete();
+        MLogs::write(Constant::$ACTION_DELETE, 'viphuman', $request->input('id'), 'Delete viphuman: ' . $vip->name);
+        if ($result) {
             return redirect()->action(
                 'ViphumanController@index', ['delete' => $request->input('id')]
             );
         } else {
             return redirect()->action(
-                'ViphumanController@index', ['delete' => "0:".$request->input('id')]
+                'ViphumanController@index', ['delete' => "0:" . $request->input('id')]
             );
         }
 

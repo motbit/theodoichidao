@@ -22,7 +22,7 @@
                 @foreach($action as $a)
                     @if($a != "")
                         <?php $a = str_replace('(', '', $a);?>
-                        <input type="checkbox" value="{{$a}}" name="action-{{$v->id}}[]" id="{{$a}}-{{$v->id}}" {{(isset($permission[$v->id]) && strpos($permission[$v->id]->action, $a) !== false)?'checked':''}}> {{$dictionary[$a]}} &nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" value="{{$a}}" name="action-{{$v->id}}[]" id="{{$a}}-{{$v->id}}"  {{(isset($permission[$v->id]) && strpos($permission[$v->id]->action, '('.$a.')') !== false)?'checked':''}}> {{$dictionary[$a]}} &nbsp;&nbsp;&nbsp;
                     @endif
                 @endforeach
                 <br>
