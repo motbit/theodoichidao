@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant;
 use App\Group;
+use App\MLogs;
 use App\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,12 +40,12 @@ class GroupController extends Controller
             Group::where('id', $id)->update(['description' => $description]);
             $request->session()->flash('message', "<strong>Cập nhật Nhóm người sử dụng thành công</strong>.");
             $request->session()->flash('gid', $id);
-
+            MLogs::write(Constant::$ACTION_UPDATE, 'group', $id, '');
         } else {
             $gid = Group::insertGetId(['description' => $description]);
             $request->session()->flash('message', "<strong>Thêm Nhóm người sử dụng thành công</strong>.");
             $request->session()->flash('gid', $gid);
-
+            MLogs::write(Constant::$ACTION_CREATE, 'group', $gid, '');
         }
         return redirect()->action('GroupController@index');
 
@@ -52,13 +54,14 @@ class GroupController extends Controller
     public function delete(Request $request)
     {
         $id = intval($request->input('id'));
-
+        $group = DB::table('group')->where('id', $id)->first();
         $st_count2 = User::Where([['group', '=', $id]])->count();
         if ($st_count2 > 0) {
             $request->session()->flash('message', "<strong>Bạn không thể xóa Nhóm này.</strong><br /> Vui xóa bỏ <u>Người sử dụng</u> thuộc nhóm này trước khi xóa <u>Nhóm</u>.");
         } else {
             $request->session()->flash('message', "<strong>Xóa Nhóm Người sử dụng thành công.</strong> <br /> #ID Nhóm Người Sử Dụng: <strong>" . $id . "</strong>");
             Group::where('id', $id)->delete();
+            MLogs::write(Constant::$ACTION_DELETE, 'group', $id, 'Delete group: ' . $group->description);
         }
 
         return redirect()->action('GroupController@index');
@@ -92,6 +95,7 @@ class GroupController extends Controller
         $dictionary['trans'] = "Chuyển";
         $dictionary['role'] = "Phân quyền";
         $dictionary['note'] = "Ý kiến đơn vị";
+        $dictionary['conductornote'] = "Ý kiến Lãnh đạo";
 
         return view("group.permission", ['id' => $id, 'permission' => $permission, 'views' => $views,
             'group' => $group, 'dataview' => $dataview, 'dictionary' => $dictionary]);

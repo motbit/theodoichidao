@@ -111,6 +111,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('tranfer', 'ApiController@tranfer')->name('steering-tranfer');
         Route::post('updatePosition', 'ApiController@updatePosition')->name('type-updatePosition');
         Route::get('formatunit', 'ApiController@formatUnit')->name('format-unit');
+        Route::get('conductornote', 'ApiController@getConductorNote');
+        Route::post('updateconductornote', 'ApiController@addConductorNote')->name('add-conductor-note');
     });
 
     Route::group(['prefix' => 'type'], function () {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant;
+use App\MLogs;
 use App\Roles;
 use App\Steeringcontent;
 use App\Unit;
@@ -25,7 +27,7 @@ class SteeringcontentController extends Controller
     {
         $role = \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri());
         if (!$role) {
-            if(Roles::accessView("xuly/daumoi")){
+            if (Roles::accessView("xuly/daumoi")) {
                 return redirect("xuly/daumoi");
             }
             return redirect('/errpermission');
@@ -264,6 +266,7 @@ class SteeringcontentController extends Controller
                 'priority' => $request->input('priority'),
                 'conductor' => $request->input('viphuman')
             ]);
+            MLogs::write(Constant::$ACTION_UPDATE, 'steeringcontent', $request->input('id'), '');
 
             DB::table('steering_source')->where('steering', $request->input('id'))->delete();
 
@@ -315,7 +318,7 @@ class SteeringcontentController extends Controller
                     'created_by' => Auth::user()->id,
                     'manager' => Auth::user()->id)
             );
-
+            MLogs::write(Constant::$ACTION_CREATE, 'steeringcontent', $scid, '');
             foreach ($typeArr as $key => $type) {
                 $arr = explode('|', $type);
                 $t = $arr[1];
@@ -350,8 +353,10 @@ class SteeringcontentController extends Controller
     #region Nguoidung Delete
     public function delete(Request $request)
     {
+        $steering = DB::table('steeringcontent')->where('id', $request->input('id'))->first();
 
         $result = Steeringcontent::where('id', $request->input('id'))->delete();
+        MLogs::write(Constant::$ACTION_DELETE, 'steeringcontent', $request->input('id'), 'Delete steering: ' . $steering->content);
         if ($result) {
             return redirect()->action(
                 'SteeringcontentController@index', ['delete' => $request->input('id')]

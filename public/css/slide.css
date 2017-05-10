@@ -38,11 +38,11 @@
 #content {
     transition: margin-left .5s;
     padding: 20px 10px;
-    margin-left: 300px;
+    margin-left: 250px;
 }
 
 #mySidenav{
-    width: 300px;
+    width: 250px;
     padding-top: 10px;
 }
 
@@ -58,6 +58,6 @@
     }
 
     #mySidenav{
-        left: -300px;
+        left: -250px;
     }
 }

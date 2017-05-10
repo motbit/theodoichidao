@@ -87,23 +87,26 @@ class ReportController extends Controller
 
         $exportdata = Utils::getDataExport($request->data, $rowsort, $typesort);
         if($filetype == "pdf") {
-            $fileName = base_path() . "/storage/example/template_steering_pdf.xlsx";
+            $fileName = base_path() . "/storage/example/template_steering.xlsx";
         }else {
             $fileName = base_path() . "/storage/example/template_steering.xlsx";
         }
         $excelobj = PHPExcel_IOFactory::load($fileName);
         $excelobj->setActiveSheetIndex(0);
         $excelobj->getActiveSheet()->toArray(null, true, true, true);
+        $colstart = 3;
         foreach($exportdata as $idx=>$data){
-            $excelobj->getActiveSheet()->setCellValue('A'. ($idx + 2), $idx + 1)
-                ->setCellValue('B'. ($idx + 2), $data['content'])
-                ->setCellValue('C'. ($idx + 2), $data['unit'])
-                ->setCellValue('D'. ($idx + 2), $data['deadline'])
-                ->setCellValue('E'. ($idx + 2), $data['progress'])
-                ->setCellValue('F'. ($idx + 2), $data['conductor'])
-                ->setCellValue('G'. ($idx + 2), $data['follow'])
-                ->setCellValue('H'. ($idx + 2), $data['unitnote'])
-                ->setCellValue('I'. ($idx + 2), $data['status']);
+            $excelobj->getActiveSheet()->setCellValue('A'. ($idx + $colstart), $idx + 1)
+                ->setCellValue('B'. ($idx + $colstart), $data['content'])
+                ->setCellValue('C'. ($idx + $colstart), $data['unit'])
+                ->setCellValue('D'. ($idx + $colstart), $data['deadline'])
+                ->setCellValue('E'. ($idx + $colstart), $data['progress'])
+                ->setCellValue('F'. ($idx + $colstart), $data['conductor'])
+                ->setCellValue('G'. ($idx + $colstart), $data['follow'])
+                ->setCellValue('H'. ($idx + $colstart), $data['unitnote'])
+                ->setCellValue('I'. ($idx + $colstart), $data['conductornote'])
+                ->setCellValue('J'. ($idx + $colstart), $data['status'])
+                ->setCellValue('K'. ($idx + $colstart), $data['manager']);
             $excelobj->getActiveSheet()->getRowDimension(($idx + 2))->setRowHeight(-1);
 
         }

@@ -385,55 +385,30 @@ label {
     float: left;
 }
 
-.progress-update {
+
+.ac-update {
     background: url('../img/bullet-add.png') no-repeat bottom 5px right 5px;
     cursor: pointer;
 }
 
-.progress-update:hover {
+.ac-update:hover {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #faf2cc;
 }
 
-.progress-update:visited, .progress-update:focus, .progress-update:active {
+.ac-update:visited, .unit-update:focus, .unit-update:active {
     background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
 }
 
-.progress-view {
+.ac-view {
     background: url('../img/bullet-view.png') no-repeat bottom 5px right 5px;
     cursor: pointer;
 }
 
-.progress-view:hover {
+.ac-view:hover {
     background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #faf2cc;
 }
 
-.progress-view:visited, .progress-view:focus, .progress-view:active {
-    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #fff2cc;
-}
-
-.unit-update {
-    background: url('../img/bullet-add.png') no-repeat bottom 5px right 5px;
-    cursor: pointer;
-}
-
-.unit-update:hover {
-    background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #faf2cc;
-}
-
-.unit-update:visited, .unit-update:focus, .unit-update:active {
-    background: url('../img/bullet-add-hover.png') no-repeat bottom 5px right 5px #fff2cc;
-}
-
-.unit-view {
-    background: url('../img/bullet-view.png') no-repeat bottom 5px right 5px;
-    cursor: pointer;
-}
-
-.unit-view:hover {
-    background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #faf2cc;
-}
-
-.unit-view:visited, .unit-view:focus, .unit-view:active {
+.ac-view:visited, .unit-view:focus, .unit-view:active {
     background: url('../img/bullet-view-hover.png') no-repeat bottom 5px right 5px #fff2cc;
 }
 

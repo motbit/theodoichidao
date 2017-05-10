@@ -53,6 +53,7 @@
             <th style="min-width: 100px">Đv/cn đầu mối<input type="text"></th>
             <th style="min-width: 130px">Tình hình thực hiện<br><input type="text"></th>
             <th style="min-width: 130px">Ý kiến của đơn vị<br><input type="text"></th>
+            <th style="min-width: 130px">{{env('LDCD')}}<br><input name="conductornote" type="text"></th>
             <th style="min-width: 100px">Đv/cn phối hợp<br><input type="text"></th>
             <th style="width: 55px">{{env('LD_SHORT')}}<br>
                 <select style="width: 55px">
@@ -135,16 +136,23 @@
                 </td>
                 @if(\App\Roles::accessAction($role, 'status'))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
-                        class="progress-update"> {{$row->progress}}</td>
+                        class="progress-update ac-update"> {{$row->progress}}</td>
                 @else
-                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view"> {{$row->progress}}</td>
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view ac-view"> {{$row->progress}}</td>
                 @endif
                 @if(\App\Roles::accessAction($role, 'note'))
                 <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                    class="unit-update"> {{$row->unitnote}}</td>
+                    class="unit-update ac-update"> {{$row->unitnote}}</td>
                 @else
                     <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="unit-view"> {{$row->unitnote}}</td>
+                        class="unit-view ac-view"> {{$row->unitnote}}</td>
+                @endif
+                @if(\App\Roles::accessAction($role, 'conductornote') && \App\Roles::accessRow($role, $row->manager))
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-update ac-update"> {{$row->conductornote}}</td>
+                @else
+                    <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="conductor-view ac-view"> {{$row->conductornote}}</td>
                 @endif
                 <td class="" onclick="showfollow({{$idx}})">
                     <ul class="unit-list" id="follow-list{{$idx}}">
@@ -194,172 +202,9 @@
         <span><a class="btn btn-default buttons-pdf buttons-html5" tabindex="0" aria-controls="table"
                  href="javascript:exportExcel(null,null,'pdf')"><span>Xuất ra PDF</span></a></span>
     </div>
-    <div id="modal-progress" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Theo dõi tiến độ</h4>
-                </div>
-                <div class="modal-body" style="padding-top: 0px !important;">
-                    @if(\App\Roles::accessAction($role, 'status'))
-                    {!! Form::open(array('route' => 'add-progress', 'id' => 'form-progress', 'files'=>'true')) !!}
-                    <input id="steering_id" type="hidden" name="steering_id">
-                    <div class="form-group from-inline">
-                        <label>Ghi chú tiến độ</label>
-                        <textarea name="note" required id="pr-note" rows="2" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group  from-inline">
-                        <label>Tình trạng</label>
-                        <input type="radio" name="pr_status" value="0"> Nhiệm vụ Đang thực hiện&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="pr_status" value="1"> Nhiệm vụ đã hoàn thành&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="pr_status" value="-1"> Nhiệm vụ bị hủy
-                    </div>
-                    <div class="form-group form-inline" id="input-file" style="display: none">
-                        <label style="float: left">File đính kèm:</label>
-                        <input type="file" name="file">
-                    </div>
-                    <div class="form-group form-inline">
-                        <label>Ngày cập nhật</label>
-                        <input name="time_log" type="text" class="datepicker form-control" id="progress_time"
-                               required value="{{date('d/m/y')}}">
-                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                    </div>
-                    {!! Form::close() !!}
-                    @endif
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Nội dung</th>
-                            <th>Người cập nhật</th>
-                            <th>Thời gian</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-progress"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-unit-note" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ý kiến của đơn vị chủ trì/phối hợp</h4>
-                </div>
-                <div class="modal-body" style="padding-top: 0px !important;">
-                    @if(\App\Roles::accessAction($role, 'note'))
-                    {!! Form::open(array('route' => 'add-unit-note', 'id' => 'form-unit-note', 'files'=>'true')) !!}
-                    <input id="steering_id_note" type="hidden" name="steering_id">
-                    <div class="form-group from-inline">
-                        <label>Nội dung ý kiến</label>
-                        <textarea name="note" required id="unit-note" rows="2" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group form-inline hidden">
-                        <label>Ngày cập nhật</label>
-                        <input name="time_log" type="text" class="datepicker form-control" id="unit_time"
-                               required value="{{date('d/m/y')}}">
-                    </div>
-                    <div class="form-group form-inline">
-                        <input class="btn btn-my pull-right" type="submit" value="Lưu">
-                    </div>
-                    {!! Form::close() !!}
-                    @endif
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Nội dung</th>
-                            <th>Người cập nhật</th>
-                            <th>Thời gian</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-unit-note"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         var current_date = "{{date('d/m/y')}}";
-        //        var showpr = false;
-        //        $("#form-progress").hide();
-        //        function showAddProgress() {
-        //            if (showpr) {
-        //                showpr = false;
-        //                $("#form-progress").hide();
-        //            } else {
-        //                showpr = true;
-        //                $("#form-progress").show();
-        //            }
-        //        }
-        function showDetailProgress(id) {
-            resetFromProgress();
-            $(".loader").show();
-            $("#steering_id").val(id);
-            $.ajax({
-                url: "{{$_ENV['ALIAS']}}/api/progress?s=" + id,
-                success: function (result) {
-                    $(".loader").hide();
-                    var html_table = "";
-                    for (var i = 0; i < result.length; i++) {
-                        var r = result[i];
-                        html_table += "<tr>";
-                        html_table += "<td>" + r.note
-                        if (r.file_attach != null) {
-                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/status_file_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
-                        }
-                        html_table += "</td>"
-                        html_table += "<td>" + r.created + "</td>"
-                        html_table += "<td>" + r.time_log + "</td>"
-                        html_table += "</tr>"
-                    }
-                    $("#table-progress").html(html_table);
-                    $("#modal-progress").modal("show");
-                },
-                error: function () {
-                    alert("Xảy ra lỗi nội bộ");
-                    $(".loader").hide();
-                }
-            });
-        }
-
-
-
-
-
-        function showDetailUnitNote(id) {
-            resetFromUnitNote();
-            $(".loader").show();
-            $("#steering_id_note").val(id);
-            $.ajax({
-                url: "{{$_ENV['ALIAS']}}/api/unitnote?s=" + id,
-                success: function (result) {
-                    $(".loader").hide();
-                    var html_table = "";
-                    for (var i = 0; i < result.length; i++) {
-                        var r = result[i];
-                        html_table += "<tr>";
-                        html_table += "<td>" + r.note
-                        if (r.file_attach != null) {
-                            html_table += " (<a href='{{$_ENV['ALIAS']}}/file/unit_note_" + r.id + "." + r.file_attach + "'>File đính kèm</a>)"
-                        }
-                        html_table += "</td>"
-                        html_table += "<td>" + r.created + "</td>"
-                        html_table += "<td>" + r.time_log + "</td>"
-                        html_table += "</tr>"
-                    }
-                    $("#table-unit-note").html(html_table);
-                    $("#modal-unit-note").modal("show");
-                },
-                error: function () {
-                    alert("Xảy ra lỗi nội bộ");
-                    $(".loader").hide();
-                }
-            });
-        }
-
         function showunit(unit) {
             if ($("#unit-list" + unit + " .more-link").attr("hide") == 1) {
                 $("#unit-list" + unit + " .more").show();
@@ -400,90 +245,8 @@
         }
 
         $(document).ready(function () {
-            @if(\App\Roles::accessAction($role, 'status'))
-            $(".progress-update").on("click", function () {
-                showDetailProgress($(this).attr("data-id"))
-            });
-            @else
-            $(".progress-view").on("click", function () {
-                showDetailProgress($(this).attr("data-id"))
-            });
-            @endif
-
-            @if(\App\Roles::accessAction($role, 'note'))
-            $(".unit-update").on("click", function () {
-                showDetailUnitNote($(this).attr("data-id"))
-            });
-            @else
-            $(".unit-update").on("click", function () {
-                showDetailUnitNote($(this).attr("data-id"))
-            });
-            @endif
 
             reCount();
-            $("#form-progress").submit(function (e) {
-                e.preventDefault();
-                var formData = new FormData($(this)[0]);
-                var note = $("#pr-note").val();
-                var steering_id = $("#steering_id").val();
-                var status = $('input[name="pr_status"]:checked').val()
-                var time_log = $("#progress_time").val();
-                $(".loader").show();
-                var url = $(this).attr("action");
-                console.log(url);
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    async: false,
-                    success: function (result) {
-                        console.log(result);
-                        $(".loader").hide();
-                        $("#modal-progress").modal("hide");
-                        $("#progress-" + steering_id).html(note)
-                        resetFromProgress();
-                        reStyleRow(steering_id, status, time_log);
-                    },
-                    error: function () {
-                        alert("Xảy ra lỗi nội bộ");
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-            });
-            $("#form-unit-note").submit(function (e) {
-                e.preventDefault();
-                var formData = new FormData($(this)[0]);
-                var note = $("#unit-note").val();
-                var steering_id = $("#steering_id_note").val();
-                var status = $('input[name="pr_status"]:checked').val()
-                var time_log = $("#unit_time").val();
-                $(".loader").show();
-                var url = $(this).attr("action");
-                console.log(url);
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    async: false,
-                    success: function (result) {
-                        console.log(result);
-                        $(".loader").hide();
-                        $("#modal-unit-note").modal("hide");
-                        console.log(steering_id + " : " + note);
-                        $("#unit-note-" + steering_id).html(note)
-                        resetFromUnitNote();
-                        reStyleRow(steering_id, status, time_log);
-                    },
-                    error: function () {
-                        alert("Xảy ra lỗi nội bộ");
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-            });
 
             // DataTable
             var table = $('#table').DataTable({

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant;
+use App\MLogs;
 use App\User;
 use App\Steeringcontent;
 use App\Sourcesteering;
@@ -18,11 +20,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        if (! \App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())){
+        if (!\App\Roles::accessView(\Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri())) {
             return redirect('/errpermission');
         }
-        $unitdata=Unit::orderBy('created_at', 'DESC')->get();
-        $unitgroup=Group::orderBy('created_at', 'DESC')->get();
+        $unitdata = Unit::orderBy('created_at', 'DESC')->get();
+        $unitgroup = Group::orderBy('created_at', 'DESC')->get();
 
         $unit = array();
         $group = array();
@@ -34,20 +36,21 @@ class UserController extends Controller
         foreach ($unitgroup as $row) {
             $group[$row->id] = $row->description;
         }
-        $data= DB::table('user')->where('username', '!=', 'supperadmin')->orderBy('created_at', 'DESC')->get();
-        return view('user.index',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
+        $data = DB::table('user')->where('username', '!=', 'supperadmin')->orderBy('created_at', 'DESC')->get();
+        return view('user.index', ['unit' => $unit, 'group' => $group, 'nguoidung' => $data]);
 
 
     }
 
-    public function changepass(Request $request){
+    public function changepass(Request $request)
+    {
         $id = Auth::id();
 
         $messages = [
             'password.min' => 'Mật khẩu phải ít nhất 6 ký tự.',
             'password.required' => 'Yêu cầu nhập mật khẩu.'
         ];
-        if ($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
                 'password' => 'required|nullable|min:6',
 
@@ -59,40 +62,41 @@ class UserController extends Controller
                     ->withInput();
             }
         }
-        if($request->input('old-password')){
+        if ($request->input('old-password')) {
             $credentials = [
                 'username' => Auth::user()->username,
                 'password' => $request->input('old-password'),
             ];
-            if(\Auth::validate($credentials)) {
+            if (\Auth::validate($credentials)) {
                 $result = User::where('id', $id)->update([
-                    'password'=>  bcrypt($request->input('password')),
+                    'password' => bcrypt($request->input('password')),
                 ]);
-                if (! \App\Roles::accessView("user")){
+                MLogs::write(Constant::$ACTION_UPDATE, 'user', $id, 'change pass');
+                if (!\App\Roles::accessView("user")) {
                     return redirect('/steeringcontent');
-                }else {
+                } else {
 //                    Log::alert('User ID #' . $id . ' Change Password!');
                     return redirect()->action(
                         'UserController@index', ['add' => 1]
                     );
                 }
-            }else{
+            } else {
                 $request->session()->flash('message', "Mật khẩu cũ không đúng");
                 return redirect()->action(
                     'UserController@changepass'
                 );
             }
         }
-        $data = User::where('id',$id)->get();
-        return view('user.changepass',['data'=>$data[0], 'id'=>$id]);
+        $data = User::where('id', $id)->get();
+        return view('user.changepass', ['data' => $data[0], 'id' => $id]);
     }
 
     public function edit(Request $request)
     {
-        $id = intval( $request->input('id') );
+        $id = intval($request->input('id'));
 
-        $unitdata=Unit::orderBy('created_at', 'DESC')->get();
-        $unitgroup=Group::orderBy('created_at', 'DESC')->get();
+        $unitdata = Unit::orderBy('created_at', 'DESC')->get();
+        $unitgroup = Group::orderBy('created_at', 'DESC')->get();
 
         $unit = array();
         $group = array();
@@ -106,18 +110,18 @@ class UserController extends Controller
             $group[$row->id] = $row->description;
         }
 
-        if($id > 0) {
-            $data=User::where('id',$id)->get();
-            return view('user.update',['unit'=>$unit,'group'=>$group,'nguoidung'=>$data]);
+        if ($id > 0) {
+            $data = User::where('id', $id)->get();
+            return view('user.update', ['unit' => $unit, 'group' => $group, 'nguoidung' => $data]);
 
         } else {
-            return view('user.add',['unit'=>$unit,'group'=>$group]);
+            return view('user.add', ['unit' => $unit, 'group' => $group]);
         }
     }
 
     public function update(Request $request)
     {
-        $id = intval( $request->input('id') );
+        $id = intval($request->input('id'));
 
         $messages = [
             'username.min' => 'Tên người dùng phải ít nhất 4 chữ cái.',
@@ -127,13 +131,13 @@ class UserController extends Controller
             'password.min' => 'Mật khẩu phải ít nhất 6 ký tự.',
             'password.required' => 'Yêu cầu nhập mật khẩu.',
         ];
-        if($id > 0) {
+        if ($id > 0) {
             $validator = Validator::make($request->all(), [
                 'password' => 'nullable|min:6',
             ], $messages);
 
             if ($validator->fails()) {
-                return redirect()->action('UserController@update',["id"=>$id])
+                return redirect()->action('UserController@update', ["id" => $id])
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -153,21 +157,21 @@ class UserController extends Controller
 
         }
 
-        if($id > 0) {
+        if ($id > 0) {
 
             $data = [
-                'fullname'=>$request->input('fullname'),
-                'group'=>$request->input('group'),
-                'unit'=>$request->input('unit'),
+                'fullname' => $request->input('fullname'),
+                'group' => $request->input('group'),
+                'unit' => $request->input('unit'),
             ];
 
-            if(strlen($request->input('password')) >= 6) {
+            if (strlen($request->input('password')) >= 6) {
                 $data['password'] = bcrypt($request->input('password'));
             }
 
-            $result=User::where('id',$request->input('id'))->update($data);
-
-            if($result) {
+            $result = User::where('id', $request->input('id'))->update($data);
+            MLogs::write(Constant::$ACTION_CREATE, 'user', $id, '');
+            if ($result) {
                 $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('username') . "</b> thành công!");
             } else {
                 $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('fullname') . " </b>không thành công!");
@@ -181,22 +185,22 @@ class UserController extends Controller
         } else {
 
             $data = [
-                'username'=>$request->input('username'),
-                'password'=>bcrypt($request->input('password')),
-                'fullname'=>$request->input('fullname'),
-                'group'=>$request->input('group'),
-                'unit'=>$request->input('unit'),
+                'username' => $request->input('username'),
+                'password' => bcrypt($request->input('password')),
+                'fullname' => $request->input('fullname'),
+                'group' => $request->input('group'),
+                'unit' => $request->input('unit'),
             ];
-            $result=User::insertGetId($data);
-
-            if($result) {
+            $result = User::insertGetId($data);
+            MLogs::write(Constant::$ACTION_UPDATE, 'user', $result, '');
+            if ($result) {
                 $request->session()->flash('message', "Thêm người dùng mới thành công!");
             } else {
                 $request->session()->flash('message', "Thêm người dùng mới thất bại!");
             }
 //            Log::info('Admin ID #' . Auth::id() . ' add new user #' . $result, $data);
 
-            if($result) {
+            if ($result) {
                 return redirect()->action(
                     'UserController@index', ['add' => 1]
                 );
@@ -219,13 +223,15 @@ class UserController extends Controller
 //            ->orWhere([['created_by', '=', $id]])
 //            ->count();
         $st_count2 = Steeringcontent::Where([['manager', '=', $id]])->count();
+        $user = DB::table('user')->where('id', $id)->first();
 
-        if($st_count2 > 0) {
+        if ($st_count2 > 0) {
 //            $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Vui bỏ <u>Người sử dụng</u> này khỏi <u>Đơn vị/Cá nhân chủ trì</u> và <u>Đơn vị/Cá nhân phối hợp</u> trong mục <b>Nhiệm vụ</b> trước khi xóa <u>Người sử dụng</u>.");
             $request->session()->flash('message', "<strong>Bạn không thể xóa Người sử dụng này.</strong><br /> Nguời này đang theo dõi 1 hoặc nhiều nhiệm vụ. Vui lòng chuyển nhiệm vụ cho người khác trước khi xóa");
         } else {
             $request->session()->flash('message', "<strong>Xóa Người sử dụng thành công. #ID Người Sử Dụng: " . $id . "</strong>");
-            $result=User::where('id',$id)->delete();
+            $result = User::where('id', $id)->delete();
+            MLogs::write(Constant::$ACTION_DELETE, 'user', $id, 'Delete user: ' . $user->username);
         }
 
         return redirect()->action('UserController@index');
