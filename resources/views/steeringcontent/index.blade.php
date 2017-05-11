@@ -302,7 +302,7 @@
                         <select class="js-example-basic-single js-states form-control" name="receiver" id="receiver" required>
                             <option value="0"></option>
                             @foreach($datauser as $u)
-                                @if($u->id != \Illuminate\Support\Facades\Auth::user()->id && $u->group != 4)
+                                @if($u->group != 4)
                                     <option id="reciever-{{$u->id}}" value="{{$u->id}}">{{$u->fullname}}
                                         ({{$u->username}})
                                     </option>
@@ -583,6 +583,5 @@
         #table_filter {
             display: none;
         }
-
     </style>
 @stop
