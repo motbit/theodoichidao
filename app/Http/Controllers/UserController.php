@@ -97,6 +97,7 @@ class UserController extends Controller
 
         $unitdata = Unit::orderBy('created_at', 'DESC')->get();
         $unitgroup = Group::orderBy('created_at', 'DESC')->get();
+        $viphuman = DB::table('viphuman')->get();
 
         $unit = array();
         $group = array();
@@ -112,10 +113,10 @@ class UserController extends Controller
 
         if ($id > 0) {
             $data = User::where('id', $id)->get();
-            return view('user.update', ['unit' => $unit, 'group' => $group, 'nguoidung' => $data]);
+            return view('user.update', ['unit' => $unit, 'group' => $group, 'nguoidung' => $data, 'viphuman' =>$viphuman]);
 
         } else {
-            return view('user.add', ['unit' => $unit, 'group' => $group]);
+            return view('user.add', ['unit' => $unit, 'group' => $group, 'viphuman' =>$viphuman]);
         }
     }
 
@@ -157,12 +158,18 @@ class UserController extends Controller
 
         }
 
+        $conductor = null;
+        if ($request->input('conductor') != ''){
+            $conductor = $request->input('conductor');
+        }
+
         if ($id > 0) {
 
             $data = [
                 'fullname' => $request->input('fullname'),
                 'group' => $request->input('group'),
                 'unit' => $request->input('unit'),
+                'conductor' => $conductor
             ];
 
             if (strlen($request->input('password')) >= 6) {
@@ -170,7 +177,7 @@ class UserController extends Controller
             }
 
             $result = User::where('id', $request->input('id'))->update($data);
-            MLogs::write(Constant::$ACTION_CREATE, 'user', $id, '');
+            MLogs::write(Constant::$ACTION_UPDATE, 'user', $id, '');
             if ($result) {
                 $request->session()->flash('message', "Cập nhật <b>#" . $id . ". " . $request->input('username') . "</b> thành công!");
             } else {
@@ -190,9 +197,10 @@ class UserController extends Controller
                 'fullname' => $request->input('fullname'),
                 'group' => $request->input('group'),
                 'unit' => $request->input('unit'),
+                'conductor' => $conductor
             ];
             $result = User::insertGetId($data);
-            MLogs::write(Constant::$ACTION_UPDATE, 'user', $result, '');
+            MLogs::write(Constant::$ACTION_CREATE, 'user', $result, '');
             if ($result) {
                 $request->session()->flash('message', "Thêm người dùng mới thành công!");
             } else {

@@ -365,12 +365,17 @@ class ApiController extends Controller
         $users = array();
         $select_user = DB::table('user')->get();
         foreach ($select_user as $row) {
-            $users[$row->id] = $row->fullname;
+            $users[$row->id] = $row;
         }
-        $progress_note = 'Anh/chị ' . $users[$sender] . ' đã chuyển nhiệm vụ.';
+        $progress_note = 'Anh/chị ' . $users[$sender]->fullname . ' đã chuyển nhiệm vụ.';
         #update nhiem vu
+        $dt_update = array();
+        $dt_update['manager'] = $receiver;
+        if ($users[$receiver]->conductor != null){
+            $dt_update['conductor'] = $users[$receiver]->conductor;
+        }
         $update = DB::table('steeringcontent')->where('id', '=', $steering)
-            ->update(['manager' => $receiver]);
+            ->update($dt_update);
         if (!$update) {
             return response()->json(['result' => false,
                 'mess' => 'Nhiệm vụ không tồn tại hoặc không do tài khoản anh/chị quản lý'
@@ -392,7 +397,8 @@ class ApiController extends Controller
             'note' => $progress_note
         ]);
         return response()->json(['result' => true,
-            'mess' => 'Nhiệm vụ chuyển thành công'
+            'mess' => 'Nhiệm vụ chuyển thành công',
+            'conductor' => $users[$receiver]->conductor
         ]);
     }
 

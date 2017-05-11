@@ -61,6 +61,15 @@
             ) !!}
         </div>
 
+        <div class="form-group form-inline">
+            <label>Thư kí của:</label>
+            <select name="conductor" class="form-control select-single ipw" style="max-width: 200px">
+                <option value=""></option>
+                @foreach($viphuman as $key=>$v)
+                    <option value="{{$v->id}}" {{($row->conductor == $v->id)?'selected':''}}>{{$v->name}}</option>
+                @endforeach
+            </select>
+        </div>
 
         <div class="form-group">
             {!! Form::submit('Cập nhật',
