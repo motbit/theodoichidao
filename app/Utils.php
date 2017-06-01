@@ -79,6 +79,17 @@ class Utils extends Model
             $conductor[$row->id] = $row->name;
         }
 
+        //Lấy danh sách nguồn chỉ đạo
+        $datasource = DB::table('steering_source')->whereIn('steering', $data)->get();
+        $sources = array();
+        foreach ($datasource as $row){
+            if (isset($sources[$row->steering])){
+                $sources[$row->steering] .= "; " . $row->note;
+            }else{
+                $sources[$row->steering] = $row->note;
+            }
+        }
+
         $exportData = array();
 
         foreach ($steering as $row) {
@@ -180,6 +191,8 @@ class Utils extends Model
             if (isset($user[$row->manager])) {
                 $temp['manager'] = $user[$row->manager];
             }
+            $temp['steer_time'] = date("d/m/Y", strtotime($row->steer_time));
+            $temp['source'] = isset($sources[$row->id])?$sources[$row->id]:"";
 
             $exportData[] = $temp;
         }
