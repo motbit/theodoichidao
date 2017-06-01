@@ -14,7 +14,7 @@
     @endif
 
     @foreach ($nguoidung as $row)
-        {!! Form::open(array('route' => 'user-update', 'class' => 'form')) !!}
+        {!! Form::open(array('route' => 'user-update', 'class' => 'form', 'autocomplete'=>'off')) !!}
         {{ Form::hidden('id', $row->id, array('id' => 'nguoidung_id')) }}
         <div class="form-group form-inline">
             <label>Tên đăng nhập: <span class="required">(*)</span></label>
@@ -28,10 +28,7 @@
 
         <div class="form-group form-inline">
             <label>Mật khẩu: <span class="required">(*)</span></label>
-            {!! Form::password('password',
-                array(
-                      'class'=>'form-control',
-                      'placeholder'=>'Mật khẩu ít nhất 6 ký tự.')) !!}
+            <input type="text" class="form-control" name="password" autocomplete="off">
             <em>* Để trống nếu không thay đổi.</em>
         </div>
 
@@ -80,5 +77,9 @@
 
     <script>
         $(".select-single").select2();
+        $("input[name='password']").focus(function() {
+           $(this).attr('type', 'password');
+        });
+//        $("input[name='password']").attr('type', 'password');
     </script>
 @stop
