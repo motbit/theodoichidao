@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class ApiController extends Controller
 {
@@ -416,6 +417,16 @@ class ApiController extends Controller
         ]);
     }
 
+    public function sendEmail(Request $request){
+        $data = array('name'=>"Cao Hoàng Tiến");
+        Mail::send('mail', $data, function($message) {
+            $message->to('tiench189.hut@gmail.com', 'Tiến Cao')->subject
+            ('Laravel HTML Testing Mail');
+            $message->from('caotien189@gmail.com','Cao Hoàng Tiến');
+        });
+        echo "Basic Email Sent. Check your inbox.";
+    }
+
     public function formatUnit(Request $request)
     {
         $khacid = Unit::where('shortname', "KHAC")->pluck('id')->toArray()[0];
@@ -477,6 +488,26 @@ class ApiController extends Controller
             }
 
             DB::table('steeringcontent')->where('id', '=', $steering->id)->update(['unit' => $unit, 'follow' => $follow]);
+        }
+    }
+
+    //Kiem tra trung lap
+    public function checkDuplicate(Request $request){
+        $id = intval($request->id);
+        $content = $request->mycontent;
+        $steerings = DB::table('steeringcontent')->get();
+        $duplicate = array();
+        foreach ($steerings as $row){
+            if ($row->id != $id && Utils::compareSteer($content, $row->content)){
+                $duplicate[] = $row;
+            }
+        }
+        if (count($duplicate) > 0){
+            return response()->json(['result' => false,
+                'data' => $duplicate
+            ]);
+        }else{
+            return response()->json(['result' => true]);
         }
     }
 }

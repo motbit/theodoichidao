@@ -21,6 +21,7 @@
                 {!! Form::textarea('content', "",
                     array('required',
                           'class'=>'form-control',
+                          'id'=>'str-content',
                           'placeholder'=>'Nội dung chỉ đạo',
                           'rows'=>'5')) !!}
             </div>
@@ -38,14 +39,13 @@
 
             <div class="form-group form-inline">
                 <label>{{env('LD_MEDIUM')}}:</label>
-                <div class="row">
+                <select name="viphuman[]" class="form-control select-multiple ipw"
+                        multiple="multiple"
+                        required="required">
                     @foreach($viphuman as $v)
-                        <div class="col-xs-12 col-md-3">
-                            {!! Form::radio('viphuman', $v->id, ($v->name == "") ? true : false) !!} {!! $v->name !!}
-                            &nbsp;
-                        </div>
+                        <option value="{{$v->id}}">{{$v->name}}</option>
                     @endforeach
-                </div>
+                </select>
             </div>
             <div class="form-group form-inline">
                 <label>Mức độ:</label>
@@ -340,6 +340,28 @@
             </div>
         </div>
     </div>
+    <div id="modal-duplicate" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cảnh báo trùng nhiệm vụ</h4>
+                </div>
+                <div class="modal-body">
+                    <div>Nhiệm vụ vừa thêm có thể trùng với các nhiệm vụ dưới đây, vui lòng kiểm tra lại</div>
+                    <table class="table table-bordered" style="margin-top: 10px">
+                        <tbody id="table-duplicate">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn btn-my" onclick="continueSubmit()" style="margin-bottom: 0">Tiếp tục thêm</div>
+                    <div class="btn btn-my" data-dismiss="modal" style="margin-bottom: 0">Kiểm tra lại</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="{{$_ENV['ALIAS']}}/js/jquery-ui.js"></script>
     <link href="{{$_ENV['ALIAS']}}/css/jquery-ui.css" rel="stylesheet">
     <script>
@@ -406,13 +428,13 @@
                 source: viphumans
             });
         });
-        $('input[name="note[]"]').change(function(e){
+        $('input[name="note[]"]').change(function (e) {
             var val = $(this).val();
             var id = $(this).attr('date-id');
-            if(val != ''){
-                $('input:checkbox[id=type'+id+']').attr('checked', true);
-            }else{
-                $('input:checkbox[id=type'+id+']').attr('checked', false);
+            if (val != '') {
+                $('input:checkbox[id=type' + id + ']').attr('checked', true);
+            } else {
+                $('input:checkbox[id=type' + id + ']').attr('checked', false);
             }
         });
 
@@ -543,12 +565,57 @@
         });
         $(".select-single").select2();
 
+        var checkDuplicate = false;
         $("#steeringcontent-update").submit(function (e) {
             var check = valCheckbox();
             if (check == false) {
                 return false;
             }
-        })
+            if (!checkDuplicate) {
+                var id = 0;
+                var duplicate = false;
+                var mycontent = $("#str-content").val();
+                var urlCheck = '{{$_ENV['ALIAS']}}/api/checkduplicate';
+                $(".loader").hide();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: urlCheck,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {id: id, mycontent: mycontent},
+                    async: false,
+                    success: function (result) {
+                        $(".loader").hide();
+                        console.log(result);
+                        if (!result.result) {
+                            var html = "";
+                            duplicate = true;
+                            result.data.forEach(function (item) {
+                                html += "<tr>" +
+                                    "<td>" + item.id + "</td>" +
+                                    "<td>" + item.content + "</td>"
+                                "</tr>";
+                            });
+                            $("#table-duplicate").html(html);
+                            $("#modal-duplicate").modal('show');
+                        }
+                    },
+                    error: function () {
+                        $(".loader").hide();
+                        duplicate = true;
+                    },
+                });
+                if (duplicate) return false;
+            }
+        });
+
+        function continueSubmit() {
+            checkDuplicate = true;
+            $("#steeringcontent-update").submit();
+        }
+
 
         $("#form-add-source").submit(function (e) {
             e.preventDefault();
@@ -592,8 +659,10 @@
         .select2 {
             width: 290px !important;
         }
-        .bd{
+
+        .bd {
         }
+
         @media screen and (max-width: 600px) {
             .select2 {
                 width: 270px !important;

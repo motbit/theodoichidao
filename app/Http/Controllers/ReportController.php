@@ -318,7 +318,9 @@ class ReportController extends Controller
         }
         $steeringSourceArr = array();
         foreach ($scData as $item) {
-            $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note' => $item->note);
+            if(isset($typeArr[$item->source])) {
+                $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note' => $item->note);
+            }
         }
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');
@@ -386,7 +388,9 @@ class ReportController extends Controller
         }
         $steeringSourceArr = array();
         foreach ($scData as $item) {
-            $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note' => $item->note);
+            if(isset($typeArr[$item->source])) {
+                $steeringSourceArr[$item->steering][] = array('source' => $typeArr[$item->source], 'note' => $item->note);
+            }
         }
 
         $allsteeringcode = DB::table('sourcesteering')->pluck('code');

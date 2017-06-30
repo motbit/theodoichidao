@@ -183,6 +183,7 @@ class SteeringcontentController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $deadline = Utils::dateformat($request->input('deathline'));
         if (!$deadline) $deadline = null;
 
@@ -250,7 +251,6 @@ class SteeringcontentController extends Controller
         if (!isset($priority)) {
             $priority = 1;
         }
-
         if ($id > 0) {
             $noteArr = $request->input('note');
             $typeArr = $request->input('mtype');
@@ -264,7 +264,7 @@ class SteeringcontentController extends Controller
                 'steer_time' => Utils::dateformat($request->input('steer_time')),
                 'deadline' => $deadline,
                 'priority' => $request->input('priority'),
-                'conductor' => $request->input('viphuman')
+                'conductor' => implode(',', $request->input('viphuman'))
             ]);
             MLogs::write(Constant::$ACTION_UPDATE, 'steeringcontent', $request->input('id'), '');
 
@@ -312,7 +312,7 @@ class SteeringcontentController extends Controller
                     'unit' => $fu,
                     'follow' => $su,
                     'priority' => $priority,
-                    'conductor' => $request->input('viphuman'),
+                    'conductor' => implode(',', $request->input('viphuman')),
                     'steer_time' => Utils::dateformat($request->input('steer_time')),
                     'deadline' => $deadline,
                     'created_by' => Auth::user()->id,
