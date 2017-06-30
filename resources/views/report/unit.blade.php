@@ -185,14 +185,7 @@
             <th class="hidden"></th>
             <th style="width: 10px"></th>
             <th style="min-width: 150px"> Tên nhiệm vụ<br><input type="text"></th>
-            <th style="width: 55px">{{env('LD_SHORT')}}<br>
-                <select style="width: 55px" id="filter-conductor">
-                    <option value=""></option>
-                    @foreach($viphuman as $row)
-                        <option value="{{$row->name}}">{{$row->name}}</option>
-                    @endforeach
-                </select>
-            </th>
+            <th style="width: 55px">{{env('LD_SHORT')}}<br><input type="text" id="conductor"></th>
             <th style="min-width: 100px"> Ngày chỉ đạo<br><input type="text" id="id_steertime"></th>
             <th style="min-width: 100px"> {{env('SRC_UC')}}<br><input id="id_source" type="text"></th>
             <th style="min-width: 100px"> Đv/cn đầu mối<input id="id_funit" type="text"></th>
@@ -242,7 +235,12 @@
                 <td>{{$idx + 1}}</td>
                 <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail"
                     onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
-                <td class="text-center">{{isset($conductor[$row->conductor])?$conductor[$row->conductor]:$row->conductor}}</td>
+                <td class="text-center">
+                    <?php $arrConductor = explode(',', $row->conductor)?>
+                    @foreach($arrConductor as $idx => $cd)
+                        {!! isset($conductor[$cd])?$conductor[$cd]:'' !!} {!!$idx < count($arrConductor) - 1?'<br><br>':'' !!}
+                    @endforeach
+                </td>
                 <td> {{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }} </td>
                 <td>
                     {{--@foreach(explode('|', $row->source) as $s)--}}

@@ -40,13 +40,14 @@
 
                 <div class="form-group form-inline">
                     <label>{{env('LD_SHORT')}}:<span class="required">(*)</span></label>
-                    <div class="row">
+                    <?php $arrConductor = explode(',', $row->conductor)?>
+                    <select name="viphuman[]" class="form-control select-multiple ipw"
+                            multiple="multiple"
+                            required="required">
                         @foreach($viphuman as $v)
-                            <div class="col-xs-12 col-md-3">
-                                {!! Form::radio('viphuman', $v->id, ($v->id == $row->conductor) ? true : false) !!} {!! $v->name !!}
-                            </div>
+                            <option value="{{$v->id}}" {{in_array($v->id, $arrConductor)?'selected':''}}>{{$v->name}}</option>
                         @endforeach
-                    </div>
+                    </select>
                 </div>
 
                 <div class="form-group form-inline">

@@ -113,6 +113,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('formatunit', 'ApiController@formatUnit')->name('format-unit');
         Route::get('conductornote', 'ApiController@getConductorNote');
         Route::post('updateconductornote', 'ApiController@addConductorNote')->name('add-conductor-note');
+        Route::get('sendemail', 'ApiController@sendEmail');
+        Route::post('checkduplicate', 'ApiController@checkDuplicate');
     });
 
     Route::group(['prefix' => 'type'], function () {

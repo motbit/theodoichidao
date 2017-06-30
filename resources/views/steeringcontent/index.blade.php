@@ -19,7 +19,8 @@
     @endif
     @if ($conductor != false && !empty($conductor))
         <div class="text-center">
-            <div>Danh sách các nhiệm vụ theo {{env('LD_FULL')}}: <span style="color: #ff0000">{{$conductor->name}}</span></div>
+            <div>Danh sách các nhiệm vụ theo {{env('LD_FULL')}}: <span
+                        style="color: #ff0000">{{$conductor->name}}</span></div>
         </div>
     @endif
 
@@ -87,21 +88,14 @@
             <th style="width: 15px"></th>
             <th style="min-width: 150px">Tên nhiệm vụ<br><input name="tennhiemvu" type="text"></th>
             <th style="min-width: 90px">Đv/cn đầu mối<input name="daumoi" type="text"></th>
-            <th style="min-width: 130px">Tình hình thực hiện<br><input name="tinhhinhthuchien" type="text"></th>
             <th class="hidden" style="min-width: 100px">Đv/cn phối hợp<br><input name="phoihop" type="text"></th>
-            <th style="width: 110px">Ý kiến của đơn vị<br><input name="ykien" type="text"></th>
+            <th style="width: 110px">Nội dung công việc<br><input name="ykien" type="text"></th>
+            <th style="min-width: 130px">Tiến độ triển khai<br><input name="tinhhinhthuchien" type="text"></th>
             <th style="width: 130px">{{env('LDCD')}}<br><input name="conductornote" type="text"></th>
-            <th style="width: 55px">{{env('LD_SHORT')}}<br>
-                <select style="width: 55px">
-                    <option value=""></option>
-                    @foreach($viphuman as $row)
-                        <option value="{{$row->name}}">{{$row->name}}</option>
-                    @endforeach
-                </select>
-            </th>
+            <th style="width: 65px">{{env('LD_SHORT')}}<br><input type="text" id="conductor"></th>
             <th style="min-width: 50px">Hạn HT<br><input type="text" name="thoihan" class="datepicker"></th>
             <th class=" hidden">Trạng thái</th>
-            <th style="width: 95px">Người theo dõi<br><input name="nguoitheodoi" type="text"></th>
+            <th style="width: 100px">Người theo dõi<br><input name="nguoitheodoi" type="text"></th>
             @if(\App\Roles::accessAction($role, 'edit'))
                 <th class=" td-action"></th>
             @endif
@@ -150,7 +144,7 @@
                 <td class="hidden id-export">{{$row->id}}</td>
                 <td>{{$idx + 1}}</td>
                 <td title="Xem thông tin chi tiết nhiệm vụ" class="click-detail"
-                    onclick="showDetail({{$row->id}})"> {{$row->content}} </td>
+                    onclick="showDetail({{$row->id}})"> {{\App\Utils::strunc($row->content, 200)}} </td>
                 <td onclick="javascript:showunit({{$idx}})">
                     <ul class="unit-list" id="unit-list{{$idx}}">
                         @php ($n = 0)
@@ -183,28 +177,29 @@
                         @endif
                     </ul>
                 </td>
+                @if(\App\Roles::accessAction($role, 'note') && \App\Roles::accessRow($role, $row->manager))
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-update ac-update"> {{\App\Utils::strunc($row->unitnote)}}</td>
+                @else
+                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
+                        class="unit-view ac-view"> {{\App\Utils::strunc($row->unitnote)}}</td>
+                @endif
+
                 @if(\App\Roles::accessAction($role, 'status') && \App\Roles::accessRow($role, $row->manager))
                     <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
                         data-deadline="{{ ($row->steer_time != '')?Carbon\Carbon::parse($row->steer_time)->format('d/m/y'):'' }}"
-                        class="progress-update ac-update"> {{$row->progress}}</td>
+                        class="progress-update ac-update"> {{\App\Utils::strunc($row->progress)}}</td>
                 @else
-                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}" class="progress-view ac-view"> {{$row->progress}}</td>
-                @endif
-
-                @if(\App\Roles::accessAction($role, 'note') && \App\Roles::accessRow($role, $row->manager))
-                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="unit-update ac-update"> {{$row->unitnote}}</td>
-                @else
-                    <td id="unit-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="unit-view ac-view"> {{$row->unitnote}}</td>
+                    <td id="progress-{{$row->id}}" data-id="{{$row->id}}"
+                        class="progress-view ac-view"> {{\App\Utils::strunc($row->progress)}}</td>
                 @endif
 
                 @if(\App\Roles::accessAction($role, 'conductornote') && \App\Roles::accessRow($role, $row->manager))
                     <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="conductor-update ac-update"> {{$row->conductornote}}</td>
+                        class="conductor-update ac-update"> {{\App\Utils::strunc($row->conductornote)}}</td>
                 @else
                     <td id="conductor-note-{{$row->id}}" data-id="{{$row->id}}"
-                        class="conductor-view ac-view"> {{$row->conductornote}}</td>
+                        class="conductor-view ac-view"> {{\App\Utils::strunc($row->conductornote)}}</td>
                 @endif
 
                 <td class="hidden" onclick="javascript:showfollow({{$idx}})">
@@ -241,7 +236,12 @@
                         @endif
                     </ul>
                 </td>
-                <td class="text-center">{{isset($dtconductor[intval($row->conductor)])?$dtconductor[intval($row->conductor)]:$row->conductor}}</td>
+                <td class="text-center">
+                    <?php $arrConductor = explode(',', $row->conductor)?>
+                    @foreach($arrConductor as $idx => $cd)
+                            {!! isset($dtconductor[$cd])?$dtconductor[$cd]:'' !!} {!!$idx < count($arrConductor) - 1?'<br><br>':'' !!}
+                    @endforeach
+                </td>
                 <td class=""> {{ ($row->deadline != '')?Carbon\Carbon::parse($row->deadline)->format('d/m/y'):'' }}</td>
                 <td class="hidden">{{$name_stt[$st]}}</td>
                 <td>{{isset($user[$row->manager])?$user[$row->manager]:''}}</td>
@@ -299,7 +299,8 @@
                     <input id="sid" type="hidden" name="sid">
                     <div class="form-group from-inline">
                         <label>Người tiếp nhận</label>
-                        <select class="js-example-basic-single js-states form-control" name="receiver" id="receiver" required>
+                        <select class="js-example-basic-single js-states form-control" name="receiver" id="receiver"
+                                required>
                             <option value="0"></option>
                             @foreach($datauser as $u)
                                 @if($u->group != 4)
@@ -409,7 +410,7 @@
                 e.preventDefault();
                 var formData = new FormData($(this)[0]);
                 var receiver = $("#receiver").val();
-                if (receiver == "0"){
+                if (receiver == "0") {
                     alert("Vui lòng chọn người nhận nhiệm vụ!");
                     return;
                 }

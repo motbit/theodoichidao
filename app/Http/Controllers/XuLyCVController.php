@@ -31,6 +31,7 @@ class XuLyCVController extends Controller
             ->orwhere('unit', 'like', '%u|' . $user->unit . ',%')
             ->orwhere('unit', 'like', '%h|' . $user->id . ',%')
             ->select('steeringcontent.*')
+            ->orderBy('id', 'DESC')
             ->get();
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
 
@@ -72,6 +73,7 @@ class XuLyCVController extends Controller
                 ['xn', '=', 'C'],
                 ['status', '=', '0'],
             ])->whereNotIn('id', $danhan_array)
+            ->orderBy('id', 'DESC')
             ->get();
         $dataunit = Unit::orderBy('created_at', 'DESC')->get();
 
